@@ -55,6 +55,7 @@ SHAFT_D, SHAFT_L = 19.05, 61.9           # 3/4" x 2-7/16"
 MOUNT_Y, MOUNT_X = 162.0, 75.5           # 4 x M8 mounting pattern (verify the orientation on the engine)
 ENGINE_FRONT_MAX = 105.0                 # air cleaner must stay this far behind the seat back
 ENGINE_HALF_W = 188.0                    # half of the 376 mm width (air cleaner to muffler)
+ENGINE_FRONT_EXT = None                  # engine extent ahead of the crank axis; default ENGINE_HALF_W
 
 WHEEL_C = (540.0, 460.0)                 # steering wheel centre (x, z)
 X_DF = 140.0                             # deck front station: uprights F14, cross F16, brace and side rail start
@@ -85,6 +86,9 @@ if SEAT_BASE_Z is None:
 if SEAT_TABS is None:
     SEAT_TABS = [[x, y, 0.0] for x in SEAT_HOLE_X for y in (-SEAT_HOLES[0] / 2, SEAT_HOLES[0] / 2)]
 
+if ENGINE_FRONT_EXT is None:
+    ENGINE_FRONT_EXT = ENGINE_HALF_W
+
 # Chain: choose the smallest even link count that keeps the engine behind the seat, then put the
 # engine where that chain fits with the mounting slots centred (+/-15 mm for tension and wear).
 _P35 = 9.525
@@ -99,7 +103,7 @@ def _centres(n):
 
 CHAIN_LINKS = 80
 while not (_centres(CHAIN_LINKS) > _dz and
-           -math.sqrt(_centres(CHAIN_LINKS) ** 2 - _dz ** 2) + ENGINE_HALF_W <= ENGINE_FRONT_MAX):
+           -math.sqrt(_centres(CHAIN_LINKS) ** 2 - _dz ** 2) + ENGINE_FRONT_EXT <= ENGINE_FRONT_MAX):
     CHAIN_LINKS += 2
 ENGINE_X = -math.sqrt(_centres(CHAIN_LINKS) ** 2 - _dz ** 2)
 CLUTCH = (ENGINE_X, ENGINE_BASE_Z + CRANK_H)      # (x, z) in the chain plane
