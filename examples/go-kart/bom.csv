@@ -27,7 +27,7 @@ item,part_id,category,description,specification,material_standard,qty,unit,mass_
 26,C16,buy,Brake caliper,Mechanical (cable) disc caliper for 4 mm disc,-,1,pc,,drill P07 to its bolt pattern
 27,,buy,Brake cable,"Brake cable with housing and adjuster, 1.5 m",-,1,pc,,
 28,,buy,Throttle cable,"Throttle cable with housing, 1.5 m, to suit the engine's governor lever",-,1,pc,,
-29,C17,buy,Seat,"Tillett T11 kart seat, size XS, fibreglass (driver ~1.5 m / 45 kg)",-,1,pc,,Tillett chart A 27.5 / B 29 / C 40.3 / D 9.5 / E 30 cm
+29,C17,buy,Seat,"Universal high-back plastic (HDPE) go-kart bucket seat, about 450 W x 355 H x 370 D, 4 mounting holes 254 x 273 (10 x 10-3/4 in)",-,1,pc,,"sold for karts, buggies and drift trikes; check the hole pattern on arrival; add a seat cushion"
 30,,buy,Keys,Parallel key 8 x 7 x 30,DIN 6885 A,4,pc,,"hubs, sprocket hub, disc hub"
 31,,buy,Pedal return springs,Extension spring ~50 N,-,2,pc,,
 32,,buy,Tube end plugs,Plastic end plug for 25 x 2 tube,-,6,pc,,"F01 x2, F15 x2, F16 x2"
@@ -39,7 +39,7 @@ item,part_id,category,description,specification,material_standard,qty,unit,mass_
 38,,buy: fastener,Pedal pivot bolts,Shoulder bolt 8 x 30 (M6) or M8 x 45 bolt with nylock nut,ISO 7379,2,set,,
 39,,buy: fastener,Chain guard fasteners,M6 rivet nut + M6 x 12 button screw,ISO 7380,3,set,,
 40,,buy: fastener,Floor pan rivets,Blind rivet 4.8 x 12 steel,ISO 15983,24,pc,,or stitch-weld
-41,F,make: tube,Frame tubes,"Round tube 25 x 2.0, 36 pieces, total 10.77 m (see cut_list.csv); order 2 x 6 m",EN 10305-3 E235 (or 1 in x 14 ga DOM),36,pc,,copes and mitres per cut_list.csv
+41,F,make: tube,Frame tubes,"Round tube 25 x 2.0, 38 pieces, total 10.99 m (see cut_list.csv); order 3 x 6 m",EN 10305-3 E235 (or 1 in x 14 ga DOM),38,pc,,copes and mitres per cut_list.csv
 42,M05,make: machined,Rear axle,"Dia 25 h9 x 860, keyways 8 x 4 at hubs, sprocket and disc hub",C45 bright bar,1,pc,,
 43,M01,make: machined,Knuckle sleeve,"Tube 22 x 4 x 48, ream 14 H7 after welding",E355 tube,2,pc,,
 44,M02,make: machined,Stub axle,"Dia 20 x 162, thread M20 x 1.5 x 25, 3.2 mm cotter hole",S355 bright bar,2,pc,,weld to M01 in a fixture
@@ -56,8 +56,8 @@ item,part_id,category,description,specification,material_standard,qty,unit,mass_
 55,P05,make: plate,Engine plate,"5 mm, 390 x 300, 4 slots 8.5 x 30 (mark from the engine)",S235,1,pc,,
 56,P06,make: plate,Chain guard,"1.5 mm sheet, follows the chain, hole 66 for the hub, 15 mm folded lip",DC01,1,pc,,
 57,P07,make: plate,Caliper bracket,"6 mm, 80 x 92.5, 2 x 8.5 (match caliper)",S235,1,pc,,
-58,P08,make: plate,Seat tab,"4 mm, 40 x 30, hole 8.5",S235,4,pc,,
-59,P09,make: plate,Seat-back tab,"4 mm, ~21 x 30, hole 8.5",S235,2,pc,,
+58,P08,make: plate,Seat tab,"4 mm, 40 x 30, hole 8.5, under the seat's 254 x 273 holes",S235,4,pc,,
+59,P09,make: plate,Seat-back tab,"4 mm, 30 x 34, hole 8.5 (bolts through the seat back)",S235,2,pc,,drill the seat back on assembly
 60,P10,make: plate,Column upper bracket,"6 mm, 50 x 55, hole 20.5",S235,1,pc,,
 61,P11,make: plate,Column lower bracket,"6 mm, 120 x 65, hole 30 + 2 x 10.5 at 90",S235,1,pc,,
 62,P12,make: plate,Pedal clevis tab,"4 mm, 30 x 25, hole 8.5",S235,4,pc,,

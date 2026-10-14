@@ -8,7 +8,8 @@ work and be built.
 | File | What it is |
 |---|---|
 | `gen_kart.py` | Parametric generator: every dimension is at the top. It writes `go_kart.json`, `cut_list.csv` and `bom.csv`. |
-| `go_kart.json` | SolidCraft command script: 463 commands, 122 bodies |
+| `go_kart.solvecraft` | The complete design: open it in SolidCraft (`solvecraft go_kart.solvecraft`) |
+| `go_kart.json` | SolidCraft command script that builds it: 467 commands, 124 bodies |
 | `cut_list.csv` | Tube cut list with the end preparation (cope or mitre) for each tube |
 | `bom.csv` | Bill of materials: everything to buy, fasteners, tube, plates and machined parts |
 | `iso.png`, `side.png` | Renders made with `solvecraft-cli snapshot` |
@@ -38,7 +39,7 @@ the rear axle lies on the Y axis at X = 0. Units are mm.
 | 7 | **No brake, no pedals, no throttle** | Unsafe. | Mechanical disc brake (Ø180 disc) on the axle with a cable from a pivoting brake pedal. The throttle pedal pulls a cable to the engine. |
 | 8 | **Rear axle has no bearings or mounts** | The axle would run in a frame tube. | Two UCFL205 flange bearings on 8 mm plates welded to the rails. |
 | 9 | **"Joint detail" shows 5–6 tubes meeting at one point** | Impossible to fit up and weld well; the joint would be weak and full of heat cracks. | At most two tubes are coped onto a through-tube at any node. Crowded nodes are offset by ≥ 25 mm (rear uprights at X = −230, side rail at Z = 220, braces moved off the cross-tube stations). |
-| 10 | **Seat and floor pan are not attached** to anything | Unsafe. | Tillett T11 XS seat bolted to welded tabs on the seat crosses (4 × M8) and to two back tabs on the deck cross; a 1.5 mm floor pan riveted or stitch-welded under the rails. |
+| 10 | **Seat and floor pan are not attached** to anything | Unsafe. | Bucket seat bolted to welded tabs on the seat crosses (4 × M8, 254 × 273) and through its back to two tabs on the deck cross; a 1.5 mm floor pan riveted or stitch-welded under the rails. |
 | 11 | The hoop around the seat looks like roll protection but is **lower than the driver's head** | It gives false confidence. | It is not claimed as roll protection. The kart is a low, wide, open kart: helmet required, no seat belt, as in normal karting. |
 | 12 | **Top and side views do not match the 3D view** (different tube layouts and wheel sizes) | The drawing cannot be built as drawn. | A single 3D model; every view and the cut list come from it. |
 | 13 | **Parts list incomplete**: no tyre size, bearings, chain, fasteners, steering or brake parts | The kart cannot be ordered or built from it. | Full list of commercial parts (section 3) and list of parts to make (section 4). |
@@ -53,10 +54,10 @@ the rear axle lies on the Y axis at X = 0. Units are mm.
 | Tyres | 13x5.00-6 (Ø330 mm), axle height 165 mm |
 | Ground clearance | Frame and floor pan 76 mm; chain guard 48 mm (lowest point) |
 | Engine | Honda GX200 QX, 5.5 hp, governed at 3600 rpm, 3/4" keyed shaft, 16.1 kg |
-| Seat | Tillett T11 XS fibreglass kart seat |
+| Seat | Universal high-back plastic bucket seat, 450 × 355 × 370 mm |
 | Final drive | 10T / 72T #35 (ratio 7.2), **≈ 31 km/h** at 3600 rpm; 92-link chain at 223.1 mm centres |
 | Steering | Ø280 wheel, column at 32.5° to horizontal, ±30° lock, Ackermann steering arms 80 mm long |
-| Frame | 25 × 2.0 steel tube, **10.8 m** cut length (≈ 12.1 kg); plates 1.5–8 mm |
+| Frame | 25 × 2.0 steel tube, **11.0 m** cut length, 38 pieces (≈ 12.5 kg); plates 1.5–8 mm |
 | Estimated dry mass | ≈ 70 kg. The model reports 93 kg because the rims and the engine are solid envelopes; the BOM gives catalogue masses. |
 
 **Faster or more ground clearance:** a 60T sprocket raises the lowest point to about 70 mm, but the
@@ -88,12 +89,20 @@ with the number of bodies in the model.
   behind the seat back. It then places the engine where that chain fits with the slots centred:
   223.1 mm between sprocket centres.
 
-**Seat: Tillett T11, size XS**, a fibreglass kart seat.
-- Tillett's guide gives size XS for drivers of about 11–13 years, 1.5 m and 45 kg.
-- Chart dimensions (cm): A 27.5 (hip width), B 29, C 40.3 (back height), D 9.5, E 30.
-- It is modelled as a 5 mm shell, 290 mm wide outside, with a 403 mm back reclined 10°. It sits on
-  four seat tabs (P08) and two back tabs (P09).
-- A bigger driver (about 1.6 m, 55 kg) needs size S.
+**Seat: universal high-back plastic (HDPE) go-kart bucket seat**, about 450 W × 355 H × 370 D.
+- It is the widely sold replacement seat for karts, buggies and drift trikes (e.g. YC Yier and
+  similar), with 4 mounting holes on 254 × 273 mm (10 × 10-3/4 in).
+- It is chosen over a racing seat because its back is upright enough (about 10° recline) to sit in
+  front of the engine. A racing seat such as the Tillett T11 has its back reclined 58° and would
+  reach the engine.
+- It is modelled as a 5 mm shell with side bolsters. It sits on four seat tabs (P08) placed under
+  its holes, and bolts through the back to two tabs (P09) on the deck cross.
+- The frame was adapted to it:
+  - The seat crosses (F07, F08) sit under its holes.
+  - The side rails stay at ±250 mm beside the seat, then a second rail (F24) mitres in to the hoop.
+  - The rail taper starts at X = 560.
+- Check the hole pattern when the seat arrives. If it differs, move the tabs, which are welded on
+  last.
 
 ### Using the vendor STEP models
 
@@ -102,7 +111,7 @@ redistribution. Download them yourself, then build the kart with them in place o
 
 ```sh
 python3 gen_kart.py --engine-step GX200.step --engine-rot "Z:90" --engine-pto "x,y,z" \
-                    --seat-step T11_XS.step --seat-rot "Z:-90" --out go_kart_vendor.json
+                    --seat-step seat.step --seat-rot "Z:-90" --out go_kart_vendor.json
 solvecraft-cli run go_kart_vendor.json --save go_kart.solvecraft --out go_kart.step
 ```
 
@@ -112,14 +121,10 @@ solvecraft-cli run go_kart_vendor.json --save go_kart.solvecraft --out go_kart.s
   `--engine-pto` is any point on the shaft axis in the file's own coordinates; with it, the shaft
   sits exactly on the clutch axis. The generator warns if the file's shaft height differs from
   `CRANK_H`.
-- The seat is placed with its underside on the seat tabs, its front edge at X = 470 and centred
+- The seat is placed with its underside on the seat tabs, its front edge at X = 555 and centred
   across the kart.
 - The BOM check counts the imported bodies, then run the clash check
   (`inspect.interference`) again.
-
-**Open issue: seat back angle.** Tillett specifies the T11 back as reclined **58°**. The shell above
-is modelled with a 10° recline, which is wrong. At 58° the top of the back reaches the engine, so
-the layout or the seat choice has to change before a T11 is fitted.
 
 ## 4. Parts to make
 
@@ -139,8 +144,8 @@ are calculated rather than modelled. Cut the copes with a hole saw or a printed 
 | P05 | Engine plate | 390 × 300 × 5 | 4 slots 8.5 × 30 on the engine's pattern | 1 |
 | P06 | Chain guard | 1.5 mm, follows the chain | Ø66 hole for the axle hub; fold a 15 mm lip | 1 |
 | P07 | Caliper bracket | 80 × 92.5 × 6 | 2 × Ø8.5 (match the caliper) | 1 |
-| P08 | Seat tab | 40 × 30 × 4 | Ø8.5 | 4 |
-| P09 | Seat-back tab | 18.5 × 30 × 4 | Ø8.5 | 2 |
+| P08 | Seat tab | 40 × 30 × 4 | Ø8.5, under the seat holes (254 × 273) | 4 |
+| P09 | Seat-back tab | 30 × 34 × 4 | Ø8.5, bolts through the seat back | 2 |
 | P10 | Column upper bracket | 50 × 55 × 6 | Ø20.5 | 1 |
 | P11 | Column lower bracket | 120 × 65 × 6 | Ø30 + 2 × Ø10.5 at 90 mm (UCFL204) | 1 |
 | P12 | Pedal clevis tab | 30 × 25 × 4 | Ø8.5 | 4 |
@@ -172,7 +177,7 @@ are calculated rather than modelled. Cut the copes with a hole saw or a printed 
 4. **Front axle beam F12.** Weld the kingpin back plates and ears with an M12 rod through both
    pairs of ears, so the kingpins are parallel and vertical. Then fit F12 onto the front uprights
    F11.
-5. **Hoop and side rails.** Weld F20–F23, then the column brackets P10 and P11 with the column in
+5. **Hoop and side rails.** Weld F20–F24, then the column brackets P10 and P11 with the column in
    place and the UCFL204 bolted on.
 6. **Weld in short, alternating runs** (MIG/MAG, 0.8 mm wire). Leave the frame to cool on the jig,
    then check the axle and kingpin alignment again. Drill a Ø3 vent hole in each closed tube
@@ -191,7 +196,7 @@ with adult supervision. Keep the engine governor; the 72T gearing is chosen for 
 
 ## 6. How the design was checked (SolidCraft)
 
-- The whole assembly (122 bodies) rebuilds from `go_kart.json` with no errors. It saves, reopens,
+- The whole assembly (124 bodies) rebuilds from `go_kart.json` with no errors. It saves, reopens,
   and exports to STEP.
 - **Engine and seat:** a clash check of the engine, seat, clutch, chain, guard, engine plate, seat
   tabs, rear deck, seat crosses, side rails, rear wheels, bearings and steering wheel found nothing
