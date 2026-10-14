@@ -95,6 +95,32 @@ with the number of bodies in the model.
   four seat tabs (P08) and two back tabs (P09).
 - A bigger driver (about 1.6 m, 55 kg) needs size S.
 
+### Using the vendor STEP models
+
+Vendor CAD files are not stored in this repository because their licences do not allow
+redistribution. Download them yourself, then build the kart with them in place of the envelopes:
+
+```sh
+python3 gen_kart.py --engine-step GX200.step --engine-rot "Z:90" --engine-pto "x,y,z" \
+                    --seat-step T11_XS.step --seat-rot "Z:-90" --out go_kart_vendor.json
+solvecraft-cli run go_kart_vendor.json --save go_kart.solvecraft --out go_kart.step
+```
+
+- `--*-rot` turns the file into kart axes in 90° steps about the world axes. Kart axes are X
+  forward, Y toward the chain side (the engine's PTO end), and Z up.
+- The engine is placed with its base on the plate and its PTO end where the clutch expects it.
+  `--engine-pto` is any point on the shaft axis in the file's own coordinates; with it, the shaft
+  sits exactly on the clutch axis. The generator warns if the file's shaft height differs from
+  `CRANK_H`.
+- The seat is placed with its underside on the seat tabs, its front edge at X = 470 and centred
+  across the kart.
+- The BOM check counts the imported bodies, then run the clash check
+  (`inspect.interference`) again.
+
+**Open issue: seat back angle.** Tillett specifies the T11 back as reclined **58°**. The shell above
+is modelled with a 10° recline, which is wrong. At 58° the top of the back reaches the engine, so
+the layout or the seat choice has to change before a T11 is fitted.
+
 ## 4. Parts to make
 
 **Frame tubes**: see `cut_list.csv`. The table gives the length to the long point, and for each

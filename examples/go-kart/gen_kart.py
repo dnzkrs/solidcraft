@@ -6,10 +6,29 @@ at X = 0. All dimensions in millimetres.
 Writes:
   go_kart.json       the SolidCraft command script (solvecraft-cli run/eval/snapshot)
   cut_list.csv       tube cut list with cope/mitre end preparation
+  bom.csv            bill of materials, checked against the model
 """
+import argparse
 import csv
 import json
 import math
+import os
+import shutil
+import subprocess
+
+_here = os.path.dirname(os.path.abspath(__file__))
+_ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+_ap.add_argument("--engine-step", help="vendor STEP file of the engine, used instead of the envelope")
+_ap.add_argument("--engine-rot", default="", help='rotations into kart axes, e.g. "Z:90" or "X:90,Z:-90"')
+_ap.add_argument("--engine-pto", help='a point on the PTO shaft axis in the STEP file\'s own coordinates, "x,y,z": '
+                 "puts the shaft on the clutch axis (without it the engine is centred by its bounding box)")
+_ap.add_argument("--seat-step", help="vendor STEP file of the seat, used instead of the modelled shell")
+_ap.add_argument("--seat-rot", default="", help="rotations into kart axes (multiples of 90 degrees)")
+_ap.add_argument("--cli", default=os.environ.get("SOLVECRAFT_CLI") or shutil.which("solvecraft-cli")
+                 or os.path.join(_here, "..", "..", "target", "release", "solvecraft-cli"),
+                 help="solvecraft-cli used to read the STEP files")
+_ap.add_argument("--out", default="go_kart.json", help="script to write")
+ARGS = _ap.parse_args()
 
 # ----------------------------------------------------------------------------- parameters
 TUBE_OD, TUBE_WALL = 25.0, 2.0          # frame tube EN 10305-3 E235 25 x 2
@@ -198,6 +217,66 @@ def revolve(name, origin, axis_dir, radial_dir, profile, op="new", targets=None)
 
 def ring(a0, a1, r0, r1):
     return [(a0, r0), (a1, r0), (a1, r1), (a0, r1)]
+
+
+IMPORTED = {}          # part id -> number of bodies imported from a STEP file
+
+
+def _rot90(p, axis, deg):
+    q = round(deg / 90) % 4
+    x, y, z = p
+    for _ in range(q):
+        if axis == "X":
+            y, z = -z, y
+        elif axis == "Y":
+            x, z = z, -x
+        else:
+            x, y = -y, x
+    return [x, y, z]
+
+
+def import_step(pid, label, path, rot_spec, align, ref=None):
+    """Insert a vendor STEP file, turn it into kart axes (90-degree steps about the world axes) and
+    move it so its bounding box meets the mounting datums: align(lo, hi) -> translation."""
+    path = os.path.abspath(path)
+    out = subprocess.run([ARGS.cli, "eval", path], capture_output=True, text=True, check=True).stdout
+    bodies = json.loads(out)["bodies"]
+    names = [b["name"] for b in bodies]
+    rots = []
+    for tok in filter(None, (t.strip() for t in rot_spec.split(","))):
+        ax, deg = tok.split(":")
+        if float(deg) % 90:
+            raise SystemExit(f"{pid}: rotations must be multiples of 90 degrees ({tok})")
+        rots.append((ax.upper(), float(deg)))
+    corners = []
+    for b in bodies:
+        lo, hi = b["bbox"]["min"], b["bbox"]["max"]
+        corners += [[(lo, hi)[i >> k & 1][k] for k in range(3)] for i in range(8)]
+    for ax, deg in rots:
+        corners = [_rot90(p, ax, deg) for p in corners]
+    lo = [min(p[k] for p in corners) for k in range(3)]
+    hi = [max(p[k] for p in corners) for k in range(3)]
+    if ref is not None:
+        for ax, deg in rots:
+            ref = _rot90(ref, ax, deg)
+        if pid == "C13" and abs(ref[2] - lo[2] - CRANK_H) > 1:
+            print(f"C13: the STEP shaft is {ref[2] - lo[2]:.1f} mm above the base, not CRANK_H = {CRANK_H}: "
+                  "set CRANK_H to it so the chain and clutch line up")
+    t = align(lo, hi, ref)
+    c("file.insert_step", path=path, name=f"{pid} {label}")
+    for ax, deg in rots:
+        c("solid.move", bodies=names, axis={"X": [1, 0, 0], "Y": [0, 1, 0], "Z": [0, 0, 1]}[ax],
+          angle=f"{deg} deg")
+    c("solid.move", bodies=names, translate=r6(t))
+    final = []
+    for i, n in enumerate(names):
+        new = f"{pid} {label}" if len(names) == 1 else f"{pid} {label} - {i + 1:02d} {n}"
+        c("body.rename", body=n, name=new)
+        final.append(new)
+    IMPORTED[pid] = len(final)
+    size = [round(hi[k] - lo[k], 1) for k in range(3)]
+    print(f"{pid}: imported {len(final)} bodies from {os.path.basename(path)}, size in kart axes {size} mm")
+    return final
 
 
 # ============================================================================= FRAME
@@ -534,16 +613,26 @@ c("solid.extrude", distance=5, direction="positive", operation="cut", targets=["
   name="Engine slots")
 ENG = "C13 Engine Honda GX200 QX"
 ex0, ey0, z0 = ENGINE_X, ENGINE_Y, ENGINE_BASE_Z
-box(ENG, [ex0 - 100, ey0 - 95, z0], [ex0 + 100, ey0 + PTO_FACE, z0 + 200])                 # crankcase
-box(ENG, [ex0 - 140, ey0 - 60, z0 + 120], [ex0 - 40, ey0 + 60, z0 + 225], op="join", targets=[ENG])  # cylinder
-box(ENG, [ex0 - 110, ey0 - 100, z0 + 220], [ex0 + 110, ey0 + 100, z0 + 346], op="join",
-    targets=[ENG])                                                                           # fuel tank
-box(ENG, [ex0 - ENGINE_HALF_W, ey0 - 70, z0 + 150], [ex0 - 120, ey0 + 90, z0 + 260], op="join",
-    targets=[ENG])                                                                           # muffler
-box(ENG, [ex0 + 100, ey0 - 80, z0 + 170], [ex0 + ENGINE_HALF_W, ey0 + 60, z0 + 300], op="join",
-    targets=[ENG])                                                                           # air cleaner
-cylinder(ENG, [ex0, ey0 - 95, ez], [0, -1, 0], 170, 45, op="join", targets=[ENG])          # recoil starter
-cylinder(ENG, [ex0, ey0 + PTO_FACE, ez], [0, 1, 0], SHAFT_D, SHAFT_L, op="join", targets=[ENG])  # PTO shaft
+if ARGS.engine_step:
+    # base on the plate and PTO shaft end where the envelope's is; the shaft on the clutch axis when
+    # --engine-pto is given, else the bounding box centred fore-aft on the engine position
+    pto = [float(v) for v in ARGS.engine_pto.split(",")] if ARGS.engine_pto else None
+    import_step("C13", "Engine Honda GX200 QX", ARGS.engine_step, ARGS.engine_rot,
+                lambda lo, hi, p: [(ex0 - p[0]) if p else ex0 - (lo[0] + hi[0]) / 2,
+                                   ey0 + PTO_FACE + SHAFT_L - hi[1], z0 - lo[2]], ref=pto)
+    if pto is None:
+        print("C13: no --engine-pto given; check that the shaft lines up with the clutch")
+else:
+    box(ENG, [ex0 - 100, ey0 - 95, z0], [ex0 + 100, ey0 + PTO_FACE, z0 + 200])                 # crankcase
+    box(ENG, [ex0 - 140, ey0 - 60, z0 + 120], [ex0 - 40, ey0 + 60, z0 + 225], op="join", targets=[ENG])  # cylinder
+    box(ENG, [ex0 - 110, ey0 - 100, z0 + 220], [ex0 + 110, ey0 + 100, z0 + 346], op="join",
+        targets=[ENG])                                                                           # fuel tank
+    box(ENG, [ex0 - ENGINE_HALF_W, ey0 - 70, z0 + 150], [ex0 - 120, ey0 + 90, z0 + 260], op="join",
+        targets=[ENG])                                                                           # muffler
+    box(ENG, [ex0 + 100, ey0 - 80, z0 + 170], [ex0 + ENGINE_HALF_W, ey0 + 60, z0 + 300], op="join",
+        targets=[ENG])                                                                           # air cleaner
+    cylinder(ENG, [ex0, ey0 - 95, ez], [0, -1, 0], 170, 45, op="join", targets=[ENG])          # recoil starter
+    cylinder(ENG, [ex0, ey0 + PTO_FACE, ez], [0, 1, 0], SHAFT_D, SHAFT_L, op="join", targets=[ENG])  # PTO shaft
 
 # chain guard (1.5 mm, outboard of the chain)
 outer_g, _, _ = tangent_loop(R1 + 8, R2 + 22)
@@ -577,18 +666,23 @@ SEAT_Z, SEAT_T = Z_RAIL + R + 4, 5.0             # underside on the seat tabs; s
 SB = (195.0, 125.0)                                 # back outer line: x at the base, x at the top
 SEAT_TOP = SEAT_Z + 403
 back_x = lambda z: SB[0] + (SB[1] - SB[0]) * (z - SEAT_Z) / (SEAT_TOP - SEAT_Z)
-sketch_on(plane([0, 0, 0], [1, 0, 0], [0, 0, 1]), SEAT)          # XZ, normal -Y
-c("sketch.line", closed=True, points=[r6(p) for p in ([[SB[0], SEAT_Z], [470, SEAT_Z], [470, SEAT_Z + 64], [300, SEAT_Z + 94],
-                                       [200, SEAT_Z + 224], [150, SEAT_TOP], [SB[1], SEAT_TOP]])])
-c("sketch.finish")
-extrude(SEAT, 145, "symmetric")
-cav_z0, cav_z1 = SEAT_Z + SEAT_T, SEAT_TOP + 120
-sketch_on(plane([0, 0, 0], [1, 0, 0], [0, 0, 1]), "Seat cavity")
-c("sketch.line", closed=True, points=[r6(p) for p in ([[back_x(cav_z0) + SEAT_T, cav_z0], [480, cav_z0], [480, cav_z1],
-                                       [back_x(cav_z1) + SEAT_T, cav_z1]])])
-c("sketch.finish")
-c("solid.extrude", distance=145 - SEAT_T, direction="symmetric", operation="cut", targets=[SEAT],
-  name="Seat cavity")
+if ARGS.seat_step:
+    # underside on the seat tabs, front edge at x = 470, centred on the kart
+    import_step("C17", "Seat Tillett T11 XS", ARGS.seat_step, ARGS.seat_rot,
+                lambda lo, hi, _p: [470 - hi[0], -(lo[1] + hi[1]) / 2, SEAT_Z - lo[2]])
+else:
+    sketch_on(plane([0, 0, 0], [1, 0, 0], [0, 0, 1]), SEAT)          # XZ, normal -Y
+    c("sketch.line", closed=True, points=[r6(p) for p in ([[SB[0], SEAT_Z], [470, SEAT_Z], [470, SEAT_Z + 64], [300, SEAT_Z + 94],
+                                           [200, SEAT_Z + 224], [150, SEAT_TOP], [SB[1], SEAT_TOP]])])
+    c("sketch.finish")
+    extrude(SEAT, 145, "symmetric")
+    cav_z0, cav_z1 = SEAT_Z + SEAT_T, SEAT_TOP + 120
+    sketch_on(plane([0, 0, 0], [1, 0, 0], [0, 0, 1]), "Seat cavity")
+    c("sketch.line", closed=True, points=[r6(p) for p in ([[back_x(cav_z0) + SEAT_T, cav_z0], [480, cav_z0], [480, cav_z1],
+                                           [back_x(cav_z1) + SEAT_T, cav_z1]])])
+    c("sketch.finish")
+    c("solid.extrude", distance=145 - SEAT_T, direction="symmetric", operation="cut", targets=[SEAT],
+      name="Seat cavity")
 # seat tabs welded on the seat crosses: 40 x 25 x 4 flat bar standing up, hole 8.5
 for i, (x, y) in enumerate([(200, -110), (200, 110), (440, -110), (440, 110)], 1):
     plate(f"P08{i} Seat tab {i}", plane([0, 0, Z_RAIL + R], [1, 0, 0], [0, 1, 0]),
@@ -685,7 +779,7 @@ for y, side, label in ((60.0, "L", "brake"), (-60.0, "R", "throttle")):
 # ----------------------------------------------------------------------------- appearance / material
 body_names = []
 for cm in cmds:
-    bn = cm["params"].get("body_name")
+    bn = cm["params"].get("body_name") or (cm["params"].get("name") if cm["command"] == "body.rename" else None)
     if bn and bn not in body_names:
         body_names.append(bn)
 
@@ -725,7 +819,7 @@ for g, bodies in groups.items():
     else:
         c("appearance.assign", bodies=bodies, **ap)
 
-json.dump({"commands": cmds}, open("go_kart.json", "w"), indent=1)
+json.dump({"commands": cmds}, open(ARGS.out, "w"), indent=1)
 with open("cut_list.csv", "w", newline="") as f:
     w = csv.DictWriter(f, fieldnames=list(cut_rows[0].keys()))
     w.writeheader()
@@ -834,6 +928,7 @@ BOM = [
 ]
 # every modelled part id must match the number of bodies in the model
 ONE_PIECE = {"C19": 4, "C20": 2, "C07": 2}   # wheel = rim + 3 spokes; bush = 2 halves; housing + insert
+ONE_PIECE.update(IMPORTED)                     # a vendor STEP may hold several bodies for one part
 for pid, cat, *_rest in BOM:
     if not pid or pid == "F":
         continue
