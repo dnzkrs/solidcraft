@@ -12,19 +12,20 @@ work and be built.
 | `go_kart.json` | SolidCraft command script that builds it: 467 commands, 124 bodies |
 | `cut_list.csv` | Tube cut list with the end preparation (cope or mitre) for each tube |
 | `bom.csv` | Bill of materials: everything to buy, fasteners, tube, plates and machined parts |
-| `iso.png`, `side.png` | Renders made with `solvecraft-cli snapshot` |
+| `iso.jpg`, `rear.jpg`, `side.jpg` | Studio renders of `go_kart.json` (Blender Cycles, from SolidCraft's 3MF export) |
 
 ```sh
 python3 gen_kart.py                                   # regenerate after changing a parameter
 solvecraft-cli run go_kart.json --save go_kart.solvecraft --out go_kart.step
-solvecraft-cli snapshot go_kart.json --out iso.png --view iso
+solvecraft-cli snapshot go_kart.json --out shot.png --view iso   # quick look
 ```
 
 Axes: X points forward (the driver faces +X), Y points left, Z points up. The ground is Z = 0 and
 the rear axle lies on the Y axis at X = 0. Units are mm.
 
-![iso](iso.png)
-![side](side.png)
+![Front three-quarter view](iso.jpg)
+![Rear three-quarter view](rear.jpg)
+![Side view](side.jpg)
 
 ## 1. Errors in the concept sketch, and the corrections
 
