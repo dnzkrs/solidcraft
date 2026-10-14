@@ -18,11 +18,11 @@ import subprocess
 
 _here = os.path.dirname(os.path.abspath(__file__))
 _ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-_ap.add_argument("--engine-step", help="vendor STEP file of the engine, used instead of the envelope")
+_ap.add_argument("--engine-step", help="vendor STEP/IGES file (or STL/3MF mesh) of the engine, used instead of the envelope")
 _ap.add_argument("--engine-rot", default="", help='rotations into kart axes, e.g. "Z:90" or "X:90,Z:-90"')
 _ap.add_argument("--engine-pto", help='a point on the PTO shaft axis in the STEP file\'s own coordinates, "x,y,z": '
                  "puts the shaft on the clutch axis (without it the engine is centred by its bounding box)")
-_ap.add_argument("--seat-step", help="vendor STEP file of the seat, used instead of the modelled shell")
+_ap.add_argument("--seat-step", help="vendor STEP/IGES file (or STL/3MF mesh) of the seat, used instead of the modelled shell")
 _ap.add_argument("--seat-rot", default="", help="rotations into kart axes (multiples of 90 degrees)")
 _ap.add_argument("--cli", default=os.environ.get("SOLVECRAFT_CLI") or shutil.which("solvecraft-cli")
                  or os.path.join(_here, "..", "..", "target", "release", "solvecraft-cli"),
@@ -269,10 +269,18 @@ def _rot90(p, axis, deg):
 
 
 def import_step(pid, label, path, rot_spec, align, ref=None):
-    """Insert a vendor STEP file, turn it into kart axes (90-degree steps about the world axes) and
-    move it so its bounding box meets the mounting datums: align(lo, hi) -> translation."""
+    """Insert a vendor CAD file (STEP/IGES as exact geometry, STL/3MF as a mesh body), turn it into
+    kart axes (90-degree steps about the world axes) and move it so its bounding box meets the
+    mounting datums: align(lo, hi, ref) -> translation."""
     path = os.path.abspath(path)
-    out = subprocess.run([ARGS.cli, "eval", path], capture_output=True, text=True, check=True).stdout
+    mesh = path.lower().endswith((".stl", ".3mf"))
+    insert = ("file.insert_mesh" if mesh else "file.insert_step", {"path": path, "name": f"{pid} {label}"})
+    probe = os.path.join(os.path.dirname(os.path.abspath(ARGS.out)), f".probe_{pid}.json")
+    json.dump({"commands": [{"command": insert[0], "params": insert[1]}]}, open(probe, "w"))
+    try:
+        out = subprocess.run([ARGS.cli, "eval", probe], capture_output=True, text=True, check=True).stdout
+    finally:
+        os.remove(probe)
     bodies = json.loads(out)["bodies"]
     names = [b["name"] for b in bodies]
     rots = []
@@ -296,7 +304,7 @@ def import_step(pid, label, path, rot_spec, align, ref=None):
             print(f"C13: the STEP shaft is {ref[2] - lo[2]:.1f} mm above the base, not CRANK_H = {CRANK_H}: "
                   "set CRANK_H to it so the chain and clutch line up")
     t = align(lo, hi, ref)
-    c("file.insert_step", path=path, name=f"{pid} {label}")
+    c(insert[0], **insert[1])
     for ax, deg in rots:
         c("solid.move", bodies=names, axis={"X": [1, 0, 0], "Y": [0, 1, 0], "Z": [0, 0, 1]}[ax],
           angle=f"{deg} deg")

@@ -117,6 +117,10 @@ solvecraft-cli run go_kart_vendor.json --save go_kart.solvecraft --out go_kart.s
 
 - `--*-rot` turns the file into kart axes in 90° steps about the world axes. Kart axes are X
   forward, Y toward the chain side (the engine's PTO end), and Z up.
+- `--engine-step` and `--seat-step` also take a mesh (`.stl` / `.3mf`, inserted with
+  `file.insert_mesh`). Use a mesh when a large STEP file is slow to triangulate in SolidCraft; any
+  STEP-to-mesh converter will do, for example Assembly Studio's print export. A mesh body can be
+  moved, measured and clash-checked, but a design that contains one exports to 3MF/STL, not STEP.
 - The engine is placed with its base on the plate and its PTO end where the clutch expects it.
   `--engine-pto` is any point on the shaft axis in the file's own coordinates; with it, the shaft
   sits exactly on the clutch axis. The generator warns if the file's shaft height differs from
