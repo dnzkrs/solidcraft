@@ -1,30 +1,32 @@
 id,name,tube,node_length,cut_length_long_point,end_A,end_B
-F01L,Rail rear L,25 x 2.0,740.0,756.3,"square cut, runs 12.5 past the rear cross, end plug",mitre 16.8° (half of 33.7°) to F02L
-F02L,Rail taper L,25 x 2.0,180.3,187.8,mitre 16.8° (half of 33.7°) to F01L,mitre 16.8° (half of 33.7°) to F03L
-F03L,Rail foot-box L,25 x 2.0,295.0,301.2,mitre 16.8° (half of 33.7°) to F02L,mitre 11.1° (half of 22.2°) to F04L
+F01L,Rail rear L,25 x 2.0,820.0,839.0,"square cut, runs 12.5 past the rear cross, end plug",mitre 27.5° (half of 55.0°) to F02L
+F02L,Rail taper L,25 x 2.0,122.1,135.1,mitre 27.5° (half of 55.0°) to F01L,mitre 27.5° (half of 55.0°) to F03L
+F03L,Rail foot-box L,25 x 2.0,295.0,304.0,mitre 27.5° (half of 55.0°) to F02L,mitre 11.1° (half of 22.2°) to F04L
 F04L,Nose rail L,25 x 2.0,145.8,156.6,mitre 11.1° (half of 22.2°) to F03L,mitre 33.9° (half of 67.8°) to F05
 F11L,Front upright L,25 x 2.0,75.0,74.8,"cope Ø25 onto F03L at 90°, saddle depth 12.4","cope Ø25 onto F12 at 90°, saddle depth 12.4"
 F13L,Rear upright L,25 x 2.0,155.0,154.8,"cope Ø25 onto F01L at 90°, saddle depth 12.4","cope Ø25 onto F15 at 90°, saddle depth 12.4"
 F14L,Deck front upright L,25 x 2.0,155.0,154.8,"cope Ø25 onto F01L at 90°, saddle depth 12.4","cope Ø25 onto F16 at 90°, saddle depth 12.4"
 F17L,Deck rail L,25 x 2.0,370.0,369.8,"cope Ø25 onto F15 at 90°, saddle depth 12.4","cope Ø25 onto F16 at 90°, saddle depth 12.4"
 F18L,Rear diagonal L,25 x 2.0,130.4,130.2,"cope Ø25 onto F13L at 32°, saddle depth 42.8","cope Ø25 onto F01L at 58°, saddle depth 22.6"
-F19L,Deck front brace L,25 x 2.0,139.0,138.8,"cope Ø25 onto F14L at 52°, saddle depth 25.3","cope Ø25 onto F01L at 38°, saddle depth 36.5"
+F19L,Deck front brace L,25 x 2.0,181.2,181.0,"cope Ø25 onto F14L at 62°, saddle depth 20.6","cope Ø25 onto F01L at 28°, saddle depth 50.0"
 F20L,Hoop upright L,25 x 2.0,240.8,246.6,"cope Ø25 onto F03L at 85°, saddle depth 13.4",mitre 25.2° (half of 50.5°) to F21L
 F21L,Hoop shoulder L,25 x 2.0,143.5,154.0,mitre 25.2° (half of 50.5°) to F20L,mitre 20.0° (half of 40.0°) to F22
-F23L,Side rail L,25 x 2.0,540.2,540.0,"cope Ø25 onto F14L at 90°, saddle depth 12.4","cope Ø25 onto F20L at 85°, saddle depth 13.4"
-F01R,Rail rear R,25 x 2.0,740.0,756.3,"square cut, runs 12.5 past the rear cross, end plug",mitre 16.8° (half of 33.7°) to F02R
-F02R,Rail taper R,25 x 2.0,180.3,187.8,mitre 16.8° (half of 33.7°) to F01R,mitre 16.8° (half of 33.7°) to F03R
-F03R,Rail foot-box R,25 x 2.0,295.0,301.2,mitre 16.8° (half of 33.7°) to F02R,mitre 11.1° (half of 22.2°) to F04R
+F23L,Side rail L,25 x 2.0,410.0,414.4,"cope Ø25 onto F14L at 90°, saddle depth 12.4",mitre 19.8° (half of 39.6°) to F24L
+F24L,Side rail front L,25 x 2.0,156.8,161.2,mitre 19.8° (half of 39.6°) to F23L,"cope Ø25 onto F20L at 86°, saddle depth 13.2"
+F01R,Rail rear R,25 x 2.0,820.0,839.0,"square cut, runs 12.5 past the rear cross, end plug",mitre 27.5° (half of 55.0°) to F02R
+F02R,Rail taper R,25 x 2.0,122.1,135.1,mitre 27.5° (half of 55.0°) to F01R,mitre 27.5° (half of 55.0°) to F03R
+F03R,Rail foot-box R,25 x 2.0,295.0,304.0,mitre 27.5° (half of 55.0°) to F02R,mitre 11.1° (half of 22.2°) to F04R
 F04R,Nose rail R,25 x 2.0,145.8,156.6,mitre 11.1° (half of 22.2°) to F03R,mitre 33.9° (half of 67.8°) to F05
 F11R,Front upright R,25 x 2.0,75.0,74.8,"cope Ø25 onto F03R at 90°, saddle depth 12.4","cope Ø25 onto F12 at 90°, saddle depth 12.4"
 F13R,Rear upright R,25 x 2.0,155.0,154.8,"cope Ø25 onto F01R at 90°, saddle depth 12.4","cope Ø25 onto F15 at 90°, saddle depth 12.4"
 F14R,Deck front upright R,25 x 2.0,155.0,154.8,"cope Ø25 onto F01R at 90°, saddle depth 12.4","cope Ø25 onto F16 at 90°, saddle depth 12.4"
 F17R,Deck rail R,25 x 2.0,370.0,369.8,"cope Ø25 onto F15 at 90°, saddle depth 12.4","cope Ø25 onto F16 at 90°, saddle depth 12.4"
 F18R,Rear diagonal R,25 x 2.0,130.4,130.2,"cope Ø25 onto F13R at 32°, saddle depth 42.8","cope Ø25 onto F01R at 58°, saddle depth 22.6"
-F19R,Deck front brace R,25 x 2.0,139.0,138.8,"cope Ø25 onto F14R at 52°, saddle depth 25.3","cope Ø25 onto F01R at 38°, saddle depth 36.5"
+F19R,Deck front brace R,25 x 2.0,181.2,181.0,"cope Ø25 onto F14R at 62°, saddle depth 20.6","cope Ø25 onto F01R at 28°, saddle depth 50.0"
 F20R,Hoop upright R,25 x 2.0,240.8,246.6,"cope Ø25 onto F03R at 85°, saddle depth 13.4",mitre 25.2° (half of 50.5°) to F21R
 F21R,Hoop shoulder R,25 x 2.0,143.5,154.0,mitre 25.2° (half of 50.5°) to F20R,mitre 20.0° (half of 40.0°) to F22
-F23R,Side rail R,25 x 2.0,540.2,540.0,"cope Ø25 onto F14R at 90°, saddle depth 12.4","cope Ø25 onto F20R at 85°, saddle depth 13.4"
+F23R,Side rail R,25 x 2.0,410.0,414.4,"cope Ø25 onto F14R at 90°, saddle depth 12.4",mitre 19.8° (half of 39.6°) to F24R
+F24R,Side rail front R,25 x 2.0,156.8,161.2,mitre 19.8° (half of 39.6°) to F23R,"cope Ø25 onto F20R at 86°, saddle depth 13.2"
 F05,Nose cross,25 x 2.0,190.0,206.8,mitre 33.9° (half of 67.8°) to F04L,mitre 33.9° (half of 67.8°) to F04R
 F06,Rear cross,25 x 2.0,500.0,499.8,"cope Ø25 onto F01L at 90°, saddle depth 12.4","cope Ø25 onto F01R at 90°, saddle depth 12.4"
 F07,Seat cross front,25 x 2.0,500.0,499.8,"cope Ø25 onto F01L at 90°, saddle depth 12.4","cope Ø25 onto F01R at 90°, saddle depth 12.4"

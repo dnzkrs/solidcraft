@@ -7,9 +7,11 @@ work and be built.
 
 | File | What it is |
 |---|---|
-| `gen_kart.py` | Parametric generator: every dimension is at the top. It writes `go_kart.json` and `cut_list.csv`. |
-| `go_kart.json` | SolidCraft command script: 456 commands, 122 bodies |
+| `gen_kart.py` | Parametric generator: every dimension is at the top. It writes `go_kart.json`, `cut_list.csv` and `bom.csv`. |
+| `go_kart.solvecraft` | The complete design: open it in SolidCraft (`solvecraft go_kart.solvecraft`) |
+| `go_kart.json` | SolidCraft command script that builds it: 467 commands, 124 bodies |
 | `cut_list.csv` | Tube cut list with the end preparation (cope or mitre) for each tube |
+| `bom.csv` | Bill of materials: everything to buy, fasteners, tube, plates and machined parts |
 | `iso.png`, `side.png` | Renders made with `solvecraft-cli snapshot` |
 
 ```sh
@@ -29,15 +31,15 @@ the rear axle lies on the Y axis at X = 0. Units are mm.
 | # | Error in the sketch | Why it is a problem | Correction in this design |
 |---|---|---|---|
 | 1 | **Rear axle "Ø12 mm"** | Each rear wheel carries ≈ 380 N about 100 mm from its bearing, which gives about 115 N·m with a ×3 bump factor. Ø12 gives σ ≈ 680 MPa in bending and τ ≈ 230 MPa under engine torque: it bends or breaks. | **Ø25 h9 C45 live axle**: σ ≈ 75 MPa, τ ≈ 25 MPa, safety factor > 4. Runs in UCFL205 bearings. |
-| 2 | **Dimensions disagree**: width is given as both 60 cm and 55 cm, and the tyres are drawn outside a frame that would then be only about 30 cm wide | There is no room for a seated driver. A track that narrow tips over in a turn. | Rear track 760 mm and front track 640 mm; overall width 888 mm. Static rollover threshold ≈ 1.3–1.4 g, so the kart slides before it tips. |
+| 2 | **Dimensions disagree**: width is given as both 60 cm and 55 cm, and the tyres are drawn outside a frame that would then be only about 30 cm wide | There is no room for a seated driver. A track that narrow tips over in a turn. | Rear track 760 mm and front track 640 mm; overall width 887 mm. Static rollover threshold ≈ 1.3–1.4 g, so the kart slides before it tips. |
 | 3 | The **"12 mm" callout points at a frame tube** | This contradicts the parts list, which says the frame is Ø25 tube. | The whole frame is 25 × 2.0 tube (EN 10305-3 E235, or 1" × 14 ga DOM). |
 | 4 | **Handlebar with no steering mechanism**: no column, kingpins, stub axles, steering arms or tie rods, and the front wheels sit on a fixed axle | The kart cannot steer. | Steering wheel and column, pitman arm, two adjustable tie rods with rod ends, kingpin brackets, and welded knuckles with Ø20 stub axles. The steering arms point at the rear-axle centre (Ackermann geometry). |
 | 5 | **Front frame passes through the space the front wheels sweep** | The front wheels hit the frame as soon as they steer. | The foot box narrows to ±150 mm. At **±30° lock** the tyre stops 15 mm from the frame; this was checked by rotating the corner about the kingpin in the model. |
-| 6 | **Drivetrain missing**: a sprocket floats beside the seat with no engine, clutch, chain or mount | The kart has no drive. | 196–212 cc engine on a slotted plate, centrifugal clutch (10T #35), #35 chain of 88 links, and a 72T sprocket on a keyed hub. |
+| 6 | **Drivetrain missing**: a sprocket floats beside the seat with no engine, clutch, chain or mount | The kart has no drive. | Honda GX200 on a slotted plate, centrifugal clutch (10T #35), #35 chain of 92 links, and a 72T sprocket on a keyed hub. |
 | 7 | **No brake, no pedals, no throttle** | Unsafe. | Mechanical disc brake (Ø180 disc) on the axle with a cable from a pivoting brake pedal. The throttle pedal pulls a cable to the engine. |
 | 8 | **Rear axle has no bearings or mounts** | The axle would run in a frame tube. | Two UCFL205 flange bearings on 8 mm plates welded to the rails. |
 | 9 | **"Joint detail" shows 5–6 tubes meeting at one point** | Impossible to fit up and weld well; the joint would be weak and full of heat cracks. | At most two tubes are coped onto a through-tube at any node. Crowded nodes are offset by ≥ 25 mm (rear uprights at X = −230, side rail at Z = 220, braces moved off the cross-tube stations). |
-| 10 | **Seat and floor pan are not attached** to anything | Unsafe. | Seat crosses with welded tabs (4 × M8), seat-back tabs on the deck cross, and a 1.5 mm floor pan riveted or stitch-welded under the rails. |
+| 10 | **Seat and floor pan are not attached** to anything | Unsafe. | Bucket seat bolted to welded tabs on the seat crosses (4 × M8, 254 × 273) and through its back to two tabs on the deck cross; a 1.5 mm floor pan riveted or stitch-welded under the rails. |
 | 11 | The hoop around the seat looks like roll protection but is **lower than the driver's head** | It gives false confidence. | It is not claimed as roll protection. The kart is a low, wide, open kart: helmet required, no seat belt, as in normal karting. |
 | 12 | **Top and side views do not match the 3D view** (different tube layouts and wheel sizes) | The drawing cannot be built as drawn. | A single 3D model; every view and the cut list come from it. |
 | 13 | **Parts list incomplete**: no tyre size, bearings, chain, fasteners, steering or brake parts | The kart cannot be ordered or built from it. | Full list of commercial parts (section 3) and list of parts to make (section 4). |
@@ -47,48 +49,94 @@ the rear axle lies on the Y axis at X = 0. Units are mm.
 | Item | Value |
 |---|---|
 | Driver | Youth, about 130–160 cm tall, ≤ 60 kg |
-| Overall L × W × H | 1345 × 888 × 596 mm (top of the steering wheel) |
+| Overall L × W × H | 1352 × 887 × 608 mm (top of the fuel tank) |
 | Wheelbase / track (rear, front) | 900 / 760, 640 mm |
 | Tyres | 13x5.00-6 (Ø330 mm), axle height 165 mm |
 | Ground clearance | Frame and floor pan 76 mm; chain guard 48 mm (lowest point) |
-| Engine | 196–212 cc horizontal-shaft OHV (Honda GX200 type), governed at 3600 rpm, 3/4" keyed shaft |
-| Final drive | 10T / 72T #35 (ratio 7.2), **≈ 31 km/h** at 3600 rpm; 88-link chain at 201.6 mm centres |
+| Engine | Honda GX200 QX, 5.5 hp, governed at 3600 rpm, 3/4" keyed shaft, 16.1 kg |
+| Seat | Universal high-back plastic bucket seat, 450 × 355 × 370 mm |
+| Final drive | 10T / 72T #35 (ratio 7.2), **≈ 31 km/h** at 3600 rpm; 92-link chain at 223.1 mm centres |
 | Steering | Ø280 wheel, column at 32.5° to horizontal, ±30° lock, Ackermann steering arms 80 mm long |
-| Frame | 25 × 2.0 steel tube, **10.8 m** cut length (≈ 12.1 kg); plates 1.5–8 mm |
-| Estimated dry mass | ≈ 70 kg with the engine. The model reports 90 kg because the rims, engine and seat are solid envelopes. |
+| Frame | 25 × 2.0 steel tube, **11.0 m** cut length, 38 pieces (≈ 12.5 kg); plates 1.5–8 mm |
+| Estimated dry mass | ≈ 70 kg. The model reports 93 kg because the rims and the engine are solid envelopes; the BOM gives catalogue masses. |
 
 **Faster or more ground clearance:** a 60T sprocket raises the lowest point to about 70 mm, but the
 top speed rises to ≈ 37 km/h, which is too fast for a youth kart. Bigger tyres (16x6.50-8) need a
 jackshaft to keep the speed down. Both are owner decisions; the parameters are at the top of
 `gen_kart.py`.
 
-## 3. Commercial parts (buy)
+## 3. Engine, seat and the bill of materials
 
-| # | Part | Specification | Qty |
-|---|---|---|---|
-| C13 | Engine | 196–212 cc horizontal-shaft OHV, 3/4" (19.05) keyed PTO, GX160/GX200 mounting pattern. Measure the bolt pattern before cutting the engine-plate slots. | 1 |
-| C12 | Centrifugal clutch | 3/4" bore, 10T **#35**, dry, engages at ≈ 2000 rpm | 1 |
-| C11 | Roller chain | ANSI #35 (ISO 06C-1), **88 links** including the connecting link | 1 |
-| C09/C10 | Axle sprocket + hub | 72T #35 bolt-on sprocket, with a sprocket hub for a **25 mm** bore and 8 mm keyway | 1+1 |
-| C07 | Rear bearings | **UCFL205** 2-bolt flange unit, 25 mm bore, set-screw insert; M10 × 40 8.8 bolts and nylock nuts | 2 |
-| C08 | Shaft collars | Ø25 set-screw collar | 2 |
-| C06 | Rear wheel hubs | Bolt-on hub, 25 mm bore, 8 mm key, flange to suit the rims | 2 |
-| C04 | Tyres | **13x5.00-6** off-road / knobby, tubeless | 4 |
-| C05 | Rims | 6 × 4.5" steel, 2-piece. Front rims take 2 × 6204 bearings; rear rims to suit the hubs. | 4 |
-| C01 | Front wheel bearings | **6204-2RS** (20 × 47 × 14) | 4 |
-| — | Kingpin bushes | Flanged PTFE-lined bush 12 × 14 × 12 (e.g. PCMF 121412E) | 4 |
-| C03 | Kingpins | M12 × 90 hex bolt, class 8.8, nylock nut and 2 washers | 2 |
-| C02 | Stub-axle nuts | M20 × 1.5 nylock nut with washer | 2 |
-| C22/C23 | Rod ends | M8 female rod end, 2 right-hand + 2 left-hand (DIN ISO 12240-4 E series, e.g. SI 8 E / SIL 8 E); M8 × 30 8.8 bolts | 4 |
-| C19 | Steering wheel | Ø280–300 kart wheel, 3-bolt, with hub for a Ø20 column | 1 |
-| C21 | Column lower bearing | **UCFL204** (20 mm), bolts at 90 mm | 1 |
-| C20 | Column upper bush | Split nylon column bush, Ø20 | 1 |
-| C14/C15 | Brake disc + hub | Ø180 × 4 steel disc and a disc hub for 25 mm with 8 mm key | 1+1 |
-| C16 | Brake caliper | Mechanical (cable) disc caliper for a 4 mm disc. Drill the bracket to match its bolt pattern. | 1 |
-| — | Cables | Brake cable with housing, 1.5 m; throttle cable with housing, 1.5 m | 1+1 |
-| C17 | Seat | Composite kart seat, cadet / size S (≈ 300 mm wide), M8 bolts with large washers | 1 |
-| — | Keys | 8 × 7 × 30 DIN 6885 (sprocket hub, brake hub, wheel hubs) | 4 |
-| — | Pedal return springs, end plugs | Extension springs ≈ 50 N; 25 × 2 tube end plugs | 2 + 6 |
+**`bom.csv` is the bill of materials:** 63 lines covering bought parts, fasteners, tube, plates and
+machined parts, with quantities, standards and notes. `gen_kart.py` generates it together with the
+model, and the generator stops if a modelled part is missing from the BOM or a quantity disagrees
+with the number of bodies in the model.
+
+**Engine: Honda GX200 QX (GX200UT2QX2)**, a 196 cc OHV engine giving 5.5 hp at 3600 rpm (governed).
+- It has a 3/4" × 2-7/16" keyed shaft, measures 313 × 376 × 346 mm and weighs 16.1 kg dry.
+- It suits a youth kart: it is governed, reliable, sold and serviced worldwide, and it takes the
+  standard 3/4" 10T #35 kart clutch directly.
+- These engines use the same mounting base and shaft and fit the plate without changes:
+  - Predator 212 non-hemi, which uses 5/16-24 bolts
+  - Loncin G200F
+- The model is an envelope at the catalogue size: crankcase, cylinder, fuel tank, muffler at the
+  rear, air cleaner toward the seat, recoil starter and PTO shaft.
+- The mounting pattern is 4 × M8 on 162 × 75.5 mm. The plate slots give ±15 mm of chain
+  adjustment.
+- **Mark the slots from the engine you buy before cutting.** Published drawings do not make it clear
+  which direction the 162 mm runs.
+- The generator picks the shortest even chain (92 links of #35) that keeps the air cleaner 41 mm
+  behind the seat back. It then places the engine where that chain fits with the slots centred:
+  223.1 mm between sprocket centres.
+
+**Seat: universal high-back plastic (HDPE) go-kart bucket seat**, about 450 W × 355 H × 370 D.
+- It is the widely sold replacement seat for karts, buggies and drift trikes (e.g. YC Yier and
+  similar), with 4 mounting holes on 254 × 273 mm (10 × 10-3/4 in).
+- It is chosen over a racing seat because its back is upright enough (about 10° recline) to sit in
+  front of the engine. A racing seat such as the Tillett T11 has its back reclined 58° and would
+  reach the engine.
+- It is modelled as a 5 mm shell with side bolsters. It sits on four seat tabs (P08) placed under
+  its holes, and bolts through the back to two tabs (P09) on the deck cross.
+- The frame was adapted to it:
+  - The seat crosses (F07, F08) sit under its holes.
+  - The side rails stay at ±250 mm beside the seat, then a second rail (F24) mitres in to the hoop.
+  - The rail taper starts at X = 560.
+- Check the hole pattern when the seat arrives. If it differs, move the tabs, which are welded on
+  last.
+
+### Using the vendor STEP models
+
+Vendor CAD files are not stored in this repository because their licences do not allow
+redistribution. Download them yourself, then build the kart with them in place of the envelopes:
+
+```sh
+python3 gen_kart.py --engine-step GX200.step --engine-rot "Z:90" --engine-pto "x,y,z" \
+                    --seat-step seat.step --seat-rot "Z:-90" --out go_kart_vendor.json
+solvecraft-cli run go_kart_vendor.json --save go_kart.solvecraft --out go_kart.step
+```
+
+- `--*-rot` turns the file into kart axes in 90° steps about the world axes. Kart axes are X
+  forward, Y toward the chain side (the engine's PTO end), and Z up.
+- `--engine-step` and `--seat-step` also take a mesh (`.stl` / `.3mf`, inserted with
+  `file.insert_mesh`). Use a mesh when a large STEP file is slow to triangulate in SolidCraft; any
+  STEP-to-mesh converter will do, for example Assembly Studio's print export. A mesh body can be
+  moved, measured and clash-checked, but a design that contains one exports to 3MF/STL, not STEP.
+- The engine is placed with its base on the plate and its PTO end where the clutch expects it.
+  `--engine-pto` is any point on the shaft axis in the file's own coordinates; with it, the shaft
+  sits exactly on the clutch axis. The generator warns if the file's shaft height differs from
+  `CRANK_H`.
+- The seat is placed with its underside on the seat tabs, its front edge at X = 555 and centred
+  across the kart.
+- The BOM check counts the imported bodies, then run the clash check
+  (`inspect.interference`) again.
+- A vendor part with a different size usually needs the frame to follow it. `--config parts.json`
+  overrides any parameter in the generator's parameter block. Useful ones:
+  - `X_DF`: the deck front cross behind the seat.
+  - `SEAT_REAR`, `SEAT_D`: the seat's position and depth.
+  - `SEAT_BASE_Z`: the seat's lowest point.
+  - `SEAT_CROSS_X`: the stations of the two seat crosses.
+  - `SEAT_TABS`: the seat tabs, each `[x, y, height]`; a raised tab stands on a welded block.
+  - `ENGINE_FRONT_MAX`: how far forward the engine may sit.
 
 ## 4. Parts to make
 
@@ -108,8 +156,8 @@ are calculated rather than modelled. Cut the copes with a hole saw or a printed 
 | P05 | Engine plate | 390 × 300 × 5 | 4 slots 8.5 × 30 on the engine's pattern | 1 |
 | P06 | Chain guard | 1.5 mm, follows the chain | Ø66 hole for the axle hub; fold a 15 mm lip | 1 |
 | P07 | Caliper bracket | 80 × 92.5 × 6 | 2 × Ø8.5 (match the caliper) | 1 |
-| P08 | Seat tab | 40 × 30 × 4 | Ø8.5 | 4 |
-| P09 | Seat-back tab | 18.5 × 30 × 4 | Ø8.5 | 2 |
+| P08 | Seat tab | 40 × 30 × 4 | Ø8.5, under the seat holes (254 × 273) | 4 |
+| P09 | Seat-back tab | 30 × 34 × 4 | Ø8.5, bolts through the seat back | 2 |
 | P10 | Column upper bracket | 50 × 55 × 6 | Ø20.5 | 1 |
 | P11 | Column lower bracket | 120 × 65 × 6 | Ø30 + 2 × Ø10.5 at 90 mm (UCFL204) | 1 |
 | P12 | Pedal clevis tab | 30 × 25 × 4 | Ø8.5 | 4 |
@@ -141,7 +189,7 @@ are calculated rather than modelled. Cut the copes with a hole saw or a printed 
 4. **Front axle beam F12.** Weld the kingpin back plates and ears with an M12 rod through both
    pairs of ears, so the kingpins are parallel and vertical. Then fit F12 onto the front uprights
    F11.
-5. **Hoop and side rails.** Weld F20–F23, then the column brackets P10 and P11 with the column in
+5. **Hoop and side rails.** Weld F20–F24, then the column brackets P10 and P11 with the column in
    place and the UCFL204 bolted on.
 6. **Weld in short, alternating runs** (MIG/MAG, 0.8 mm wire). Leave the frame to cool on the jig,
    then check the axle and kingpin alignment again. Drill a Ø3 vent hole in each closed tube
@@ -149,7 +197,8 @@ are calculated rather than modelled. Cut the copes with a hole saw or a printed 
 7. **Knuckles.** Weld the stub axle M02 square to the sleeve M01 in a fixture, then the steering
    arm M03. Ream the sleeve to 14 H7 after welding.
 8. **Drivetrain.** Line up the sprocket with the clutch using a straightedge (chain line at
-   Y = +180). Tension the chain by sliding the engine in its slots so the chain has 10 mm of slack.
+   Y = +180). Fit the 92-link chain and slide the engine in its slots until the chain has 10 mm of
+   slack.
 9. **Before the first drive.** Brake test, with the brake cable stop set so the pedal stays firm.
    Check every nylock nut and every set screw (with Loctite 243), and fit the chain guard.
 10. **Finish.** Degrease and powder-coat or paint the frame.
@@ -159,8 +208,12 @@ with adult supervision. Keep the engine governor; the 72T gearing is chosen for 
 
 ## 6. How the design was checked (SolidCraft)
 
-- The whole assembly (122 bodies) rebuilds from `go_kart.json` with no errors. It saves, reopens,
+- The whole assembly (124 bodies) rebuilds from `go_kart.json` with no errors. It saves, reopens,
   and exports to STEP.
+- **Engine and seat:** a clash check of the engine, seat, clutch, chain, guard, engine plate, seat
+  tabs, rear deck, seat crosses, side rails, rear wheels, bearings and steering wheel found nothing
+  except the chain meshing with its sprockets and the steering wheel's own parts. The air cleaner is
+  41 mm behind the seat back.
 - **Clash check** (`inspect.interference`) over the whole assembly: the only overlaps reported are
   weld joints (frame nodes, plates on tubes, knuckle welds), the chain meshing with its sprockets,
   parts that are made as one piece (steering-wheel spokes, pedal pads), and bolted stacks.
@@ -179,5 +232,6 @@ with adult supervision. Keep the engine governor; the 72T gearing is chosen for 
 **Known limits of the model:**
 - The SolidCraft kernel cannot yet make booleans between angled cylinders, so tube copes are given
   in the cut list instead of being modelled.
-- Commercial parts are simplified envelopes: tyre, rim, engine, seat, caliper and bearings.
-  Rod-end and caliper bolt patterns must be checked against the parts actually bought.
+- Commercial parts are modelled at catalogue size but simplified: engine, seat, tyre, rim, caliper
+  and bearings. The engine's mounting orientation and the caliper bolt pattern must be checked
+  against the parts actually bought.

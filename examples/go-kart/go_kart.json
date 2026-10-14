@@ -4,14 +4,14 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 25.0,
-    "height": 752.5,
+    "height": 832.5,
     "base": [
      -272.5,
      250.0,
      90.0
     ],
     "axis": [
-     752.5,
+     832.5,
      0.0,
      0.0
     ],
@@ -23,14 +23,14 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 21.0,
-    "height": 752.5,
+    "height": 832.5,
     "base": [
      -272.5,
      250.0,
      90.0
     ],
     "axis": [
-     752.5,
+     832.5,
      0.0,
      0.0
     ],
@@ -44,14 +44,14 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 25.0,
-    "height": 180.277564,
+    "height": 122.065556,
     "base": [
-     480.0,
+     560.0,
      250.0,
      90.0
     ],
     "axis": [
-     150.0,
+     70.0,
      -100.0,
      0.0
     ],
@@ -63,14 +63,14 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 21.0,
-    "height": 180.277564,
+    "height": 122.065556,
     "base": [
-     480.0,
+     560.0,
      250.0,
      90.0
     ],
     "axis": [
-     150.0,
+     70.0,
      -100.0,
      0.0
     ],
@@ -364,14 +364,14 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 25.0,
-    "height": 139.014388,
+    "height": 181.176709,
     "base": [
      140.0,
      250.0,
      175.0
     ],
     "axis": [
-     110.0,
+     160.0,
      0.0,
      -85.0
     ],
@@ -383,14 +383,14 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 21.0,
-    "height": 139.014388,
+    "height": 181.176709,
     "base": [
      140.0,
      250.0,
      175.0
     ],
     "axis": [
-     110.0,
+     160.0,
      0.0,
      -85.0
     ],
@@ -484,15 +484,15 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 25.0,
-    "height": 540.170369,
+    "height": 410.0,
     "base": [
      140.0,
      250.0,
      220.0
     ],
     "axis": [
-     530.833333,
-     -100.0,
+     410.0,
+     0.0,
      0.0
     ],
     "operation": "new",
@@ -503,15 +503,15 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 21.0,
-    "height": 540.170369,
+    "height": 410.0,
     "base": [
      140.0,
      250.0,
      220.0
     ],
     "axis": [
-     530.833333,
-     -100.0,
+     410.0,
+     0.0,
      0.0
     ],
     "operation": "cut",
@@ -524,14 +524,54 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 25.0,
-    "height": 752.5,
+    "height": 156.846085,
+    "base": [
+     550.0,
+     250.0,
+     220.0
+    ],
+    "axis": [
+     120.833333,
+     -100.0,
+     0.0
+    ],
+    "operation": "new",
+    "body_name": "F24L Side rail front L"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 21.0,
+    "height": 156.846085,
+    "base": [
+     550.0,
+     250.0,
+     220.0
+    ],
+    "axis": [
+     120.833333,
+     -100.0,
+     0.0
+    ],
+    "operation": "cut",
+    "targets": [
+     "F24L Side rail front L"
+    ]
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 25.0,
+    "height": 832.5,
     "base": [
      -272.5,
      -250.0,
      90.0
     ],
     "axis": [
-     752.5,
+     832.5,
      0.0,
      0.0
     ],
@@ -543,14 +583,14 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 21.0,
-    "height": 752.5,
+    "height": 832.5,
     "base": [
      -272.5,
      -250.0,
      90.0
     ],
     "axis": [
-     752.5,
+     832.5,
      0.0,
      0.0
     ],
@@ -564,14 +604,14 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 25.0,
-    "height": 180.277564,
+    "height": 122.065556,
     "base": [
-     480.0,
+     560.0,
      -250.0,
      90.0
     ],
     "axis": [
-     150.0,
+     70.0,
      100.0,
      0.0
     ],
@@ -583,14 +623,14 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 21.0,
-    "height": 180.277564,
+    "height": 122.065556,
     "base": [
-     480.0,
+     560.0,
      -250.0,
      90.0
     ],
     "axis": [
-     150.0,
+     70.0,
      100.0,
      0.0
     ],
@@ -884,14 +924,14 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 25.0,
-    "height": 139.014388,
+    "height": 181.176709,
     "base": [
      140.0,
      -250.0,
      175.0
     ],
     "axis": [
-     110.0,
+     160.0,
      0.0,
      -85.0
     ],
@@ -903,14 +943,14 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 21.0,
-    "height": 139.014388,
+    "height": 181.176709,
     "base": [
      140.0,
      -250.0,
      175.0
     ],
     "axis": [
-     110.0,
+     160.0,
      0.0,
      -85.0
     ],
@@ -1004,15 +1044,15 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 25.0,
-    "height": 540.170369,
+    "height": 410.0,
     "base": [
      140.0,
      -250.0,
      220.0
     ],
     "axis": [
-     530.833333,
-     100.0,
+     410.0,
+     0.0,
      0.0
     ],
     "operation": "new",
@@ -1023,20 +1063,60 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 21.0,
-    "height": 540.170369,
+    "height": 410.0,
     "base": [
      140.0,
      -250.0,
      220.0
     ],
     "axis": [
-     530.833333,
-     100.0,
+     410.0,
+     0.0,
      0.0
     ],
     "operation": "cut",
     "targets": [
      "F23R Side rail R"
+    ]
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 25.0,
+    "height": 156.846085,
+    "base": [
+     550.0,
+     -250.0,
+     220.0
+    ],
+    "axis": [
+     120.833333,
+     100.0,
+     0.0
+    ],
+    "operation": "new",
+    "body_name": "F24R Side rail front R"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 21.0,
+    "height": 156.846085,
+    "base": [
+     550.0,
+     -250.0,
+     220.0
+    ],
+    "axis": [
+     120.833333,
+     100.0,
+     0.0
+    ],
+    "operation": "cut",
+    "targets": [
+     "F24R Side rail front R"
     ]
    }
   },
@@ -1126,7 +1206,7 @@
     "diameter": 25.0,
     "height": 500.0,
     "base": [
-     440.0,
+     506.5,
      250.0,
      90.0
     ],
@@ -1145,7 +1225,7 @@
     "diameter": 21.0,
     "height": 500.0,
     "base": [
-     440.0,
+     506.5,
      250.0,
      90.0
     ],
@@ -1166,7 +1246,7 @@
     "diameter": 25.0,
     "height": 500.0,
     "base": [
-     200.0,
+     233.5,
      250.0,
      90.0
     ],
@@ -1185,7 +1265,7 @@
     "diameter": 21.0,
     "height": 500.0,
     "base": [
-     200.0,
+     233.5,
      250.0,
      90.0
     ],
@@ -1472,7 +1552,7 @@
       262.5
      ],
      [
-      480,
+      560,
       262.5
      ],
      [
@@ -1492,7 +1572,7 @@
       -162.5
      ],
      [
-      480,
+      560,
       -262.5
      ],
      [
@@ -1813,12 +1893,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     900.0,
-     220.0
-    ],
     "start": [
      920.0,
      220.0
@@ -1826,6 +1902,10 @@
     "end": [
      880.0,
      220.0
+    ],
+    "through": [
+     900.0,
+     240.0
     ]
    }
   },
@@ -1918,12 +1998,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     900.0,
-     220.0
-    ],
     "start": [
      920.0,
      220.0
@@ -1931,6 +2007,10 @@
     "end": [
      880.0,
      220.0
+    ],
+    "through": [
+     900.0,
+     240.0
     ]
    }
   },
@@ -2082,12 +2162,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     977.711921,
-     238.996247
-    ],
     "start": [
      974.743757,
      251.138735
@@ -2095,6 +2171,10 @@
     "end": [
      980.680084,
      226.85376
+    ],
+    "through": [
+     965.569433,
+     236.028084
     ]
    }
   },
@@ -2446,12 +2526,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     900.0,
-     -220.0
-    ],
     "start": [
      880.0,
      -220.0
@@ -2459,6 +2535,10 @@
     "end": [
      920.0,
      -220.0
+    ],
+    "through": [
+     900.0,
+     -240.0
     ]
    }
   },
@@ -2551,12 +2631,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     900.0,
-     -220.0
-    ],
     "start": [
      880.0,
      -220.0
@@ -2564,6 +2640,10 @@
     "end": [
      920.0,
      -220.0
+    ],
+    "through": [
+     900.0,
+     -240.0
     ]
    }
   },
@@ -2715,12 +2795,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     977.711921,
-     -238.996247
-    ],
     "start": [
      980.680084,
      -226.85376
@@ -2728,6 +2804,10 @@
     "end": [
      974.743757,
      -251.138735
+    ],
+    "through": [
+     965.569433,
+     -236.028084
     ]
    }
   },
@@ -4033,12 +4113,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     49.5,
-     165.0
-    ],
     "start": [
      49.5,
      148.0
@@ -4046,6 +4122,10 @@
     "end": [
      49.5,
      182.0
+    ],
+    "through": [
+     66.5,
+     165.0
     ]
    }
   },
@@ -4065,12 +4145,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     -49.5,
-     165.0
-    ],
     "start": [
      -49.5,
      182.0
@@ -4078,6 +4154,10 @@
     "end": [
      -49.5,
      148.0
+    ],
+    "through": [
+     -66.5,
+     165.0
     ]
    }
   },
@@ -4289,12 +4369,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     49.5,
-     165.0
-    ],
     "start": [
      49.5,
      148.0
@@ -4302,6 +4378,10 @@
     "end": [
      49.5,
      182.0
+    ],
+    "through": [
+     66.5,
+     165.0
     ]
    }
   },
@@ -4321,12 +4401,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     -49.5,
-     165.0
-    ],
     "start": [
      -49.5,
      182.0
@@ -4334,6 +4410,10 @@
     "end": [
      -49.5,
      148.0
+    ],
+    "through": [
+     -66.5,
+     165.0
     ]
    }
   },
@@ -4653,19 +4733,17 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.line",
    "params": {
-    "center": [
-     0.0,
-     165.0
-    ],
-    "start": [
-     -111.814639,
-     185.526426
-    ],
-    "end": [
-     80.350206,
-     245.421962
+    "points": [
+     [
+      74.515163,
+      250.856497
+     ],
+     [
+      -78.360575,
+      383.5379
+     ]
     ]
    }
   },
@@ -4674,30 +4752,35 @@
    "params": {
     "points": [
      [
-      80.350206,
-      245.421962
+      -111.322451,
+      368.731454
      ],
      [
-      -45.926535,
-      371.586033
+      -113.675421,
+      166.321451
      ]
     ]
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     -60.0,
-     357.5
-    ],
-    "start": [
-     -45.926535,
-     371.586033
-    ],
-    "end": [
-     -79.58451,
-     361.095236
+    "start": "l2.end",
+    "end": "l1.start",
+    "through": [
+     46.582454,
+     61.298879
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.three_point",
+   "params": {
+    "start": "l1.end",
+    "end": "l2.start",
+    "through": [
+     -99.571013,
+     386.663414
     ]
    }
   },
@@ -4706,30 +4789,13 @@
    "params": {
     "points": [
      [
-      -79.58451,
-      361.095236
+      68.615988,
+      244.059458
      ],
      [
-      -111.814639,
-      185.526426
+      -84.25975,
+      376.740861
      ]
-    ]
-   }
-  },
-  {
-   "command": "sketch.arc.center_point",
-   "params": {
-    "center": [
-     0.0,
-     165.0
-    ],
-    "start": [
-     -102.96256,
-     183.901402
-    ],
-    "end": [
-     73.989086,
-     239.055161
     ]
    }
   },
@@ -4738,45 +4804,35 @@
    "params": {
     "points": [
      [
-      73.989086,
-      239.055161
+      -102.323059,
+      368.626838
      ],
      [
-      -52.287655,
-      365.219232
+      -104.676029,
+      166.216835
      ]
     ]
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     -60.0,
-     357.5
-    ],
-    "start": [
-     -52.287655,
-     365.219232
-    ],
-    "end": [
-     -70.732431,
-     359.470211
+    "start": "l4.end",
+    "end": "l3.start",
+    "through": [
+     42.89464,
+     69.508631
     ]
    }
   },
   {
-   "command": "sketch.line",
+   "command": "sketch.arc.three_point",
    "params": {
-    "points": [
-     [
-      -70.732431,
-      359.470211
-     ],
-     [
-      -102.96256,
-      183.901402
-     ]
+    "start": "l3.end",
+    "end": "l4.start",
+    "through": [
+     -95.883199,
+     378.453662
     ]
    }
   },
@@ -4806,9 +4862,9 @@
    "params": {
     "plane": {
      "origin": [
-      -60.0,
+      -91.412023,
       128.0,
-      357.5
+      368.5
      ],
      "x_dir": [
       0.0,
@@ -4908,11 +4964,11 @@
       -150
      ],
      [
-      150,
+      150.0,
       -150
      ],
      [
-      150,
+      150.0,
       150
      ],
      [
@@ -4964,39 +5020,11 @@
    "command": "sketch.slot.center_to_center",
    "params": {
     "p0": [
-     -112.75,
+     -144.16202290681534,
      -66.0
     ],
     "p1": [
-     -82.75,
-     -66.0
-    ],
-    "width": 8.5
-   }
-  },
-  {
-   "command": "sketch.slot.center_to_center",
-   "params": {
-    "p0": [
-     -112.75,
-     96.0
-    ],
-    "p1": [
-     -82.75,
-     96.0
-    ],
-    "width": 8.5
-   }
-  },
-  {
-   "command": "sketch.slot.center_to_center",
-   "params": {
-    "p0": [
-     -37.25,
-     -66.0
-    ],
-    "p1": [
-     -7.25,
+     -114.16202290681534,
      -66.0
     ],
     "width": 8.5
@@ -5006,11 +5034,39 @@
    "command": "sketch.slot.center_to_center",
    "params": {
     "p0": [
-     -37.25,
+     -144.16202290681534,
      96.0
     ],
     "p1": [
-     -7.25,
+     -114.16202290681534,
+     96.0
+    ],
+    "width": 8.5
+   }
+  },
+  {
+   "command": "sketch.slot.center_to_center",
+   "params": {
+    "p0": [
+     -68.66202290681534,
+     -66.0
+    ],
+    "p1": [
+     -38.66202290681534,
+     -66.0
+    ],
+    "width": 8.5
+   }
+  },
+  {
+   "command": "sketch.slot.center_to_center",
+   "params": {
+    "p0": [
+     -68.66202290681534,
+     96.0
+    ],
+    "p1": [
+     -38.66202290681534,
      96.0
     ],
     "width": 8.5
@@ -5035,44 +5091,95 @@
   {
    "command": "solid.box",
    "params": {
-    "length": 260.0,
-    "width": 210,
-    "height": 170.0,
+    "length": 200.0,
+    "width": 200.0,
+    "height": 200.0,
     "corner": [
-     -190.0,
-     -90,
+     -191.412023,
+     -80.0,
      262.5
     ],
     "operation": "new",
-    "body_name": "C13 Engine 196-212 cc OHV (envelope)"
+    "body_name": "C13 Engine Honda GX200 QX"
+   }
+  },
+  {
+   "command": "solid.box",
+   "params": {
+    "length": 100.0,
+    "width": 120.0,
+    "height": 105.0,
+    "corner": [
+     -231.412023,
+     -45.0,
+     382.5
+    ],
+    "operation": "join",
+    "targets": [
+     "C13 Engine Honda GX200 QX"
+    ]
    }
   },
   {
    "command": "solid.box",
    "params": {
     "length": 220.0,
-    "width": 220,
-    "height": 100.0,
+    "width": 200.0,
+    "height": 126.0,
     "corner": [
-     -170.0,
-     -110,
+     -201.412023,
+     -85.0,
+     482.5
+    ],
+    "operation": "join",
+    "targets": [
+     "C13 Engine Honda GX200 QX"
+    ]
+   }
+  },
+  {
+   "command": "solid.box",
+   "params": {
+    "length": 67.99999999999997,
+    "width": 160.0,
+    "height": 110.0,
+    "corner": [
+     -279.412023,
+     -55.0,
+     412.5
+    ],
+    "operation": "join",
+    "targets": [
+     "C13 Engine Honda GX200 QX"
+    ]
+   }
+  },
+  {
+   "command": "solid.box",
+   "params": {
+    "length": 88.0,
+    "width": 140.0,
+    "height": 130.0,
+    "corner": [
+     8.587977,
+     -65.0,
      432.5
     ],
     "operation": "join",
     "targets": [
-     "C13 Engine 196-212 cc OHV (envelope)"
+     "C13 Engine Honda GX200 QX"
     ]
    }
   },
   {
    "command": "solid.cylinder",
    "params": {
-    "diameter": 160,
-    "height": 40,
+    "diameter": 170,
+    "height": 45,
     "base": [
-     -60.0,
-     -90,
-     357.5
+     -91.412023,
+     -80.0,
+     368.5
     ],
     "axis": [
      0,
@@ -5081,7 +5188,7 @@
     ],
     "operation": "join",
     "targets": [
-     "C13 Engine 196-212 cc OHV (envelope)"
+     "C13 Engine Honda GX200 QX"
     ]
    }
   },
@@ -5089,11 +5196,11 @@
    "command": "solid.cylinder",
    "params": {
     "diameter": 19.05,
-    "height": 64.0,
+    "height": 61.9,
     "base": [
-     -60.0,
-     120,
-     357.5
+     -91.412023,
+     120.0,
+     368.5
     ],
     "axis": [
      0,
@@ -5102,7 +5209,7 @@
     ],
     "operation": "join",
     "targets": [
-     "C13 Engine 196-212 cc OHV (envelope)"
+     "C13 Engine Honda GX200 QX"
     ]
    }
   },
@@ -5130,19 +5237,17 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.line",
    "params": {
-    "center": [
-     0.0,
-     165.0
-    ],
-    "start": [
-     -116.542596,
-     177.235303
-    ],
-    "end": [
-     88.951704,
-     241.285475
+    "points": [
+     [
+      82.656716,
+      248.064714
+     ],
+     [
+      -65.023113,
+      395.019167
+     ]
     ]
    }
   },
@@ -5151,45 +5256,35 @@
    "params": {
     "points": [
      [
-      88.951704,
-      241.285475
+      -128.764066,
+      366.386786
      ],
      [
-      -31.601357,
-      381.854833
+      -116.996011,
+      158.380882
      ]
     ]
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     -60.0,
-     357.5
-    ],
-    "start": [
-     -31.601357,
-     381.854833
-    ],
-    "end": [
-     -97.207286,
-     361.406232
+    "start": "l2.end",
+    "end": "l1.start",
+    "through": [
+     48.016603,
+     58.106197
     ]
    }
   },
   {
-   "command": "sketch.line",
+   "command": "sketch.arc.three_point",
    "params": {
-    "points": [
-     [
-      -97.207286,
-      361.406232
-     ],
-     [
-      -116.542596,
-      177.235303
-     ]
+    "start": "l1.end",
+    "end": "l2.start",
+    "through": [
+     -106.741761,
+     402.626821
     ]
    }
   },
@@ -5487,7 +5582,7 @@
       1.0
      ]
     },
-    "name": "C17 Kart seat size S (envelope)"
+    "name": "C17 Seat universal HDPE bucket 450"
    }
   },
   {
@@ -5496,28 +5591,32 @@
     "closed": true,
     "points": [
      [
-      190,
+      185.0,
       106.5
      ],
      [
-      440,
+      555.0,
       106.5
      ],
      [
-      440,
-      115.5
+      555.0,
+      176.5
      ],
      [
-      205,
-      115.5
+      395.0,
+      206.5
      ],
      [
-      160,
-      470
+      214.444794,
+      336.5
      ],
      [
-      150,
-      470
+      162.403922,
+      461.5
+     ],
+     [
+      122.403922,
+      461.5
      ]
     ]
    }
@@ -5529,11 +5628,74 @@
   {
    "command": "solid.extrude",
    "params": {
-    "distance": 150,
+    "distance": 225.0,
     "direction": "symmetric",
     "operation": "new",
     "profiles": "all",
-    "body_name": "C17 Kart seat size S (envelope)"
+    "body_name": "C17 Seat universal HDPE bucket 450"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      1.0
+     ]
+    },
+    "name": "Seat cavity"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "closed": true,
+    "points": [
+     [
+      189.118365,
+      111.5
+     ],
+     [
+      565.0,
+      111.5
+     ],
+     [
+      565.0,
+      581.5
+     ],
+     [
+      106.244684,
+      581.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 220.0,
+    "direction": "symmetric",
+    "operation": "cut",
+    "targets": [
+     "C17 Seat universal HDPE bucket 450"
+    ],
+    "name": "Seat cavity"
    }
   },
   {
@@ -5564,20 +5726,20 @@
    "params": {
     "points": [
      [
-      180,
-      -125
+      213.5,
+      -142.0
      ],
      [
-      220,
-      -125
+      253.5,
+      -142.0
      ],
      [
-      220,
-      -95
+      253.5,
+      -112.0
      ],
      [
-      180,
-      -95
+      213.5,
+      -112.0
      ]
     ],
     "closed": true
@@ -5587,8 +5749,8 @@
    "command": "sketch.circle.center",
    "params": {
     "center": [
-     200,
-     -110
+     233.5,
+     -127.0
     ],
     "diameter": 8.5
    }
@@ -5606,8 +5768,8 @@
     "profiles": [
      {
       "point": [
-       188,
-       -110
+       221.5,
+       -127.0
       ]
      }
     ],
@@ -5642,20 +5804,20 @@
    "params": {
     "points": [
      [
-      180,
-      95
+      213.5,
+      112.0
      ],
      [
-      220,
-      95
+      253.5,
+      112.0
      ],
      [
-      220,
-      125
+      253.5,
+      142.0
      ],
      [
-      180,
-      125
+      213.5,
+      142.0
      ]
     ],
     "closed": true
@@ -5665,8 +5827,8 @@
    "command": "sketch.circle.center",
    "params": {
     "center": [
-     200,
-     110
+     233.5,
+     127.0
     ],
     "diameter": 8.5
    }
@@ -5684,8 +5846,8 @@
     "profiles": [
      {
       "point": [
-       188,
-       110
+       221.5,
+       127.0
       ]
      }
     ],
@@ -5720,20 +5882,20 @@
    "params": {
     "points": [
      [
-      420,
-      -125
+      486.5,
+      -142.0
      ],
      [
-      460,
-      -125
+      526.5,
+      -142.0
      ],
      [
-      460,
-      -95
+      526.5,
+      -112.0
      ],
      [
-      420,
-      -95
+      486.5,
+      -112.0
      ]
     ],
     "closed": true
@@ -5743,8 +5905,8 @@
    "command": "sketch.circle.center",
    "params": {
     "center": [
-     440,
-     -110
+     506.5,
+     -127.0
     ],
     "diameter": 8.5
    }
@@ -5762,8 +5924,8 @@
     "profiles": [
      {
       "point": [
-       428,
-       -110
+       494.5,
+       -127.0
       ]
      }
     ],
@@ -5798,20 +5960,20 @@
    "params": {
     "points": [
      [
-      420,
-      95
+      486.5,
+      112.0
      ],
      [
-      460,
-      95
+      526.5,
+      112.0
      ],
      [
-      460,
-      125
+      526.5,
+      142.0
      ],
      [
-      420,
-      125
+      486.5,
+      142.0
      ]
     ],
     "closed": true
@@ -5821,8 +5983,8 @@
    "command": "sketch.circle.center",
    "params": {
     "center": [
-     440,
-     110
+     506.5,
+     127.0
     ],
     "diameter": 8.5
    }
@@ -5840,8 +6002,8 @@
     "profiles": [
      {
       "point": [
-       428,
-       110
+       494.5,
+       127.0
       ]
      }
     ],
@@ -5853,13 +6015,13 @@
    "params": {
     "plane": {
      "origin": [
+      152.5,
       0,
-      -100,
       0
      ],
      "x_dir": [
-      1.0,
       0.0,
+      1.0,
       0.0
      ],
      "y_dir": [
@@ -5876,20 +6038,20 @@
    "params": {
     "points": [
      [
-      152.5,
-      230.0
+      -115,
+      228.0
      ],
      [
-      171,
-      230.0
+      -85,
+      228.0
      ],
      [
-      167.5,
-      260.0
+      -85,
+      262.0
      ],
      [
-      152.5,
-      260.0
+      -115,
+      262.0
      ]
     ],
     "closed": true
@@ -5899,8 +6061,8 @@
    "command": "sketch.circle.center",
    "params": {
     "center": [
-     162,
-     245.0
+     -100,
+     250.0
     ],
     "diameter": 8.5
    }
@@ -5912,13 +6074,13 @@
   {
    "command": "solid.extrude",
    "params": {
-    "distance": 2.0,
-    "direction": "symmetric",
+    "distance": 4,
+    "direction": "positive",
     "operation": "new",
     "profiles": [
      {
       "point": [
-       156,
+       -100,
        235.0
       ]
      }
@@ -5931,13 +6093,13 @@
    "params": {
     "plane": {
      "origin": [
+      152.5,
       0,
-      100,
       0
      ],
      "x_dir": [
-      1.0,
       0.0,
+      1.0,
       0.0
      ],
      "y_dir": [
@@ -5954,20 +6116,20 @@
    "params": {
     "points": [
      [
-      152.5,
-      230.0
+      85,
+      228.0
      ],
      [
-      171,
-      230.0
+      115,
+      228.0
      ],
      [
-      167.5,
-      260.0
+      115,
+      262.0
      ],
      [
-      152.5,
-      260.0
+      85,
+      262.0
      ]
     ],
     "closed": true
@@ -5977,8 +6139,8 @@
    "command": "sketch.circle.center",
    "params": {
     "center": [
-     162,
-     245.0
+     100,
+     250.0
     ],
     "diameter": 8.5
    }
@@ -5990,13 +6152,13 @@
   {
    "command": "solid.extrude",
    "params": {
-    "distance": 2.0,
-    "direction": "symmetric",
+    "distance": 4,
+    "direction": "positive",
     "operation": "new",
     "profiles": [
      {
       "point": [
-       156,
+       100,
        235.0
       ]
      }
@@ -6584,12 +6746,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     45,
-     0
-    ],
     "start": [
      45,
      -12
@@ -6597,6 +6755,10 @@
     "end": [
      45,
      12
+    ],
+    "through": [
+     57.0,
+     0.0
     ]
    }
   },
@@ -6616,12 +6778,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     -45,
-     0
-    ],
     "start": [
      -45,
      12
@@ -6629,6 +6787,10 @@
     "end": [
      -45,
      -12
+    ],
+    "through": [
+     -57.0,
+     0.0
     ]
    }
   },
@@ -6722,12 +6884,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     45,
-     0
-    ],
     "start": [
      45,
      -12.5
@@ -6735,6 +6893,10 @@
     "end": [
      45,
      12.5
+    ],
+    "through": [
+     57.5,
+     0.0
     ]
    }
   },
@@ -6754,12 +6916,8 @@
    }
   },
   {
-   "command": "sketch.arc.center_point",
+   "command": "sketch.arc.three_point",
    "params": {
-    "center": [
-     -45,
-     0
-    ],
     "start": [
      -45,
      12.5
@@ -6767,6 +6925,10 @@
     "end": [
      -45,
      -12.5
+    ],
+    "through": [
+     -57.5,
+     0.0
     ]
    }
   },
@@ -7332,6 +7494,7 @@
      "F20L Hoop upright L",
      "F21L Hoop shoulder L",
      "F23L Side rail L",
+     "F24L Side rail front L",
      "F01R Rail rear R",
      "F02R Rail taper R",
      "F03R Rail foot-box R",
@@ -7345,6 +7508,7 @@
      "F20R Hoop upright R",
      "F21R Hoop shoulder R",
      "F23R Side rail R",
+     "F24R Side rail front R",
      "F05 Nose cross",
      "F06 Rear cross",
      "F07 Seat cross front",
@@ -7376,6 +7540,7 @@
      "F20L Hoop upright L",
      "F21L Hoop shoulder L",
      "F23L Side rail L",
+     "F24L Side rail front L",
      "F01R Rail rear R",
      "F02R Rail taper R",
      "F03R Rail foot-box R",
@@ -7389,6 +7554,7 @@
      "F20R Hoop upright R",
      "F21R Hoop shoulder R",
      "F23R Side rail R",
+     "F24R Side rail front R",
      "F05 Nose cross",
      "F06 Rear cross",
      "F07 Seat cross front",
@@ -7703,7 +7869,7 @@
    "command": "material.assign",
    "params": {
     "bodies": [
-     "C13 Engine 196-212 cc OHV (envelope)"
+     "C13 Engine Honda GX200 QX"
     ],
     "material": "Nylon"
    }
@@ -7712,7 +7878,7 @@
    "command": "appearance.assign",
    "params": {
     "bodies": [
-     "C13 Engine 196-212 cc OHV (envelope)"
+     "C13 Engine Honda GX200 QX"
     ],
     "color": "#3b3b40"
    }
@@ -7721,16 +7887,16 @@
    "command": "material.assign",
    "params": {
     "bodies": [
-     "C17 Kart seat size S (envelope)"
+     "C17 Seat universal HDPE bucket 450"
     ],
-    "material": "ABS Plastic"
+    "material": "Polycarbonate"
    }
   },
   {
    "command": "appearance.assign",
    "params": {
     "bodies": [
-     "C17 Kart seat size S (envelope)"
+     "C17 Seat universal HDPE bucket 450"
     ],
     "appearance": "ABS - Black"
    }
