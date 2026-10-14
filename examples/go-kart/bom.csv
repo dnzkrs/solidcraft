@@ -56,7 +56,7 @@ item,part_id,category,description,specification,material_standard,qty,unit,mass_
 55,P05,make: plate,Engine plate,"5 mm, 390 x 300, 4 slots 8.5 x 30 (mark from the engine)",S235,1,pc,,
 56,P06,make: plate,Chain guard,"1.5 mm sheet, follows the chain, hole 66 for the hub, 15 mm folded lip",DC01,1,pc,,
 57,P07,make: plate,Caliper bracket,"6 mm, 80 x 92.5, 2 x 8.5 (match caliper)",S235,1,pc,,
-58,P08,make: plate,Seat tab,"4 mm, 40 x 30, hole 8.5, under the seat's 254 x 273 holes",S235,4,pc,,
+58,P08,make: plate,Seat tab,"4 mm, 40 x 30, hole 8.5, under the seat's mounting holes",S235,4,pc,,
 59,P09,make: plate,Seat-back tab,"4 mm, 30 x 34, hole 8.5 (bolts through the seat back)",S235,2,pc,,drill the seat back on assembly
 60,P10,make: plate,Column upper bracket,"6 mm, 50 x 55, hole 20.5",S235,1,pc,,
 61,P11,make: plate,Column lower bracket,"6 mm, 120 x 65, hole 30 + 2 x 10.5 at 90",S235,1,pc,,

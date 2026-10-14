@@ -27,6 +27,7 @@ _ap.add_argument("--seat-rot", default="", help="rotations into kart axes (multi
 _ap.add_argument("--cli", default=os.environ.get("SOLVECRAFT_CLI") or shutil.which("solvecraft-cli")
                  or os.path.join(_here, "..", "..", "target", "release", "solvecraft-cli"),
                  help="solvecraft-cli used to read the STEP files")
+_ap.add_argument("--config", help="JSON file of parameter overrides (names as in the parameter block)")
 _ap.add_argument("--out", default="go_kart.json", help="script to write")
 ARGS = _ap.parse_args()
 
@@ -55,6 +56,35 @@ MOUNT_Y, MOUNT_X = 162.0, 75.5           # 4 x M8 mounting pattern (verify the o
 ENGINE_FRONT_MAX = 105.0                 # air cleaner must stay this far behind the seat back
 ENGINE_HALF_W = 188.0                    # half of the 376 mm width (air cleaner to muffler)
 
+WHEEL_C = (540.0, 460.0)                 # steering wheel centre (x, z)
+X_DF = 140.0                             # deck front station: uprights F14, cross F16, brace and side rail start
+# Seat: universal high-back plastic (HDPE) go-kart bucket seat, 450 W x 355 H x 370 D, 4 mounting
+# holes 254 (side to side) x 273 (front to back), 10 degree back recline. Upright enough to sit in
+# front of the engine (a racing seat with a 58 degree back would reach it).
+SEAT_W, SEAT_H, SEAT_D = 450.0, 355.0, 370.0
+SEAT_HOLES = (254.0, 273.0)
+SEAT_RECLINE = 10.0                      # degrees from vertical
+SEAT_REAR = 185.0                        # x of the back's outside at the base
+SEAT_TABS = None                         # [[x, y, height above the cross tops], ...]; default: under the holes
+SEAT_BASE_Z = None                       # lowest point of the seat; default: on 4 mm tabs on the crosses
+SEAT_CROSS_X = None                      # [rear, front] seat cross stations; default: under the holes
+
+# --config FILE.json overrides any of the parameters above (e.g. for a vendor seat or engine)
+if ARGS.config:
+    for _k, _v in json.load(open(ARGS.config)).items():
+        if _k not in globals() or _k.startswith("_"):
+            raise SystemExit(f"--config: unknown parameter {_k}")
+        globals()[_k] = tuple(_v) if isinstance(_v, list) and isinstance(globals()[_k], tuple) else _v
+
+SEAT_FRONT = SEAT_REAR + SEAT_D
+SEAT_HOLE_X = (SEAT_REAR + SEAT_D / 2 - SEAT_HOLES[1] / 2, SEAT_REAR + SEAT_D / 2 + SEAT_HOLES[1] / 2)
+if SEAT_CROSS_X is None:
+    SEAT_CROSS_X = SEAT_HOLE_X
+if SEAT_BASE_Z is None:
+    SEAT_BASE_Z = Z_RAIL + TUBE_OD / 2 + 4
+if SEAT_TABS is None:
+    SEAT_TABS = [[x, y, 0.0] for x in SEAT_HOLE_X for y in (-SEAT_HOLES[0] / 2, SEAT_HOLES[0] / 2)]
+
 # Chain: choose the smallest even link count that keeps the engine behind the seat, then put the
 # engine where that chain fits with the mounting slots centred (+/-15 mm for tension and wear).
 _P35 = 9.525
@@ -73,16 +103,6 @@ while not (_centres(CHAIN_LINKS) > _dz and
     CHAIN_LINKS += 2
 ENGINE_X = -math.sqrt(_centres(CHAIN_LINKS) ** 2 - _dz ** 2)
 CLUTCH = (ENGINE_X, ENGINE_BASE_Z + CRANK_H)      # (x, z) in the chain plane
-WHEEL_C = (540.0, 460.0)                 # steering wheel centre (x, z)
-# Seat: universal high-back plastic (HDPE) go-kart bucket seat, 450 W x 355 H x 370 D, 4 mounting
-# holes 254 (side to side) x 273 (front to back), 10 degree back recline. Upright enough to sit in
-# front of the engine (a racing seat with a 58 degree back would reach it).
-SEAT_W, SEAT_H, SEAT_D = 450.0, 355.0, 370.0
-SEAT_HOLES = (254.0, 273.0)
-SEAT_RECLINE = 10.0                      # degrees from vertical
-SEAT_REAR = 185.0                        # x of the back's outside at the base
-SEAT_FRONT = SEAT_REAR + SEAT_D
-SEAT_HOLE_X = (SEAT_REAR + SEAT_D / 2 - SEAT_HOLES[1] / 2, SEAT_REAR + SEAT_D / 2 + SEAT_HOLES[1] / 2)
 COL_BOTTOM = (953.6, 196.9)              # steering column lower end (x, z)
 
 cmds = []
@@ -323,24 +343,24 @@ for s, side in ((1, "L"), (-1, "R")):
     member(f"F04{side}", f"Nose rail {side}", m(F1, s), m(N1, s), ("mitre", f"F03{side}"), ("mitre", "F05"))
     member(f"F11{side}", f"Front upright {side}", [WB, 150.0 * s, Z_RAIL], [WB, 150.0 * s, ZA], ("cope", f"F03{side}"), ("cope", "F12"))
     member(f"F13{side}", f"Rear upright {side}", [X_RU, 250.0 * s, Z_RAIL], [X_RU, 250.0 * s, Z_DECK], ("cope", f"F01{side}"), ("cope", "F15"))
-    member(f"F14{side}", f"Deck front upright {side}", [140.0, 250.0 * s, Z_RAIL], [140.0, 250.0 * s, Z_DECK], ("cope", f"F01{side}"), ("cope", "F16"))
-    member(f"F17{side}", f"Deck rail {side}", [X_RU, 140.0 * s, Z_DECK], [140.0, 140.0 * s, Z_DECK], ("cope", "F15"), ("cope", "F16"))
+    member(f"F14{side}", f"Deck front upright {side}", [X_DF, 250.0 * s, Z_RAIL], [X_DF, 250.0 * s, Z_DECK], ("cope", f"F01{side}"), ("cope", "F16"))
+    member(f"F17{side}", f"Deck rail {side}", [X_RU, 140.0 * s, Z_DECK], [X_DF, 140.0 * s, Z_DECK], ("cope", "F15"), ("cope", "F16"))
     member(f"F18{side}", f"Rear diagonal {side}", [X_RU, 250.0 * s, 200.0], [-160.0, 250.0 * s, Z_RAIL], ("cope", f"F13{side}"), ("cope", f"F01{side}"))
-    member(f"F19{side}", f"Deck front brace {side}", [140.0, 250.0 * s, 175.0], [300.0, 250.0 * s, Z_RAIL], ("cope", f"F14{side}"), ("cope", f"F01{side}"))
+    member(f"F19{side}", f"Deck front brace {side}", [X_DF, 250.0 * s, 175.0], [X_DF + 160, 250.0 * s, Z_RAIL], ("cope", f"F14{side}"), ("cope", f"F01{side}"))
     member(f"F20{side}", f"Hoop upright {side}", m(HOOP_B, s), m(HOOP_K, s), ("cope", f"F03{side}"), ("mitre", f"F21{side}"))
     member(f"F21{side}", f"Hoop shoulder {side}", m(HOOP_K, s), m(HOOP_T, s), ("mitre", f"F20{side}"), ("mitre", "F22"))
-    member(f"F23{side}", f"Side rail {side}", [140.0, 250.0 * s, Z_SIDE], [SEAT_FRONT - 5, 250.0 * s, Z_SIDE], ("cope", f"F14{side}"), ("mitre", f"F24{side}"))
+    member(f"F23{side}", f"Side rail {side}", [X_DF, 250.0 * s, Z_SIDE], [SEAT_FRONT - 5, 250.0 * s, Z_SIDE], ("cope", f"F14{side}"), ("mitre", f"F24{side}"))
     member(f"F24{side}", f"Side rail front {side}", [SEAT_FRONT - 5, 250.0 * s, Z_SIDE], m(SIDE_F, s), ("mitre", f"F23{side}"), ("cope", f"F20{side}"))
 
 member("F05", "Nose cross", m(N1, 1), m(N1, -1), ("mitre", "F04L"), ("mitre", "F04R"))
 member("F06", "Rear cross", m(RC, 1), m(RC, -1), ("cope", "F01L"), ("cope", "F01R"))
-member("F07", "Seat cross front", [SEAT_HOLE_X[1], 250.0, Z_RAIL], [SEAT_HOLE_X[1], -250.0, Z_RAIL], ("cope", "F01L"), ("cope", "F01R"))
-member("F08", "Seat cross rear", [SEAT_HOLE_X[0], 250.0, Z_RAIL], [SEAT_HOLE_X[0], -250.0, Z_RAIL], ("cope", "F01L"), ("cope", "F01R"))
+member("F07", "Seat cross front", [SEAT_CROSS_X[1], 250.0, Z_RAIL], [SEAT_CROSS_X[1], -250.0, Z_RAIL], ("cope", "F01L"), ("cope", "F01R"))
+member("F08", "Seat cross rear", [SEAT_CROSS_X[0], 250.0, Z_RAIL], [SEAT_CROSS_X[0], -250.0, Z_RAIL], ("cope", "F01L"), ("cope", "F01R"))
 member("F09", "Brake cross", [-120.0, 250.0, Z_RAIL], [-120.0, -250.0, Z_RAIL], ("cope", "F01L"), ("cope", "F01R"))
 member("F10", "Pedal cross", [850.0, 150.0, Z_RAIL], [850.0, -150.0, Z_RAIL], ("cope", "F03L"), ("cope", "F03R"))
 member("F12", "Front axle beam", [WB, FA, ZA], [WB, -FA, ZA], ("sq", "welds to kingpin bracket back plate"), ("sq", "welds to kingpin bracket back plate"))
 member("F15", "Deck rear cross", [X_RU, 250.0, Z_DECK], [X_RU, -250.0, Z_DECK], ("cap", "runs 12.5 past F13L, end plug"), ("cap", "runs 12.5 past F13R, end plug"))
-member("F16", "Deck front cross", [140.0, 250.0, Z_DECK], [140.0, -250.0, Z_DECK], ("cap", "runs 12.5 past F14L, end plug"), ("cap", "runs 12.5 past F14R, end plug"))
+member("F16", "Deck front cross", [X_DF, 250.0, Z_DECK], [X_DF, -250.0, Z_DECK], ("cap", "runs 12.5 past F14L, end plug"), ("cap", "runs 12.5 past F14R, end plug"))
 member("F22", "Hoop top", m(HOOP_T, 1), m(HOOP_T, -1), ("mitre", "F21L"), ("mitre", "F21R"))
 
 def ext_ends(p0, p1, e0, e1):
@@ -609,7 +629,7 @@ revolve("C12 Centrifugal clutch 10T #35", [ex, CHAIN_Y - 52, ez], [0, 1, 0], [0,
 
 # ----------------------------------------------------------------------------- engine plate and engine (envelope)
 plate("P05 Engine plate", plane([0, 0, Z_DECK + R], [1, 0, 0], [0, 1, 0]),
-      [(-240, -150), (150, -150), (150, 150), (-240, 150)], 5,
+      [(-240, -150), (X_DF + 10, -150), (X_DF + 10, 150), (-240, 150)], 5,
       holes=[], direction="positive")
 # engine mounting slots: 4 x M8 on 162 x 75.5 (GX160/GX200 pattern); slots along X give +/- 15 mm
 # of fore-aft travel to tension the chain. Mark from the engine itself before cutting.
@@ -670,7 +690,7 @@ plate("P07 Caliper bracket", plane([0, BRAKE_Y - 20, 0], [1, 0, 0], [0, 0, 1]),
 # ----------------------------------------------------------------------------- seat: universal bucket seat
 # Modelled as a 5 mm shell: flat base on the seat tabs, back reclined SEAT_RECLINE, side bolsters.
 SEAT = "C17 Seat universal HDPE bucket 450"
-SEAT_Z, SEAT_T = Z_RAIL + R + 4, 5.0             # underside on the seat tabs; shell thickness
+SEAT_Z, SEAT_T = SEAT_BASE_Z, 5.0                 # underside on the seat tabs; shell thickness
 SEAT_TOP = SEAT_Z + SEAT_H
 _tan = math.tan(math.radians(SEAT_RECLINE))
 back_x = lambda z: SEAT_REAR - (z - SEAT_Z) * _tan          # outside of the back
@@ -693,16 +713,18 @@ else:
     c("sketch.finish")
     c("solid.extrude", distance=SEAT_W / 2 - SEAT_T, direction="symmetric", operation="cut", targets=[SEAT],
       name="Seat cavity")
-# seat tabs on the seat crosses under the seat's 4 holes: 40 x 30 x 4, hole 8.5
-for i, (x, y) in enumerate([(SEAT_HOLE_X[0], -SEAT_HOLES[0] / 2), (SEAT_HOLE_X[0], SEAT_HOLES[0] / 2),
-                            (SEAT_HOLE_X[1], -SEAT_HOLES[0] / 2), (SEAT_HOLE_X[1], SEAT_HOLES[0] / 2)], 1):
-    plate(f"P08{i} Seat tab {i}", plane([0, 0, Z_RAIL + R], [1, 0, 0], [0, 1, 0]),
+# seat tabs on the seat crosses under the seat's holes: 40 x 30 x 4, hole 8.5; a tab with a height
+# above the tube top stands on a welded block of that height
+for i, (x, y, h) in enumerate(SEAT_TABS, 1):
+    plate(f"P08{i} Seat tab {i}", plane([0, 0, Z_RAIL + R + h], [1, 0, 0], [0, 1, 0]),
           [(x - 20, y - 15), (x + 20, y - 15), (x + 20, y + 15), (x - 20, y + 15)], 4,
           holes=[(x, y, 8.5)], pick=(x - 12, y), direction="positive")
+    if h > 0:
+        box(f"P14{i} Seat tab block {i}", [x - 15, y - 12, Z_RAIL + R], [x + 15, y + 12, Z_RAIL + R + h])
 # seat-back tabs: 4 mm plates welded to the front of the deck front cross, parallel to the seat back;
 # an M8 bolt goes through tab, spacer washers and seat back
 for y in (-100, 100):
-    plate(f"P09 Seat back tab {'L' if y > 0 else 'R'}", plane([140 + R, 0, 0], [0, 1, 0], [0, 0, 1]),
+    plate(f"P09 Seat back tab {'L' if y > 0 else 'R'}", plane([X_DF + R, 0, 0], [0, 1, 0], [0, 0, 1]),
           [(y - 15, Z_DECK - 17), (y + 15, Z_DECK - 17), (y + 15, Z_DECK + 17), (y - 15, Z_DECK + 17)], 4,
           holes=[(y, Z_DECK + 5, 8.5)], pick=(y, Z_DECK - 10), direction="positive")
 
@@ -931,8 +953,13 @@ BOM = [
     ("P06", MAKE_P, "Chain guard", "1.5 mm sheet, follows the chain, hole 66 for the hub, 15 mm folded lip",
      "DC01", 1, "pc", "", ""),
     ("P07", MAKE_P, "Caliper bracket", "6 mm, 80 x 92.5, 2 x 8.5 (match caliper)", "S235", 1, "pc", "", ""),
-    ("P08", MAKE_P, "Seat tab", "4 mm, 40 x 30, hole 8.5, under the seat's 254 x 273 holes", "S235", 4, "pc",
-     "", ""),
+    ("P08", MAKE_P, "Seat tab", "4 mm, 40 x 30, hole 8.5, under the seat's mounting holes", "S235", len(SEAT_TABS),
+     "pc", "", ""),
+] + [
+    ("P14", MAKE_P, "Seat tab block", "30 x 24 flat bar stack / block under a raised seat tab, height " +
+     ", ".join(f"{t[2]:.0f}" for t in SEAT_TABS if t[2] > 0), "S235", sum(1 for t in SEAT_TABS if t[2] > 0), "pc",
+     "", "") for _ in [0] if any(t[2] > 0 for t in SEAT_TABS)
+] + [
     ("P09", MAKE_P, "Seat-back tab", "4 mm, 30 x 34, hole 8.5 (bolts through the seat back)", "S235", 2, "pc",
      "", "drill the seat back on assembly"),
     ("P10", MAKE_P, "Column upper bracket", "6 mm, 50 x 55, hole 20.5", "S235", 1, "pc", "", ""),

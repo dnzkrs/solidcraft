@@ -125,6 +125,14 @@ solvecraft-cli run go_kart_vendor.json --save go_kart.solvecraft --out go_kart.s
   across the kart.
 - The BOM check counts the imported bodies, then run the clash check
   (`inspect.interference`) again.
+- A vendor part with a different size usually needs the frame to follow it. `--config parts.json`
+  overrides any parameter in the generator's parameter block. Useful ones:
+  - `X_DF`: the deck front cross behind the seat.
+  - `SEAT_REAR`, `SEAT_D`: the seat's position and depth.
+  - `SEAT_BASE_Z`: the seat's lowest point.
+  - `SEAT_CROSS_X`: the stations of the two seat crosses.
+  - `SEAT_TABS`: the seat tabs, each `[x, y, height]`; a raised tab stands on a welded block.
+  - `ENGINE_FRONT_MAX`: how far forward the engine may sit.
 
 ## 4. Parts to make
 
