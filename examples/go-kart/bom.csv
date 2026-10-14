@@ -1,0 +1,64 @@
+item,part_id,category,description,specification,material_standard,qty,unit,mass_each_kg,notes
+1,C13,buy,Engine,"Honda GX200 QX (GX200UT2QX2): 196 cc OHV, 5.5 hp at 3600 rpm (governed), 3/4 in x 2-7/16 in keyed shaft, 313 x 376 x 346 mm",-,1,pc,16.1,"Same base pattern and shaft: Predator 212 non-hemi, Loncin G200F (clones use 5/16-24 mounting bolts)"
+2,C12,buy,Centrifugal clutch,"Dry centrifugal clutch, 3/4 in bore, 10T ANSI #35, engages ~2000 rpm",-,1,pc,,Max-Torque / Hilliard type
+3,C11,buy,Roller chain,"ANSI #35 roller chain, 92 links incl. 1 connecting link",ISO 606 06C-1,1,pc,,"centre distance 223.1 mm, tension with engine slots"
+4,C09,buy,Axle sprocket,72T ANSI #35 bolt-on sprocket,ISO 606 06C-1,1,pc,,bolt pattern to match C10
+5,C10,buy,Sprocket hub,"Sprocket hub, 25 mm bore, 8 mm keyway, set screws",-,1,pc,,
+6,C07,buy,Rear axle bearing,"UCFL205 2-bolt flange unit, 25 mm bore, set-screw insert",ISO 9628,2,pc,0.8,bolt centres 99 mm
+7,C08,buy,Shaft collar,"Set-screw shaft collar, 25 mm",-,2,pc,,inboard of the bearings
+8,C06,buy,Rear wheel hub,"Bolt-on hub, 25 mm bore, 8 mm keyway, flange to suit C05",-,2,pc,,buy as a set with the rims
+9,C04,buy,Tyre,"13x5.00-6 off-road / knobby, tubeless",-,4,pc,,
+10,C05,buy,Rim,6 x 4.5 in steel 2-piece rim; front rims bored for 2 x 6204,-,4,pc,,
+11,C01,buy,Front wheel bearing,6204-2RS deep-groove ball bearing 20 x 47 x 14,ISO 15,4,pc,0.106,
+12,,buy,Kingpin bush,Flanged PTFE-lined bush 12 x 14 x 12 (e.g. SKF PCMF 121412E),ISO 3547,4,pc,,press into M01 after reaming to 14 H7
+13,C03,buy: fastener,Kingpin bolt,"Hex bolt M12 x 90, 8.8, with nylock nut and 2 washers",ISO 4014 / 10511,2,set,,
+14,C02,buy: fastener,Stub-axle nut,Nylock nut M20 x 1.5 + washer 20,ISO 10512 / 7089,2,set,,
+15,,buy: fastener,Cotter pin,Split pin 3.2 x 32,ISO 1234,2,pc,,stub-axle nut lock
+16,C22,buy,"Rod end, pitman side",Female rod end M8 right-hand (e.g. SKF SI 8 E),ISO 12240-4,2,pc,,
+17,C23,buy,"Rod end, steering-arm side",Female rod end M8 left-hand (e.g. SKF SIL 8 E),ISO 12240-4,2,pc,,
+18,,buy: fastener,Rod-end bolts,"Hex bolt M8 x 35, 8.8, nylock nut, 2 washers",ISO 4014 / 10511,4,set,,
+19,,buy: fastener,Tie-rod jam nuts,"Hex nut M8 RH x 2, M8 LH x 2",ISO 4032,4,pc,,
+20,C19,buy,Steering wheel,"Kart steering wheel 280 mm, 3-bolt",-,1,pc,,model: rim + spokes
+21,C18,buy,Steering wheel hub,3-bolt steering hub for 20 mm column,-,1,pc,,
+22,C21,buy,Column lower bearing,"UCFL204 2-bolt flange unit, 20 mm bore",ISO 9628,1,pc,0.6,bolt centres 90 mm
+23,C20,buy,Column upper bush,"Split nylon steering-column bush, 20 mm (2 halves)",-,1,set,,model: 2 halves
+24,C14,buy,Brake disc,Steel brake disc 180 x 4 mm,-,1,pc,,
+25,C15,buy,Brake disc hub,"Disc hub, 25 mm bore, 8 mm keyway",-,1,pc,,
+26,C16,buy,Brake caliper,Mechanical (cable) disc caliper for 4 mm disc,-,1,pc,,drill P07 to its bolt pattern
+27,,buy,Brake cable,"Brake cable with housing and adjuster, 1.5 m",-,1,pc,,
+28,,buy,Throttle cable,"Throttle cable with housing, 1.5 m, to suit the engine's governor lever",-,1,pc,,
+29,C17,buy,Seat,"Tillett T11 kart seat, size XS, fibreglass (driver ~1.5 m / 45 kg)",-,1,pc,,Tillett chart A 27.5 / B 29 / C 40.3 / D 9.5 / E 30 cm
+30,,buy,Keys,Parallel key 8 x 7 x 30,DIN 6885 A,4,pc,,"hubs, sprocket hub, disc hub"
+31,,buy,Pedal return springs,Extension spring ~50 N,-,2,pc,,
+32,,buy,Tube end plugs,Plastic end plug for 25 x 2 tube,-,6,pc,,"F01 x2, F15 x2, F16 x2"
+33,,buy: fastener,Bearing bolts UCFL205,"Hex bolt M10 x 40, 8.8, nylock nut, 2 washers",ISO 4017 / 10511,4,set,,
+34,,buy: fastener,Bearing bolts UCFL204,"Hex bolt M10 x 30, 8.8, nylock nut, 2 washers",ISO 4017 / 10511,2,set,,
+35,,buy: fastener,Engine bolts,"Hex bolt M8 x 25, 8.8, spring + flat washer (into the engine's M8 base)",ISO 4017,4,set,,5/16-24 UNF on most clones
+36,,buy: fastener,Seat bolts,"Hex bolt M8 x 25, 8.8, large washer 8.4 x 24, nylock nut",ISO 4017 / DIN 9021,6,set,,4 base + 2 back
+37,,buy: fastener,Caliper bolts,"Hex bolt M8 x 30, 8.8, nylock nut",ISO 4017 / 10511,2,set,,
+38,,buy: fastener,Pedal pivot bolts,Shoulder bolt 8 x 30 (M6) or M8 x 45 bolt with nylock nut,ISO 7379,2,set,,
+39,,buy: fastener,Chain guard fasteners,M6 rivet nut + M6 x 12 button screw,ISO 7380,3,set,,
+40,,buy: fastener,Floor pan rivets,Blind rivet 4.8 x 12 steel,ISO 15983,24,pc,,or stitch-weld
+41,F,make: tube,Frame tubes,"Round tube 25 x 2.0, 36 pieces, total 10.77 m (see cut_list.csv); order 2 x 6 m",EN 10305-3 E235 (or 1 in x 14 ga DOM),36,pc,,copes and mitres per cut_list.csv
+42,M05,make: machined,Rear axle,"Dia 25 h9 x 860, keyways 8 x 4 at hubs, sprocket and disc hub",C45 bright bar,1,pc,,
+43,M01,make: machined,Knuckle sleeve,"Tube 22 x 4 x 48, ream 14 H7 after welding",E355 tube,2,pc,,
+44,M02,make: machined,Stub axle,"Dia 20 x 162, thread M20 x 1.5 x 25, 3.2 mm cotter hole",S355 bright bar,2,pc,,weld to M01 in a fixture
+45,M03,make: machined,Steering arm,"6 mm plate, hole 8.2 at 80 mm from kingpin",S235,2,pc,,
+46,M04,make: machined,Stub-axle spacer,"Tube 28 x 4 x 44.5, faces square",E235 tube,2,pc,,
+47,M06,make: machined,Steering column,Tube 20 x 2.5 x 510,E355 tube,1,pc,,
+48,M07,make: machined,Pitman arm,"6 mm plate, hole 20.5 + 2 x 8.2 at +/-45",S235,1,pc,,
+49,M08,make: machined,Tie rod,"Dia 12 x ~165, M8 RH one end, M8 LH other, 20 deep",S235 bright bar,2,pc,,set toe-in 0-2 mm
+50,M09,make: machined,Pedal arm,Tube 16 x 2 x 171 with 8.5 pivot boss,E235 tube,2,pc,,
+51,P01,make: plate,Floor pan,"1.5 mm sheet, 700 x 525 outline",DC01 / S235,1,pc,,
+52,P02,make: plate,Rear bearing plate,"8 mm, 150 x 157, hole 45 + 2 x 12 at 99",S235,2,pc,,
+53,P03,make: plate,Kingpin back plate,"6 mm, 40 x 62",S235,2,pc,,
+54,P04,make: plate,Kingpin ear,"6 mm, 40 x 39 with R20 end, hole 12.2",S235,4,pc,,
+55,P05,make: plate,Engine plate,"5 mm, 390 x 300, 4 slots 8.5 x 30 (mark from the engine)",S235,1,pc,,
+56,P06,make: plate,Chain guard,"1.5 mm sheet, follows the chain, hole 66 for the hub, 15 mm folded lip",DC01,1,pc,,
+57,P07,make: plate,Caliper bracket,"6 mm, 80 x 92.5, 2 x 8.5 (match caliper)",S235,1,pc,,
+58,P08,make: plate,Seat tab,"4 mm, 40 x 30, hole 8.5",S235,4,pc,,
+59,P09,make: plate,Seat-back tab,"4 mm, ~21 x 30, hole 8.5",S235,2,pc,,
+60,P10,make: plate,Column upper bracket,"6 mm, 50 x 55, hole 20.5",S235,1,pc,,
+61,P11,make: plate,Column lower bracket,"6 mm, 120 x 65, hole 30 + 2 x 10.5 at 90",S235,1,pc,,
+62,P12,make: plate,Pedal clevis tab,"4 mm, 30 x 25, hole 8.5",S235,4,pc,,
+63,P13,make: plate,Pedal pad,"8 mm, 70 x 60, knurled",S235,2,pc,,
