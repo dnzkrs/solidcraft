@@ -143,6 +143,23 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 3-04 | Differential housing part-2 | Steel | 1 | 20,630.1 | 161.9 |
 | 3-05 | Rear axle main bearing housing part-1 | Aluminum | 1 | 7,312.4 | 19.7 |
 | 3-06 | Rear axle main bearing housing part-2 | Aluminum | 1 | 12,653.9 | 34.2 |
+| 3-07 | Rear axle main housing ball bearing-1 | Steel | 1 | 6,715.0 | 52.7 |
+| 3-08 | Rear axle main housing ball bearing-2 | Steel | 1 | 2,111.1 | 16.6 |
+| 3-09A | Rear axle-1 | Steel | 1 | 3,946.7 | 31.0 |
+| 3-09B | Rear axle-2 | Steel | 1 | 5,303.6 | 41.6 |
+| 3-10 | Differential gear wheel | Brass | 1 | 2,252.8 | 19.1 |
+| 3-11 | Differential gear wheel shaft | Stainless Steel | 1 | 1,115.2 | 8.9 |
+| 3-13 | Rear wheel spacer | Brass | 1 | 1,945.2 | 16.5 |
+| 3-14 | Rear wheel mounting plate | Steel | 1 | 11,281.7 | 88.6 |
+| 3-15 | Rear wheel rim | Aluminum | 1 | 66,225.2 | 178.8 |
+| 3-16 | Rear wheel tyre | Default | 1 | 467,298.4 | 602.8 |
+| 3-17 | Rear wheel hub cap | Brass | 1 | 541.4 | 4.6 |
+| 3-18 | Rear wheel drive gear wheel | Brass | 1 | 10,229.7 | 87.0 |
+| 3-19 | Drivers console side frame | Aluminum | 1 | 23,636.2 | 63.8 |
+| 3-21 | Accelerator control lever | Brass, Steel | 2 | 1,423.4 | 11.6 |
+| 3-22 | Accelerator control lever handle | Brass | 1 | 647.2 | 5.5 |
+| 3-25A | Drivers seat base | Brass | 1 | 4,811.7 | 40.9 |
+| 3-25B | Drivers seat | Oak | 1 | 27,807.3 | 20.9 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,
@@ -265,6 +282,17 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
 - **3-03/3-04**: read from their sections' lines; the 8 flange holes are turned 22.5° from the
   drawing (off the revolve's seam), and 3-04's Ø6 radial hole is placed at 45° for the same reason.
 
+- **3-07/3-08** are bought-in bearings, modelled as their envelopes. **3-10** is modelled as its
+  bevel gear blank (from the lines); its teeth (about 20, not dimensioned) are not cut. **3-17**:
+  the spigot's Ø5.5 bore is measured; its cross slot is turned 45° (off the revolve's seam).
+- **3-15**: the rim's profile is read from section B-B's lines (about 2 thick, a 3 thick web).
+  **3-18**: the teeth's R5 flanks are straightened. **3-19**: the second M4 in the front edge (45
+  up) is measured, and the M4 at 66 in the underside is modelled 9 deep (see the issues below).
+- **3-22**: the knob's taper to Ø8.4 is measured. **3-25A**: the angle round the tray is taken as
+  6 high overall (the side view), so the back wall's pilot holes nick its flat leg.
+  **3-25B**: oak; its R6 top round is modelled R5 (SolidCraft refuses 5.5 and more on the 6 high
+  top).
+
 ## SolidCraft issue found while modelling
 
 Adding blind holes one at a time with `solid.hole` to 1-01 left most of them **3.42 mm too
@@ -305,3 +333,7 @@ a 0.5 top took the top away, and cuts across the bottom edge of the bent-up 2-47
 deep (on a 0.5 sheet the boolean's tolerance, about 0.35 mm, and its 1 mm nudge are as large as
 the wall). Interior cut-outs are right. 2-48 is therefore hollowed with `solid.shell` and 2-47
 built with the sheet-metal commands, which give the exact volumes.
+
+A cut whose end face lies in the plane of another face of the part needs a separation retry and
+can come out deeper, even when the two faces are far apart: 3-19's M4 at 66, ending in the plane
+of the notch's floor (Y = 8), was cut 2.5 too deep. It ends at Y = 9 instead.

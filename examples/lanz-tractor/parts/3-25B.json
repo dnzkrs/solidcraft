@@ -1,0 +1,391 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Slab"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -21.0,
+      1
+     ],
+     [
+      21.0,
+      1
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     21.0,
+     10
+    ],
+    "start": [
+     21.0,
+     1
+    ],
+    "end": [
+     30.0,
+     10
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.0,
+      10
+     ],
+     [
+      30.0,
+      32
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     12.0,
+     32
+    ],
+    "start": [
+     30.0,
+     32
+    ],
+    "end": [
+     12.0,
+     50
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12.0,
+      50
+     ],
+     [
+      -12.0,
+      50
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -12.0,
+     32
+    ],
+    "start": [
+     -12.0,
+     50
+    ],
+    "end": [
+     -30.0,
+     32
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -30.0,
+      32
+     ],
+     [
+      -30.0,
+      10
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -21.0,
+     10
+    ],
+    "start": [
+     -30.0,
+     10
+    ],
+    "end": [
+     -21.0,
+     1
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 4.5,
+    "name": "Slab",
+    "body_name": "3-25B Drivers seat"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      4
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Top"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -21.0,
+      0.0
+     ],
+     [
+      21.0,
+      0.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     21.0,
+     10.0
+    ],
+    "start": [
+     21.0,
+     0.0
+    ],
+    "end": [
+     31.0,
+     10.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      31.0,
+      10.0
+     ],
+     [
+      31.0,
+      32.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     12.0,
+     32.0
+    ],
+    "start": [
+     31.0,
+     32.0
+    ],
+    "end": [
+     12.0,
+     51.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12.0,
+      51.0
+     ],
+     [
+      -12.0,
+      51.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -12.0,
+     32.0
+    ],
+    "start": [
+     -12.0,
+     51.0
+    ],
+    "end": [
+     -31.0,
+     32.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -31.0,
+      32.0
+     ],
+     [
+      -31.0,
+      10.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -21.0,
+     10.0
+    ],
+    "start": [
+     -31.0,
+     10.0
+    ],
+    "end": [
+     -21.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 6,
+    "operation": "join",
+    "targets": [
+     "3-25B Drivers seat"
+    ],
+    "name": "Top"
+   }
+  },
+  {
+   "command": "solid.fillet",
+   "params": {
+    "edges": [
+     [
+      0,
+      0,
+      10
+     ],
+     [
+      0,
+      51,
+      10
+     ],
+     [
+      31.0,
+      25.5,
+      10
+     ],
+     [
+      -31.0,
+      25.5,
+      10
+     ],
+     [
+      28.071068,
+      2.928932,
+      10
+     ],
+     [
+      25.435029,
+      45.435029,
+      10
+     ],
+     [
+      -25.435029,
+      45.435029,
+      10
+     ],
+     [
+      -28.071068,
+      2.928932,
+      10
+     ]
+    ],
+    "radius": 5,
+    "name": "Top round"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-25B Drivers seat"
+    ],
+    "material": "Oak"
+   }
+  }
+ ]
+}

@@ -3435,6 +3435,384 @@ def bearing_housing_2(s):
                                 (9, 7), (10, 7)])
 
 
+# ----------------------------------------------------------------------------- 3-07 to 3-17
+def revolved_loop(s, name, start, segs, body=None, operation="new"):
+    """Revolve a (r, z) loop with arcs about Z (Script.loop arguments in the XZ half plane)."""
+    s.sketch(f"{name} section", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    s.loop(start, segs)
+    s.finish()
+    extra = {"body_name": body or s.body} if operation == "new" else {"targets": [body or s.body]}
+    s.cmd("solid.revolve", axis="Z", operation=operation, name=name, **extra)
+
+
+def spandrel_ring(r_corner, rad, inward=True):
+    """Volume of the ring a radius `rad` round removes from (or adds to) a circular corner edge at
+    radius r_corner: the spandrel (1 - pi/4) rad² about its centroid."""
+    k = (10 - 3 * math.pi) / (12 - 3 * math.pi) * rad
+    return 2 * math.pi * (r_corner - k if inward else r_corner + k) * (1 - math.pi / 4) * rad * rad
+
+
+@part("3-07", "Rear axle main housing ball bearing-1", "Steel")
+def ball_bearing_1(s):
+    """Sheet 06, 3-07: a bought-in ball bearing Ø32 / Ø13, 10 thick (as drawn), modelled as its
+    envelope. Axis = Z."""
+    return s.turned("Bearing", [(6.5, 0), (16, 0), (16, 10), (6.5, 10)])
+
+
+@part("3-08", "Rear axle main housing ball bearing-2", "Steel")
+def ball_bearing_2(s):
+    """Sheet 06, 3-08: a bought-in ball bearing Ø20 / Ø8, 8 thick, modelled as its envelope. Axis = Z."""
+    return s.turned("Bearing", [(4, 0), (10, 0), (10, 8), (4, 8)])
+
+
+def rear_axle(s, L):
+    D, DE, LE = 8, 6, 13
+    v = s.turned("Axle", [(0, 0), (D / 2, 0), (D / 2, L), (DE / 2, L), (DE / 2, L + LE), (0, L + LE)])
+    s.cmd("solid.cylinder", diameter=4.5, height=21, base=[-10.5, 0, 12.5], axis="X", operation="join",
+          targets=[s.body], name="Cross pin")
+    return v + math.pi / 4 * 4.5 ** 2 * 21 - cross_hole(D / 2, 2.25)
+
+
+@part("3-09A", "Rear axle-1", "Steel")
+def rear_axle_1(s):
+    """Sheet 06, 3-09A (scale 1:2): a Ø8 x 67 steel axle with a Ø6 x 13 end and a Ø4.5 x 21 cross pin
+    (pressed in) 12.5 from the other end. Axis = Z, the pin along X."""
+    return rear_axle(s, s.param("ra_l", 67, "Ø8 length"))
+
+
+@part("3-09B", "Rear axle-2", "Steel")
+def rear_axle_2(s):
+    """Sheet 06, 3-09B (scale 1:2): as 3-09A with the Ø8 part 94 long. Axis = Z."""
+    return rear_axle(s, s.param("ra_l", 94, "Ø8 length"))
+
+
+@part("3-10", "Differential gear wheel", "Brass")
+def diff_gear(s):
+    """Sheet 06, 3-10 (scale 1:1, from the lines): a brass bevel gear on a 90° pitch cone: the back
+    face to Ø15.1, a 45° back cone to the Ø21.1 tips 3 out, the face cone at 45° down to the Ø13 hub
+    4 further, the hub 7.5 long with an R2 end; reamed Ø6. Modelled as the gear blank: the teeth
+    (about 20, not dimensioned) are not cut. Axis = Z, the back face on Z = 0."""
+    zt, zh, zl = 2.96, 6.98, 14.49
+    start = (3, 0)
+    segs = [("line", (7.56, 0)), ("line", (10.52, zt)), ("line", (6.5, zh)), ("line", (6.5, zl - 2)),
+            ("arc", (4.5, zl - 2), (4.5, zl), True), ("line", (3, zl)), ("line", start)]
+    revolved_loop(s, "Blank", start, segs)
+    pts = [(3, 0), (7.56, 0), (10.52, zt), (6.5, zh), (6.5, zl), (3, zl)]
+    return revolved_volume(pts) - spandrel_ring(6.5, 2)
+
+
+@part("3-11", "Differential gear wheel shaft", "Stainless Steel")
+def diff_gear_shaft(s):
+    """Sheet 06, 3-11 (scale 1:1.5): a Ø6 x 45.5 stainless shaft, tapped M4 (Ø3.3) 10 deep at both
+    ends. Axis = Z."""
+    L = s.param("dgs_l", 45.5, "length")
+    return s.turned("Shaft", [(1.65, 0), (3, 0), (3, L), (1.65, L), (1.65, L - 10), (0, L - 10), (0, 10), (1.65, 10)])
+
+
+@part("3-13", "Rear wheel spacer", "Brass")
+def rear_wheel_spacer(s):
+    """Sheet 06, 3-13 (scale 1:1.5): a brass spool: Ø19 x 2 flanges 15 apart on a Ø12 body with R2
+    roots, bored Ø8. Axis = Z."""
+    start = (4, 0)
+    segs = [("line", (9.5, 0)), ("line", (9.5, 2)), ("line", (8, 2)), ("arc", (8, 4), (6, 4), False),
+            ("line", (6, 15)), ("arc", (8, 15), (8, 17), False), ("line", (9.5, 17)), ("line", (9.5, 19)),
+            ("line", (4, 19)), ("line", start)]
+    revolved_loop(s, "Spool", start, segs)
+    pts = [(4, 0), (9.5, 0), (9.5, 2), (6, 2), (6, 17), (9.5, 17), (9.5, 19), (4, 19)]
+    return revolved_volume(pts) + 2 * spandrel_ring(6, 2, inward=False)
+
+
+@part("3-14", "Rear wheel mounting plate", "Steel")
+def rear_wheel_mounting_plate(s):
+    """Sheet 06, 3-14 (scale 1:1.5, section A-A): a Ø42 x 5 steel flange between a Ø20 x 6 and a
+    Ø20 x 13 hub, bored Ø8; 5 x M4 (Ø3.3) on a Ø32 PCD (72° apart, one at the top); a Ø4.5 cross
+    hole through the long hub 8 from the flange. Axis = Z; the cross hole at 45° (off the seam)."""
+    v = s.turned("Plate", [(4, 0), (10, 0), (10, 6), (21, 6), (21, 11), (10, 11), (10, 24), (4, 24)])
+    v -= pcd_holes(s, "M4 tapped", 5, 7, 3.3, n=5, pcd=32, start_deg=90) * 5
+    u = (math.cos(math.radians(45)), math.sin(math.radians(45)), 0)
+    s.holes("Ø4.5 cross hole", (12 * u[0], 12 * u[1], 0), (-u[0], -u[1], 0), [(12 * u[0], 12 * u[1], 19)], 4.5)
+    return v - cross_hole(10, 2.25, 4)
+
+
+@part("3-17", "Rear wheel hub cap", "Brass")
+def rear_hub_cap(s):
+    """Sheet 06, 3-17 (scale 1:1, from a 1000 dpi render): a Ø20 x 2 brass cap with a Ø14 recess 1
+    deep in its face; on the back a split spigot Ø7 x 5, bored Ø5.5 (measured), with a barb to Ø8
+    over its last 2 and a 1 wide cross slot along its length. Axis = Z, the face on Z = 0; the slot
+    turned 45° (off the seam)."""
+    start = (0, 1)
+    pts = [(0, 1), (7, 1), (7, 0), (10, 0), (10, 2), (3.5, 2), (3.5, 5), (3.95, 5), (3.5, 7), (2.75, 7), (2.75, 2), (0, 2)]
+    v = s.turned("Cap", pts)
+    c, w, a = math.cos(math.radians(45)), 0.5, 5
+    cross = []
+    for k in range(4):                                       # a plus sign, arms 5 long, turned 45°
+        ang = math.radians(45 + 90 * k)
+        ux, uy, nx, ny = math.cos(ang), math.sin(ang), -math.sin(ang), math.cos(ang)
+        cross += [(w * ux - w * nx, w * uy - w * ny), (a * ux - w * nx, a * uy - w * ny), (a * ux + w * nx, a * uy + w * ny)]
+    s.sketch("Cross slot", (0, 0, 7.5), (1, 0, 0), (0, -1, 0))             # normal -Z
+    s.polyline([(x, -y) for x, y in cross])
+    s.finish()
+    s.cmd("solid.extrude", distance=5.5, operation="cut", targets=[s.body], name="Cross slot")
+    # the slots take a 1 wide strip of the spigot's wall on each of the four sides
+    n, cut = 400, 0.0
+    for i in range(n):
+        z = 2 + (i + 0.5) * 5 / n
+        R = 3.5 if z < 5 else 3.95 - 0.225 * (z - 5)
+        h, strip = 1.0 / 200, 0.0
+        for j in range(200):
+            y = -0.5 + (j + 0.5) * h
+            strip += (math.sqrt(R * R - y * y) - math.sqrt(2.75 ** 2 - y * y)) * h
+        cut += 4 * strip * 5 / n
+    return v - cut
+
+
+# ----------------------------------------------------------------------------- 3-15 to 3-25
+def revolved_loop_volume(start, segs, n=720):
+    """Volume of a Script.loop() (r, z) boundary revolved about Z, its arcs split finely."""
+    pts, p = [start], start
+    for seg in segs:
+        if seg[0] == "line":
+            p = seg[1]
+            pts.append(p)
+        else:
+            _, c, e, ccw = seg
+            r = math.dist(c, p)
+            t0, t1 = math.atan2(p[1] - c[1], p[0] - c[0]), math.atan2(e[1] - c[1], e[0] - c[0])
+            sweep = (t1 - t0) % (2 * math.pi) if ccw else -((t0 - t1) % (2 * math.pi))
+            for i in range(1, n + 1):
+                t = t0 + sweep * i / n
+                pts.append((c[0] + r * math.cos(t), c[1] + r * math.sin(t)))
+            p = e
+    return revolved_volume(pts[:-1])
+
+
+def tray_outline(w, h, rt, rb, d=0.0):
+    """A w x h outline (X centred, Y from 0 up) with top corners rt and bottom corners rb, offset
+    inward by d, as Script.loop() arguments."""
+    a, y0, y1, t, b = w / 2 - d, d, h - d, rt - d, rb - d
+    start = (-a + b, y0)
+    return start, [("line", (a - b, y0)), ("arc", (a - b, y0 + b), (a, y0 + b), True), ("line", (a, y1 - t)),
+                   ("arc", (a - t, y1 - t), (a - t, y1), True), ("line", (-a + t, y1)),
+                   ("arc", (-a + t, y1 - t), (-a, y1 - t), True), ("line", (-a, y0 + b)),
+                   ("arc", (-a + b, y0 + b), start, True)]
+
+
+@part("3-15", "Rear wheel rim", "Aluminum")
+def rear_rim(s):
+    """Sheet 06, 3-15 (section B-B, scale 1:2, read from the lines): a pressed aluminium rim about
+    2 thick: Ø142 lips 1 wide, 45° sides to a Ø132 floor 14 wide, Ø136 inside the lips, Ø128 inside
+    the floor; a 3 thick web offset by a 45° step from Ø112 / Ø109.5 to Ø100 / Ø97.5, bored Ø20 with
+    5 x Ø4 on a Ø32 PCD (as 3-14). Axis = Z, one lip's face on Z = 0."""
+    pts = [(68, 0), (71, 0), (71, 1), (66, 6), (66, 20), (71, 25), (71, 26), (68, 26), (68, 25), (64, 21), (64, 13),
+           (54.75, 13), (48.75, 7), (10, 7), (10, 4), (50, 4), (56, 10), (64, 10), (64, 5), (68, 1)]
+    v = s.turned("Rim", pts)
+    return v - pcd_holes(s, "Ø4 holes", 3, 5, 4, n=5, pcd=32, start_deg=90) * 3
+
+
+@part("3-16", "Rear wheel tyre", "Default")
+def rear_tyre(s):
+    """Sheet 06, 3-16: a rubber ring, Ø33.8 section on a 132 inside diameter (the rim's floor): a
+    torus. Default density (1.29) with the black rubber appearance, as 2-32."""
+    DS = s.param("rt_section", 33.8, "section")
+    DI = s.param("rt_inside", 132, "inside diameter")
+    rc = DI / 2 + DS / 2
+    s.sketch("Section", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    s.cmd("sketch.circle.center", center=[rc, 0], diameter=DS)
+    s.finish()
+    s.cmd("solid.revolve", axis="Z", name="Tyre", body_name=s.body)
+    s.cmd("appearance.assign", bodies=[s.body], appearance="Rubber - Black")
+    return 2 * math.pi ** 2 * rc * (DS / 2) ** 2
+
+
+@part("3-18", "Rear wheel drive gear wheel", "Brass")
+def rear_drive_gear(s):
+    """Sheet 06, 3-18 (scale 1:1.5): a 2.5 thick brass gear, 57 teeth, Ø78.8 over the tips, Ø73.5 at
+    the roots, the teeth 1 wide at the tip and 2.5 at the root (their R5 flanks straightened); bored
+    Ø20 with 8 x Ø4 on a Ø52 PCD (as 3-03). XY plane, Z = 0..2.5."""
+    N = s.param("rdg_teeth", 57, "teeth", unit="")
+    RT, RR = s.param("rdg_tip_d", 78.8, "tip diameter") / 2, s.param("rdg_root_d", 73.5, "root diameter") / 2
+    T = s.param("rdg_t", 2.5, "thickness")
+    at, ar = math.asin(0.5 / RT), math.asin(1.25 / RR)
+    pts = []
+    for k in range(int(N)):
+        t = 2 * math.pi * k / N
+        for r, a in ((RR, t - ar), (RT, t - at), (RT, t + at), (RR, t + ar)):
+            pts.append((r * math.cos(a), r * math.sin(a)))
+    holes = [(0, 0, 20)] + [(26 * math.cos(i * math.pi / 4), 26 * math.sin(i * math.pi / 4), 4) for i in range(8)]
+    s.sketch("Gear", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.polyline(pts)
+    for x, y, d in holes:
+        s.cmd("sketch.circle.center", center=[round(x, 6), round(y, 6)], diameter=d)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [33, 0]}], name="Gear", body_name=s.body)
+    return (polygon_area(pts) - sum(math.pi / 4 * d * d for _, _, d in holes)) * T
+
+
+@part("3-19", "Drivers console side frame", "Aluminum")
+def console_side_frame(s):
+    """Sheet 06, 3-19 (scale 1:1.5): an 8 thick aluminium frame: a foot 72 long, its end 8 high with
+    a 45° corner up to 16, and an upright 39 wide, 81.5 high (R4 into the foot); in its back edge a
+    notch 17.5 deep from 8 to 39 up (R3 corners), a slope 6 in over the 10 above it. A Ø10 hole at
+    (21.5, 61), a Ø4 at (58, 10); M4 (Ø3.3): 10 deep in the top at 6 and at 32 tilted 15°, two 10
+    deep in the front edge at 61 (into the Ø10) and 45 up (measured), one through the foot at 12 and one 9 deep at 66 in the
+    underside. X along from the back edge, Y up, Z = 0..8."""
+    T = s.param("csf_t", 8, "thickness")
+    start = (0, 0)
+    segs = [("line", (72, 0)), ("line", (72, 8)), ("line", (64, 16)), ("line", (43, 16)), ("arc", (43, 20), (39, 20), False),
+            ("line", (39, 81.5)), ("line", (0, 81.5)), ("line", (0, 49)), ("line", (6, 39)), ("line", (14.5, 39)),
+            ("arc", (14.5, 36), (17.5, 36), False), ("line", (17.5, 11)), ("arc", (14.5, 11), (14.5, 8), False),
+            ("line", (0, 8)), ("line", start)]
+    s.sketch("Frame", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    s.cmd("sketch.circle.center", center=[21.5, 61], diameter=10)
+    s.cmd("sketch.circle.center", center=[58, 10], diameter=4)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [30, 5]}], name="Frame", body_name=s.body)
+    v = (loop_area(start, segs) - math.pi * 25 - math.pi * 4) * T
+    zc = T / 2
+    s.holes("M4 top", (0, 82.5, 0), (0, -1, 0), [(6, 82.5, zc)], 3.3, depth=11)
+    u = (math.sin(math.radians(15)), -math.cos(math.radians(15)), 0)
+    p0 = (32 - 2 * u[0], 81.5 - 2 * u[1], 0)
+    s.holes("M4 top, 15°", p0, u, [(p0[0], p0[1], zc)], 3.3, depth=12)
+    s.holes("M4 front", (40, 0, 0), (-1, 0, 0), [(40, 45, zc)], 3.3, depth=11)
+    s.holes("M4 front, into the Ø10", (40, 0, 0), (-1, 0, 0), [(40, 61, zc)], 3.3, depth=15)
+    # the one at 12 goes through the foot into the notch: drilled on past the notch's floor
+    s.holes("M4 underside", (0, -1, 0), (0, 1, 0), [(12, -1, zc)], 3.3, depth=10.5)
+    # 9 deep (not 8: a hole ending in the plane of the notch's floor, Y = 8, needs a separation
+    # retry that leaves it 2.5 deeper, although the two faces are far apart)
+    s.holes("M4 underside, end", (0, -1, 0), (0, 1, 0), [(66, -1, zc)], 3.3, depth=10)
+    a = math.pi / 4 * 3.3 ** 2
+    h, into_bore = 3.3 / 400, 0.0                     # the front M4 at 61 runs from X = 39 into the Ø10
+    for i in range(400):
+        y = -1.65 + (i + 0.5) * h
+        into_bore += 2 * math.sqrt(1.65 ** 2 - y * y) * (39 - 21.5 - math.sqrt(25 - y * y)) * h
+    return v - a * (10 + 10 + 10 + 8 + 9) - into_bore
+
+
+@part("3-21", "Accelerator control lever", {"lever": "Steel", "collar": "Brass"})
+def accelerator_control_lever(s):
+    """Sheet 06, 3-21 (scale 1:1.5): a 2 thick steel lever: an R6 end round a Ø8 hole, tapering to
+    6 wide 36 up, then a 4 wide tip 14 long; an M3 (Ø2.5) 18 up. A brass collar Ø12 x 6 with a Ø8
+    spigot pressed into the lever (8PF), bored Ø4, an M3 (Ø2.5) set screw 3 from the lever. Lever in
+    the XY plane on Z = 0..2, the collar on Z = 2..8."""
+    n = s.body.split()[0]
+    tr = tangent_from((3, 36), (0, 0), 6, left=True)
+    tl = (-tr[0], tr[1])
+    start = (2, 50)
+    segs = [("line", (-2, 50)), ("line", (-2, 36)), ("line", (-3, 36)), ("line", tl), ("arc", (0, 0), tr, True),
+            ("line", (3, 36)), ("line", (2, 36)), ("line", start)]
+    s.sketch("Lever", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    s.cmd("sketch.circle.center", center=[0, 0], diameter=8)
+    s.cmd("sketch.circle.center", center=[0, 18], diameter=2.5)
+    s.finish()
+    s.cmd("solid.extrude", distance=2, profiles=[{"point": [0, 30]}], name="Lever", body_name=f"{n} lever")
+    v = (loop_area(start, segs) - math.pi * 16 - math.pi / 4 * 6.25) * 2
+    v += s.turned("Collar", [(2, 0), (4, 0), (4, 2), (6, 2), (6, 8), (2, 8)], body=f"{n} collar")
+    u = (math.cos(math.radians(45)), math.sin(math.radians(45)), 0)
+    s.holes("M3 set screw", (7 * u[0], 7 * u[1], 0), (-u[0], -u[1], 0), [(7 * u[0], 7 * u[1], 5)], 2.5, depth=5,
+            target=f"{n} collar")
+    return v - cross_hole(6, 1.25, 2) / 2
+
+
+@part("3-22", "Accelerator control lever handle", "Brass")
+def accelerator_lever_handle(s):
+    """Sheet 06, 3-22: a brass knob 18.5 high: tapering from Ø6 at the foot to about Ø8.4 at 14
+    (measured), an R2 shoulder into an R4.5 dome; a 4 x 2 slot 14 deep in the foot for the lever's
+    tip. Axis = Z, the foot on Z = 0."""
+    p0, p1, S, R, RF = (3, 0), (4.2, 14), (0, 14), 4.5, 2
+    L = math.dist(p0, p1)
+    u = ((p1[0] - p0[0]) / L, (p1[1] - p0[1]) / L)
+    nn = (-u[1], u[0])                                         # toward the axis
+    # fillet centre C = p0 + t u + RF nn with |C - S| = R - RF
+    q = (p0[0] + RF * nn[0] - S[0], p0[1] + RF * nn[1] - S[1])
+    bq = q[0] * u[0] + q[1] * u[1]
+    t = -bq + math.sqrt(bq * bq - (q[0] ** 2 + q[1] ** 2 - (R - RF) ** 2))
+    C = (p0[0] + t * u[0] + RF * nn[0], p0[1] + t * u[1] + RF * nn[1])
+    T1 = (p0[0] + t * u[0], p0[1] + t * u[1])
+    d = math.dist(C, S)
+    T2 = (S[0] + R * (C[0] - S[0]) / d, S[1] + R * (C[1] - S[1]) / d)
+    start = (0, 0)
+    segs = [("line", p0), ("line", T1), ("arc", C, T2, True), ("arc", S, (0, S[1] + R), True), ("line", start)]
+    revolved_loop(s, "Knob", start, segs)
+    s.sketch("Slot", (0, 0, -1), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.rectangle.two_point", p0=[-2, -1], p1=[2, 1])
+    s.finish()
+    s.cmd("solid.extrude", distance=15, operation="cut", targets=[s.body], name="Slot")
+    return revolved_loop_volume(start, segs) - 4 * 2 * 14
+
+
+@part("3-25A", "Drivers seat base", "Brass")
+def seat_base(s):
+    """Sheet 06, 3-25A (scale 1:2): a brass tray 62 x 51 (R19 corners at the back, R10 at the front)
+    and 6 high: a 1 plate and a 6 x 5 x 1 angle round its edge (inside R18 / R9). Ø2.5 pilot holes:
+    four 32 from the front at ±4 and ±18.5, two in the back wall at ±4, 3.5 below its top; a Ø3 for
+    the leg 12.3 from the front. X across, Y from the front edge, Z up."""
+    W, H, RT, RB, Ht = 62, 51, 19, 10, 6
+    st0, sg0 = tray_outline(W, H, RT, RB)
+    s.sketch("Outline", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(st0, sg0)
+    s.finish()
+    s.cmd("solid.extrude", distance=Ht, name="Tray", body_name=s.body)
+    # drilled before the tray is hollowed, 0.5 past the wall (drilled into the hollow tray the cut
+    # fails); the holes' lower edge (Z 1.25 .. 2) nicks the angle's flat leg over that 0.5
+    s.holes("Back wall holes", (0, H + 1, 0), (0, -1, 0), [(-4, H + 1, Ht - 3.5), (4, H + 1, Ht - 3.5)], 2.5, depth=2.5)
+    st6, sg6 = tray_outline(W, H, RT, RB, 6)
+    st1, sg1 = tray_outline(W, H, RT, RB, 1)
+    s.sketch("Inside the angle", (0, 0, Ht + 1), (1, 0, 0), (0, -1, 0))   # normal -Z
+    s.loop((st6[0], -st6[1]), [(g[0], (g[1][0], -g[1][1])) if g[0] == "line" else
+                               (g[0], (g[1][0], -g[1][1]), (g[2][0], -g[2][1]), not g[3]) for g in sg6])
+    s.finish()
+    s.cmd("solid.extrude", distance=Ht, operation="cut", targets=[s.body], name="Inside the angle")
+    s.sketch("Inside the wall", (0, 0, Ht + 1), (1, 0, 0), (0, -1, 0))
+    s.loop((st1[0], -st1[1]), [(g[0], (g[1][0], -g[1][1])) if g[0] == "line" else
+                               (g[0], (g[1][0], -g[1][1]), (g[2][0], -g[2][1]), not g[3]) for g in sg1])
+    s.finish()
+    s.cmd("solid.extrude", distance=5, operation="cut", targets=[s.body], name="Inside the wall")
+    a0, a1, a6 = loop_area(st0, sg0), loop_area(st1, sg1), loop_area(st6, sg6)
+    v = a0 * Ht - a6 * (Ht - 1) - (a1 - a6) * (Ht - 2)
+    pl = [(-18.5, 32), (-4, 32), (4, 32), (18.5, 32)]
+    s.sketch("Plate holes", (0, 0, -1), (1, 0, 0), (0, 1, 0))
+    for x, y in pl:
+        s.cmd("sketch.circle.center", center=[x, y], diameter=2.5)
+    s.cmd("sketch.circle.center", center=[0, 12.3], diameter=3)
+    s.finish()
+    s.cmd("solid.extrude", distance=2.5, operation="cut", targets=[s.body], name="Plate holes")
+    r, dd = 1.25, 0.5
+    nick = (r * r * math.acos(dd / r) - dd * math.sqrt(r * r - dd * dd)) * 0.5
+    return v - (4 * math.pi / 4 * 6.25 + math.pi / 4 * 9) * 1 - 2 * (math.pi / 4 * 6.25 * 1 + nick)
+
+
+@part("3-25B", "Drivers seat", "Oak")
+def seat(s):
+    """Sheet 06, 3-25B (scale 1:2): a wooden seat: a 60 x 49 x 4 slab (R18 / R9) that fits inside
+    3-25A's wall, under a 62 x 51 x 6 top (R19 / R10) with its upper edges rounded R6 (modelled R5:
+    SolidCraft refuses rounds of 5.5 and more on the 6 high top). Oak density. X across, Y from the front, Z = 0 the
+    slab's underside."""
+    W, H, RT, RB = 62, 51, 19, 10
+    st1, sg1 = tray_outline(W, H, RT, RB, 1)
+    st0, sg0 = tray_outline(W, H, RT, RB)
+    s.sketch("Slab", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(st1, sg1)
+    s.finish()
+    s.cmd("solid.extrude", distance=4.5, name="Slab", body_name=s.body)    # 0.5 into the top
+    s.sketch("Top", (0, 0, 4), (1, 0, 0), (0, 1, 0))
+    s.loop(st0, sg0)
+    s.finish()
+    s.cmd("solid.extrude", distance=6, operation="join", targets=[s.body], name="Top")
+    RF = 5
+    edges = [[0, 0, 10], [0, H, 10], [W / 2, H / 2, 10], [-W / 2, H / 2, 10]]
+    for cx, cy, r, ang in ((W / 2 - RB, RB, RB, -45), (W / 2 - RT, H - RT, RT, 45), (-W / 2 + RT, H - RT, RT, 135),
+                           (-W / 2 + RB, RB, RB, -135)):
+        edges.append([round(cx + r * math.cos(math.radians(ang)), 6), round(cy + r * math.sin(math.radians(ang)), 6), 10])
+    s.cmd("solid.fillet", edges=edges, radius=RF, name="Top round")
+    a1, a0 = loop_area(st1, sg1), loop_area(st0, sg0)
+    k = (10 - 3 * math.pi) / (12 - 3 * math.pi) * RF
+    spandrel = (1 - math.pi / 4) * RF * RF
+    path = (W - 2 * RT) + (W - 2 * RB) + 2 * (H - RT - RB) + math.pi * (RT - k) + math.pi * (RB - k)
+    return a1 * 4 + a0 * 6 - spandrel * path
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]

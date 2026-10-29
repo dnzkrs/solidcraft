@@ -1,0 +1,225 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Rim section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      68,
+      0
+     ],
+     [
+      71,
+      0
+     ],
+     [
+      71,
+      1
+     ],
+     [
+      66,
+      6
+     ],
+     [
+      66,
+      20
+     ],
+     [
+      71,
+      25
+     ],
+     [
+      71,
+      26
+     ],
+     [
+      68,
+      26
+     ],
+     [
+      68,
+      25
+     ],
+     [
+      64,
+      21
+     ],
+     [
+      64,
+      13
+     ],
+     [
+      54.75,
+      13
+     ],
+     [
+      48.75,
+      7
+     ],
+     [
+      10,
+      7
+     ],
+     [
+      10,
+      4
+     ],
+     [
+      50,
+      4
+     ],
+     [
+      56,
+      10
+     ],
+     [
+      64,
+      10
+     ],
+     [
+      64,
+      5
+     ],
+     [
+      68,
+      1
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Rim",
+    "body_name": "3-15 Rear wheel rim"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      3
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "\u00d84 holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     16.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.216904,
+     4.944272
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -9.404564,
+     -12.944272
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     9.404564,
+     -12.944272
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.216904,
+     4.944272
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 5,
+    "operation": "cut",
+    "targets": [
+     "3-15 Rear wheel rim"
+    ],
+    "name": "\u00d84 holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-15 Rear wheel rim"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

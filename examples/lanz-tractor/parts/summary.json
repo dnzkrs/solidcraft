@@ -761,5 +761,124 @@
   "bodies": 1,
   "volume_mm3": 12653.9,
   "mass_g": 34.2
+ },
+ "3-07": {
+  "name": "Rear axle main housing ball bearing-1",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 6715.0,
+  "mass_g": 52.7
+ },
+ "3-08": {
+  "name": "Rear axle main housing ball bearing-2",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 2111.1,
+  "mass_g": 16.6
+ },
+ "3-09A": {
+  "name": "Rear axle-1",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 3946.7,
+  "mass_g": 31.0
+ },
+ "3-09B": {
+  "name": "Rear axle-2",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 5303.6,
+  "mass_g": 41.6
+ },
+ "3-10": {
+  "name": "Differential gear wheel",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 2252.8,
+  "mass_g": 19.1
+ },
+ "3-11": {
+  "name": "Differential gear wheel shaft",
+  "material": "Stainless Steel",
+  "bodies": 1,
+  "volume_mm3": 1115.2,
+  "mass_g": 8.9
+ },
+ "3-13": {
+  "name": "Rear wheel spacer",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1945.2,
+  "mass_g": 16.5
+ },
+ "3-14": {
+  "name": "Rear wheel mounting plate",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 11281.7,
+  "mass_g": 88.6
+ },
+ "3-15": {
+  "name": "Rear wheel rim",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 66225.2,
+  "mass_g": 178.8
+ },
+ "3-16": {
+  "name": "Rear wheel tyre",
+  "material": "Default",
+  "bodies": 1,
+  "volume_mm3": 467298.4,
+  "mass_g": 602.8
+ },
+ "3-17": {
+  "name": "Rear wheel hub cap",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 541.4,
+  "mass_g": 4.6
+ },
+ "3-18": {
+  "name": "Rear wheel drive gear wheel",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 10229.7,
+  "mass_g": 87.0
+ },
+ "3-19": {
+  "name": "Drivers console side frame",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 23636.2,
+  "mass_g": 63.8
+ },
+ "3-21": {
+  "name": "Accelerator control lever",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 1423.4,
+  "mass_g": 11.6
+ },
+ "3-22": {
+  "name": "Accelerator control lever handle",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 647.2,
+  "mass_g": 5.5
+ },
+ "3-25A": {
+  "name": "Drivers seat base",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 4811.7,
+  "mass_g": 40.9
+ },
+ "3-25B": {
+  "name": "Drivers seat",
+  "material": "Oak",
+  "bodies": 1,
+  "volume_mm3": 27807.3,
+  "mass_g": 20.9
  }
 }

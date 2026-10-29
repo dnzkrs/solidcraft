@@ -1,0 +1,604 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "csf_t",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Frame"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      72,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      72,
+      0
+     ],
+     [
+      72,
+      8
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      72,
+      8
+     ],
+     [
+      64,
+      16
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      64,
+      16
+     ],
+     [
+      43,
+      16
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     43,
+     20
+    ],
+    "start": [
+     39,
+     20
+    ],
+    "end": [
+     43,
+     16
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      39,
+      20
+     ],
+     [
+      39,
+      81.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      39,
+      81.5
+     ],
+     [
+      0,
+      81.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      81.5
+     ],
+     [
+      0,
+      49
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      49
+     ],
+     [
+      6,
+      39
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      6,
+      39
+     ],
+     [
+      14.5,
+      39
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     14.5,
+     36
+    ],
+    "start": [
+     17.5,
+     36
+    ],
+    "end": [
+     14.5,
+     39
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      17.5,
+      36
+     ],
+     [
+      17.5,
+      11
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     14.5,
+     11
+    ],
+    "start": [
+     14.5,
+     8
+    ],
+    "end": [
+     17.5,
+     11
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      14.5,
+      8
+     ],
+     [
+      0,
+      8
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      8
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     21.5,
+     61
+    ],
+    "diameter": 10
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     58,
+     10
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 8,
+    "profiles": [
+     {
+      "point": [
+       30,
+       5
+      ]
+     }
+    ],
+    "name": "Frame",
+    "body_name": "3-19 Drivers console side frame"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      82.5,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      -0.0,
+      -0.0,
+      -1.0
+     ]
+    },
+    "name": "M4 top"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -6.0,
+     -4.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 11,
+    "operation": "cut",
+    "targets": [
+     "3-19 Drivers console side frame"
+    ],
+    "name": "M4 top"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      31.48236190979496,
+      83.43185165257813,
+      0
+     ],
+     "x_dir": [
+      -0.9659258262890683,
+      -0.25881904510252074,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      -0.0,
+      -1.0
+     ]
+    },
+    "name": "M4 top, 15\u00b0"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -4.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 12,
+    "operation": "cut",
+    "targets": [
+     "3-19 Drivers console side frame"
+    ],
+    "name": "M4 top, 15\u00b0"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      40,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "M4 front"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     45.0,
+     -4.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 11,
+    "operation": "cut",
+    "targets": [
+     "3-19 Drivers console side frame"
+    ],
+    "name": "M4 front"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      40,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "M4 front, into the \u00d810"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     61.0,
+     -4.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 15,
+    "operation": "cut",
+    "targets": [
+     "3-19 Drivers console side frame"
+    ],
+    "name": "M4 front, into the \u00d810"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -1,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "M4 underside"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     12.0,
+     -4.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 10.5,
+    "operation": "cut",
+    "targets": [
+     "3-19 Drivers console side frame"
+    ],
+    "name": "M4 underside"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -1,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "M4 underside, end"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     66.0,
+     -4.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 10,
+    "operation": "cut",
+    "targets": [
+     "3-19 Drivers console side frame"
+    ],
+    "name": "M4 underside, end"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-19 Drivers console side frame"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

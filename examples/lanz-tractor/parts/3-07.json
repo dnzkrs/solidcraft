@@ -1,0 +1,73 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Bearing section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      6.5,
+      0
+     ],
+     [
+      16,
+      0
+     ],
+     [
+      16,
+      10
+     ],
+     [
+      6.5,
+      10
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Bearing",
+    "body_name": "3-07 Rear axle main housing ball bearing-1"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-07 Rear axle main housing ball bearing-1"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}
