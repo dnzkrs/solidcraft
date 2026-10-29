@@ -2969,6 +2969,164 @@ def pulling_hook(s):
     return math.pi * (4 * 8 + 16 * 3 + 6.25 * 15) + 2 / 3 * math.pi * 125
 
 
+# ----------------------------------------------------------------------------- 2-41
+@part("2-41", "Steering column and worm gear", {"shaft": "Steel", "worm": "Brass", "collar 1": "Brass",
+                                                "collar 2": "Brass"})
+def steering_column(s):
+    """Sheet 05, 2-41 (scale 1:1.5): a Ø4 steel column 254 long (the last 10 measured) with a brass
+    worm pressed on one end and two brass collars Ø10 x 7, 50.5 and 175.5 from that end, each pinned
+    by a Ø2 x 11 steel pin; a Ø2 x 14 pin crosses the column 244 from the worm's end. The worm is
+    Ø14 over a Ø10 root, 15.5 long; its thread is a square-section helix (2.2 x 2.2, a 6° lead angle
+    on Ø12: lead 3.96, 3 turns), the drawn trapezoid form and end chamfers simplified. Axis = Z, the
+    worm's end on Z = 0; the pins along X."""
+    n = s.body.split()[0]
+    L = s.param("sc_l", 254, "column length (244 to the end pin + 10, measured)")
+    ZC = [s.param("sc_collar1", 50.5, "first collar's centre"), s.param("sc_collar2", 175.5, "second collar's centre (50.5 + 125)")]
+    ZP = s.param("sc_end_pin", 244, "end pin (175.5 + 68.5)")
+    LW = s.param("sc_worm_l", 15.5, "worm length")
+    lead = math.pi * 12 * math.tan(math.radians(6))
+    turns, a, d0 = 3, 2.2, 9.6
+    v = s.turned("Column", [(0, 0), (2, 0), (2, L), (0, L)], body=f"{n} shaft")
+    for z, lp in ((ZC[0], 11), (ZC[1], 11), (ZP, 14)):
+        s.cmd("solid.cylinder", diameter=2, height=lp, base=[-lp / 2, 0, z], axis="X", operation="join",
+              targets=[f"{n} shaft"], name="Pin")
+        v += math.pi * lp - cross_hole(2, 1)
+    s.cmd("solid.cylinder", diameter=10, height=LW, base=[0, 0, 0], axis="Z", name="Worm core", body_name=f"{n} worm")
+    v += math.pi * 25 * LW
+    # the thread's square section reaches 0.2 into the core (r 4.8 .. 7) so the two cross. It is
+    # joined as two 1.5-turn coils, end to end: a join of more than about 2 turns exceeds the
+    # kernel's limit on contact work ("lumps: contact work exceeds the limit")
+    for k in range(2):
+        s.cmd("solid.coil", diameter=d0, turns=turns / 2, pitch=round(lead, 6), section_size=a, section="square",
+              section_position="outside", base=[0, 0, round(1.8 + k * turns / 2 * lead, 6)], axis="Z",
+              start_angle=180 * k * (turns % 2), operation="join", targets=[f"{n} worm"], name="Worm thread")
+    # bored last: with the bore already in the core the second coil's join exceeds the limit too
+    s.cmd("solid.cylinder", diameter=4, height=LW + 2, base=[0, 0, -1], axis="Z", operation="cut",
+          targets=[f"{n} worm"], name="Worm bore")
+    v -= math.pi * 4 * LW
+    v += a * a * 2 * math.pi * (d0 / 2 + a / 2) * turns - 0.2 * a * 2 * math.pi * 4.9 * turns
+    for k, z in enumerate(ZC):
+        body = f"{n} collar {k + 1}"
+        v += s.turned(f"Collar {k + 1}", [(2, z - 3.5), (5, z - 3.5), (5, z + 3.5), (2, z + 3.5)], body=body)
+        s.holes(f"Collar {k + 1} pin hole", (-6, 0, 0), (1, 0, 0), [(-6, 0, z)], 2, target=body)
+        v -= cross_hole(5, 1, 2)
+    return v
+
+
+# ----------------------------------------------------------------------------- 2-42
+@part("2-42", "Steering wheel", "Aluminum")
+def steering_wheel(s):
+    """Sheet 05, 2-42 (scale 1:2.5): an aluminium wheel, rim Ø64 / Ø54 x 6, four Ø3 spokes in the
+    rim's mid plane to a Ø13.5 x 15 hub bored Ø4, cross-drilled Ø2 5 from the hub's end. The rim is
+    modelled square-edged. Axis = Z, the rim and the hub's inner end on Z = 0."""
+    RO, RI = s.param("sw_rim_od", 64, "rim") / 2, s.param("sw_rim_id", 54, "rim inside") / 2
+    T = s.param("sw_rim_t", 6, "rim thickness")
+    RH = s.param("sw_hub_d", 13.5, "hub") / 2
+    LH = s.param("sw_hub_l", 15, "hub length")
+    DS = s.param("sw_spoke_d", 3, "spokes")
+    v = s.turned("Hub", [(2, 0), (RH, 0), (RH, LH), (2, LH)])
+    rs = DS / 2
+    for k in range(4):
+        a = k * math.pi / 2
+        u = (math.cos(a), math.sin(a), 0)
+        s.cmd("solid.cylinder", diameter=DS, height=RI + 1 - (RH - 0.75), base=[round((RH - 0.75) * u[0], 6),
+              round((RH - 0.75) * u[1], 6), T / 2], axis=[round(c, 6) for c in u], operation="join",
+              targets=[s.body], name="Spoke")
+    v += s.turned("Rim", [(RI, 0), (RO, 0), (RO, T), (RI, T)], operation="join")
+    h, sp = 2 * rs / 2000, 0.0
+    for i in range(2000):
+        y = -rs + (i + 0.5) * h
+        sp += 2 * math.sqrt(rs * rs - y * y) * (math.sqrt(RI * RI - y * y) - math.sqrt(RH * RH - y * y)) * h
+    s.holes("Ø2 cross hole", (0, -10, 0), (0, 1, 0), [(0, -10, LH - 5)], 2)
+    return v + 4 * sp - cross_hole(RH, 1, 2)
+
+
+# ----------------------------------------------------------------------------- 2-44
+@part("2-44", "Front lighting main beam", "Brass")
+def lighting_beam(s):
+    """Sheet 05, 2-44 (scale 1:1.5, read with the vector lines): a 9 x 5 x 0.5 brass tube 87 long,
+    its corners on one side cut back at 37° from 6.3 across the end. Top wall: Ø4 at 4.5 and 11.5
+    from each end, two 7 wide slots from 19 to 34 and 53 to 68, a Ø8 at the middle; bottom wall:
+    Ø7 under the end holes and Ø4 at 11.5. X along, Y across from the straight side, Z up."""
+    L = s.param("lb_l", 87, "length")
+    W = s.param("lb_w", 9, "width")
+    H = s.param("lb_h", 5, "height")
+    T = s.param("lb_t", 0.5, "wall")
+    YC = s.param("lb_corner", 6.3, "corner cut starts across the end")
+    A = math.radians(s.param("lb_corner_a", 37, "corner cut angle", unit="deg"))
+    s.sketch("Section", (0, 0, 0), (0, 1, 0), (0, 0, 1))                 # normal +X
+    s.cmd("sketch.rectangle.two_point", p0=[0, 0], p1=[W, H])
+    s.cmd("sketch.rectangle.two_point", p0=[T, T], p1=[W - T, H - T])
+    s.finish()
+    s.cmd("solid.extrude", distance=L, profiles=[{"point": [T / 2, H / 2]}], name="Tube", body_name=s.body)
+    v = (W * H - (W - 2 * T) * (H - 2 * T)) * L
+    run = (W - YC) / math.tan(A)
+    k = run / (W - YC)
+    s.sketch("Corner cuts", (0, 0, -1), (1, 0, 0), (0, 1, 0))
+    for m in (lambda x: x, lambda x: L - x):
+        s.polyline([(m(-1), YC - 1 / k), (m((W + 1 - YC) * k), W + 1), (m(-1), W + 1)])
+    s.finish()
+    s.cmd("solid.extrude", distance=H + 2, operation="cut", targets=[s.body], name="Corner cuts")
+    tri = (W - YC) * run / 2
+    side = k * ((W - YC) ** 2 - (W - T - YC) ** 2) / 2      # the cut's part of the side wall's band
+    v -= 2 * (tri * 2 * T + side * (H - 2 * T))
+    yc = W / 2
+    bottom = [(4.5, 7), (L - 4.5, 7)]
+    s.sketch("Bottom holes", (0, 0, -1), (1, 0, 0), (0, 1, 0))
+    for x, d in bottom:
+        s.cmd("sketch.circle.center", center=[x, yc], diameter=d)
+    s.finish()
+    s.cmd("solid.extrude", distance=2, operation="cut", targets=[s.body], name="Bottom holes")
+    # the Ø4 holes at 11.5 are in both walls: one cut through
+    s.sketch("Through holes", (0, 0, H + 1), (1, 0, 0), (0, -1, 0))       # normal -Z
+    for x in (11.5, L - 11.5):
+        s.cmd("sketch.circle.center", center=[x, -yc], diameter=4)
+    s.finish()
+    s.cmd("solid.extrude", distance=H + 2, operation="cut", targets=[s.body], name="Through holes")
+    # the Ø8 just fills the tube's 8 inside: drawn exactly, it is tangent to the inner faces of the
+    # side walls and the cut fails, so it is 0.02 smaller
+    top = [(4.5, 4), (L - 4.5, 4), (L / 2, 7.98)]
+    s.sketch("Top holes", (0, 0, H + 1), (1, 0, 0), (0, -1, 0))           # normal -Z
+    for x, d in top:
+        s.cmd("sketch.circle.center", center=[x, -yc], diameter=d)
+    for x0, x1 in ((19, 34), (L - 34, L - 19)):
+        st, sg = slot_loop((x0, -yc), (x1, -yc), 3.5)
+        s.loop(st, sg)
+    s.finish()
+    s.cmd("solid.extrude", distance=2, operation="cut", targets=[s.body], name="Top holes")
+    holes = sum(math.pi / 4 * d * d for _, d in top + bottom) + 2 * (math.pi * 3.5 ** 2 + 7 * 15) + 4 * math.pi * 4
+    return v - holes * T
+
+
+# ----------------------------------------------------------------------------- 2-45
+@part("2-45", "Front lighting lampstand", {"housing": "Brass", "reflector": "Stainless Steel",
+                                          "stem": "Brass", "washer": "Brass"})
+def lampstand(s):
+    """Sheet 05, 2-45 (scale 1:1, half section, read from the drawing at 1:1): a brass lamp housing
+    19 long: a Ø9 x 7 cup with a 1.5 back wall and Ø7 inside, a Ø13.5 step, a cone out to Ø22 and a
+    Ø22 / Ø20 mouth 6 long; a stainless reflector cone 0.5 thick inside it from a Ø6 / Ø7 sleeve to
+    Ø20; a Ø4 / Ø3 brass stem tube 30 long entering the cup 4 from its back through a Ø4 hole, and a
+    Ø7 / Ø4 x 1 brass washer 2 above the stem's end. The housing's cone wall and the reflector are
+    read off the half section (not all dimensioned). Lamp axis = Z, back face on Z = 0; stem along
+    -X."""
+    n = s.body.split()[0]
+    hp = [(0, 0), (4.5, 0), (4.5, 7), (6.75, 7), (11, 12.85), (11, 19), (10, 19), (10, 12.85), (5.8, 8.5),
+          (3.5, 8.5), (3.5, 1.5), (0, 1.5)]
+    v = s.turned("Housing", hp, body=f"{n} housing")
+    s.holes("Stem hole", (-6, 0, 0), (1, 0, 0), [(-6, 0, 4)], 4, depth=4, target=f"{n} housing")
+    v -= cross_hole(4.5, 2, 3.5) / 2
+    v += s.turned("Reflector", [(3, 6.9), (3.5, 6.9), (3.5, 8.4), (10, 12.85), (10, 13.1), (9.6, 13.1), (3, 8.75)],
+                  body=f"{n} reflector")
+    s.cmd("solid.cylinder", diameter=4, height=30, base=[-32.5, 0, 4], axis="X", name="Stem", body_name=f"{n} stem")
+    s.cmd("solid.cylinder", diameter=3, height=32, base=[-33.5, 0, 4], axis="X", operation="cut",
+          targets=[f"{n} stem"], name="Stem bore")
+    s.cmd("solid.cylinder", diameter=7, height=1, base=[-30.5, 0, 4], axis="X", name="Washer",
+          body_name=f"{n} washer")
+    s.cmd("solid.cylinder", diameter=4, height=3, base=[-31.5, 0, 4], axis="X", operation="cut",
+          targets=[f"{n} washer"], name="Washer bore")
+    return v + math.pi / 4 * (16 - 9) * 30 + math.pi / 4 * (49 - 16) * 1
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]

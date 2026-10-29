@@ -1,0 +1,526 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "lb_l",
+    "expression": "87",
+    "unit": "mm",
+    "comment": "length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "lb_w",
+    "expression": "9",
+    "unit": "mm",
+    "comment": "width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "lb_h",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "lb_t",
+    "expression": "0.5",
+    "unit": "mm",
+    "comment": "wall"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "lb_corner",
+    "expression": "6.3",
+    "unit": "mm",
+    "comment": "corner cut starts across the end"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "lb_corner_a",
+    "expression": "37",
+    "unit": "deg",
+    "comment": "corner cut angle"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0,
+      1,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Section"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     0,
+     0
+    ],
+    "p1": [
+     9,
+     5
+    ]
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     0.5,
+     0.5
+    ],
+    "p1": [
+     8.5,
+     4.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 87,
+    "profiles": [
+     {
+      "point": [
+       0.25,
+       2.5
+      ]
+     }
+    ],
+    "name": "Tube",
+    "body_name": "2-44 Front lighting main beam"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -1
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Corner cuts"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -1,
+      5.546446
+     ],
+     [
+      4.910066,
+      10
+     ],
+     [
+      -1,
+      10
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      88,
+      5.546446
+     ],
+     [
+      82.089934,
+      10
+     ],
+     [
+      88,
+      10
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 7,
+    "operation": "cut",
+    "targets": [
+     "2-44 Front lighting main beam"
+    ],
+    "name": "Corner cuts"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -1
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Bottom holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     4.5,
+     4.5
+    ],
+    "diameter": 7
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     82.5,
+     4.5
+    ],
+    "diameter": 7
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "operation": "cut",
+    "targets": [
+     "2-44 Front lighting main beam"
+    ],
+    "name": "Bottom holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      6
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      -1,
+      0
+     ]
+    },
+    "name": "Through holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     11.5,
+     -4.5
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     75.5,
+     -4.5
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 7,
+    "operation": "cut",
+    "targets": [
+     "2-44 Front lighting main beam"
+    ],
+    "name": "Through holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      6
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      -1,
+      0
+     ]
+    },
+    "name": "Top holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     4.5,
+     -4.5
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     82.5,
+     -4.5
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     43.5,
+     -4.5
+    ],
+    "diameter": 7.98
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      19.0,
+      -8.0
+     ],
+     [
+      34.0,
+      -8.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     34,
+     -4.5
+    ],
+    "start": [
+     34.0,
+     -8.0
+    ],
+    "end": [
+     34.0,
+     -1.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      34.0,
+      -1.0
+     ],
+     [
+      19.0,
+      -1.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     19,
+     -4.5
+    ],
+    "start": [
+     19.0,
+     -1.0
+    ],
+    "end": [
+     19.0,
+     -8.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      -8.0
+     ],
+     [
+      68.0,
+      -8.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     68,
+     -4.5
+    ],
+    "start": [
+     68.0,
+     -8.0
+    ],
+    "end": [
+     68.0,
+     -1.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      68.0,
+      -1.0
+     ],
+     [
+      53.0,
+      -1.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     53,
+     -4.5
+    ],
+    "start": [
+     53.0,
+     -1.0
+    ],
+    "end": [
+     53.0,
+     -8.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "operation": "cut",
+    "targets": [
+     "2-44 Front lighting main beam"
+    ],
+    "name": "Top holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-44 Front lighting main beam"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

@@ -1,0 +1,800 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "sc_l",
+      "expr": "254",
+      "unit": "mm",
+      "comment": "column length (244 to the end pin + 10, measured)",
+      "model": false
+    },
+    {
+      "name": "sc_collar1",
+      "expr": "50.5",
+      "unit": "mm",
+      "comment": "first collar's centre",
+      "model": false
+    },
+    {
+      "name": "sc_collar2",
+      "expr": "175.5",
+      "unit": "mm",
+      "comment": "second collar's centre (50.5 + 125)",
+      "model": false
+    },
+    {
+      "name": "sc_end_pin",
+      "expr": "244",
+      "unit": "mm",
+      "comment": "end pin (175.5 + 68.5)",
+      "model": false
+    },
+    {
+      "name": "sc_worm_l",
+      "expr": "15.5",
+      "unit": "mm",
+      "comment": "worm length",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Column section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              2.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              2.0,
+              254.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              0.0,
+              254.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 1
+          }
+        ],
+        "counters": {
+          "k": 1,
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Column",
+      "suppressed": false,
+      "body_names": [
+        "2-41 shaft"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "revolve",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      },
+      "axis": {
+        "type": "world",
+        "axis": "Z"
+      },
+      "angle": "360 deg",
+      "operation": "new_body",
+      "convention": "sketch_normal"
+    },
+    {
+      "id": 3,
+      "name": "Pin",
+      "suppressed": false,
+      "param_names": [
+        "d2",
+        "d3"
+      ],
+      "participants": [
+        "2-41 shaft"
+      ],
+      "type": "cylinder",
+      "base": [
+        -5.5,
+        0.0,
+        50.5
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": "(2) / 2",
+      "height": "11",
+      "operation": "join"
+    },
+    {
+      "id": 4,
+      "name": "Pin",
+      "suppressed": false,
+      "param_names": [
+        "d4",
+        "d5"
+      ],
+      "participants": [
+        "2-41 shaft"
+      ],
+      "type": "cylinder",
+      "base": [
+        -5.5,
+        0.0,
+        175.5
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": "(2) / 2",
+      "height": "11",
+      "operation": "join"
+    },
+    {
+      "id": 5,
+      "name": "Pin",
+      "suppressed": false,
+      "param_names": [
+        "d6",
+        "d7"
+      ],
+      "participants": [
+        "2-41 shaft"
+      ],
+      "type": "cylinder",
+      "base": [
+        -7.0,
+        0.0,
+        244.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": "(2) / 2",
+      "height": "14",
+      "operation": "join"
+    },
+    {
+      "id": 6,
+      "name": "Worm core",
+      "suppressed": false,
+      "body_names": [
+        "2-41 worm"
+      ],
+      "param_names": [
+        "d8",
+        "d9"
+      ],
+      "type": "cylinder",
+      "base": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "radius": "(10) / 2",
+      "height": "15.5",
+      "operation": "new_body"
+    },
+    {
+      "id": 7,
+      "name": "Worm thread",
+      "suppressed": false,
+      "param_names": [
+        "d10",
+        "d11",
+        "d12",
+        "d13",
+        "d14"
+      ],
+      "type": "coil",
+      "base": [
+        0.0,
+        0.0,
+        1.8
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "diameter": "9.6",
+      "pitch": "3.962336",
+      "turns": "1.5",
+      "section_size": "2.2",
+      "section": "square",
+      "position": 1,
+      "start_angle": "0",
+      "operation": "join",
+      "targets": [
+        "2-41 worm"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Worm thread",
+      "suppressed": false,
+      "param_names": [
+        "d15",
+        "d16",
+        "d17",
+        "d18",
+        "d19"
+      ],
+      "type": "coil",
+      "base": [
+        0.0,
+        0.0,
+        7.743504
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "diameter": "9.6",
+      "pitch": "3.962336",
+      "turns": "1.5",
+      "section_size": "2.2",
+      "section": "square",
+      "position": 1,
+      "start_angle": "180",
+      "operation": "join",
+      "targets": [
+        "2-41 worm"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Worm bore",
+      "suppressed": false,
+      "param_names": [
+        "d20",
+        "d21"
+      ],
+      "participants": [
+        "2-41 worm"
+      ],
+      "type": "cylinder",
+      "base": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "radius": "(4) / 2",
+      "height": "17.5",
+      "operation": "cut"
+    },
+    {
+      "id": 10,
+      "name": "Collar 1 section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              2.0,
+              47.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              5.0,
+              47.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              5.0,
+              54.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              2.0,
+              54.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 11,
+      "name": "Collar 1",
+      "suppressed": false,
+      "body_names": [
+        "2-41 collar 1"
+      ],
+      "param_names": [
+        "d22"
+      ],
+      "type": "revolve",
+      "sketch": 10,
+      "profiles": {
+        "type": "all"
+      },
+      "axis": {
+        "type": "world",
+        "axis": "Z"
+      },
+      "angle": "360 deg",
+      "operation": "new_body",
+      "convention": "sketch_normal"
+    },
+    {
+      "id": 12,
+      "name": "Collar 1 pin hole",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            -6.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              -50.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 1.0,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 13,
+      "name": "Collar 1 pin hole",
+      "suppressed": false,
+      "param_names": [
+        "d23"
+      ],
+      "type": "extrude",
+      "sketch": 12,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "2-41 collar 1"
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Collar 2 section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              2.0,
+              172.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              5.0,
+              172.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              5.0,
+              179.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              2.0,
+              179.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 15,
+      "name": "Collar 2",
+      "suppressed": false,
+      "body_names": [
+        "2-41 collar 2"
+      ],
+      "param_names": [
+        "d24"
+      ],
+      "type": "revolve",
+      "sketch": 14,
+      "profiles": {
+        "type": "all"
+      },
+      "axis": {
+        "type": "world",
+        "axis": "Z"
+      },
+      "angle": "360 deg",
+      "operation": "new_body",
+      "convention": "sketch_normal"
+    },
+    {
+      "id": 16,
+      "name": "Collar 2 pin hole",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            -6.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              -175.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 1.0,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 17,
+      "name": "Collar 2 pin hole",
+      "suppressed": false,
+      "param_names": [
+        "d25"
+      ],
+      "type": "extrude",
+      "sketch": 16,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "2-41 collar 2"
+      ]
+    }
+  ],
+  "next_id": 18,
+  "materials": {
+    "2-41 collar 1": "Brass",
+    "2-41 collar 2": "Brass",
+    "2-41 shaft": "Steel",
+    "2-41 worm": "Brass"
+  }
+}

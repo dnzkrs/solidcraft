@@ -128,7 +128,11 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 2-38 | Steering tie rod end | Steel | 1 | 444.8 | 3.5 |
 | 2-39 | Steering tie rod end plug | Steel | 1 | 214.4 | 1.7 |
 | 2-40 | Steering tie rod end balljoint | Steel | 1 | 257.3 | 2.0 |
+| 2-41 | Steering column and worm gear | Brass, Steel | 4 | 5,671.9 | 46.1 |
+| 2-42 | Steering wheel | Aluminum | 1 | 8,062.4 | 21.8 |
 | 2-43 | Accelerator link | Steel | 1 | 349.1 | 2.7 |
+| 2-44 | Front lighting main beam | Brass | 1 | 863.7 | 7.3 |
+| 2-45 | Front lighting lampstand | Brass, Stainless Steel | 4 | 1,539.9 | 13.0 |
 | 2-46 | Pulling hook | Steel | 1 | 807.5 | 6.3 |
 <!-- /parts -->
 
@@ -230,6 +234,11 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
 - **2-43**: the eyes' Ø4.5 is taken as the wire's centre line (the drawn eyes are about 6.5 over
   the wire); the eyes are closed rings at right angles to each other, and the drawn sharp kink is
   bent R3. The legs stop 0.3 outside the eyes' centre lines (see below).
+- **2-41**: the worm's thread is a square-section helix (2.2 x 2.2, lead 3.96 from the 6° lead
+  angle on Ø12, 3 turns) instead of the drawn trapezoid; the column's last 10 (past the end pin) is
+  measured. **2-42**: the rim is square-edged. **2-44**: the Ø8 hole is modelled Ø7.98 (see below).
+- **2-45**: the housing's cone wall and the stainless reflector are read off the 1:1 half section;
+  the stem's position (4 from the back) and length (30) are measured and dimensioned.
 - **1-04**: from the detail: a 20 wide, 0.5 deep valve channel across the face, with 0.5 wide,
   1 deep relief grooves along its edges; the Ø10 port countersunk 90° to Ø15 on the other face.
 - **1-05**: its thickness is not on the drawing ("refer to 1-04"): not modelled yet.
@@ -263,3 +272,8 @@ Revolving a profile whose arc runs across a ball's equator (2-40's ball, from th
 equator to the pole) gives an inside-out solid with negative volume, like the pipe above; split
 into two arcs at the equator it is right. A Ø2 wire ended on the centre line of a Ø2-wire eye
 (2-43) touches the eye's tube tangentially and cannot be joined; ended 0.3 short it can.
+
+A hole exactly tangent to the inside of a tube's walls (2-44's Ø8 in a tube 8 wide inside) cannot
+be cut; Ø7.98 can. Joining a square-section coil of more than about 2 turns to a cylinder stops
+with "lumps: contact work exceeds the limit"; 2-41's 3-turn worm thread is joined as two
+1.5-turn coils end to end, onto an unbored core that is bored afterwards.

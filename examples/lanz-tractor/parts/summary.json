@@ -657,12 +657,40 @@
   "volume_mm3": 257.3,
   "mass_g": 2.0
  },
+ "2-41": {
+  "name": "Steering column and worm gear",
+  "material": "Brass, Steel",
+  "bodies": 4,
+  "volume_mm3": 5671.9,
+  "mass_g": 46.1
+ },
+ "2-42": {
+  "name": "Steering wheel",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 8062.4,
+  "mass_g": 21.8
+ },
  "2-43": {
   "name": "Accelerator link",
   "material": "Steel",
   "bodies": 1,
   "volume_mm3": 349.1,
   "mass_g": 2.7
+ },
+ "2-44": {
+  "name": "Front lighting main beam",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 863.7,
+  "mass_g": 7.3
+ },
+ "2-45": {
+  "name": "Front lighting lampstand",
+  "material": "Brass, Stainless Steel",
+  "bodies": 4,
+  "volume_mm3": 1539.9,
+  "mass_g": 13.0
  },
  "2-46": {
   "name": "Pulling hook",
