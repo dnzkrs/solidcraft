@@ -3309,6 +3309,132 @@ def air_cover(s):
     return (loop_area(st, sg) - len(holes) * O * O) * T
 
 
+# ----------------------------------------------------------------------------- 3-01
+@part("3-01", "Chassis rear end", "Aluminum")
+def chassis_rear_end(s):
+    """Sheet 05, 3-01 (scale 1:2, read with the vector lines): a 6 thick aluminium plate 118 long:
+    28 at 56 wide, then 90 at 128 wide, an 8 wide relief with an R4 end cut 4 into the wide part at
+    each step. Holes: A = Ø4 at (12, ±24), (66, ±24), (34, ±59), (62, ±59); B = M4 (Ø3.3) at
+    (78, ±54), (108, ±54), (79, -5); C = M6 (Ø5) at (108, 0), (104, -32); D = Ø8 at (70.5, -5); an
+    8 wide slot from (40, -5) to (50, -5). Under the narrow end a flange 6 thick, 56 wide, 31.5 deep
+    (measured), with Ø6 holes 6 (at ±16) and 24 (at 0) from its edge. X along from the narrow end,
+    Z = 0 the plate's underside."""
+    T = s.param("cre_t", 6, "plate thickness")
+    LN, WN = s.param("cre_narrow_l", 28, "narrow end length"), s.param("cre_narrow_w", 56, "narrow end width")
+    L, W = s.param("cre_l", 118, "length (28 + 90)"), s.param("cre_w", 128, "width (64 + 64)")
+    DF = s.param("cre_flange_d", 31.5, "flange depth below the plate (measured)")
+    a, b = WN / 2, W / 2
+    start = (0, -a)
+    segs = [("line", (LN + 4, -a)), ("arc", (LN + 4, -a - 4), (LN + 4, -a - 8), False), ("line", (LN, -a - 8)),
+            ("line", (LN, -b)), ("line", (L, -b)), ("line", (L, b)), ("line", (LN, b)), ("line", (LN, a + 8)),
+            ("line", (LN + 4, a + 8)), ("arc", (LN + 4, a + 4), (LN + 4, a), False), ("line", (0, a)), ("line", start)]
+    holes = ([((x, y), 4) for x in (12, 66) for y in (24, -24)] + [((x, y), 4) for x in (34, 62) for y in (59, -59)]
+             + [((x, y), 3.3) for x in (78, 108) for y in (54, -54)] + [((79, -5), 3.3), ((108, 0), 5), ((104, -32), 5),
+                                                                        ((70.5, -5), 8)])
+    s.sketch("Plate", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    for (x, y), d in holes:
+        s.cmd("sketch.circle.center", center=[x, y], diameter=d)
+    st, sg = slot_loop((40, -5), (50, -5), 4)
+    s.loop(st, sg)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [1, 0]}], name="Plate", body_name=s.body)
+    v = (loop_area(start, segs) - sum(math.pi / 4 * d * d for _, d in holes) - loop_area(st, sg)) * T
+    # the flange reaches 1 into the plate so the two overlap
+    s.sketch("Flange", (0, 0, -DF), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.rectangle.two_point", p0=[0, -a], p1=[6, a])
+    s.finish()
+    s.cmd("solid.extrude", distance=DF + 1, operation="join", targets=[s.body], name="Flange")
+    v += 6 * WN * DF
+    s.holes("Flange holes", (-1, 0, 0), (1, 0, 0), [(-1, 16, -DF + 6), (-1, -16, -DF + 6), (-1, 0, -DF + 24)], 6, depth=8)
+    return v - 3 * math.pi * 9 * 6
+
+
+# ----------------------------------------------------------------------------- 3-02
+@part("3-02", "Rear axle support bracket", "Aluminum")
+def rear_axle_support_bracket(s):
+    """Sheet 05, 3-02 (scale 1:2, read with the vector lines): an aluminium block 40 wide, 60 high
+    and 10 thick, bored Ø24 18 above its foot and split by a 4 wide slot from the bore to one side;
+    the clamp screw 16 from the centre: Ø5 up from the foot to the slot, M4 (Ø3.3) 18 deep above it;
+    two M4 (Ø3.3) x 20 in the top at ±14. X across, Y up from the foot, Z through the thickness."""
+    W, H, T = s.param("ras_w", 40, "width (20 + 20)"), s.param("ras_h", 60, "height"), s.param("ras_t", 10, "thickness")
+    YB = s.param("ras_bore_y", 18, "bore above the foot")
+    D = s.param("ras_bore_d", 24, "bore")
+    S = s.param("ras_slot", 4, "slot width")
+    XS = s.param("ras_screw_x", 16, "clamp screw from the centre (20 - 4)")
+    R = D / 2
+    s.sketch("Block", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.rectangle.two_point", p0=[-W / 2, 0], p1=[W / 2, H])
+    s.finish()
+    s.cmd("solid.extrude", distance=T, name="Block", body_name=s.body)
+    xe = math.sqrt(R * R - (S / 2) ** 2)
+    start = (xe, YB + S / 2)
+    segs = [("line", (W / 2 + 1, YB + S / 2)), ("line", (W / 2 + 1, YB - S / 2)), ("line", (xe, YB - S / 2)),
+            ("arc", (0, YB), start, False)]
+    s.sketch("Bore and slot", (0, 0, -1), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.extrude", distance=T + 2, operation="cut", targets=[s.body], name="Bore and slot")
+    open_ = loop_area(start, segs) - 1 * S                     # less the part outside the block
+    s.holes("Clamp screw clearance", (0, -1, 0), (0, 1, 0), [(XS, -1, T / 2)], 5, depth=YB - S / 2 + 2)
+    s.holes("Clamp screw thread", (0, YB, 0), (0, 1, 0), [(XS, YB, T / 2)], 3.3, depth=S / 2 + 18)
+    s.holes("M4 tapped", (0, H + 1, 0), (0, -1, 0), [(14, H + 1, T / 2), (-14, H + 1, T / 2)], 3.3, depth=21)
+    v = (W * H - open_) * T
+    return v - math.pi * 6.25 * (YB - S / 2) - math.pi / 4 * 3.3 ** 2 * (18 + 2 * 20)
+
+
+# ----------------------------------------------------------------------------- 3-03 to 3-06
+def pcd_holes(s, name, z0, depth, d, n=8, pcd=52, start_deg=22.5, target=None):
+    """n holes of diameter d on a PCD round the Z axis, drilled up from Z = z0; turned off the
+    revolve's seam (a cut across the seam needs a separation retry)."""
+    ctr = [(pcd / 2 * math.cos(math.radians(start_deg + i * 360 / n)),
+            pcd / 2 * math.sin(math.radians(start_deg + i * 360 / n)), z0) for i in range(n)]
+    s.holes(name, (0, 0, z0), (0, 0, 1), ctr, d, depth=depth, target=target)
+    return n * math.pi / 4 * d * d
+
+
+@part("3-03", "Differential housing part-1", "Steel")
+def diff_housing_1(s):
+    """Sheet 05, 3-03 (scale 1:1.5, read from the section's lines): a Ø13 x 12 tube, a Ø20 x 8 hub, a
+    Ø60 x 2 flange with 8 x Ø4 on a Ø52 PCD and a Ø42 x 2 spigot; bored Ø9 through the tube, Ø8 for
+    4 and Ø14 8 deep from the spigot's face. Axis = Z, the tube's end on Z = 0. The holes are drawn
+    at 0° and 45°; here they are turned 22.5° (a round part does not notice)."""
+    v = s.turned("Housing", [(4.5, 0), (6.5, 0), (6.5, 12), (10, 12), (10, 20), (30, 20), (30, 22), (21, 22), (21, 24),
+                             (7, 24), (7, 16), (4, 16), (4, 12), (4.5, 12)])
+    return v - pcd_holes(s, "Ø4 holes", 19, 4, 4) * 2           # through the 2 flange
+
+
+@part("3-04", "Differential housing part-2", "Steel")
+def diff_housing_2(s):
+    """Sheet 05, 3-04 (scale 1:2, read from the section's lines): a Ø13 x 12 tube and a Ø20 x 8 hub
+    like 3-03, then a Ø46 body 28 long with a Ø42 bore 28 deep (4 wall) and a Ø60 x 4 flange with
+    8 x M4 (Ø3.3) on the Ø52 PCD matching 3-03; bored Ø9, Ø8 and Ø14 like 3-03; a Ø6 radial hole 15
+    from the flange face. Axis = Z, the tube's end on Z = 0; the holes turned 22.5° as on 3-03 and the
+    radial hole at 45°."""
+    v = s.turned("Housing", [(4.5, 0), (6.5, 0), (6.5, 12), (10, 12), (10, 20), (23, 20), (23, 48), (30, 48), (30, 52),
+                             (21, 52), (21, 24), (7, 24), (7, 16), (4, 16), (4, 12), (4.5, 12)])
+    v -= pcd_holes(s, "M4 tapped", 47, 6, 3.3) * 4             # through the 4 flange
+    u = (math.cos(math.radians(45)), math.sin(math.radians(45)), 0)
+    s.holes("Ø6 radial", (25 * u[0], 25 * u[1], 0), (-u[0], -u[1], 0), [(25 * u[0], 25 * u[1], 37)], 6, depth=5)
+    return v - cross_hole(23, 3, 21) / 2
+
+
+@part("3-05", "Rear axle main bearing housing part-1", "Aluminum")
+def bearing_housing_1(s):
+    """Sheet 05, 3-05 (scale 1:2, steps read from the lines): a Ø24 x 13.5 tube and a Ø38 x 12 flange;
+    bored Ø20 7 deep, Ø18, and Ø32 10 deep from the flange face. Axis = Z."""
+    return s.turned("Housing", [(10, 0), (12, 0), (12, 13.5), (19, 13.5), (19, 25.5), (16, 25.5), (16, 15.5), (9, 15.5),
+                                (9, 7), (10, 7)])
+
+
+@part("3-06", "Rear axle main bearing housing part-2", "Aluminum")
+def bearing_housing_2(s):
+    """Sheet 05, 3-06 (scale 1:2, steps read from the lines): as 3-05 with a 40.5 long tube: Ø24 x 40.5
+    and Ø38 x 12; bored Ø20 7 deep, Ø18, and Ø32 10 deep. Axis = Z."""
+    return s.turned("Housing", [(10, 0), (12, 0), (12, 40.5), (19, 40.5), (19, 52.5), (16, 52.5), (16, 42.5), (9, 42.5),
+                                (9, 7), (10, 7)])
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]

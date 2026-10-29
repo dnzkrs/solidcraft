@@ -1,0 +1,378 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ras_w",
+    "expression": "40",
+    "unit": "mm",
+    "comment": "width (20 + 20)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ras_h",
+    "expression": "60",
+    "unit": "mm",
+    "comment": "height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ras_t",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ras_bore_y",
+    "expression": "18",
+    "unit": "mm",
+    "comment": "bore above the foot"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ras_bore_d",
+    "expression": "24",
+    "unit": "mm",
+    "comment": "bore"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ras_slot",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "slot width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ras_screw_x",
+    "expression": "16",
+    "unit": "mm",
+    "comment": "clamp screw from the centre (20 - 4)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Block"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -20.0,
+     0
+    ],
+    "p1": [
+     20.0,
+     60
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 10,
+    "name": "Block",
+    "body_name": "3-02 Rear axle support bracket"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -1
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Bore and slot"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      11.83216,
+      20.0
+     ],
+     [
+      21.0,
+      20.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      21.0,
+      20.0
+     ],
+     [
+      21.0,
+      16.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      21.0,
+      16.0
+     ],
+     [
+      11.83216,
+      16.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     18
+    ],
+    "start": [
+     11.83216,
+     20.0
+    ],
+    "end": [
+     11.83216,
+     16.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 12,
+    "operation": "cut",
+    "targets": [
+     "3-02 Rear axle support bracket"
+    ],
+    "name": "Bore and slot"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -1,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Clamp screw clearance"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     16.0,
+     -5.0
+    ],
+    "diameter": 5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 18.0,
+    "operation": "cut",
+    "targets": [
+     "3-02 Rear axle support bracket"
+    ],
+    "name": "Clamp screw clearance"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      18,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Clamp screw thread"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     16.0,
+     -5.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 20.0,
+    "operation": "cut",
+    "targets": [
+     "3-02 Rear axle support bracket"
+    ],
+    "name": "Clamp screw thread"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      61,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      -0.0,
+      -0.0,
+      -1.0
+     ]
+    },
+    "name": "M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -14.0,
+     -5.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     14.0,
+     -5.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 21,
+    "operation": "cut",
+    "targets": [
+     "3-02 Rear axle support bracket"
+    ],
+    "name": "M4 tapped"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-02 Rear axle support bracket"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

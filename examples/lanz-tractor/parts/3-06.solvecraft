@@ -1,0 +1,229 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [],
+  "features": [
+    {
+      "id": 1,
+      "name": "Housing section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              10.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              12.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              12.0,
+              40.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              19.0,
+              40.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              19.0,
+              52.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              16.0,
+              52.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              16.0,
+              42.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              9.0,
+              42.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.end",
+            "pos": [
+              9.0,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l9.end",
+            "pos": [
+              10.0,
+              7.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "l9",
+            "type": "line",
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "l10",
+            "type": "line",
+            "a": 10,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 10
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Housing",
+      "suppressed": false,
+      "body_names": [
+        "3-06 Rear axle main bearing housing part-2"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "revolve",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      },
+      "axis": {
+        "type": "world",
+        "axis": "Z"
+      },
+      "angle": "360 deg",
+      "operation": "new_body",
+      "convention": "sketch_normal"
+    }
+  ],
+  "next_id": 3,
+  "materials": {
+    "3-06 Rear axle main bearing housing part-2": "Aluminum"
+  }
+}

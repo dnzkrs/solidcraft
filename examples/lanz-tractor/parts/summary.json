@@ -719,5 +719,47 @@
   "bodies": 1,
   "volume_mm3": 596.4,
   "mass_g": 4.7
+ },
+ "3-01": {
+  "name": "Chassis rear end",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 85739.4,
+  "mass_g": 231.5
+ },
+ "3-02": {
+  "name": "Rear axle support bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 18343.9,
+  "mass_g": 49.5
+ },
+ "3-03": {
+  "name": "Differential housing part-1",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 10134.7,
+  "mass_g": 79.6
+ },
+ "3-04": {
+  "name": "Differential housing part-2",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 20630.1,
+  "mass_g": 161.9
+ },
+ "3-05": {
+  "name": "Rear axle main bearing housing part-1",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 7312.4,
+  "mass_g": 19.7
+ },
+ "3-06": {
+  "name": "Rear axle main bearing housing part-2",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 12653.9,
+  "mass_g": 34.2
  }
 }
