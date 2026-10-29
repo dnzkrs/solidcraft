@@ -160,6 +160,7 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 3-22 | Accelerator control lever handle | Brass | 1 | 647.2 | 5.5 |
 | 3-25A | Drivers seat base | Brass | 1 | 4,811.7 | 40.9 |
 | 3-25B | Drivers seat | Oak | 1 | 27,807.3 | 20.9 |
+| 3-26A | Bumper-towbar mounting bracket | Steel | 1 | 1,426.9 | 11.2 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,

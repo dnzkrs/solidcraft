@@ -3813,6 +3813,47 @@ def seat(s):
     return a1 * 4 + a0 * 6 - spandrel * path
 
 
+# ----------------------------------------------------------------------------- 3-26A
+def line_meet(p, d, y):
+    """Where the line through p along d reaches height y."""
+    t = (y - p[1]) / d[1]
+    return (p[0] + t * d[0], y)
+
+
+@part("3-26A", "Bumper-towbar mounting bracket", "Steel")
+def towbar_bracket(s):
+    """Sheet 06, 3-26A (scale 1:2): a 2 x 8 steel strip with R4 ends: a top leg 43 long, a slanted leg
+    dropping to 37 overall over 22.5, a bottom leg 11 long; Ø4 holes 5 and 35 from the top leg's end
+    and 5 from the bottom leg's end. The bends are modelled sharp (drawn with small, undimensioned
+    rounds). Side profile in the XZ plane, X along, Z up from the bottom leg's underside; 8 wide in Y."""
+    T, W = s.param("tb_t", 2, "thickness"), s.param("tb_w", 8, "width")
+    L1, DX, L3, H = 43, 22.5, 11, 37
+    a, b = (L1, H), (L1 + DX, T)                                  # the slant's upper face
+    d = (b[0] - a[0], b[1] - a[1])
+    ln = math.hypot(*d)
+    nrm = (d[1] / ln * T, -d[0] / ln * T)                        # toward the lower left
+    nrm = (-abs(nrm[0]), -abs(nrm[1]))
+    q = (a[0] + nrm[0], a[1] + nrm[1])
+    p1, p2 = line_meet(q, d, H - T), line_meet(q, d, 0)
+    pts = [(0, H - T), p1, p2, (L1 + DX + L3, 0), (L1 + DX + L3, T), b, a, (0, H)]
+    s.sketch("Side", (0, 0, 0), (1, 0, 0), (0, 0, 1))                     # normal -Y
+    s.polyline(pts)
+    s.finish()
+    s.cmd("solid.extrude", distance=W / 2, direction="symmetric", name="Strip", body_name=s.body)
+    v = polygon_area(pts) * W
+    xe = L1 + DX + L3
+    r = W / 2
+    s.sketch("End rounds", (0, 0, -1), (1, 0, 0), (0, 1, 0))
+    for xc, x0, x1 in ((r, -1, r), (xe - r, xe - r, xe + 1)):
+        s.cmd("sketch.rectangle.two_point", p0=[x0, -r - 1], p1=[x1, r + 1])
+        s.cmd("sketch.circle.center", center=[xc, 0], diameter=W)
+    s.finish()
+    s.cmd("solid.extrude", distance=H + 2, operation="cut", targets=[s.body],
+          profiles=[{"point": [-0.5, 0]}, {"point": [xe + 0.5, 0]}], name="End rounds")
+    s.holes("Ø4 holes", (0, 0, -1), (0, 0, 1), [(5, 0, -1), (35, 0, -1), (xe - 5, 0, -1)], 4, depth=H + 2)
+    return v - 2 * (2 * r * r - math.pi / 2 * r * r) * T - 3 * math.pi * 4 * T
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]

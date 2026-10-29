@@ -880,5 +880,12 @@
   "bodies": 1,
   "volume_mm3": 27807.3,
   "mass_g": 20.9
+ },
+ "3-26A": {
+  "name": "Bumper-towbar mounting bracket",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1426.9,
+  "mass_g": 11.2
  }
 }
