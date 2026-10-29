@@ -187,10 +187,27 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 4-04 | Coupling unit outer bearing plate | Brass | 1 | 4,946.0 | 42.0 |
 | 4-05 | Coupling unit outer plate ball bearing | Steel | 1 | 1,474.1 | 11.6 |
 | 4-06 | Coupling drive pulley | Steel | 1 | 4,159.1 | 32.6 |
+| 4-07 | Coupling plate | Brass | 1 | 3,597.6 | 30.6 |
 | 4-08 | Coupling spacer | Steel | 1 | 62.8 | 0.5 |
 | 4-09 | Coupling spring | Steel | 1 | 40.1 | 0.3 |
+| 4-10 | Coupling spring retainer | Steel | 1 | 727.6 | 5.7 |
 | 4-11 | Coupling spring retainer ball bearing | Steel | 1 | 447.7 | 3.5 |
 | 4-12 | Coupling ball bearing retainer | Steel | 1 | 253.8 | 2.0 |
+| 4-13 | Coupling shaft and gearwheel-1 | Stainless Steel, Steel | 2 | 1,194.7 | 9.5 |
+| 4-14 | Coupling RH-pulley plate | Steel | 1 | 2,684.3 | 21.1 |
+| 4-15 | Coupling RH-pulley shaft | Steel | 1 | 802.5 | 6.3 |
+| 4-16 | Coupling RH-pulley | Brass | 1 | 1,369.6 | 11.6 |
+| 4-17 | GB-gearwheel type-A | Stainless Steel, Steel | 2 | 3,901.3 | 30.7 |
+| 4-18 | GB-gearwheel type-B | Steel | 1 | 518.4 | 4.1 |
+| 4-19 | GB-gearwheel type-C | Stainless Steel, Steel | 2 | 4,417.4 | 34.7 |
+| 4-20 | GB-driver shaft spacer | Brass | 1 | 31.4 | 0.3 |
+| 4-21 | GB-idler shaft-1 spacer | Brass | 1 | 78.5 | 0.7 |
+| 4-22 | GB-idler shaft-2 spacer | Brass | 1 | 235.6 | 2.0 |
+| 4-23 | GB-output shaft reversing gearwheel | Brass, Stainless Steel, Steel | 5 | 5,561.2 | 44.3 |
+| 4-24 | GB-external output shaft gearwheel | Brass, Steel | 2 | 5,917.9 | 47.0 |
+| 4-25 | Reversing shaft bearing plate | Steel | 1 | 3,140.0 | 24.6 |
+| 4-28 | Reversing shaft rack cover plate | Brass | 1 | 638.1 | 5.4 |
+| 4-31 | Coupling guide pillar | Brass | 1 | 492.4 | 4.2 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,
@@ -336,6 +353,14 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
   throttle quadrant), 3-23/3-24 (mudguards), 3-25C (seat leg), 3-25D (back rest), 3-27E (release
   handle).
 
+- **Group 4** (sheet 07): 4-05 and 4-11 are bought-in bearings modelled as their envelopes (their
+  labelled bores, Ø8.5 and Ø6.5, as given). 4-06, 4-10 and 4-15 are read from high-resolution
+  renders of their sections. The gears have straight flanks: the 30 tooth gears 0.5 wide at the
+  tip and 1.5 at the root (assumed), the 10 tooth pinions as 4-13 (0.75 / 1.5), 4-24's 19 teeth as
+  3-18 (1 / 2.5). The Ø8 collars and hubs against the pinions are Ø7.9 so they stay inside the
+  pinions' roots. 4-14's two Ø3 holes are placed as 4-25's. Not yet modelled: 4-26 (reversing
+  shaft operating ring), 4-27 (rack), 4-29, 4-30.
+
 ## SolidCraft issue found while modelling
 
 Adding blind holes one at a time with `solid.hole` to 1-01 left most of them **3.42 mm too
@@ -384,3 +409,8 @@ of the notch's floor (Y = 8), was cut 2.5 too deep. It ends at Y = 9 instead.
 Cutting two regions of one sketch picked by points, a rectangle less a circle and a smaller
 circle inside it (3-27J's end round and hole), removed 13.15 mm³ instead of 19.44; as two cuts
 both are right.
+
+Where two solids touch, the boolean's fallback needs planar faces on both: a gear prism (planar)
+could not be joined onto a revolved hub it touched, nor a prism carrying a bore circle onto a
+bored core. The gears are built prisms first, the round parts joined reaching 0.5 into them, and
+bored last.

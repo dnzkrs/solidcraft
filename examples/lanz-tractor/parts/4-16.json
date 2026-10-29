@@ -1,0 +1,105 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Pulley section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5,
+      0
+     ],
+     [
+      7,
+      0
+     ],
+     [
+      7,
+      5.5
+     ],
+     [
+      9,
+      5.5
+     ],
+     [
+      9,
+      7.5
+     ],
+     [
+      6,
+      7.5
+     ],
+     [
+      6,
+      11.5
+     ],
+     [
+      9,
+      11.5
+     ],
+     [
+      9,
+      13.5
+     ],
+     [
+      7,
+      13.5
+     ],
+     [
+      7,
+      15
+     ],
+     [
+      5,
+      15
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Pulley",
+    "body_name": "4-16 Coupling RH-pulley"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-16 Coupling RH-pulley"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

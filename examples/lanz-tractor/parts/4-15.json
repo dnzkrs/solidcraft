@@ -1,0 +1,105 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Shaft section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      1.25,
+      0
+     ],
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      5,
+      2
+     ],
+     [
+      5,
+      5
+     ],
+     [
+      3.5,
+      5
+     ],
+     [
+      3.5,
+      13.5
+     ],
+     [
+      4,
+      13.5
+     ],
+     [
+      4,
+      19
+     ],
+     [
+      2.75,
+      19
+     ],
+     [
+      2.75,
+      10
+     ],
+     [
+      1.25,
+      10
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Shaft",
+    "body_name": "4-15 Coupling RH-pulley shaft"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-15 Coupling RH-pulley shaft"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

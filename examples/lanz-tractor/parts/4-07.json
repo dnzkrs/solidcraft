@@ -1,0 +1,129 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Plate section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      9,
+      0
+     ],
+     [
+      9,
+      8
+     ],
+     [
+      13,
+      8
+     ],
+     [
+      11.544119,
+      12
+     ],
+     [
+      2,
+      12
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Plate",
+    "body_name": "4-07 Coupling plate"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -7.0710678118654755,
+      -7.071067811865475,
+      0
+     ],
+     "x_dir": [
+      0.7071067811865475,
+      -0.7071067811865476,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "\u00d84 cross hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -4.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "4-07 Coupling plate"
+    ],
+    "name": "\u00d84 cross hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-07 Coupling plate"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

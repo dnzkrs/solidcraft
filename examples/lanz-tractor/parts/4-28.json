@@ -1,0 +1,96 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Plate"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 29
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -10,
+     0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     10,
+     0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1,
+    "profiles": [
+     {
+      "point": [
+       0,
+       8
+      ]
+     }
+    ],
+    "name": "Plate",
+    "body_name": "4-28 Reversing shaft rack cover plate"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-28 Reversing shaft rack cover plate"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

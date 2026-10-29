@@ -1070,6 +1070,13 @@
   "volume_mm3": 4159.1,
   "mass_g": 32.6
  },
+ "4-07": {
+  "name": "Coupling plate",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 3597.6,
+  "mass_g": 30.6
+ },
  "4-08": {
   "name": "Coupling spacer",
   "material": "Steel",
@@ -1084,6 +1091,13 @@
   "volume_mm3": 40.1,
   "mass_g": 0.3
  },
+ "4-10": {
+  "name": "Coupling spring retainer",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 727.6,
+  "mass_g": 5.7
+ },
  "4-11": {
   "name": "Coupling spring retainer ball bearing",
   "material": "Steel",
@@ -1097,5 +1111,110 @@
   "bodies": 1,
   "volume_mm3": 253.8,
   "mass_g": 2.0
+ },
+ "4-13": {
+  "name": "Coupling shaft and gearwheel-1",
+  "material": "Stainless Steel, Steel",
+  "bodies": 2,
+  "volume_mm3": 1194.7,
+  "mass_g": 9.5
+ },
+ "4-14": {
+  "name": "Coupling RH-pulley plate",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 2684.3,
+  "mass_g": 21.1
+ },
+ "4-15": {
+  "name": "Coupling RH-pulley shaft",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 802.5,
+  "mass_g": 6.3
+ },
+ "4-16": {
+  "name": "Coupling RH-pulley",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1369.6,
+  "mass_g": 11.6
+ },
+ "4-17": {
+  "name": "GB-gearwheel type-A",
+  "material": "Stainless Steel, Steel",
+  "bodies": 2,
+  "volume_mm3": 3901.3,
+  "mass_g": 30.7
+ },
+ "4-18": {
+  "name": "GB-gearwheel type-B",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 518.4,
+  "mass_g": 4.1
+ },
+ "4-19": {
+  "name": "GB-gearwheel type-C",
+  "material": "Stainless Steel, Steel",
+  "bodies": 2,
+  "volume_mm3": 4417.4,
+  "mass_g": 34.7
+ },
+ "4-20": {
+  "name": "GB-driver shaft spacer",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 31.4,
+  "mass_g": 0.3
+ },
+ "4-21": {
+  "name": "GB-idler shaft-1 spacer",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 78.5,
+  "mass_g": 0.7
+ },
+ "4-22": {
+  "name": "GB-idler shaft-2 spacer",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 235.6,
+  "mass_g": 2.0
+ },
+ "4-23": {
+  "name": "GB-output shaft reversing gearwheel",
+  "material": "Brass, Stainless Steel, Steel",
+  "bodies": 5,
+  "volume_mm3": 5561.2,
+  "mass_g": 44.3
+ },
+ "4-24": {
+  "name": "GB-external output shaft gearwheel",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 5917.9,
+  "mass_g": 47.0
+ },
+ "4-25": {
+  "name": "Reversing shaft bearing plate",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 3140.0,
+  "mass_g": 24.6
+ },
+ "4-28": {
+  "name": "Reversing shaft rack cover plate",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 638.1,
+  "mass_g": 5.4
+ },
+ "4-31": {
+  "name": "Coupling guide pillar",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 492.4,
+  "mass_g": 4.2
  }
 }

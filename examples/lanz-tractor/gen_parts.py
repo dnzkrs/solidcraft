@@ -4344,6 +4344,232 @@ def bearing_retainer(s):
     return s.turned("Retainer", [(2, 0), (3.25, 0), (3.25, 5), (4, 5), (4, 9), (2, 9)])
 
 
+# ----------------------------------------------------------------------------- 4-07 to 4-31 (sheet 07)
+def gear_points(N, tip_d, root_d, tip_w, root_w, phase=0.0):
+    """A straight-flanked gear outline: N teeth, tip_w wide at the tip circle, root_w at the root."""
+    RT, RR = tip_d / 2, root_d / 2
+    at, ar = math.asin(tip_w / 2 / RT), math.asin(root_w / 2 / RR)
+    pts = []
+    for k in range(int(N)):
+        t = phase + 2 * math.pi * k / N
+        for r, a in ((RR, t - ar), (RT, t - at), (RT, t + at), (RR, t + ar)):
+            pts.append((r * math.cos(a), r * math.sin(a)))
+    return pts
+
+
+def gear_prism(s, name, pts, z0, width, bore, body, operation="join"):
+    """Extrude a gear outline with a centre bore from Z = z0; returns its volume."""
+    s.sketch(name, (0, 0, z0), (1, 0, 0), (0, 1, 0))
+    s.polyline(pts)
+    if bore:
+        s.cmd("sketch.circle.center", center=[0, 0], diameter=bore)
+    s.finish()
+    rr = min(math.hypot(*p) for p in pts)
+    extra = {"targets": [body]} if operation == "join" else {"body_name": body}
+    pick = round((bore / 2 + rr) / 2, 6) if bore else 0
+    s.cmd("solid.extrude", distance=width, operation=operation, profiles=[{"point": [pick, 0]}], name=name, **extra)
+    return (polygon_area(pts) - (math.pi / 4 * bore * bore if bore else 0)) * width
+
+
+Z10 = dict(N=10, tip_d=12, root_d=8, tip_w=0.75, root_w=1.5)        # 4-13's pinion profile
+Z30 = dict(N=30, tip_d=32, root_d=28, tip_w=0.5, root_w=1.5)
+
+
+@part("4-07", "Coupling plate", "Brass")
+def coupling_plate(s):
+    """Sheet 07, 4-07 (scale 1:1.5): a brass Ø18 x 8 hub with a Ø4 cross hole 4 from its end and a
+    Ø26 x 4 disc whose face tapers 20° (a friction cone); bored Ø4. Axis = Z; the cross hole at 45°."""
+    v = s.turned("Plate", [(2, 0), (9, 0), (9, 8), (13, 8), (13 - 4 * math.tan(math.radians(20)), 12), (2, 12)])
+    u = (math.cos(math.radians(45)), math.sin(math.radians(45)), 0)
+    s.holes("Ø4 cross hole", (-10 * u[0], -10 * u[1], 0), u, [(-10 * u[0], -10 * u[1], 4)], 4)
+    return v - cross_hole(9, 2, 2)
+
+
+@part("4-10", "Coupling spring retainer", "Steel")
+def spring_retainer(s):
+    """Sheet 07, 4-10 (scale 1:1, from a 700 dpi render): a steel Ø7.5 x 7 spigot (measured) and a
+    Ø15 x 7 cup; bored Ø6 5 deep, Ø4.5 on, and Ø12.5 5 deep from the cup's face. Axis = Z."""
+    return s.turned("Retainer", [(3, 0), (3.75, 0), (3.75, 7), (7.5, 7), (7.5, 14), (6.25, 14), (6.25, 9), (2.25, 9),
+                                 (2.25, 5), (3, 5)])
+
+
+@part("4-13", "Coupling shaft and gearwheel-1", {"gear": "Steel", "shaft": "Stainless Steel"})
+def coupling_shaft_gear(s):
+    """Sheet 07, 4-13: a steel pinion, 10 teeth, Ø12 over the tips, Ø8 at the roots, the teeth 0.75
+    wide at the tip and 1.5 at the root, 4 wide; pressed on a Ø4 x 76 stainless shaft 7 from its end.
+    Axis = Z."""
+    n = s.body.split()[0]
+    v = gear_prism(s, "Pinion", gear_points(**Z10), 7, 4, 4, f"{n} gear", operation="new")
+    return v + s.turned("Shaft", [(0, 0), (2, 0), (2, 76), (0, 76)], body=f"{n} shaft")
+
+
+@part("4-14", "Coupling RH-pulley plate", "Steel")
+def rh_pulley_plate(s):
+    """Sheet 07, 4-14 (scale 1:1.5): a steel Ø32 x 3 plate with a Ø10 x 12 hub, tapped M8 (Ø6.8)
+    through the plate and bored Ø8 6 deep from the hub's end; two Ø3 holes 12.5 either side (taken as
+    3-sided from 4-25). Axis = Z."""
+    v = s.turned("Plate", [(3.4, 0), (16, 0), (16, 3), (5, 3), (5, 15), (4, 15), (4, 9), (3.4, 9)])
+    s.holes("Ø3 holes", (0, 0, -1), (0, 0, 1), [(0, 12.5, -1), (0, -12.5, -1)], 3, depth=5)
+    return v - 2 * math.pi / 4 * 9 * 3
+
+
+@part("4-15", "Coupling RH-pulley shaft", "Steel")
+def rh_pulley_shaft(s):
+    """Sheet 07, 4-15 (scale 1:1, from a 700 dpi render): a steel Ø12 x 2 collar, Ø10 x 3, Ø7 x 8.5
+    and an external thread x 5.5 at Ø8; tapped M3 (Ø2.5) 10 deep from the collar end, bored Ø5.5 9
+    deep from the threaded end. Axis = Z."""
+    return s.turned("Shaft", [(1.25, 0), (6, 0), (6, 2), (5, 2), (5, 5), (3.5, 5), (3.5, 13.5), (4, 13.5), (4, 19),
+                              (2.75, 19), (2.75, 10), (1.25, 10)])
+
+
+@part("4-16", "Coupling RH-pulley", "Brass")
+def rh_pulley(s):
+    """Sheet 07, 4-16 (scale 1:1.5): a brass pulley: a Ø14 x 5.5 hub, Ø18 x 2 flanges each side of a
+    groove 4 wide to Ø12, a Ø14 x 1.5 spigot; bored Ø10. Axis = Z."""
+    return s.turned("Pulley", [(5, 0), (7, 0), (7, 5.5), (9, 5.5), (9, 7.5), (6, 7.5), (6, 11.5), (9, 11.5), (9, 13.5),
+                               (7, 13.5), (7, 15), (5, 15)])
+
+
+def cluster_gear(s, n, hub, gear_z, pin_z, pin_l, collar=None):
+    """A steel cluster: a 30 tooth gear 4 wide from gear_z and a 10 tooth pinion pin_l long from
+    pin_z (planar prisms, joined first), a Ø16 hub (z0, z1) and an optional collar (z0, z1) reaching
+    0.5 into them (round bodies may not touch the prisms' faces: the join fails), bored Ø4. The
+    collar is Ø7.9 (drawn Ø8, the pinion's root) so it stays inside the pinion's roots."""
+    body = f"{n} gear"
+    v = gear_prism(s, "Gear", gear_points(**Z30), gear_z, 4, None, body, operation="new")
+    v += gear_prism(s, "Pinion", gear_points(**Z10), pin_z, pin_l, None, body)
+    v += s.turned("Hub", [(0, hub[0]), (8, hub[0]), (8, hub[1] + 0.5), (0, hub[1] + 0.5)], body=body,
+                  operation="join") - math.pi * 64 * 0.5
+    z_end = pin_z + pin_l
+    if collar:
+        v += s.turned("Collar", [(0, collar[0] - 0.5), (3.95, collar[0] - 0.5), (3.95, collar[1]), (0, collar[1])],
+                      body=body, operation="join") - math.pi * 3.95 ** 2 * 0.5
+        z_end = collar[1]
+    s.holes("Bore", (0, 0, hub[0] - 1), (0, 0, 1), [(0, 0, hub[0] - 1)], 4, depth=z_end - hub[0] + 2, target=body)
+    return v - math.pi * 4 * (z_end - hub[0])
+
+
+@part("4-17", "GB-gearwheel type-A", {"gear": "Steel", "shaft": "Stainless Steel"})
+def gearwheel_a(s):
+    """Sheet 07, 4-17 (scale 1:1.5): a steel cluster on a Ø4 x 37 stainless shaft: from 4 along, a
+    Ø16 x 2 hub, a 30 tooth gear (Ø32 / Ø28, teeth 0.5 at the tip, 1.5 at the root), 4 wide, a 10
+    tooth pinion 5 long (as 4-13) and a Ø8 x 3 collar. Axis = Z."""
+    n = s.body.split()[0]
+    v = cluster_gear(s, n, (4, 6), 6, 10, 5, collar=(15, 18))
+    return v + s.turned("Shaft", [(0, 0), (2, 0), (2, 37), (0, 37)], body=f"{n} shaft")
+
+
+@part("4-18", "GB-gearwheel type-B", "Steel")
+def gearwheel_b(s):
+    """Sheet 07, 4-18 (scale 1:1.5): a steel 10 tooth pinion 5 long (as 4-13) with a Ø8 x 6 hub
+    (modelled Ø7.9, inside the pinion's roots, as on 4-17), bored Ø4 (the flat in the bore shown in
+    the 3D view is not dimensioned and not modelled). Axis = Z."""
+    v = gear_prism(s, "Pinion", gear_points(**Z10), 0, 5, None, s.body, operation="new")
+    v += s.turned("Hub", [(0, 4.5), (3.95, 4.5), (3.95, 11), (0, 11)], operation="join") - math.pi * 3.95 ** 2 * 0.5
+    s.holes("Bore", (0, 0, -1), (0, 0, 1), [(0, 0, -1)], 4, depth=13)
+    return v - math.pi * 4 * 11
+
+
+@part("4-19", "GB-gearwheel type-C", {"gear": "Steel", "shaft": "Stainless Steel"})
+def gearwheel_c(s):
+    """Sheet 07, 4-19: as 4-17 ("for all other dimension details refer to 4-17") with the hub 5 long
+    from 3 along, the gear 4 wide and the pinion 6 long, no collar; on a Ø4 x 37 stainless shaft.
+    Axis = Z."""
+    n = s.body.split()[0]
+    v = cluster_gear(s, n, (3, 8), 8, 12, 6)
+    return v + s.turned("Shaft", [(0, 0), (2, 0), (2, 37), (0, 37)], body=f"{n} shaft")
+
+
+@part("4-20", "GB-driver shaft spacer", "Brass")
+def driver_spacer(s):
+    """Sheet 07, 4-20: a Ø6 / Ø4 x 2 brass spacer. Axis = Z."""
+    return s.turned("Spacer", [(2, 0), (3, 0), (3, 2), (2, 2)])
+
+
+@part("4-21", "GB-idler shaft-1 spacer", "Brass")
+def idler_spacer_1(s):
+    """Sheet 07, 4-21: a Ø6 / Ø4 x 5 brass spacer. Axis = Z."""
+    return s.turned("Spacer", [(2, 0), (3, 0), (3, 5), (2, 5)])
+
+
+@part("4-22", "GB-idler shaft-2 spacer", "Brass")
+def idler_spacer_2(s):
+    """Sheet 07, 4-22: a Ø6 / Ø4 x 15 brass spacer. Axis = Z."""
+    return s.turned("Spacer", [(2, 0), (3, 0), (3, 15), (2, 15)])
+
+
+@part("4-23", "GB-output shaft reversing gearwheel", {"shaft": "Stainless Steel", "gear": "Steel",
+                                                      "sleeve 1": "Brass", "sleeve 2": "Brass", "pin": "Steel"})
+def output_shaft_gear(s):
+    """Sheet 07, 4-23 (scale 1:1.5): a Ø6 x 87.5 stainless shaft; 34 along a brass Ø8 sleeve 7.5
+    long, a steel 30 tooth gear 4 wide (as 4-17, pressed on) and a brass Ø8 sleeve 11 long; a Ø3 x 19
+    steel pin 17.5 from the far end in a hole through the shaft. Axis = Z; the pin along X."""
+    n = s.body.split()[0]
+    v = s.turned("Shaft", [(0, 0), (3, 0), (3, 87.5), (0, 87.5)], body=f"{n} shaft")
+    s.holes("Pin hole", (-4, 0, 0), (1, 0, 0), [(-4, 0, 70)], 3, target=f"{n} shaft")
+    v -= cross_hole(3, 1.5)
+    v += gear_prism(s, "Gear", gear_points(**Z30), 41.5, 4, 6, f"{n} gear", operation="new")
+    v += s.turned("Sleeve 1", [(3, 34), (4, 34), (4, 41.5), (3, 41.5)], body=f"{n} sleeve 1")
+    v += s.turned("Sleeve 2", [(3, 45.5), (4, 45.5), (4, 56.5), (3, 56.5)], body=f"{n} sleeve 2")
+    s.cmd("solid.cylinder", diameter=3, height=19, base=[-9.5, 0, 70], axis="X", name="Pin", body_name=f"{n} pin")
+    return v + math.pi / 4 * 9 * 19
+
+
+@part("4-24", "GB-external output shaft gearwheel", {"gear": "Steel", "bush": "Brass"})
+def external_output_gear(s):
+    """Sheet 07, 4-24 (scale 1:1.5, section G-G): a steel gear, 19 teeth of 3-18's profile (Ø28.5 /
+    Ø23, 1 wide at the tip, 2.5 at the root), 12 wide, with a Ø19 x 5.5 hub; an annular groove Ø12 /
+    Ø18 8 deep in its face; a brass bush Ø10 / Ø6 x 17.5 pressed through it; a Ø3 cross hole 3.5 from
+    the hub's end through both. Axis = Z, the grooved face on Z = 0."""
+    n = s.body.split()[0]
+    pts = gear_points(19, 28.5, 23, 1, 2.5)
+    v = gear_prism(s, "Gear", pts, 0, 12, None, f"{n} gear", operation="new")
+    v += s.turned("Hub", [(0, 11.5), (9.5, 11.5), (9.5, 17.5), (0, 17.5)], body=f"{n} gear", operation="join") \
+        - math.pi * 9.5 ** 2 * 0.5
+    s.turned("Groove", [(6, -1), (9, -1), (9, 8), (6, 8)], body=f"{n} gear", operation="cut")
+    v -= math.pi * (81 - 36) * 8
+    s.holes("Bore", (0, 0, -1), (0, 0, 1), [(0, 0, -1)], 10, depth=20, target=f"{n} gear")
+    v -= math.pi * 25 * 17.5
+    v += s.turned("Bush", [(3, 0), (5, 0), (5, 17.5), (3, 17.5)], body=f"{n} bush")
+    u = (math.cos(math.radians(45)), math.sin(math.radians(45)), 0)
+    for b, R, r in ((f"{n} gear", 9.5, 5), (f"{n} bush", 5, 3)):
+        s.holes(f"Ø3 cross hole ({b.split()[-1]})", (-11 * u[0], -11 * u[1], 0), u, [(-11 * u[0], -11 * u[1], 14)], 3,
+                target=b)
+        v -= cross_hole(R, 1.5, r)
+    return v
+
+
+@part("4-25", "Reversing shaft bearing plate", "Steel")
+def reversing_bearing_plate(s):
+    """Sheet 07, 4-25 (scale 1:2): a steel Ø32 x 3 plate with a Ø10 x 17 hub, reamed Ø6 through; Ø3
+    holes 12.5 either side. Axis = Z."""
+    v = s.turned("Plate", [(3, 0), (16, 0), (16, 3), (5, 3), (5, 20), (3, 20)])
+    s.holes("Ø3 holes", (0, 0, -1), (0, 0, 1), [(0, 12.5, -1), (0, -12.5, -1)], 3, depth=5)
+    return v - 2 * math.pi / 4 * 9 * 3
+
+
+@part("4-28", "Reversing shaft rack cover plate", "Brass")
+def rack_cover_plate(s):
+    """Sheet 07, 4-28 (scale 1:2): a 1 thick brass disc Ø29 with a Ø4 centre hole and Ø2.5 holes 10
+    either side. XY plane."""
+    s.sketch("Plate", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.circle.center", center=[0, 0], diameter=29)
+    s.cmd("sketch.circle.center", center=[0, 0], diameter=4)
+    for x in (-10, 10):
+        s.cmd("sketch.circle.center", center=[x, 0], diameter=2.5)
+    s.finish()
+    s.cmd("solid.extrude", distance=1, profiles=[{"point": [0, 8]}], name="Plate", body_name=s.body)
+    return math.pi / 4 * (29 ** 2 - 16 - 2 * 6.25)
+
+
+@part("4-31", "Coupling guide pillar", "Brass")
+def guide_pillar(s):
+    """Sheet 07, 4-31: a brass pillar: an M4 x 5.5 stud (at Ø4), a Ø6 x 12 body, a Ø4 x 5 neck and an
+    M3 x 3 end (at Ø3). Axis = Z."""
+    return s.turned("Pillar", [(0, 0), (2, 0), (2, 5.5), (3, 5.5), (3, 17.5), (2, 17.5), (2, 22.5), (1.5, 22.5),
+                               (1.5, 25.5), (0, 25.5)])
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]
