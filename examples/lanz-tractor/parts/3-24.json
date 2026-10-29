@@ -1,0 +1,584 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -80.5,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Top and facets"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.669639,
+      -20.930361
+     ],
+     [
+      29.6,
+      0
+     ],
+     [
+      117.4,
+      0
+     ],
+     [
+      158.836457,
+      -41.436457
+     ],
+     [
+      158.129351,
+      -42.143564
+     ],
+     [
+      116.985786,
+      -1.0
+     ],
+     [
+      30.014214,
+      -1.0
+     ],
+     [
+      9.376746,
+      -21.637468
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 45.0,
+    "operation": "new",
+    "name": "Top and facets",
+    "body_name": "3-24 Rear wheel RH-mud guard"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -125,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Lip"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      9.376746,
+      -20.930361
+     ],
+     [
+      29.807107,
+      -0.5
+     ],
+     [
+      117.192893,
+      -0.5
+     ],
+     [
+      158.129351,
+      -41.436457
+     ],
+     [
+      149.997623,
+      -49.568185
+     ],
+     [
+      112.429437,
+      -12.0
+     ],
+     [
+      34.570563,
+      -12.0
+     ],
+     [
+      17.508474,
+      -29.062089
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1,
+    "operation": "join",
+    "name": "Lip",
+    "targets": [
+     "3-24 Rear wheel RH-mud guard"
+    ]
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -80,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Side panel"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      52.5,
+      -0.5
+     ],
+     [
+      117.192893,
+      -0.5
+     ],
+     [
+      157.846447,
+      -41.153553
+     ],
+     [
+      140.5,
+      -58.5
+     ],
+     [
+      52.5,
+      -58.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1,
+    "operation": "join",
+    "name": "Side panel",
+    "targets": [
+     "3-24 Rear wheel RH-mud guard"
+    ]
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -40,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "End wall"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      52,
+      -0.5
+     ],
+     [
+      53,
+      -0.5
+     ],
+     [
+      53,
+      -58.5
+     ],
+     [
+      52,
+      -58.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 40.7,
+    "operation": "join",
+    "name": "End wall",
+    "targets": [
+     "3-24 Rear wheel RH-mud guard"
+    ]
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -59
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Flange"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      52.5,
+      -59
+     ],
+     [
+      52.5,
+      -80.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      52.5,
+      -80.5
+     ],
+     [
+      140,
+      -80.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      140,
+      -80.5
+     ],
+     [
+      140,
+      -65
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     134,
+     -65
+    ],
+    "start": [
+     140,
+     -65
+    ],
+    "end": [
+     134,
+     -59
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      134,
+      -59
+     ],
+     [
+      52.5,
+      -59
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1,
+    "operation": "join",
+    "targets": [
+     "3-24 Rear wheel RH-mud guard"
+    ],
+    "name": "Flange"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -60
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Flange \u00d88 holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     58.0,
+     -70.0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     86.0,
+     -70.0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3,
+    "operation": "cut",
+    "targets": [
+     "3-24 Rear wheel RH-mud guard"
+    ],
+    "name": "Flange \u00d88 holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -60
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Flange \u00d84 holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     102.0,
+     -65.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     132.0,
+     -65.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3,
+    "operation": "cut",
+    "targets": [
+     "3-24 Rear wheel RH-mud guard"
+    ],
+    "name": "Flange \u00d84 holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      1
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "\u00d83 holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -103.4,
+     -95.0
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -103.4,
+     -111.0
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3,
+    "operation": "cut",
+    "targets": [
+     "3-24 Rear wheel RH-mud guard"
+    ],
+    "name": "\u00d83 holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-24 Rear wheel RH-mud guard"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

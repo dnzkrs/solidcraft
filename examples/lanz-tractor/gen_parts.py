@@ -4776,6 +4776,133 @@ def seat_back_rest(s):
     return loop_area(start, segs) * T
 
 
+# ----------------------------------------------------------------------------- 3-23, 3-24
+def clip_convex(subject, clip):
+    """The part of polygon `subject` inside the convex polygon `clip` (both lists of (x, y); clip
+    counter-clockwise): Sutherland-Hodgman."""
+    out = list(subject)
+    for a, b in zip(clip, clip[1:] + clip[:1]):
+        inside = lambda p: (b[0] - a[0]) * (p[1] - a[1]) - (b[1] - a[1]) * (p[0] - a[0]) >= -1e-12
+        src, out = out, []
+        for p, q in zip(src, src[1:] + src[:1]):
+            if inside(q):
+                if not inside(p):
+                    out.append(_seg_cross(p, q, a, b))
+                out.append(q)
+            elif inside(p):
+                out.append(_seg_cross(p, q, a, b))
+        if not out:
+            return []
+    return out
+
+
+def _seg_cross(p, q, a, b):
+    d1 = (q[0] - p[0], q[1] - p[1])
+    d2 = (b[0] - a[0], b[1] - a[1])
+    t = ((a[0] - p[0]) * d2[1] - (a[1] - p[1]) * d2[0]) / (d1[0] * d2[1] - d1[1] * d2[0])
+    return (p[0] + t * d1[0], p[1] + t * d1[1])
+
+
+def ccw(poly):
+    a = sum(p[0] * q[1] - q[0] * p[1] for p, q in zip(poly, poly[1:] + poly[:1]))
+    return poly if a > 0 else poly[::-1]
+
+
+def mud_guard(s, side):
+    """3-23 / 3-24 from the flat pattern (sheet 06, 1 thick brass), built folded as overlapping
+    solids with sharp bends. U along the guard (the flat pattern's Y), V across (its X), Z up from
+    the top panel's upper face; `side` = +1 builds it toward +Y, -1 mirrors it."""
+    T = 1
+    c45 = math.cos(math.radians(45))
+    # the top's profile in (U, Z): rear facet 29.6, top 87.8, front facet 58.6, both facets down 45°
+    prof = [(29.6 - 29.6 * c45, -29.6 * c45), (29.6, 0), (117.4, 0), (117.4 + 58.6 * c45, -58.6 * c45)]
+    off1, off12 = offset_polyline(prof, -T), offset_polyline(prof, -12)
+    band1, band12 = prof + off1[::-1], prof + off12[::-1]
+    V0, V1 = 80, 126                                            # the top: V 80..126 (the lip V 125..126)
+    y = lambda v: side * v
+
+    def slab(name, poly, v0, v1, op="join"):
+        """Extrude a (U, Z) polygon across V = v0..v1."""
+        y0, y1 = sorted((y(v0), y(v1)))
+        s.sketch(name, (0, y1, 0), (1, 0, 0), (0, 0, 1))                  # normal -Y
+        s.polyline(poly)
+        s.finish()
+        extra = {"body_name": s.body} if op == "new" else {"targets": [s.body]}
+        s.cmd("solid.extrude", distance=y1 - y0, operation=op, name=name, **extra)
+
+    # every piece overlaps its neighbours by 0.5 instead of sharing a face (coplanar faces need a
+    # separation retry); the volume is put together by inclusion-exclusion of those overlaps
+    slab("Top and facets", band1, 80.5, 125.5, op="new")
+    a1 = polygon_area(band1)
+    # the lip (V 125..126): from 0.5 below the top surface down 12, its ends 0.5 short
+    def trim(line):
+        out = list(line)
+        for k, (p, q) in ((0, (line[0], line[1])), (-1, (line[-1], line[-2]))):
+            t = _unit((q[0] - p[0], q[1] - p[1], 0))
+            out[k] = (p[0] + 0.5 * t[0], p[1] + 0.5 * t[1])
+        return out
+    o05, o12 = trim(offset_polyline(prof, -0.5)), trim(off12)
+    lip = o05 + o12[::-1]
+    slab("Lip", lip, 125, 126)
+    a_lip = polygon_area(lip)
+    a_lb = polygon_area(o05 + trim(off1)[::-1])                 # lip and top overlap over V 125..125.5
+    v = a1 * 45 + a_lip * 1 - a_lb * 0.5
+    # the inner side panel (V 80..81): from U 52.5, 0.5 under the top, its front edge 0.5 under the
+    # front facet to the apex, then down to 58.5 below
+    c = 0.5 * c45                                               # 0.5 along the facet's normal, per axis
+    apex = (158.2 - c, -40.8 - c)
+    side_poly = [(52.5, -0.5), offset_polyline(prof, -0.5)[2], apex, (apex[0] - (apex[1] + 58.5), -58.5),
+                 (52.5, -58.5)]
+    slab("Side panel", side_poly, 80, 81)
+    quads = [ccw([prof[i], prof[i + 1], off1[i + 1], off1[i]]) for i in range(3)]
+    a_bs = sum(polygon_area(p) for p in (clip_convex(ccw(side_poly), q) for q in quads) if len(p) > 2)
+    v += polygon_area(side_poly) * 1
+    # the end wall: U 52..53, V 40..80.7, Z -58.5..-0.5
+    slab("End wall", [(52, -0.5), (53, -0.5), (53, -58.5), (52, -58.5)], 40, 80.7)
+    v += 1 * 40.7 * 58
+    # the mounting flange at the foot: Z -59..-58, U 52.5..140, V 59..80.5, an R6 corner
+    st = (52.5, 59)
+    sg = [("line", (52.5, 80.5)), ("line", (140, 80.5)), ("line", (140, 65)), ("arc", (134, 65), (134, 59), False),
+          ("line", st)]
+    if side < 0:
+        sg = [(g[0], (g[1][0], -g[1][1])) if g[0] == "line" else (g[0], (g[1][0], -g[1][1]), (g[2][0], -g[2][1]), not g[3])
+              for g in sg]
+        st = (st[0], -st[1])
+    s.sketch("Flange", (0, 0, -59), (1, 0, 0), (0, 1, 0))
+    s.loop(st, sg)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, operation="join", targets=[s.body], name="Flange")
+    holes = [((58, 70), 8), ((86, 70), 8), ((102, 65), 4), ((132, 65), 4)]
+    for d in (8, 4):
+        s.holes(f"Flange Ø{d} holes", (0, 0, -60), (0, 0, 1), [(u, y(vv), -60) for (u, vv), dd in holes if dd == d], d,
+                depth=3)
+    v += (loop_area(st, sg) - sum(math.pi / 4 * d * d for _, d in holes)) * T
+    # overlaps: top/side a_bs x 0.5 (V 80.5..81); end/side 0.5 x 0.7 x 58; end/top 1 x 0.2 x 0.5;
+    # flange/side 87.5 x 0.5 x 0.5; flange/end 0.5 x 21.5 x 0.5; triples top/side/end 0.5 x 0.2 x 0.5,
+    # side/end/flange 0.5 x 0.5 x 0.5
+    v -= a_bs * 0.5 + 0.5 * 0.7 * 58 + 1 * 0.2 * 0.5 + 87.5 * 0.25 + 0.5 * 21.5 * 0.5
+    v += 0.5 * 0.2 * 0.5 + 0.5 * 0.5 * 0.5
+    s.holes("Ø3 holes", (0, 0, 1), (0, 0, -1), [(103.4, y(95), 1), (103.4, y(111), 1)], 3, depth=3)
+    return v - 2 * math.pi / 4 * 9 * T
+
+
+@part("3-23", "Rear wheel LH-mud guard", "Brass")
+def lh_mud_guard(s):
+    """Sheet 06, 3-23 (flat pattern, scale 1:2): 1 thick brass, folded: a top 44 wide and 87.8 long
+    with front (58.6) and rear (29.6) facets turned down 45°, a 12 wide lip turned down 90° along its
+    outer edge, an inner side panel 59 deep (its front edge under the front facet), an end wall 41
+    wide at its back and a 22 wide mounting flange at its foot (2 x Ø8, 2 x Ø4); 2 x Ø3 in the top.
+    Built folded with sharp bends from overlapping solids (the drawn folds cross notches and slanted
+    edges, which SolidCraft's fold refuses); the lip's R10 ends are not rounded."""
+    return mud_guard(s, 1)
+
+
+@part("3-24", "Rear wheel RH-mud guard", "Brass")
+def rh_mud_guard(s):
+    """Sheet 06, 3-24: the mirror image of 3-23. Built as 3-23 with Y reversed."""
+    return mud_guard(s, -1)
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]

@@ -158,6 +158,8 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 3-19 | Drivers console side frame | Aluminum | 1 | 23,636.2 | 63.8 |
 | 3-21 | Accelerator control lever | Brass, Steel | 2 | 1,423.4 | 11.6 |
 | 3-22 | Accelerator control lever handle | Brass | 1 | 647.2 | 5.5 |
+| 3-23 | Rear wheel LH-mud guard | Brass | 1 | 18,882.4 | 160.5 |
+| 3-24 | Rear wheel RH-mud guard | Brass | 1 | 18,882.4 | 160.5 |
 | 3-25A | Drivers seat base | Brass | 1 | 4,811.7 | 40.9 |
 | 3-25B | Drivers seat | Oak | 1 | 27,807.3 | 20.9 |
 | 3-25D | Drivers seat back rest | Oak | 1 | 5,231.3 | 3.9 |
@@ -359,9 +361,13 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
 - **3-27E**: its fork slot (3 wide for 10.5, then 2 wide to 25) is read from the top view and
   taken right through the blade's height. **3-25D**: oak; the R7 rounding of its front edges and
   the 12° bend of its ends are not modelled.
-- Not modelled: **3-20** (console top plate) and **3-23/3-24** (mudguards) are 1 mm sheets whose
-  folds cross notches, corners and slanted edges, which `sheet.fold` refuses, and building them
-  from separate plates would need many touching joins; **3-25C** (seat leg) has too few views of
+- **3-23/3-24** (mudguards): their flat pattern's folds cross notches and slanted edges, which
+  `sheet.fold` refuses, so they are built folded with sharp bends from overlapping solids (top and
+  facets, lip, side panel, end wall, flange), the volume checked by inclusion-exclusion of the
+  overlaps. The folded shape (which way each panel turns) is read from the 3D views on sheets 06
+  and 10; the lip's R10 ends are not rounded.
+- Not modelled: **3-20** (console top plate): the flat pattern does not show which regions fold
+  which way, and the side view does not settle it; **3-25C** (seat leg) has too few views of
   its bends; **4-26** (reversing shaft operating ring) cannot be read unambiguously (its hub's
   size and shape); **2-11** (tank hanger) lacks its length and rod positions.
 

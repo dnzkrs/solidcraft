@@ -867,6 +867,20 @@
   "volume_mm3": 647.2,
   "mass_g": 5.5
  },
+ "3-23": {
+  "name": "Rear wheel LH-mud guard",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 18882.4,
+  "mass_g": 160.5
+ },
+ "3-24": {
+  "name": "Rear wheel RH-mud guard",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 18882.4,
+  "mass_g": 160.5
+ },
  "3-25A": {
   "name": "Drivers seat base",
   "material": "Brass",
