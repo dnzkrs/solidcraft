@@ -1,0 +1,126 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "piston_d",
+    "expression": "32",
+    "unit": "mm",
+    "comment": "diameter (fits the \u00d832 bore of 1-02)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "piston_l",
+    "expression": "30",
+    "unit": "mm",
+    "comment": "length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "piston_id",
+    "expression": "28",
+    "unit": "mm",
+    "comment": "inside diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "piston_crown",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "crown thickness (30 - 28)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "piston_rod_hole",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "piston rod hole"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Piston section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2.5,
+      0
+     ],
+     [
+      16.0,
+      0
+     ],
+     [
+      16.0,
+      30
+     ],
+     [
+      14.0,
+      30
+     ],
+     [
+      14.0,
+      2
+     ],
+     [
+      2.5,
+      2
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Piston",
+    "body_name": "1-22 Motor piston"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-22 Motor piston"
+    ],
+    "material": "Cast Iron"
+   }
+  }
+ ]
+}

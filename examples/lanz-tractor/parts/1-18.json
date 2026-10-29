@@ -1,0 +1,235 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "nut_af",
+    "expression": "20",
+    "unit": "mm",
+    "comment": "hex across flats"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "nut_hex_t",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "hex thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "nut_collar_d",
+    "expression": "19",
+    "unit": "mm",
+    "comment": "collar diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "nut_collar_t",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "collar length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "nut_tap_d",
+    "expression": "14",
+    "unit": "mm",
+    "comment": "M16 (tap drill \u00d814)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Hex"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      11.547005,
+      0.0
+     ],
+     [
+      5.773503,
+      10.0
+     ],
+     [
+      -5.773503,
+      10.0
+     ],
+     [
+      -11.547005,
+      0.0
+     ],
+     [
+      -5.773503,
+      -10.0
+     ],
+     [
+      5.773503,
+      -10.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 5,
+    "name": "Hex",
+    "body_name": "1-18 Motor crank shaft cam follower lock nut"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Collar section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      7.0,
+      4
+     ],
+     [
+      9.5,
+      4
+     ],
+     [
+      9.5,
+      8
+     ],
+     [
+      7.0,
+      8
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "join",
+    "name": "Collar",
+    "targets": [
+     "1-18 Motor crank shaft cam follower lock nut"
+    ]
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M16 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 14
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-18 Motor crank shaft cam follower lock nut"
+    ],
+    "name": "M16 tapped"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-18 Motor crank shaft cam follower lock nut"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

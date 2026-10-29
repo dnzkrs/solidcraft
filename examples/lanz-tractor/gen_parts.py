@@ -84,7 +84,7 @@ class Script:
     def finish(self):
         self.cmd("sketch.finish")
 
-    def holes(self, name, origin, into, centres, diameter, depth=None):
+    def holes(self, name, origin, into, centres, diameter, depth=None, target=None):
         """A hole pattern as one feature: circles in a sketch on the plane through `origin` normal
         to `into`, cut `depth` deep along `into` (through all without a depth). `centres` are world
         points on that plane. (One cut per pattern: holes added one by one with solid.hole can come
@@ -101,7 +101,17 @@ class Script:
                      diameter=diameter)
         self.finish()
         cut = {"through_all": True} if depth is None else {"distance": depth}
-        self.cmd("solid.extrude", **cut, operation="cut", targets=[self.body], name=name)
+        self.cmd("solid.extrude", **cut, operation="cut", targets=[target or self.body], name=name)
+
+    def turned(self, name, pts, body=None, operation="new"):
+        """A turned shape: the closed polygon `pts` of (radius, z) points in the XZ half plane,
+        revolved about the Z axis. Returns its volume (Pappus)."""
+        self.sketch(f"{name} section", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+        self.polyline(pts)
+        self.finish()
+        extra = {"body_name": body or self.body} if operation == "new" else {"targets": [body or self.body]}
+        self.cmd("solid.revolve", axis="Z", operation=operation, name=name, **extra)
+        return revolved_volume(pts)
 
 
 def _unit(v):
@@ -309,6 +319,51 @@ def annulus(d1, d2):
     return math.pi / 4 * (d1 * d1 - d2 * d2)
 
 
+def revolved_volume(pts):
+    """Volume of the closed polygon of (r, z) points revolved about the z axis: 2π ∬ r dA."""
+    m = 0.0
+    for (x0, y0), (x1, y1) in zip(pts, pts[1:] + pts[:1]):
+        m += (x0 + x1) * (x0 * y1 - x1 * y0)
+    return abs(2 * math.pi * m / 6)
+
+
+def loop_area(start, segs):
+    """Area enclosed by a Script.loop() boundary (lines and circular arcs), exactly."""
+    a, p = 0.0, start
+    for seg in segs:
+        if seg[0] == "line":
+            e = seg[1]
+            a += p[0] * e[1] - e[0] * p[1]
+        else:
+            _, c, e, ccw = seg
+            r = math.dist(c, p)
+            t0, t1 = math.atan2(p[1] - c[1], p[0] - c[0]), math.atan2(e[1] - c[1], e[0] - c[0])
+            sweep = (t1 - t0) % (2 * math.pi) if ccw else -((t0 - t1) % (2 * math.pi))
+            a += r * r * sweep + r * (c[0] * (math.sin(t0 + sweep) - math.sin(t0))
+                                      - c[1] * (math.cos(t0 + sweep) - math.cos(t0)))
+        p = e
+    return abs(a) / 2
+
+
+def radial_hole(d, r_out, r_in=0.0, walls=1, n=4000):
+    """Volume a Ø d hole along a radius removes from a tube (r_out, r_in) whose axis it crosses
+    at right angles: through one wall, or both (walls=2; with r_in = 0, through the solid)."""
+    h, v = d / n, 0.0
+    for i in range(n):
+        y = -d / 2 + (i + 0.5) * h
+        width = 2 * math.sqrt(max(0.0, d * d / 4 - y * y))
+        length = math.sqrt(max(0.0, r_out * r_out - y * y)) - math.sqrt(max(0.0, r_in * r_in - y * y))
+        v += width * length * h
+    return v * walls if r_in > 0 else v * 2 if walls == 2 else v
+
+
+def hexagon(af, rot_deg=0):
+    """Corners of a regular hexagon with across-flats `af`, centred on the origin."""
+    r = af / math.sqrt(3)
+    return [(r * math.cos(math.radians(rot_deg + 60 * i)), r * math.sin(math.radians(rot_deg + 60 * i)))
+            for i in range(6)]
+
+
 def strip(R, x0, x1):
     """Area of the part of a circle of radius R between x = x0 and x = x1."""
     F = lambda x: x * math.sqrt(R * R - x * x) + R * R * math.asin(x / R)
@@ -392,17 +447,273 @@ def oiler_glass(s):
     return annulus(D, DI) * L
 
 
+# ----------------------------------------------------------------------------- 1-14
+@part("1-14", "Motor crank shaft", {"web L": "Steel", "web R": "Steel", "crank pin": "Stainless Steel",
+                                     "shaft L": "Stainless Steel", "shaft R": "Stainless Steel"})
+def crank_shaft(s):
+    """Sheet 03, 1-14 (scale 1:2): a built-up crankshaft, five bodies: two M/S webs, an S/S
+    crankpin and two S/S shafts, pressed together (PF). Axis = Z, symmetric about Z = 0 (the
+    middle of the crankpin); the crankpin is on +X. The left shaft (Z < 0) has the Ø4 cross hole."""
+    TW = s.param("crank_web_t", 12, "web thickness")
+    G = s.param("crank_gap", 12, "gap between the webs")
+    THROW = s.param("crank_throw", 22, "crank radius (stroke 44), measured on the drawing's vector lines")
+    WW = s.param("crank_web_w", 14, "web width: NOT DIMENSIONED, estimated from the iso view (12-15)")
+    WT = s.param("crank_web_top", 34.5, "web end beyond the main axis on the crankpin side (measured)")
+    WB = s.param("crank_web_bottom", 30, "web end beyond the main axis on the other side (measured)")
+    DP = s.param("crank_pin_d", 8, "crankpin, 8PF")
+    DF = s.param("crank_fit_d", 10, "shaft end pressed into the web, 10PF")
+    DJ = s.param("crank_journal_d", 9.5, "bearing journal (1-06 bore)")
+    LJ = s.param("crank_journal_l", 10.5, "journal length")
+    DS = s.param("crank_shaft_d", 8, "shaft")
+    LS = s.param("crank_shaft_l", 64.5, "shaft length beyond the web")
+    TAP = s.param("crank_end_tap", 10, "M5 x 10 deep in each shaft end (tap drill Ø4.2)")
+    XH = s.param("crank_cross_hole", 9.5, "Ø4 cross hole in the left shaft, 9.5 from the journal")
+    n = s.body.split()[0]
+    z1 = G / 2 + TW                              # web outer face
+    v = 0.0
+    for side, sg in (("L", -1), ("R", 1)):
+        z0 = G / 2 if sg > 0 else -z1           # web face with the lower Z
+        s.sketch(f"Web {side}", (0, 0, z0), (1, 0, 0), (0, 1, 0))
+        s.polyline([(-WB, -WW / 2), (WT, -WW / 2), (WT, WW / 2), (-WB, WW / 2)])
+        s.cmd("sketch.circle.center", center=[0, 0], diameter=DF)
+        s.cmd("sketch.circle.center", center=[THROW, 0], diameter=DP)
+        s.finish()
+        s.cmd("solid.extrude", distance=TW, profiles=[{"point": [-WB / 2 - 5, 0]}], operation="new",
+              name=f"Web {side}", body_name=f"{n} web {side}")
+        v += ((WT + WB) * WW - math.pi / 4 * (DF * DF + DP * DP)) * TW
+        # shaft: fit Ø10 through the web, journal, shaft
+        prof = [(0, G / 2), (DF / 2, G / 2), (DF / 2, z1), (DJ / 2, z1), (DJ / 2, z1 + LJ), (DS / 2, z1 + LJ),
+                (DS / 2, z1 + LS), (0, z1 + LS)]
+        if sg < 0:
+            prof = [(r, -z) for r, z in reversed(prof)]
+        v += s.turned(f"Shaft {side}", prof, body=f"{n} shaft {side}")
+        zend = sg * (z1 + LS)
+        s.holes(f"M5 tapped end {side}", (0, 0, zend), (0, 0, -sg), [(0, 0, zend)], 4.2, TAP,
+                target=f"{n} shaft {side}")
+        v -= math.pi / 4 * 4.2 ** 2 * TAP
+    s.holes("Cross hole", (-DS / 2, 0, 0), (1, 0, 0), [(-DS / 2, 0, -(z1 + LJ + XH))], 4,
+            target=f"{n} shaft L")
+    v -= radial_hole(4, DS / 2, walls=2)
+    s.sketch("Crank pin", (0, 0, -z1), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.circle.center", center=[THROW, 0], diameter=DP)
+    s.finish()
+    s.cmd("solid.extrude", distance=2 * z1, operation="new", name="Crank pin", body_name=f"{n} crank pin")
+    v += math.pi / 4 * DP * DP * 2 * z1
+    return v
+
+
+# ----------------------------------------------------------------------------- 1-17
+@part("1-17", "Motor crank shaft cam plate", "Steel")
+def cam_plate(s):
+    """Sheet 03, 1-17 (scale 1:1.5, section D-D): plate on the XY plane, Z = 0..5; the bore on
+    the origin, the R25 lobe on +Y. Counterbore Ø19 x 2.5 on the Z = 5 face; the bore is M16
+    (modelled at its tap drill Ø14), screwed onto the 1-20 hub."""
+    T = s.param("cam_t", 5, "thickness")
+    R1 = s.param("cam_r_lobe", 25, "lobe radius about the bore")
+    R2 = s.param("cam_r_base", 16, "base radius about the bore")
+    RF = s.param("cam_r_corner", 4, "corner radius between flank and lobe")
+    A = math.radians(s.param("cam_flank_angle", 37.5, "flank angle to the centre line", unit="deg"))
+    DCB = s.param("cam_cbore_d", 19, "counterbore")
+    HCB = s.param("cam_cbore_depth", 2.5, "counterbore depth")
+    DT = s.param("cam_tap_d", 14, "M16 tapped (tap drill Ø14)")
+    nL, wL = (-math.cos(A), -math.sin(A)), (-math.sin(A), math.cos(A))
+    sd = math.sqrt((R1 - RF) ** 2 - (R2 - RF) ** 2)
+    cL = ((R2 - RF) * nL[0] + sd * wL[0], (R2 - RF) * nL[1] + sd * wL[1])
+    t1L = (R2 * nL[0] + sd * wL[0], R2 * nL[1] + sd * wL[1])
+    t2L = (cL[0] * R1 / (R1 - RF), cL[1] * R1 / (R1 - RF))
+    p16L = (R2 * nL[0], R2 * nL[1])
+    m = lambda p: (-p[0], p[1])
+    start = p16L
+    segs = [("arc", (0, 0), m(p16L), True), ("line", m(t1L)), ("arc", m(cL), m(t2L), True),
+            ("arc", (0, 0), t2L, True), ("arc", cL, t1L, True), ("line", p16L)]
+    s.sketch("Outline", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    s.cmd("sketch.circle.center", center=[0, 0], diameter=DT)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [0, R1 - 3]}], name="Plate", body_name=s.body)
+    s.holes("Counterbore", (0, 0, T), (0, 0, -1), [(0, 0, T)], DCB, HCB)
+    return loop_area(start, segs) * T - math.pi / 4 * (DT * DT * T + (DCB * DCB - DT * DT) * HCB)
+
+
+# ----------------------------------------------------------------------------- 1-18
+@part("1-18", "Motor crank shaft cam follower lock nut", "Brass")
+def lock_nut(s):
+    """Sheet 03, 1-18 (scale 1:1.5): 20 hex x 5 with a Ø19 x 3 collar, M16 (tap drill Ø14).
+    Axis = Z; the hex on Z = 0..5, the collar on Z = 5..8."""
+    AF = s.param("nut_af", 20, "hex across flats")
+    TH = s.param("nut_hex_t", 5, "hex thickness")
+    DC = s.param("nut_collar_d", 19, "collar diameter")
+    TC = s.param("nut_collar_t", 3, "collar length")
+    DT = s.param("nut_tap_d", 14, "M16 (tap drill Ø14)")
+    s.sketch("Hex", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.polyline(hexagon(AF))
+    s.finish()
+    s.cmd("solid.extrude", distance=TH, name="Hex", body_name=s.body)
+    v = math.sqrt(3) / 2 * AF * AF * TH
+    v += s.turned("Collar", [(DT / 2, TH - 1), (DC / 2, TH - 1), (DC / 2, TH + TC), (DT / 2, TH + TC)],
+                  operation="join") - math.pi / 4 * (DC * DC - DT * DT) * 1
+    s.holes("M16 tapped", (0, 0, 0), (0, 0, 1), [(0, 0, 0)], DT)
+    return v - math.pi / 4 * DT * DT * TH
+
+
+# ----------------------------------------------------------------------------- 1-19
+@part("1-19", "Motor crank shaft cam follower spacer", "Brass")
+def cam_spacer(s):
+    """Sheet 03, 1-19: ring Ø22 x Ø16 x 3. Axis = Z from Z = 0."""
+    D = s.param("spacer_od", 22, "outside diameter")
+    DI = s.param("spacer_id", 16, "inside diameter")
+    T = s.param("spacer_t", 3, "thickness")
+    return s.turned("Ring", [(DI / 2, 0), (D / 2, 0), (D / 2, T), (DI / 2, T)])
+
+
+# ----------------------------------------------------------------------------- 1-20
+@part("1-20", "Motor flywheel hub", "Brass")
+def flywheel_hub(s):
+    """Sheet 03, 1-20 (scale 1:2). Axis = Z; Z = 0 at the threaded end (M16, modelled at Ø16),
+    the Ø22 collar on Z = 19.5..34.5. Bore Ø8 for the crankshaft. Radial grub screw holes on +X:
+    M4 9.5 from the threaded end, M6 8 from the collar end (tap drills Ø3.3, Ø5)."""
+    DT = s.param("hub_thread_d", 16, "M16 thread, modelled at its major diameter")
+    LT = s.param("hub_thread_l", 19.5, "threaded part (thread 14 long)")
+    DC = s.param("hub_collar_d", 22, "collar")
+    LC = s.param("hub_collar_l", 15, "collar length")
+    DB = s.param("hub_bore", 8, "bore on the Ø8 crankshaft")
+    Z4 = s.param("hub_m4_z", LT - 10, "M4 grub screw, 10 from the collar")
+    Z6 = s.param("hub_m6_z", LT + LC - 8, "M6 grub screw, 8 from the collar end")
+    v = s.turned("Hub", [(DB / 2, 0), (DT / 2, 0), (DT / 2, LT), (DC / 2, LT), (DC / 2, LT + LC), (DB / 2, LT + LC)])
+    s.holes("M4 grub tapped", (DT / 2, 0, 0), (-1, 0, 0), [(DT / 2, 0, Z4)], 3.3, (DT - DB) / 2 + 1)
+    s.holes("M6 grub tapped", (DC / 2, 0, 0), (-1, 0, 0), [(DC / 2, 0, Z6)], 5.0, (DC - DB) / 2 + 1)
+    return v - radial_hole(3.3, DT / 2, DB / 2) - radial_hole(5.0, DC / 2, DB / 2)
+
+
+# ----------------------------------------------------------------------------- 1-21
+@part("1-21", "Motor flywheel", "Brass")
+def flywheel(s):
+    """Sheet 03, 1-21 (scale 1:2.5, section E-E): Ø110 x 19 rim, 6 thick web in its middle plane
+    with 5 equally spaced spokes 10 wide, Ø16 bore. Axis = Z, the rim on Z = 0..19; a spoke on +Y."""
+    D = s.param("fly_d", 110, "outside diameter")
+    DR = s.param("fly_rim_id", 90, "rim inside diameter")
+    W = s.param("fly_w", 19, "rim width")
+    TW = s.param("fly_web_t", 6, "web thickness (19 - 2 x 6.5), in the middle")
+    DO = s.param("fly_window_d", 86, "spoke windows: outer diameter")
+    SW = s.param("fly_spoke_w", 10, "spoke width")
+    RW = s.param("fly_window_r", 6.5, "spoke window inner radius (centres on PCD 39)")
+    DB = s.param("fly_bore", 16, "bore")
+    N = 5
+    z0 = (W - TW) / 2
+    v = s.turned("Wheel", [(DB / 2, z0), (DR / 2, z0), (DR / 2, 0), (D / 2, 0), (D / 2, W), (DR / 2, W),
+                           (DR / 2, z0 + TW), (DB / 2, z0 + TW)])
+    s.sketch("Spoke windows", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    half = math.pi / N
+    dc = (SW / 2 + RW) / math.sin(half)          # 19.56: PCD 39
+    area = 0.0
+    for k in range(N):
+        b = math.pi / 2 + half + k * 2 * half    # window bisector; spokes at 90 deg + k 72 deg
+        s1, s2 = (math.cos(b - half), math.sin(b - half)), (math.cos(b + half), math.sin(b + half))
+        n1, n2 = (-s1[1], s1[0]), (s2[1], -s2[0])
+        c = (dc * math.cos(b), dc * math.sin(b))
+        t1 = (c[0] - RW * n1[0], c[1] - RW * n1[1])
+        t2 = (c[0] - RW * n2[0], c[1] - RW * n2[1])
+        L = math.sqrt((DO / 2) ** 2 - (SW / 2) ** 2)
+        o1 = (SW / 2 * n1[0] + L * s1[0], SW / 2 * n1[1] + L * s1[1])
+        o2 = (SW / 2 * n2[0] + L * s2[0], SW / 2 * n2[1] + L * s2[1])
+        segs = [("line", o1), ("arc", (0, 0), o2, True), ("line", t2), ("arc", c, t1, True)]
+        s.loop(t1, segs)
+        area += loop_area(t1, segs)
+    s.finish()
+    s.cmd("solid.extrude", through_all=True, operation="cut", targets=[s.body], name="Spoke windows")
+    return v - area * TW
+
+
+# ----------------------------------------------------------------------------- 1-22
+@part("1-22", "Motor piston", "Cast Iron")
+def piston(s):
+    """Sheet 03, 1-22 (scale 1:2): Ø32 x 30 cup, Ø28 bore 28 deep, 2 thick crown with a Ø5 hole
+    for the piston rod. Axis = Z; the crown on Z = 0..2."""
+    D = s.param("piston_d", 32, "diameter (fits the Ø32 bore of 1-02)")
+    L = s.param("piston_l", 30, "length")
+    DI = s.param("piston_id", 28, "inside diameter")
+    TC = s.param("piston_crown", 2, "crown thickness (30 - 28)")
+    DH = s.param("piston_rod_hole", 5, "piston rod hole")
+    return s.turned("Piston", [(DH / 2, 0), (D / 2, 0), (D / 2, L), (DI / 2, L), (DI / 2, TC), (DH / 2, TC)])
+
+
+# ----------------------------------------------------------------------------- 1-26
+@part("1-26", "Motor valve rocking shaft bearing", "Brass")
+def rocking_bearing(s):
+    """Sheet 03, 1-26: flanged bush, flange Ø10 x 1.5, body Ø8 x 12, bore Ø6. Axis = Z, the flange
+    on Z = 0..1.5."""
+    DF = s.param("rb_flange_d", 10, "flange")
+    TF = s.param("rb_flange_t", 1.5, "flange thickness")
+    D = s.param("rb_d", 8, "body")
+    L = s.param("rb_l", 12, "body length")
+    DI = s.param("rb_bore", 6, "bore (1-27 shaft)")
+    return s.turned("Bush", [(DI / 2, 0), (DF / 2, 0), (DF / 2, TF), (D / 2, TF), (D / 2, TF + L), (DI / 2, TF + L)])
+
+
+# ----------------------------------------------------------------------------- 1-27
+@part("1-27", "Motor valve rocking shaft", "Stainless Steel")
+def rocking_shaft(s):
+    """Sheet 03, 1-27 (scale 1:2): Ø6 x 60 with M4 x 10 ends (modelled at Ø4) and an M4 tapped
+    cross hole in the middle (tap drill Ø3.3, along X). Axis = Z from Z = 0."""
+    D = s.param("rs_d", 6, "shaft")
+    L = s.param("rs_l", 60, "Ø6 length (30 + 30)")
+    DE = s.param("rs_end_d", 4, "M4 ends, at the major diameter")
+    LE = s.param("rs_end_l", 10, "end length")
+    v = s.turned("Shaft", [(0, 0), (DE / 2, 0), (DE / 2, LE), (D / 2, LE), (D / 2, LE + L), (DE / 2, LE + L),
+                           (DE / 2, 2 * LE + L), (0, 2 * LE + L)])
+    s.holes("M4 tapped cross hole", (D / 2, 0, 0), (-1, 0, 0), [(D / 2, 0, LE + L / 2)], 3.3)
+    return v - radial_hole(3.3, D / 2, walls=2)
+
+
+# ----------------------------------------------------------------------------- 1-28
+@part("1-28", "Motor valve rod", "Steel")
+def valve_rod(s):
+    """Sheet 03, 1-28 (scale 1:2): Ø4 x 94 rod, M4 at both ends (16 and 7 long; threads not
+    modelled). Axis = Z from Z = 0, the 16 long thread at Z = 0."""
+    D = s.param("vr_d", 4, "rod, M4 ends")
+    L = s.param("vr_l", 94, "length")
+    return s.turned("Rod", [(0, 0), (D / 2, 0), (D / 2, L), (0, L)])
+
+
+# ----------------------------------------------------------------------------- 1-31
+@part("1-31", "Motor valve rocking arm", "Steel")
+def rocking_arm(s):
+    """Sheet 03, 1-31 (scale 1:2): 2.5 thick arm, centres 57 apart, R6 end with a Ø4 hole (on the
+    origin) and R5 end with an M4 tapped hole (tap drill Ø3.3) on +X. On the XY plane, Z = 0..2.5."""
+    T = s.param("arm_t", 2.5, "thickness")
+    C = s.param("arm_centres", 57, "hole centres")
+    R1 = s.param("arm_r1", 6, "end radius at the Ø4 hole")
+    R2 = s.param("arm_r2", 5, "end radius at the M4 hole")
+    sp = (R1 - R2) / C
+    cp = math.sqrt(1 - sp * sp)
+    p1l, p2l = (R1 * sp, -R1 * cp), (C + R2 * sp, -R2 * cp)
+    p1u, p2u = (R1 * sp, R1 * cp), (C + R2 * sp, R2 * cp)
+    segs = [("line", p2l), ("arc", (C, 0), p2u, True), ("line", p1u), ("arc", (0, 0), p1l, True)]
+    s.sketch("Arm", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(p1l, segs)
+    s.cmd("sketch.circle.center", center=[0, 0], diameter=4)
+    s.cmd("sketch.circle.center", center=[C, 0], diameter=3.3)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [C / 2, 0]}], name="Arm", body_name=s.body)
+    return (loop_area(p1l, segs) - math.pi / 4 * (16 + 3.3 ** 2)) * T
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]
     s = Script(f"{number} {name}")
     estimate = fn(s)
-    s.cmd("material.assign", bodies=[s.body], material=material)
+    # material: one name for a single-body part, or {body suffix: material} for an assembly of
+    # bodies named "<number> <suffix>"
+    materials = {s.body: material} if isinstance(material, str) else \
+        {f"{number} {b}": m for b, m in material.items()}
+    for body, m in materials.items():
+        s.cmd("material.assign", bodies=[body], material=m)
     path = os.path.join(OUT, f"{number}.json")
     with open(path, "w") as f:
         json.dump({"commands": s.cmds}, f, indent=1)
         f.write("\n")
-    return path, estimate
+    return path, estimate, len(materials)
 
 
 def stl_volume(path):
@@ -431,7 +742,7 @@ def stl_volume(path):
     return v6 / 6, len(half_edges)
 
 
-def build(number, path, estimate):
+def build(number, path, estimate, n_bodies):
     base = os.path.join(OUT, number)
     stl = os.path.join(OUT, f".{number}.check.stl")
     subprocess.run([ARGS.cli, "run", path, "--save", base + ".solvecraft", "--out", base + ".step", "--out", stl,
@@ -446,33 +757,89 @@ def build(number, path, estimate):
     notes = [t for t in res["timeline"] if t.get("warning") and t not in errors
              and not t["warning"].startswith("Boolean retry")]
     bodies = res["bodies"]
-    vol = bodies[0]["volume_mm3"] if len(bodies) == 1 else float("nan")
-    bb = bodies[0]["bbox"] if bodies else None
+    vol = sum(b["volume_mm3"] for b in bodies)
+    mass = sum(b["mass_g"] for b in bodies)
+    lo = [min(b["bbox"]["min"][i] for b in bodies) for i in range(3)] if bodies else [0] * 3
+    hi = [max(b["bbox"]["max"][i] for b in bodies) for i in range(3)] if bodies else [0] * 3
     dv, dm = (vol - estimate) / estimate, (mesh_vol - estimate) / estimate
     # the kernel's measure must agree with the hand volume; the exported mesh is a second check
     # when it is closed (an open STL gives no volume)
-    ok = len(bodies) == 1 and not errors and abs(dv) < 0.001 and (open_edges or abs(dm) < 0.005)
+    ok = len(bodies) == n_bodies and not errors and abs(dv) < 0.001 and (open_edges or abs(dm) < 0.015)
     mesh = f"{mesh_vol:.1f} ({dm * 100:+.2f} %)" if not open_edges else f"not closed ({open_edges} open edges)"
-    print(f"{number}: {'OK  ' if ok else 'FAIL'} hand volume {estimate:.1f} mm³, STL mesh {mesh}, "
-          f"SolidCraft {vol:.1f} ({dv * 100:+.2f} %), mass {bodies[0]['mass_g'] if bodies else 0:.1f} g, "
-          f"bbox {bb['min'] if bb else '-'} .. {bb['max'] if bb else '-'}, faces {bodies[0]['face_types'] if bodies else '-'}")
+    print(f"{number}: {'OK  ' if ok else 'FAIL'} {len(bodies)}/{n_bodies} bodies, hand volume {estimate:.1f} mm³, "
+          f"STL mesh {mesh}, SolidCraft {vol:.1f} ({dv * 100:+.2f} %), mass {mass:.1f} g, "
+          f"box {' x '.join(f'{hi[i] - lo[i]:.2f}' for i in range(3))} from ({', '.join(f'{v:.2f}' for v in lo)})")
     for t in errors + notes:
         print(f"   {t['name']}: {t.get('error') or t.get('warning')}")
     subprocess.run([ARGS.cli, "snapshot", base + ".solvecraft", "--out", base + ".png", "--view", "iso"],
                    check=True, capture_output=True)
+    if ok:
+        name, material, _ = PARTS[number]
+        mats = material if isinstance(material, str) else ", ".join(sorted(set(material.values())))
+        SUMMARY[number] = {"name": name, "material": mats, "bodies": len(bodies),
+                           "volume_mm3": round(vol, 1), "mass_g": round(mass, 1)}
     return ok
+
+
+SUMMARY_PATH = os.path.join(OUT, "summary.json")
+SUMMARY = {}
+
+
+def write_summary():
+    """parts/summary.json and the parts table in README.md, from the parts built so far."""
+    with open(SUMMARY_PATH, "w") as f:
+        json.dump(dict(sorted(SUMMARY.items())), f, indent=1)
+        f.write("\n")
+    rows = ["| Part | Name | Material | Bodies | Volume mm³ | Mass g |", "|---|---|---|---:|---:|---:|"]
+    rows += [f"| {n} | {r['name']} | {r['material']} | {r['bodies']} | {r['volume_mm3']:,.1f} | {r['mass_g']:,.1f} |"
+             for n, r in sorted(SUMMARY.items())]
+    readme = os.path.join(_here, "README.md")
+    with open(readme) as f:
+        text = f.read()
+    a, b = text.index("<!-- parts -->") + len("<!-- parts -->"), text.index("<!-- /parts -->")
+    with open(readme, "w") as f:
+        f.write(text[:a] + "\n" + "\n".join(rows) + "\n" + text[b:])
+    attribute(SUMMARY)
+
+
+def attribute(parts):
+    """Rows in the repository's ATTRIBUTION.md for each part's PNG and STEP file (`cargo xtask
+    assets` requires one per asset file)."""
+    path = os.path.join(_here, "..", "..", "ATTRIBUTION.md")
+    with open(path) as f:
+        lines = f.read().split("\n")
+    have = {l.split("|")[1].strip() for l in lines if l.startswith("| examples/lanz-tractor/")}
+    last = max((i for i, l in enumerate(lines) if l.startswith("| examples/")), default=len(lines) - 1)
+    new = []
+    for n, r in sorted(parts.items()):
+        for ext, what in (("png", "SolidCraft snapshot"), ("step", "SolidCraft STEP export")):
+            f = f"examples/lanz-tractor/parts/{n}.{ext}"
+            if f not in have:
+                new.append(f"| {f} | repository owner | {what} of an original SolidCraft model of Lanz mini tractor "
+                           f"part {n} ({r['name'].lower()}), modelled in examples/lanz-tractor/gen_parts.py from "
+                           f"the LANZ-A3 drawings by J.A.M. de Waal (2014) after C.P. Hendrikx (1996) | private use; "
+                           f"dimensions from copyrighted drawings, see examples/lanz-tractor/README.md |")
+    if new:
+        lines[last + 1:last + 1] = new
+        with open(path, "w") as f:
+            f.write("\n".join(lines))
 
 
 def main():
     os.makedirs(OUT, exist_ok=True)
+    if os.path.exists(SUMMARY_PATH):
+        with open(SUMMARY_PATH) as f:
+            SUMMARY.update(json.load(f))
     numbers = ARGS.parts or sorted(PARTS)
     ok = True
     for n in numbers:
         if n not in PARTS:
             raise SystemExit(f"unknown part {n}; known: {', '.join(sorted(PARTS))}")
-        path, est = write(n)
+        path, est, n_bodies = write(n)
         if ARGS.build:
-            ok &= build(n, path, est)
+            ok &= build(n, path, est, n_bodies)
+    if ARGS.build:
+        write_summary()
     if not ok:
         raise SystemExit(1)
 

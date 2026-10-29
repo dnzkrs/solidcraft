@@ -1,0 +1,693 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_web_t",
+    "expression": "12",
+    "unit": "mm",
+    "comment": "web thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_gap",
+    "expression": "12",
+    "unit": "mm",
+    "comment": "gap between the webs"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_throw",
+    "expression": "22",
+    "unit": "mm",
+    "comment": "crank radius (stroke 44), measured on the drawing's vector lines"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_web_w",
+    "expression": "14",
+    "unit": "mm",
+    "comment": "web width: NOT DIMENSIONED, estimated from the iso view (12-15)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_web_top",
+    "expression": "34.5",
+    "unit": "mm",
+    "comment": "web end beyond the main axis on the crankpin side (measured)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_web_bottom",
+    "expression": "30",
+    "unit": "mm",
+    "comment": "web end beyond the main axis on the other side (measured)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_pin_d",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "crankpin, 8PF"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_fit_d",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "shaft end pressed into the web, 10PF"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_journal_d",
+    "expression": "9.5",
+    "unit": "mm",
+    "comment": "bearing journal (1-06 bore)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_journal_l",
+    "expression": "10.5",
+    "unit": "mm",
+    "comment": "journal length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_shaft_d",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "shaft"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_shaft_l",
+    "expression": "64.5",
+    "unit": "mm",
+    "comment": "shaft length beyond the web"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_end_tap",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "M5 x 10 deep in each shaft end (tap drill \u00d84.2)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "crank_cross_hole",
+    "expression": "9.5",
+    "unit": "mm",
+    "comment": "\u00d84 cross hole in the left shaft, 9.5 from the journal"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -18.0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Web L"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -30,
+      -7.0
+     ],
+     [
+      34.5,
+      -7.0
+     ],
+     [
+      34.5,
+      7.0
+     ],
+     [
+      -30,
+      7.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 10
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     22,
+     0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 12,
+    "profiles": [
+     {
+      "point": [
+       -20.0,
+       0
+      ]
+     }
+    ],
+    "operation": "new",
+    "name": "Web L",
+    "body_name": "1-14 web L"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Shaft L section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -82.5
+     ],
+     [
+      4.0,
+      -82.5
+     ],
+     [
+      4.0,
+      -28.5
+     ],
+     [
+      4.75,
+      -28.5
+     ],
+     [
+      4.75,
+      -18.0
+     ],
+     [
+      5.0,
+      -18.0
+     ],
+     [
+      5.0,
+      -6.0
+     ],
+     [
+      0,
+      -6.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Shaft L",
+    "body_name": "1-14 shaft L"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -82.5
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M5 tapped end L"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 4.2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 10,
+    "operation": "cut",
+    "targets": [
+     "1-14 shaft L"
+    ],
+    "name": "M5 tapped end L"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      6.0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Web R"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -30,
+      -7.0
+     ],
+     [
+      34.5,
+      -7.0
+     ],
+     [
+      34.5,
+      7.0
+     ],
+     [
+      -30,
+      7.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 10
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     22,
+     0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 12,
+    "profiles": [
+     {
+      "point": [
+       -20.0,
+       0
+      ]
+     }
+    ],
+    "operation": "new",
+    "name": "Web R",
+    "body_name": "1-14 web R"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Shaft R section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      6.0
+     ],
+     [
+      5.0,
+      6.0
+     ],
+     [
+      5.0,
+      18.0
+     ],
+     [
+      4.75,
+      18.0
+     ],
+     [
+      4.75,
+      28.5
+     ],
+     [
+      4.0,
+      28.5
+     ],
+     [
+      4.0,
+      82.5
+     ],
+     [
+      0,
+      82.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Shaft R",
+    "body_name": "1-14 shaft R"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      82.5
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M5 tapped end R"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 4.2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 10,
+    "operation": "cut",
+    "targets": [
+     "1-14 shaft R"
+    ],
+    "name": "M5 tapped end R"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -4.0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Cross hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     38.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-14 shaft L"
+    ],
+    "name": "Cross hole"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -18.0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Crank pin"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     22,
+     0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 36.0,
+    "operation": "new",
+    "name": "Crank pin",
+    "body_name": "1-14 crank pin"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-14 web L"
+    ],
+    "material": "Steel"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-14 web R"
+    ],
+    "material": "Steel"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-14 crank pin"
+    ],
+    "material": "Stainless Steel"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-14 shaft L"
+    ],
+    "material": "Stainless Steel"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-14 shaft R"
+    ],
+    "material": "Stainless Steel"
+   }
+  }
+ ]
+}

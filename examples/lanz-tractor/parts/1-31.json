@@ -1,0 +1,176 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "arm_t",
+    "expression": "2.5",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "arm_centres",
+    "expression": "57",
+    "unit": "mm",
+    "comment": "hole centres"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "arm_r1",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "end radius at the \u00d84 hole"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "arm_r2",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "end radius at the M4 hole"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Arm"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.105263,
+      -5.999077
+     ],
+     [
+      57.087719,
+      -4.99923
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     57,
+     0
+    ],
+    "start": [
+     57.087719,
+     -4.99923
+    ],
+    "end": [
+     57.087719,
+     4.99923
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      57.087719,
+      4.99923
+     ],
+     [
+      0.105263,
+      5.999077
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     0.105263,
+     5.999077
+    ],
+    "end": [
+     0.105263,
+     -5.999077
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     57,
+     0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2.5,
+    "profiles": [
+     {
+      "point": [
+       28.5,
+       0
+      ]
+     }
+    ],
+    "name": "Arm",
+    "body_name": "1-31 Motor valve rocking arm"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-31 Motor valve rocking arm"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

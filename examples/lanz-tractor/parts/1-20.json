@@ -1,0 +1,240 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "hub_thread_d",
+    "expression": "16",
+    "unit": "mm",
+    "comment": "M16 thread, modelled at its major diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "hub_thread_l",
+    "expression": "19.5",
+    "unit": "mm",
+    "comment": "threaded part (thread 14 long)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "hub_collar_d",
+    "expression": "22",
+    "unit": "mm",
+    "comment": "collar"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "hub_collar_l",
+    "expression": "15",
+    "unit": "mm",
+    "comment": "collar length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "hub_bore",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "bore on the \u00d88 crankshaft"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "hub_m4_z",
+    "expression": "9.5",
+    "unit": "mm",
+    "comment": "M4 grub screw, 10 from the collar"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "hub_m6_z",
+    "expression": "26.5",
+    "unit": "mm",
+    "comment": "M6 grub screw, 8 from the collar end"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Hub section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      4.0,
+      0
+     ],
+     [
+      8.0,
+      0
+     ],
+     [
+      8.0,
+      19.5
+     ],
+     [
+      11.0,
+      19.5
+     ],
+     [
+      11.0,
+      34.5
+     ],
+     [
+      4.0,
+      34.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Hub",
+    "body_name": "1-20 Motor flywheel hub"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      8.0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "M4 grub tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -9.5
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 5.0,
+    "operation": "cut",
+    "targets": [
+     "1-20 Motor flywheel hub"
+    ],
+    "name": "M4 grub tapped"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      11.0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "M6 grub tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -26.5
+    ],
+    "diameter": 5.0
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 8.0,
+    "operation": "cut",
+    "targets": [
+     "1-20 Motor flywheel hub"
+    ],
+    "name": "M6 grub tapped"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-20 Motor flywheel hub"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

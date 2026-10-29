@@ -1,0 +1,284 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cam_t",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cam_r_lobe",
+    "expression": "25",
+    "unit": "mm",
+    "comment": "lobe radius about the bore"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cam_r_base",
+    "expression": "16",
+    "unit": "mm",
+    "comment": "base radius about the bore"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cam_r_corner",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "corner radius between flank and lobe"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cam_flank_angle",
+    "expression": "37.5",
+    "unit": "deg",
+    "comment": "flank angle to the centre line"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cam_cbore_d",
+    "expression": "19",
+    "unit": "mm",
+    "comment": "counterbore"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cam_cbore_depth",
+    "expression": "2.5",
+    "unit": "mm",
+    "comment": "counterbore depth"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cam_tap_d",
+    "expression": "14",
+    "unit": "mm",
+    "comment": "M16 tapped (tap drill \u00d814)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Outline"
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     -12.693653,
+     -9.740183
+    ],
+    "end": [
+     12.693653,
+     -9.740183
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12.693653,
+      -9.740183
+     ],
+     [
+      23.184858,
+      3.932221
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     20.011445,
+     6.367267
+    ],
+    "start": [
+     23.184858,
+     3.932221
+    ],
+    "end": [
+     23.823148,
+     7.580079
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     23.823148,
+     7.580079
+    ],
+    "end": [
+     -23.823148,
+     7.580079
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -20.011445,
+     6.367267
+    ],
+    "start": [
+     -23.823148,
+     7.580079
+    ],
+    "end": [
+     -23.184858,
+     3.932221
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -23.184858,
+      3.932221
+     ],
+     [
+      -12.693653,
+      -9.740183
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 14
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 5,
+    "profiles": [
+     {
+      "point": [
+       0,
+       22
+      ]
+     }
+    ],
+    "name": "Plate",
+    "body_name": "1-17 Motor crank shaft cam plate"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      5
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Counterbore"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 19
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2.5,
+    "operation": "cut",
+    "targets": [
+     "1-17 Motor crank shaft cam plate"
+    ],
+    "name": "Counterbore"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-17 Motor crank shaft cam plate"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

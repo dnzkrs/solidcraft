@@ -1,0 +1,114 @@
+{
+ "1-01": {
+  "name": "Motor frame",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 223383.9,
+  "mass_g": 603.1
+ },
+ "1-02": {
+  "name": "Motor cylinder",
+  "material": "Cast Iron",
+  "bodies": 1,
+  "volume_mm3": 60778.4,
+  "mass_g": 437.6
+ },
+ "1-03": {
+  "name": "Motor cylinder gasket ring",
+  "material": "Copper",
+  "bodies": 1,
+  "volume_mm3": 719.5,
+  "mass_g": 6.4
+ },
+ "1-04": {
+  "name": "Motor inner cylinder head",
+  "material": "Cast Iron",
+  "bodies": 1,
+  "volume_mm3": 7447.7,
+  "mass_g": 53.6
+ },
+ "1-09": {
+  "name": "Motor cylinder oiler glass",
+  "material": "Polycarbonate",
+  "bodies": 1,
+  "volume_mm3": 835.6,
+  "mass_g": 1.0
+ },
+ "1-14": {
+  "name": "Motor crank shaft",
+  "material": "Stainless Steel, Steel",
+  "bodies": 5,
+  "volume_mm3": 28817.5,
+  "mass_g": 227.8
+ },
+ "1-17": {
+  "name": "Motor crank shaft cam plate",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 5825.6,
+  "mass_g": 45.7
+ },
+ "1-18": {
+  "name": "Motor crank shaft cam follower lock nut",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1351.2,
+  "mass_g": 11.5
+ },
+ "1-19": {
+  "name": "Motor crank shaft cam follower spacer",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 537.3,
+  "mass_g": 4.6
+ },
+ "1-20": {
+  "name": "Motor flywheel hub",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 7713.5,
+  "mass_g": 65.6
+ },
+ "1-21": {
+  "name": "Motor flywheel",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 74187.7,
+  "mass_g": 630.6
+ },
+ "1-22": {
+  "name": "Motor piston",
+  "material": "Cast Iron",
+  "bodies": 1,
+  "volume_mm3": 6846.8,
+  "mass_g": 49.3
+ },
+ "1-26": {
+  "name": "Motor valve rocking shaft bearing",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 339.2,
+  "mass_g": 2.9
+ },
+ "1-27": {
+  "name": "Motor valve rocking shaft",
+  "material": "Stainless Steel",
+  "bodies": 1,
+  "volume_mm3": 1898.2,
+  "mass_g": 15.2
+ },
+ "1-28": {
+  "name": "Motor valve rod",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1181.0,
+  "mass_g": 9.3
+ },
+ "1-31": {
+  "name": "Motor valve rocking arm",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1754.5,
+  "mass_g": 13.8
+ }
+}
