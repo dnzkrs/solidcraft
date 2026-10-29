@@ -1,0 +1,411 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "head_d",
+    "expression": "56",
+    "unit": "mm",
+    "comment": "diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "head_t",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "head_pcd",
+    "expression": "44",
+    "unit": "mm",
+    "comment": "4 x \u00d84.5 on PCD 44, taken over from 1-02"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "head_hole_d",
+    "expression": "4.5",
+    "unit": "mm",
+    "comment": "clearance holes for M4"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "head_channel_w",
+    "expression": "20",
+    "unit": "mm",
+    "comment": "valve channel width (10 + 10)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "head_channel_depth",
+    "expression": "0.5",
+    "unit": "mm",
+    "comment": "valve channel depth"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "head_groove_w",
+    "expression": "0.5",
+    "unit": "mm",
+    "comment": "relief groove width at each channel edge"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "head_groove_depth",
+    "expression": "1",
+    "unit": "mm",
+    "comment": "relief groove depth"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "head_port_d",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "central port"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "head_csink_d",
+    "expression": "15",
+    "unit": "mm",
+    "comment": "countersink on the face away from the channel, 90 deg"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Disc"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 56
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3.5,
+    "name": "Disc",
+    "body_name": "1-04 Motor inner cylinder head"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Channel"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -10.0,
+     -30.0
+    ],
+    "p1": [
+     10.0,
+     30.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 0.5,
+    "operation": "cut",
+    "targets": [
+     "1-04 Motor inner cylinder head"
+    ],
+    "name": "Valve channel"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Relief grooves"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -10.5,
+     -30.0
+    ],
+    "p1": [
+     -10.0,
+     30.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     10.0,
+     -30.0
+    ],
+    "p1": [
+     10.5,
+     30.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1,
+    "operation": "cut",
+    "targets": [
+     "1-04 Motor inner cylinder head"
+    ],
+    "name": "Relief grooves"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      3.5
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Bolt holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.556349,
+     15.556349
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.556349,
+     15.556349
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.556349,
+     -15.556349
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.556349,
+     -15.556349
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-04 Motor inner cylinder head"
+    ],
+    "name": "Bolt holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Port section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -1
+     ],
+     [
+      5.0,
+      -1
+     ],
+     [
+      5.0,
+      1.0
+     ],
+     [
+      7.5,
+      3.5
+     ],
+     [
+      8.5,
+      4.5
+     ],
+     [
+      0,
+      4.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "cut",
+    "targets": [
+     "1-04 Motor inner cylinder head"
+    ],
+    "name": "Countersunk port"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-04 Motor inner cylinder head"
+    ],
+    "material": "Cast Iron"
+   }
+  }
+ ]
+}

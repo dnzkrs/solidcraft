@@ -1,0 +1,583 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cyl_length",
+    "expression": "71",
+    "unit": "mm",
+    "comment": "overall length (1-02)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cyl_fin_d",
+    "expression": "56",
+    "unit": "mm",
+    "comment": "fin and flange diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cyl_root_d",
+    "expression": "36",
+    "unit": "mm",
+    "comment": "fin root diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cyl_bore_d",
+    "expression": "32",
+    "unit": "mm",
+    "comment": "bore, reamed (32RM)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cyl_flange1",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "flange width at Z = 0"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cyl_flange2",
+    "expression": "9",
+    "unit": "mm",
+    "comment": "flange width at Z = L (oiler end)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cyl_fin_pitch",
+    "expression": "4.5",
+    "unit": "mm",
+    "comment": "fin pitch (12x4.5=54)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cyl_fin_t",
+    "expression": "1.5",
+    "unit": "mm",
+    "comment": "fin thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cyl_pcd",
+    "expression": "44",
+    "unit": "mm",
+    "comment": "M4 tapped holes, 4 per end, 45 deg off the oiler hole"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cyl_hole_depth",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "M4 x 10 deep"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cyl_oiler_z",
+    "expression": "66.5",
+    "unit": "mm",
+    "comment": "radial M4 oiler hole, 4.5 from the oiler end"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Half section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      16.0,
+      0
+     ],
+     [
+      28.0,
+      0
+     ],
+     [
+      28.0,
+      5
+     ],
+     [
+      18.0,
+      5
+     ],
+     [
+      18.0,
+      8.0
+     ],
+     [
+      28.0,
+      8.0
+     ],
+     [
+      28.0,
+      9.5
+     ],
+     [
+      18.0,
+      9.5
+     ],
+     [
+      18.0,
+      12.5
+     ],
+     [
+      28.0,
+      12.5
+     ],
+     [
+      28.0,
+      14.0
+     ],
+     [
+      18.0,
+      14.0
+     ],
+     [
+      18.0,
+      17.0
+     ],
+     [
+      28.0,
+      17.0
+     ],
+     [
+      28.0,
+      18.5
+     ],
+     [
+      18.0,
+      18.5
+     ],
+     [
+      18.0,
+      21.5
+     ],
+     [
+      28.0,
+      21.5
+     ],
+     [
+      28.0,
+      23.0
+     ],
+     [
+      18.0,
+      23.0
+     ],
+     [
+      18.0,
+      26.0
+     ],
+     [
+      28.0,
+      26.0
+     ],
+     [
+      28.0,
+      27.5
+     ],
+     [
+      18.0,
+      27.5
+     ],
+     [
+      18.0,
+      30.5
+     ],
+     [
+      28.0,
+      30.5
+     ],
+     [
+      28.0,
+      32.0
+     ],
+     [
+      18.0,
+      32.0
+     ],
+     [
+      18.0,
+      35.0
+     ],
+     [
+      28.0,
+      35.0
+     ],
+     [
+      28.0,
+      36.5
+     ],
+     [
+      18.0,
+      36.5
+     ],
+     [
+      18.0,
+      39.5
+     ],
+     [
+      28.0,
+      39.5
+     ],
+     [
+      28.0,
+      41.0
+     ],
+     [
+      18.0,
+      41.0
+     ],
+     [
+      18.0,
+      44.0
+     ],
+     [
+      28.0,
+      44.0
+     ],
+     [
+      28.0,
+      45.5
+     ],
+     [
+      18.0,
+      45.5
+     ],
+     [
+      18.0,
+      48.5
+     ],
+     [
+      28.0,
+      48.5
+     ],
+     [
+      28.0,
+      50.0
+     ],
+     [
+      18.0,
+      50.0
+     ],
+     [
+      18.0,
+      53.0
+     ],
+     [
+      28.0,
+      53.0
+     ],
+     [
+      28.0,
+      54.5
+     ],
+     [
+      18.0,
+      54.5
+     ],
+     [
+      18.0,
+      57.5
+     ],
+     [
+      28.0,
+      57.5
+     ],
+     [
+      28.0,
+      59.0
+     ],
+     [
+      18.0,
+      59.0
+     ],
+     [
+      18.0,
+      62.0
+     ],
+     [
+      28.0,
+      62.0
+     ],
+     [
+      28.0,
+      71
+     ],
+     [
+      16.0,
+      71
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "name": "Cylinder",
+    "body_name": "1-02 Motor cylinder"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M4 tapped, Z0"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.556349,
+     15.556349
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.556349,
+     15.556349
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.556349,
+     -15.556349
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.556349,
+     -15.556349
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 10,
+    "operation": "cut",
+    "targets": [
+     "1-02 Motor cylinder"
+    ],
+    "name": "M4 tapped, Z0"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      71
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M4 tapped, oiler end"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.556349,
+     15.556349
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.556349,
+     15.556349
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.556349,
+     -15.556349
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.556349,
+     -15.556349
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 10,
+    "operation": "cut",
+    "targets": [
+     "1-02 Motor cylinder"
+    ],
+    "name": "M4 tapped, oiler end"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      28.0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Oiler hole M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -66.5
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 13.0,
+    "operation": "cut",
+    "targets": [
+     "1-02 Motor cylinder"
+    ],
+    "name": "Oiler hole M4 tapped"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-02 Motor cylinder"
+    ],
+    "material": "Cast Iron"
+   }
+  }
+ ]
+}

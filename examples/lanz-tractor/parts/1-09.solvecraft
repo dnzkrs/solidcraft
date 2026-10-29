@@ -1,0 +1,148 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "glass_od",
+      "expr": "15",
+      "unit": "mm",
+      "comment": "outside diameter",
+      "model": false
+    },
+    {
+      "name": "glass_id",
+      "expr": "13",
+      "unit": "mm",
+      "comment": "inside diameter",
+      "model": false
+    },
+    {
+      "name": "glass_length",
+      "expr": "19",
+      "unit": "mm",
+      "comment": "length",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 7.5,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 6.5,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 1
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 0,
+            "q": 2
+          }
+        ],
+        "counters": {
+          "c": 2,
+          "k": 2
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Tube",
+      "suppressed": false,
+      "body_names": [
+        "1-09 Motor cylinder oiler glass"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 1,
+      "profiles": {
+        "type": "curves",
+        "loops": [
+          [
+            "c1"
+          ]
+        ]
+      },
+      "extent": {
+        "distance": "19",
+        "direction": "positive"
+      },
+      "operation": "new_body"
+    }
+  ],
+  "next_id": 3,
+  "materials": {
+    "1-09 Motor cylinder oiler glass": "Polycarbonate"
+  }
+}

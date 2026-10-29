@@ -1,0 +1,1234 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_length",
+    "expression": "96",
+    "unit": "mm",
+    "comment": "overall length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_width",
+    "expression": "56",
+    "unit": "mm",
+    "comment": "overall width (28 + 28)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_base_h",
+    "expression": "35",
+    "unit": "mm",
+    "comment": "base height (the U floor; 100 - 65.5 = 34.5 on the drawing)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_upright_t",
+    "expression": "12",
+    "unit": "mm",
+    "comment": "cylinder upright thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_upright_h",
+    "expression": "100",
+    "unit": "mm",
+    "comment": "cylinder upright height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_upright_r",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "upright top corners, U and cheek fillets"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_axis_z",
+    "expression": "70",
+    "unit": "mm",
+    "comment": "cylinder and crankshaft axis height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_cyl_bore",
+    "expression": "33",
+    "unit": "mm",
+    "comment": "cylinder spigot bore in the upright"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_pcd",
+    "expression": "44",
+    "unit": "mm",
+    "comment": "4 x \u00d84.5 on PCD 44 at 45 deg (cylinder bolts)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_cheek_x0",
+    "expression": "52",
+    "unit": "mm",
+    "comment": "cheek inner (cylinder-side) face, 12 + 40"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_cheek_x1",
+    "expression": "84",
+    "unit": "mm",
+    "comment": "cheek outer face, 12 + 40 + 32"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_cheek_h",
+    "expression": "84",
+    "unit": "mm",
+    "comment": "cheek height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_cheek_t",
+    "expression": "9",
+    "unit": "mm",
+    "comment": "cheek thickness (at Y = \u00b119 \u2026 \u00b128)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_cheek_r12",
+    "expression": "12",
+    "unit": "mm",
+    "comment": "fillet from the cheek's outer face to the base end"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_crank_x",
+    "expression": "68",
+    "unit": "mm",
+    "comment": "crankshaft bore position, 16 from the cheek's outer face"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_crank_bore",
+    "expression": "19",
+    "unit": "mm",
+    "comment": "crankshaft bearing bore (1-06 bearings)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_clamp_slot",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "clamp slot width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_clamp_x",
+    "expression": "80",
+    "unit": "mm",
+    "comment": "clamp screw, 4 from the cheek's outer face"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_clamp_hole",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "clamp screw clearance hole above the slot"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_clamp_tap_depth",
+    "expression": "14",
+    "unit": "mm",
+    "comment": "M4 below the slot, 14 deep"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_pit_x0",
+    "expression": "19",
+    "unit": "mm",
+    "comment": "crank pit start (section A-A)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_pit_length",
+    "expression": "71.5",
+    "unit": "mm",
+    "comment": "crank pit length (section A-A)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_pit_width",
+    "expression": "18",
+    "unit": "mm",
+    "comment": "crank pit width (9 + 9)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_pit_floor",
+    "expression": "24",
+    "unit": "mm",
+    "comment": "crank pit floor height (section A-A)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_oil_d12",
+    "expression": "12",
+    "unit": "mm",
+    "comment": "\u00d812 x 9.5 deep in the upright's outer face at Z = 30"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "frame_oil_x",
+    "expression": "9.5",
+    "unit": "mm",
+    "comment": "\u00d88 cross hole: 9.5 from the outer face, at Z = 30"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Frame profile"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      96,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      96,
+      0
+     ],
+     [
+      96,
+      35
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     96,
+     47
+    ],
+    "start": [
+     84,
+     47
+    ],
+    "end": [
+     96,
+     35
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      84,
+      47
+     ],
+     [
+      84,
+      84
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      84,
+      84
+     ],
+     [
+      62,
+      84
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     62,
+     74
+    ],
+    "start": [
+     62,
+     84
+    ],
+    "end": [
+     52,
+     74
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      52,
+      74
+     ],
+     [
+      52,
+      45
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     42,
+     45
+    ],
+    "start": [
+     42,
+     35
+    ],
+    "end": [
+     52,
+     45
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      42,
+      35
+     ],
+     [
+      22,
+      35
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     22,
+     45
+    ],
+    "start": [
+     12,
+     45
+    ],
+    "end": [
+     22,
+     35
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12,
+      45
+     ],
+     [
+      12,
+      100
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12,
+      100
+     ],
+     [
+      0,
+      100
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      100
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 28.0,
+    "direction": "symmetric",
+    "name": "Frame",
+    "body_name": "1-01 Motor frame"
+   }
+  },
+  {
+   "command": "solid.fillet",
+   "params": {
+    "edges": [
+     [
+      6.0,
+      28.0,
+      100
+     ],
+     [
+      6.0,
+      -28.0,
+      100
+     ]
+    ],
+    "radius": 10,
+    "name": "Upright corners"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      35
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Cheek gap"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      32,
+      -19.0
+     ],
+     [
+      98,
+      -19.0
+     ],
+     [
+      98,
+      19.0
+     ],
+     [
+      32,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 51,
+    "operation": "cut",
+    "targets": [
+     "1-01 Motor frame"
+    ],
+    "name": "Cheek gap"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Cylinder bore"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -70.0
+    ],
+    "diameter": 33
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 13,
+    "operation": "cut",
+    "targets": [
+     "1-01 Motor frame"
+    ],
+    "name": "Cylinder bore"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Cylinder bolt holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.556349,
+     -85.556349
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.556349,
+     -85.556349
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.556349,
+     -54.443651
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.556349,
+     -54.443651
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 13,
+    "operation": "cut",
+    "targets": [
+     "1-01 Motor frame"
+    ],
+    "name": "Cylinder bolt holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      28.0,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      -0.0,
+      -0.0,
+      -1.0
+     ]
+    },
+    "name": "Crankshaft bores"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -68.0,
+     -70.0
+    ],
+    "diameter": 19
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-01 Motor frame"
+    ],
+    "name": "Crankshaft bores"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      28.0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Clamp slot"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      68,
+      65.0
+     ],
+     [
+      98,
+      65.0
+     ],
+     [
+      98,
+      75.0
+     ],
+     [
+      68,
+      75.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-01 Motor frame"
+    ],
+    "name": "Clamp slots"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      84
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Clamp screw holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -80.0,
+     23.5
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -80.0,
+     -23.5
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 9.5,
+    "operation": "cut",
+    "targets": [
+     "1-01 Motor frame"
+    ],
+    "name": "Clamp screw holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      65.0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Clamp screw M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -80.0,
+     23.5
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -80.0,
+     -23.5
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 14,
+    "operation": "cut",
+    "targets": [
+     "1-01 Motor frame"
+    ],
+    "name": "Clamp screw M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      35
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Crank pit"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      19,
+      -9.0
+     ],
+     [
+      90.5,
+      -9.0
+     ],
+     [
+      90.5,
+      9.0
+     ],
+     [
+      19,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 11,
+    "direction": "negative",
+    "operation": "cut",
+    "targets": [
+     "1-01 Motor frame"
+    ],
+    "name": "Crank pit"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Mounting M6 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     12.0,
+     -16.0
+    ],
+    "diameter": 5.0
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     12.0,
+     16.0
+    ],
+    "diameter": 5.0
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     84.0,
+     -16.0
+    ],
+    "diameter": 5.0
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     84.0,
+     16.0
+    ],
+    "diameter": 5.0
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 25,
+    "operation": "cut",
+    "targets": [
+     "1-01 Motor frame"
+    ],
+    "name": "Mounting M6 tapped"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Mounting M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     34.5,
+     24.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     88.5,
+     24.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     34.5,
+     -24.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     69.5,
+     -24.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 10,
+    "operation": "cut",
+    "targets": [
+     "1-01 Motor frame"
+    ],
+    "name": "Mounting M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Oil well"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -30.0
+    ],
+    "diameter": 12
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 9.5,
+    "operation": "cut",
+    "targets": [
+     "1-01 Motor frame"
+    ],
+    "name": "Oil well"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      28.0,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      -0.0,
+      -0.0,
+      -1.0
+     ]
+    },
+    "name": "Oil cross hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -9.5,
+     -30.0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-01 Motor frame"
+    ],
+    "name": "Oil cross hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-01 Motor frame"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

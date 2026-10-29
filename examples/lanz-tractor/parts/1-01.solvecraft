@@ -1,0 +1,2007 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "frame_length",
+      "expr": "96",
+      "unit": "mm",
+      "comment": "overall length",
+      "model": false
+    },
+    {
+      "name": "frame_width",
+      "expr": "56",
+      "unit": "mm",
+      "comment": "overall width (28 + 28)",
+      "model": false
+    },
+    {
+      "name": "frame_base_h",
+      "expr": "35",
+      "unit": "mm",
+      "comment": "base height (the U floor; 100 - 65.5 = 34.5 on the drawing)",
+      "model": false
+    },
+    {
+      "name": "frame_upright_t",
+      "expr": "12",
+      "unit": "mm",
+      "comment": "cylinder upright thickness",
+      "model": false
+    },
+    {
+      "name": "frame_upright_h",
+      "expr": "100",
+      "unit": "mm",
+      "comment": "cylinder upright height",
+      "model": false
+    },
+    {
+      "name": "frame_upright_r",
+      "expr": "10",
+      "unit": "mm",
+      "comment": "upright top corners, U and cheek fillets",
+      "model": false
+    },
+    {
+      "name": "frame_axis_z",
+      "expr": "70",
+      "unit": "mm",
+      "comment": "cylinder and crankshaft axis height",
+      "model": false
+    },
+    {
+      "name": "frame_cyl_bore",
+      "expr": "33",
+      "unit": "mm",
+      "comment": "cylinder spigot bore in the upright",
+      "model": false
+    },
+    {
+      "name": "frame_pcd",
+      "expr": "44",
+      "unit": "mm",
+      "comment": "4 x Ø4.5 on PCD 44 at 45 deg (cylinder bolts)",
+      "model": false
+    },
+    {
+      "name": "frame_cheek_x0",
+      "expr": "52",
+      "unit": "mm",
+      "comment": "cheek inner (cylinder-side) face, 12 + 40",
+      "model": false
+    },
+    {
+      "name": "frame_cheek_x1",
+      "expr": "84",
+      "unit": "mm",
+      "comment": "cheek outer face, 12 + 40 + 32",
+      "model": false
+    },
+    {
+      "name": "frame_cheek_h",
+      "expr": "84",
+      "unit": "mm",
+      "comment": "cheek height",
+      "model": false
+    },
+    {
+      "name": "frame_cheek_t",
+      "expr": "9",
+      "unit": "mm",
+      "comment": "cheek thickness (at Y = ±19 … ±28)",
+      "model": false
+    },
+    {
+      "name": "frame_cheek_r12",
+      "expr": "12",
+      "unit": "mm",
+      "comment": "fillet from the cheek's outer face to the base end",
+      "model": false
+    },
+    {
+      "name": "frame_crank_x",
+      "expr": "68",
+      "unit": "mm",
+      "comment": "crankshaft bore position, 16 from the cheek's outer face",
+      "model": false
+    },
+    {
+      "name": "frame_crank_bore",
+      "expr": "19",
+      "unit": "mm",
+      "comment": "crankshaft bearing bore (1-06 bearings)",
+      "model": false
+    },
+    {
+      "name": "frame_clamp_slot",
+      "expr": "10",
+      "unit": "mm",
+      "comment": "clamp slot width",
+      "model": false
+    },
+    {
+      "name": "frame_clamp_x",
+      "expr": "80",
+      "unit": "mm",
+      "comment": "clamp screw, 4 from the cheek's outer face",
+      "model": false
+    },
+    {
+      "name": "frame_clamp_hole",
+      "expr": "4",
+      "unit": "mm",
+      "comment": "clamp screw clearance hole above the slot",
+      "model": false
+    },
+    {
+      "name": "frame_clamp_tap_depth",
+      "expr": "14",
+      "unit": "mm",
+      "comment": "M4 below the slot, 14 deep",
+      "model": false
+    },
+    {
+      "name": "frame_pit_x0",
+      "expr": "19",
+      "unit": "mm",
+      "comment": "crank pit start (section A-A)",
+      "model": false
+    },
+    {
+      "name": "frame_pit_length",
+      "expr": "71.5",
+      "unit": "mm",
+      "comment": "crank pit length (section A-A)",
+      "model": false
+    },
+    {
+      "name": "frame_pit_width",
+      "expr": "18",
+      "unit": "mm",
+      "comment": "crank pit width (9 + 9)",
+      "model": false
+    },
+    {
+      "name": "frame_pit_floor",
+      "expr": "24",
+      "unit": "mm",
+      "comment": "crank pit floor height (section A-A)",
+      "model": false
+    },
+    {
+      "name": "frame_oil_d12",
+      "expr": "12",
+      "unit": "mm",
+      "comment": "Ø12 x 9.5 deep in the upright's outer face at Z = 30",
+      "model": false
+    },
+    {
+      "name": "frame_oil_x",
+      "expr": "9.5",
+      "unit": "mm",
+      "comment": "Ø8 cross hole: 9.5 from the outer face, at Z = 30",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Frame profile",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              96.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              96.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              96.0,
+              35.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              96.0,
+              47.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              84.0,
+              47.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              96.0,
+              35.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              84.0,
+              47.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              84.0,
+              84.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              84.0,
+              84.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              62.0,
+              84.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              62.0,
+              74.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              62.0,
+              84.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              52.0,
+              74.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.start",
+            "pos": [
+              52.0,
+              74.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              52.0,
+              45.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.center",
+            "pos": [
+              42.0,
+              45.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.start",
+            "pos": [
+              42.0,
+              35.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.end",
+            "pos": [
+              52.0,
+              45.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.start",
+            "pos": [
+              42.0,
+              35.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              22.0,
+              35.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.center",
+            "pos": [
+              22.0,
+              45.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.start",
+            "pos": [
+              12.0,
+              45.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.end",
+            "pos": [
+              22.0,
+              35.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.start",
+            "pos": [
+              12.0,
+              45.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              12.0,
+              100.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.start",
+            "pos": [
+              12.0,
+              100.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.end",
+            "pos": [
+              0.0,
+              100.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l9.start",
+            "pos": [
+              0.0,
+              100.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l9.end",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 5,
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 10,
+            "b": 11,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 12,
+            "a": 13,
+            "b": 14,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 15,
+            "b": 16,
+            "construction": false
+          },
+          {
+            "id": "a3",
+            "type": "arc",
+            "c": 17,
+            "a": 18,
+            "b": 19,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 20,
+            "b": 21,
+            "construction": false
+          },
+          {
+            "id": "a4",
+            "type": "arc",
+            "c": 22,
+            "a": 23,
+            "b": 24,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 25,
+            "b": 26,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 27,
+            "b": 28,
+            "construction": false
+          },
+          {
+            "id": "l9",
+            "type": "line",
+            "a": 29,
+            "b": 30,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 1
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 2,
+            "q": 3
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 4,
+            "q": 7
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 6,
+            "q": 8
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 9,
+            "q": 10
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 11,
+            "q": 13
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 14,
+            "q": 15
+          },
+          {
+            "id": "k8",
+            "type": "coincident",
+            "p": 16,
+            "q": 19
+          },
+          {
+            "id": "k9",
+            "type": "coincident",
+            "p": 18,
+            "q": 20
+          },
+          {
+            "id": "k10",
+            "type": "coincident",
+            "p": 21,
+            "q": 24
+          },
+          {
+            "id": "k11",
+            "type": "coincident",
+            "p": 23,
+            "q": 25
+          },
+          {
+            "id": "k12",
+            "type": "coincident",
+            "p": 26,
+            "q": 27
+          },
+          {
+            "id": "k13",
+            "type": "coincident",
+            "p": 28,
+            "q": 29
+          },
+          {
+            "id": "k14",
+            "type": "coincident",
+            "p": 0,
+            "q": 30
+          }
+        ],
+        "counters": {
+          "a": 4,
+          "k": 14,
+          "l": 9
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Frame",
+      "suppressed": false,
+      "body_names": [
+        "1-01 Motor frame"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "28",
+        "direction": "symmetric"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 3,
+      "name": "Upright corners",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "edge_refs": [
+        {
+          "dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "min": [
+            0.0,
+            -28.000000000000014,
+            0.0
+          ],
+          "max": [
+            96.0,
+            28.000000000000018,
+            100.0
+          ]
+        },
+        {
+          "dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "min": [
+            0.0,
+            -28.000000000000014,
+            0.0
+          ],
+          "max": [
+            96.0,
+            28.000000000000018,
+            100.0
+          ]
+        }
+      ],
+      "edge_names": [
+        "F2:bottom|F2:side:l8",
+        "F2:side:l8|F2:top"
+      ],
+      "type": "fillet",
+      "edges": [
+        [
+          6.0,
+          28.0,
+          100.0
+        ],
+        [
+          6.0,
+          -28.0,
+          100.0
+        ]
+      ],
+      "radius": "10"
+    },
+    {
+      "id": 4,
+      "name": "Cheek gap",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            35.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              32.0,
+              -19.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              98.0,
+              -19.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              98.0,
+              19.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              32.0,
+              19.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 5,
+      "name": "Cheek gap",
+      "suppressed": false,
+      "param_names": [
+        "d3"
+      ],
+      "type": "extrude",
+      "sketch": 4,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "51",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-01 Motor frame"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Cylinder bore",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              -70.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 16.5,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 7,
+      "name": "Cylinder bore",
+      "suppressed": false,
+      "param_names": [
+        "d4"
+      ],
+      "type": "extrude",
+      "sketch": 6,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "13",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-01 Motor frame"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Cylinder bolt holes",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              -15.556349,
+              -85.556349
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              15.556349,
+              -85.556349
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c3.center",
+            "pos": [
+              15.556349,
+              -54.443651
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c4.center",
+            "pos": [
+              -15.556349,
+              -54.443651
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 2.25,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 2.25,
+            "construction": false
+          },
+          {
+            "id": "c3",
+            "type": "circle",
+            "c": 3,
+            "r": 2.25,
+            "construction": false
+          },
+          {
+            "id": "c4",
+            "type": "circle",
+            "c": 4,
+            "r": 2.25,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 4
+        }
+      }
+    },
+    {
+      "id": 9,
+      "name": "Cylinder bolt holes",
+      "suppressed": false,
+      "param_names": [
+        "d5"
+      ],
+      "type": "extrude",
+      "sketch": 8,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "13",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-01 Motor frame"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Crankshaft bores",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            28.0,
+            0.0
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            -0.0,
+            -1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              -68.0,
+              -70.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 9.5,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 11,
+      "name": "Crankshaft bores",
+      "suppressed": false,
+      "param_names": [
+        "d6"
+      ],
+      "type": "extrude",
+      "sketch": 10,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "1-01 Motor frame"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Clamp slot",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            28.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              68.0,
+              65.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              98.0,
+              65.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              98.0,
+              75.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              68.0,
+              75.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 13,
+      "name": "Clamp slots",
+      "suppressed": false,
+      "param_names": [
+        "d7"
+      ],
+      "type": "extrude",
+      "sketch": 12,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "1-01 Motor frame"
+      ]
+    },
+    {
+      "id": 14,
+      "name": "Clamp screw holes",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            84.0
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              -80.0,
+              23.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              -80.0,
+              -23.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 2.0,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 2.0,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 2
+        }
+      }
+    },
+    {
+      "id": 15,
+      "name": "Clamp screw holes",
+      "suppressed": false,
+      "param_names": [
+        "d8"
+      ],
+      "type": "extrude",
+      "sketch": 14,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "9.5",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-01 Motor frame"
+      ]
+    },
+    {
+      "id": 16,
+      "name": "Clamp screw M4 tapped",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            65.0
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              -80.0,
+              23.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              -80.0,
+              -23.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 1.65,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 1.65,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 2
+        }
+      }
+    },
+    {
+      "id": 17,
+      "name": "Clamp screw M4 tapped",
+      "suppressed": false,
+      "param_names": [
+        "d9"
+      ],
+      "type": "extrude",
+      "sketch": 16,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "14",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-01 Motor frame"
+      ]
+    },
+    {
+      "id": 18,
+      "name": "Crank pit",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            35.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              19.0,
+              -9.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              90.5,
+              -9.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              90.5,
+              9.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              19.0,
+              9.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 19,
+      "name": "Crank pit",
+      "suppressed": false,
+      "param_names": [
+        "d10"
+      ],
+      "type": "extrude",
+      "sketch": 18,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "11",
+        "direction": "negative"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-01 Motor frame"
+      ]
+    },
+    {
+      "id": 20,
+      "name": "Mounting M6 tapped",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              12.0,
+              -16.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              12.0,
+              16.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c3.center",
+            "pos": [
+              84.0,
+              -16.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c4.center",
+            "pos": [
+              84.0,
+              16.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 2.5,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 2.5,
+            "construction": false
+          },
+          {
+            "id": "c3",
+            "type": "circle",
+            "c": 3,
+            "r": 2.5,
+            "construction": false
+          },
+          {
+            "id": "c4",
+            "type": "circle",
+            "c": 4,
+            "r": 2.5,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 4
+        }
+      }
+    },
+    {
+      "id": 21,
+      "name": "Mounting M6 tapped",
+      "suppressed": false,
+      "param_names": [
+        "d11"
+      ],
+      "type": "extrude",
+      "sketch": 20,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "25",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-01 Motor frame"
+      ]
+    },
+    {
+      "id": 22,
+      "name": "Mounting M4 tapped",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              34.5,
+              24.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              88.5,
+              24.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c3.center",
+            "pos": [
+              34.5,
+              -24.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c4.center",
+            "pos": [
+              69.5,
+              -24.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 1.65,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 1.65,
+            "construction": false
+          },
+          {
+            "id": "c3",
+            "type": "circle",
+            "c": 3,
+            "r": 1.65,
+            "construction": false
+          },
+          {
+            "id": "c4",
+            "type": "circle",
+            "c": 4,
+            "r": 1.65,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 4
+        }
+      }
+    },
+    {
+      "id": 23,
+      "name": "Mounting M4 tapped",
+      "suppressed": false,
+      "param_names": [
+        "d12"
+      ],
+      "type": "extrude",
+      "sketch": 22,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "10",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-01 Motor frame"
+      ]
+    },
+    {
+      "id": 24,
+      "name": "Oil well",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              -30.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 6.0,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 25,
+      "name": "Oil well",
+      "suppressed": false,
+      "param_names": [
+        "d13"
+      ],
+      "type": "extrude",
+      "sketch": 24,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "9.5",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-01 Motor frame"
+      ]
+    },
+    {
+      "id": 26,
+      "name": "Oil cross hole",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            28.0,
+            0.0
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            -0.0,
+            -1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              -9.5,
+              -30.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 4.0,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 27,
+      "name": "Oil cross hole",
+      "suppressed": false,
+      "param_names": [
+        "d14"
+      ],
+      "type": "extrude",
+      "sketch": 26,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "1-01 Motor frame"
+      ]
+    }
+  ],
+  "next_id": 28,
+  "materials": {
+    "1-01 Motor frame": "Aluminum"
+  }
+}
