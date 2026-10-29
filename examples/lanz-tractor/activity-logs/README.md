@@ -1,6 +1,6 @@
 # Lanz mini tractor in SolidCraft: activity logs
 
-12 activities, written after the work, in the order it happened.
+16 activities, written after the work, in the order it happened.
 
 | # | Activity | Date | What it covers |
 | --- | --- | --- | --- |
@@ -16,6 +16,10 @@
 | 10 | [Model the front wheels, steering arm and lay shaft parts](10-front-wheels-and-lay-shaft.md) | 2026-10-29 | Fourteen parts from sheet 05 (2-25 to 2-37) were modelled, the rim and hub cap profiles taken line by line from their sections. A counterbore pattern placed on a revolved part's seam needed a separation retry and came out 46 mm³ short, until the pattern was turned 45° |
 | 11 | [Model the tie rod ends, steering column, steering wheel and lights](11-tie-rod-ends-steering-column-and-lights.md) | 2026-10-29 | Nine parts from sheet 05 (2-38 to 2-46) were modelled. On the way, four more SolidCraft limits were found and worked around: an inside-out revolve, a tangential wire join, a contact-work limit on coils and a hole tangent to a tube wall |
 | 12 | [Model the motor covers](12-motor-covers.md) | 2026-10-29 | The three 0.5 mm motor covers (2-47 to 2-49) were modelled after plain extrude cuts on the large thin brass sheets went wrong without a warning. The tray was hollowed with `solid.shell`, and the U-shaped side cover was built with the sheet-metal flange and folds |
+| 13 | [Model the rear chassis, housings, rear wheel and seat](13-rear-chassis-housings-wheels-and-seat.md) | 2026-10-29 | Twenty-seven group 3 parts from sheets 05 and 06 (3-01 to 3-26A) were modelled, most section profiles read from the drawing's vector lines. A tapped hole ending in the plane of a distant face came out 2.5 mm too deep after a SolidCraft separation retry |
+| 14 | [Model the hand brake, controls and stop light](14-hand-brake-and-controls.md) | 2026-10-29 | Twenty group 3 parts from sheet 07 were modelled: the hand brake parts, the reversing and coupling handles, the shaft adjuster and spacer, the accelerator bolt and link, and the stop light. Two SolidCraft problems came up: a cut of two picked sketch regions removed the wrong amount, and a strap's tongue could not be joined without a retry |
+| 15 | [Model the gearbox, coupling and belts](15-gearbox-and-belts.md) | 2026-10-29 | Twenty-eight group 4 parts and the 5-01 belt were modelled from sheets 07, 08 and 11. The gears were built prisms first, because SolidCraft could not join a tooth prism to a round hub it touched. The volume check caught a V-belt whose tangent points were on the wrong side |
+| 16 | [Model the mudguards and close the set](16-mudguards-and-closing-the-set.md) | 2026-10-29 | The last modelled parts were added: the hand brake and release handles (3-27B, 3-27E), the seat back rest 3-25D and the two mudguards 3-23/3-24. The mudguards were built already folded from overlapping solids. Four parts the drawings do not define fully were left out by the owner's decision, closing the set at 182 of 186 listed parts |
 
 Figures live in `figures/` and are referenced relatively, so keep the
 folder next to the Markdown files when moving them.

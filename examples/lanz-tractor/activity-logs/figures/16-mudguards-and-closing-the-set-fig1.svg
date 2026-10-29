@@ -1,0 +1,15 @@
+<svg width="600" height="300" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" font-size="13"><style>svg{--ink:#16212B;--muted:#5A6B76;--line:#D4DDDA;--accent:#1D6A86;background:#FAFBFB;font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}@media (prefers-color-scheme:dark){svg{--ink:#DCE6E9;--muted:#8FA2AA;--line:#28383F;--accent:#5BB4D3;background:#101A1E}}</style>
+<text x="20" y="24" fill="var(--ink)" font-weight="bold" font-size="15">3-23: the folded guard seen from the side (U, Z)</text>
+<polygon points="203.2,71.7 418.1,71.7 550.9,205.8 493.6,263.0 203.2,263.0" fill="var(--line)" fill-opacity="0.6" stroke="var(--muted)"/>
+<polygon points="58.6,139.1 127.7,70.0 417.4,70.0 554.2,206.7 526.2,234.7 401.0,109.6 144.1,109.6 86.6,167.1" fill="var(--accent)" fill-opacity="0.25" stroke="var(--accent)"/>
+<polygon points="58.6,139.1 127.7,70.0 417.4,70.0 554.2,206.7 551.8,209.1 416.1,73.3 129.0,73.3 60.9,141.4" fill="var(--ink)" stroke="var(--ink)"/>
+<polygon points="201.6,71.7 204.9,71.7 204.9,263.0 201.6,263.0" fill="var(--ink)"/>
+<polygon points="203.2,261.4 492.0,261.4 492.0,264.7 203.2,264.7" fill="var(--ink)"/>
+<text x="14" y="185" fill="var(--ink)">rear facet 45°</text>
+<text x="228" y="57" fill="var(--ink)">top 87.8</text>
+<text x="452" y="96" fill="var(--ink)">front facet 45°</text>
+<text x="241" y="96" fill="var(--accent)">lip, 12 deep (blue)</text>
+<text x="241" y="169" fill="var(--muted)">inner side panel (grey)</text>
+<text x="129" y="218" fill="var(--ink)">end wall</text>
+<text x="327" y="281" fill="var(--ink)">mounting flange</text>
+</svg>
