@@ -89,6 +89,20 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 1-51 | Accelerator lever-1 spring | Steel | 1 | 13.9 | 0.1 |
 | 1-52 | Accelerator levers bolt | Steel | 1 | 119.4 | 0.9 |
 | 1-53 | Accelerator crank | Steel | 1 | 1,574.5 | 12.4 |
+| 2-01 | Chassis front end | Aluminum | 1 | 91,743.5 | 247.7 |
+| 2-03 | LH-steering and fuel tank bracket | Aluminum | 1 | 11,360.1 | 30.7 |
+| 2-04 | RH-steering and fuel tank bracket | Aluminum | 1 | 11,360.1 | 30.7 |
+| 2-05 | Steering floor bracket | Aluminum | 1 | 701.7 | 1.9 |
+| 2-06 | Fuel tank | Brass | 1 | 13,925.4 | 118.4 |
+| 2-07 | Fuel tank spout | Brass | 1 | 1,462.4 | 12.4 |
+| 2-08 | Fuel tank spout cover | Brass | 1 | 1,131.2 | 9.6 |
+| 2-09 | Fuel tank inner wick holding pipe | Brass | 1 | 1,411.9 | 12.0 |
+| 2-10 | Fuel tank gear wheel axle bracket | Brass | 1 | 3,000.3 | 25.5 |
+| 2-12 | Fuel tank gearwheel and shaft | Brass, Steel | 2 | 1,790.6 | 14.6 |
+| 2-14 | Fuel tank wick holder | Brass | 1 | 2,909.3 | 24.7 |
+| 2-15 | Fuel tank wick | Default | 1 | 4,047.3 | 5.2 |
+| 2-16 | Axle body support bracket | Aluminum | 1 | 7,201.2 | 19.4 |
+| 2-17 | Front axle yoke support bracket | Aluminum | 1 | 2,393.4 | 6.5 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,
@@ -151,6 +165,16 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
 - **1-53** is drawn on sheet 04 but missing from the parts list; "Accelerator crank" is our name.
   The inside radius of the top bend is R3.5 as drawn; the lower bend (R3.5 on the centre line)
   ends at the collar.
+- **2-01**: material not on the drawing; aluminium assumed (its 3D view is shaded like the
+  aluminium parts). Detail "A" is drawn from below: the 8 wide, 3 deep recess is in the underside,
+  between the Ø6 hole at (236, −16) and the centre line (vector lines). The window's R4 corners are
+  measured. **2-03/2-04**: the leg's flanks and R4 corners are read off the vector lines.
+- **2-05**: the second bend's 45° is drawn, not dimensioned. **2-06**: the end plates are modelled
+  1 thick, set 2 in; the Ø10 hole at 45° through the top edge is inferred from the 7 mm openings in
+  the top and side views; the tube's R2 corners are read from section F-F.
+- **2-12**: 12 teeth counted on the drawing; straight-flanked teeth. **2-15**: no wick material in
+  SolidCraft's library; the default density is used. **2-11** (tank hanger) is not yet modelled:
+  its length and rod positions are not in its view.
 - **1-04**: from the detail: a 20 wide, 0.5 deep valve channel across the face, with 0.5 wide,
   1 deep relief grooves along its edges; the Ø10 port countersunk 90° to Ø15 on the other face.
 - **1-05**: its thickness is not on the drawing ("refer to 1-04"): not modelled yet.

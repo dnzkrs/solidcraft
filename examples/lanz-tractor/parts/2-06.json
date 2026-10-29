@@ -1,0 +1,826 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ft_l",
+    "expression": "90",
+    "unit": "mm",
+    "comment": "length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ft_w",
+    "expression": "40",
+    "unit": "mm",
+    "comment": "width (20 + 20)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ft_h",
+    "expression": "30",
+    "unit": "mm",
+    "comment": "height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ft_wall",
+    "expression": "1",
+    "unit": "mm",
+    "comment": "wall"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ft_r",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "outside corner radius (read from section F-F)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ft_end_inset",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "end plates' inner faces from the tube ends"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      15.0
+     ],
+     "x_dir": [
+      0,
+      1,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Tube section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -18.0,
+      -15.0
+     ],
+     [
+      18.0,
+      -15.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     18.0,
+     -13.0
+    ],
+    "start": [
+     18.0,
+     -15.0
+    ],
+    "end": [
+     20.0,
+     -13.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.0,
+      -13.0
+     ],
+     [
+      20.0,
+      13.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     18.0,
+     13.0
+    ],
+    "start": [
+     20.0,
+     13.0
+    ],
+    "end": [
+     18.0,
+     15.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      15.0
+     ],
+     [
+      -18.0,
+      15.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -18.0,
+     13.0
+    ],
+    "start": [
+     -18.0,
+     15.0
+    ],
+    "end": [
+     -20.0,
+     13.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -20.0,
+      13.0
+     ],
+     [
+      -20.0,
+      -13.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -18.0,
+     -13.0
+    ],
+    "start": [
+     -20.0,
+     -13.0
+    ],
+    "end": [
+     -18.0,
+     -15.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -18.0,
+      -14.0
+     ],
+     [
+      18.0,
+      -14.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     18.0,
+     -13.0
+    ],
+    "start": [
+     18.0,
+     -14.0
+    ],
+    "end": [
+     19.0,
+     -13.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      19.0,
+      -13.0
+     ],
+     [
+      19.0,
+      13.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     18.0,
+     13.0
+    ],
+    "start": [
+     19.0,
+     13.0
+    ],
+    "end": [
+     18.0,
+     14.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      14.0
+     ],
+     [
+      -18.0,
+      14.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -18.0,
+     13.0
+    ],
+    "start": [
+     -18.0,
+     14.0
+    ],
+    "end": [
+     -19.0,
+     13.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -19.0,
+      13.0
+     ],
+     [
+      -19.0,
+      -13.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -18.0,
+     -13.0
+    ],
+    "start": [
+     -19.0,
+     -13.0
+    ],
+    "end": [
+     -18.0,
+     -14.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 90,
+    "profiles": [
+     {
+      "point": [
+       19.5,
+       0
+      ]
+     }
+    ],
+    "name": "Tube",
+    "body_name": "2-06 Fuel tank"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      1,
+      0,
+      15.0
+     ],
+     "x_dir": [
+      0,
+      1,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "End plate 1"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -18.0,
+      -14.3
+     ],
+     [
+      18.0,
+      -14.3
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     18.0,
+     -13.0
+    ],
+    "start": [
+     18.0,
+     -14.3
+    ],
+    "end": [
+     19.3,
+     -13.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      19.3,
+      -13.0
+     ],
+     [
+      19.3,
+      13.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     18.0,
+     13.0
+    ],
+    "start": [
+     19.3,
+     13.0
+    ],
+    "end": [
+     18.0,
+     14.3
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      14.3
+     ],
+     [
+      -18.0,
+      14.3
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -18.0,
+     13.0
+    ],
+    "start": [
+     -18.0,
+     14.3
+    ],
+    "end": [
+     -19.3,
+     13.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -19.3,
+      13.0
+     ],
+     [
+      -19.3,
+      -13.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -18.0,
+     -13.0
+    ],
+    "start": [
+     -19.3,
+     -13.0
+    ],
+    "end": [
+     -18.0,
+     -14.3
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1,
+    "operation": "join",
+    "targets": [
+     "2-06 Fuel tank"
+    ],
+    "name": "End plate 1"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      88,
+      0,
+      15.0
+     ],
+     "x_dir": [
+      0,
+      1,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "End plate 2"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -18.0,
+      -14.3
+     ],
+     [
+      18.0,
+      -14.3
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     18.0,
+     -13.0
+    ],
+    "start": [
+     18.0,
+     -14.3
+    ],
+    "end": [
+     19.3,
+     -13.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      19.3,
+      -13.0
+     ],
+     [
+      19.3,
+      13.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     18.0,
+     13.0
+    ],
+    "start": [
+     19.3,
+     13.0
+    ],
+    "end": [
+     18.0,
+     14.3
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      14.3
+     ],
+     [
+      -18.0,
+      14.3
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -18.0,
+     13.0
+    ],
+    "start": [
+     -18.0,
+     14.3
+    ],
+    "end": [
+     -19.3,
+     13.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -19.3,
+      13.0
+     ],
+     [
+      -19.3,
+      -13.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -18.0,
+     -13.0
+    ],
+    "start": [
+     -19.3,
+     -13.0
+    ],
+    "end": [
+     -18.0,
+     -14.3
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1,
+    "operation": "join",
+    "targets": [
+     "2-06 Fuel tank"
+    ],
+    "name": "End plate 2"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      30
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Spout hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -19.0,
+     0.0
+    ],
+    "diameter": 11
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "operation": "cut",
+    "targets": [
+     "2-06 Fuel tank"
+    ],
+    "name": "Spout hole"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      30
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M3 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -38.0,
+     14.0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -58.0,
+     14.0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "operation": "cut",
+    "targets": [
+     "2-06 Fuel tank"
+    ],
+    "name": "M3 tapped"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 10,
+    "height": 9,
+    "base": [
+     58,
+     -22.12132,
+     32.12132
+    ],
+    "axis": [
+     0,
+     0.707106781,
+     -0.707106781
+    ],
+    "operation": "cut",
+    "targets": [
+     "2-06 Fuel tank"
+    ],
+    "name": "Edge hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-06 Fuel tank"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

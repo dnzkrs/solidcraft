@@ -1841,6 +1841,467 @@ def valve_spring(s):
     return math.pi / 4 * DW * DW * length
 
 
+def slot_loop(c1, c2, r):
+    """A closed slot (two R ends joined by tangents) between centres c1 and c2, as Script.loop()
+    arguments."""
+    dx, dy = c2[0] - c1[0], c2[1] - c1[1]
+    L = math.hypot(dx, dy)
+    n = (-dy / L * r, dx / L * r)
+    a1, b1 = (c1[0] - n[0], c1[1] - n[1]), (c2[0] - n[0], c2[1] - n[1])
+    b2, a2 = (c2[0] + n[0], c2[1] + n[1]), (c1[0] + n[0], c1[1] + n[1])
+    return a1, [("line", b1), ("arc", c2, b2, True), ("line", a2), ("arc", c1, a1, True)]
+
+
+def countersink(s, name, x, y, z0, d, dcs, up, through):
+    """A Ø d hole with a 90 deg countersink to Ø dcs at the face Z = z0, drilled up (+Z) or down,
+    `through` deep: a revolve cut about the hole's axis."""
+    h = (dcs - d) / 2
+    sg = 1 if up else -1
+    s.sketch(name, (x, y, z0), (1, 0, 0), (0, 0, sg))
+    s.polyline([(0, -1), (dcs / 2 + 1, -1), (dcs / 2, 0), (d / 2, h), (d / 2, through + 1), (0, through + 1)])
+    s.finish()
+    s.cmd("solid.revolve", axis="y", operation="cut", targets=[s.body], name=name)
+    return math.pi / 12 * h * (dcs * dcs + dcs * d + d * d) + math.pi / 4 * d * d * (through - h)
+
+
+# ----------------------------------------------------------------------------- 2-01
+@part("2-01", "Chassis front end", "Aluminum")
+def chassis_front_end(s):
+    """Sheet 04, 2-01 (scale 1:1.5, vector lines; detail "A" is drawn from below): 6 thick plate,
+    254 x 88 with a pointed front end, a 102 x 46 window with R4 corners, two slots, Ø4 holes (A),
+    M4 tapped holes (B, Ø3.3), 4 x Ø6 countersunk Ø12 from underneath (C) and an 8 wide slot
+    recess 3 deep in the underside (detail A). X from the point backward, Y across, Z = 0..6.
+    Material not given on the drawing: aluminium assumed (its 3D view is shaded like the other
+    aluminium parts)."""
+    T = s.param("cfe_t", 6, "thickness")
+    L = s.param("cfe_l", 254, "length")
+    H = s.param("cfe_half_w", 44, "half width (88)")
+    XN = s.param("cfe_nose", 34.5, "length of the pointed end")
+    W0, W1, WH = 34.5, 136.5, 23                 # window X from, to; half height
+    s.sketch("Plate", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.polyline([(0, 0), (XN, -H), (L, -H), (L, H), (XN, H)])
+    s.finish()
+    s.cmd("solid.extrude", distance=T, name="Plate", body_name=s.body)
+    v = (L - XN) * 2 * H * T + XN * H * T
+    # window, through
+    rw = 4
+    start = (W0 + rw, -WH)
+    segs = [("line", (W1 - rw, -WH)), ("arc", (W1 - rw, -WH + rw), (W1, -WH + rw), True), ("line", (W1, WH - rw)),
+            ("arc", (W1 - rw, WH - rw), (W1 - rw, WH), True), ("line", (W0 + rw, WH)),
+            ("arc", (W0 + rw, WH - rw), (W0, WH - rw), True), ("line", (W0, -WH + rw)),
+            ("arc", (W0 + rw, -WH + rw), start, True)]
+    s.sketch("Window", (0, 0, T), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, direction="negative", operation="cut", targets=[s.body], name="Window")
+    v -= loop_area(start, segs) * T
+    # slots, through
+    s.sketch("Slots", (0, 0, T), (1, 0, 0), (0, 1, 0))
+    sl = [slot_loop((108, -32), (120, -32), 2.5), slot_loop((197.5, -32), (233.5, -32), 4)]
+    for a, sg in sl:
+        s.loop(a, sg)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, direction="negative", operation="cut", targets=[s.body], name="Slots")
+    v -= sum(loop_area(a, sg) for a, sg in sl) * T
+    A = [(61, 32), (61, -32), (131, 32), (131, -32), (142, 0), (144.5, -32), (186.5, 24), (186.5, -24),
+         (221.5, 24), (240.5, -24)]
+    B = [(34.5, 32), (34.5, -32), (13.5, 0)]
+    s.holes("Holes A (Ø4)", (0, 0, T), (0, 0, -1), [(x, y, T) for x, y in A], 4)
+    s.holes("Holes B (M4 tapped)", (0, 0, T), (0, 0, -1), [(x, y, T) for x, y in B], 3.3)
+    v -= math.pi / 4 * (16 * len(A) + 3.3 ** 2 * len(B)) * T
+    # detail A: the slot recess in the underside, then the four countersunk holes from below
+    ra, rs = slot_loop((222, -8), (243, -8), 4)
+    s.sketch("Recess", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(ra, rs)
+    s.finish()
+    s.cmd("solid.extrude", distance=3, operation="cut", targets=[s.body], name="Recess (detail A)")
+    v -= loop_area(ra, rs) * 3
+    C = [(164, 16), (164, -16), (236, 16), (236, -16)]
+    for i, (x, y) in enumerate(C):
+        v -= countersink(s, f"Hole C{i + 1} (Ø6, c'sunk below)", x, y, 0, 6, 12, True, T)
+    # the recess and the countersink at (236, -16) overlap: add back their common part
+    in_slot = lambda x, y: abs(y + 8) <= 4 and (222 <= x <= 243 or min(math.dist((x, y), (222, -8)),
+                                                                        math.dist((x, y), (243, -8))) <= 4)
+    v += integrate2(lambda x, y: min(3.0, max(0.0, 6 - math.dist((x, y), (236, -16))))
+                    if in_slot(x, y) else 0.0, 230, 242, -22, -10, 600)
+    return v
+
+
+def angle_bracket(s, mirror):
+    """2-03 and its mirror image 2-04 (sheet 04, scale 1:1.5/1:2, vector lines): 3.5 thick
+    aluminium angle, 80 long: a 19.5 wide top flange (2 x M4 tapped, an R4.5 slot 22 between
+    centres, all 10 from the leg's outer face) and a 33 deep leg narrowing with R4 corners to an
+    R6 nose round a Ø6 hole (55 along, 27 down), with 2 x Ø2.5 holes 13 down. X along, the leg's
+    outer face on Y = 0 (the flange toward +Y; 2-04: toward -Y), the flange top on Z = 0."""
+    T = s.param("ab_t", 3.5, "thickness")
+    L = s.param("ab_l", 80, "length (5 + 35 + 22 + 13 + 5)")
+    F = s.param("ab_flange", 19.5, "flange width over the leg")
+    XC, ZC, RN = 55, -27, 6                      # nose: Ø6 hole centre and radius
+    RC = 4
+    sy = -1 if mirror else 1
+    # leg outline in (x, z): flanks tangent to the nose at the measured angles, R4 corners
+    def flank(theta, side):
+        u = (math.cos(theta), math.sin(theta))
+        n = (u[1], -u[0])                                       # outward normal (below the line)
+        t = (XC + RN * n[0], ZC + RN * n[1])                    # tangent point on the nose
+        return u, n, t
+    out = []
+    for theta, x_edge, side in ((math.radians(-9.38), 0, -1), (math.radians(20.76), L, 1)):
+        u, n, t = flank(theta, side)
+        # corner centre: RC in from the edge X = x_edge, RC inside the flank line
+        cx = x_edge + (RC if x_edge == 0 else -RC)
+        # inside the flank: (C - t) . n = -RC  ->  solve for cz
+        cz = t[1] + (-RC - (cx - t[0]) * n[0]) / n[1]
+        out.append(((cx, cz), (cx + RC * n[0], cz + RC * n[1]), t))
+    (cl, tl, nl), (cr, tr, nr) = out
+    start = (0, 0)
+    segs = [("line", (0, cl[1])), ("arc", cl, tl, True), ("line", nl), ("arc", (XC, ZC), nr, True),
+            ("line", tr), ("arc", cr, (L, cr[1]), True), ("line", (L, 0)), ("line", start)]
+    s.sketch("Leg", (0, 0, 0), (1, 0, 0), (0, 0, 1))                  # normal -Y
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, direction="negative" if not mirror else "positive", name="Leg",
+          body_name=s.body)
+    s.sketch("Flange", (0, 0, -T), (1, 0, 0), (0, 1, 0))
+    s.polyline([(0, sy * 1), (L, sy * 1), (L, sy * F), (0, sy * F)])
+    s.finish()
+    s.cmd("solid.extrude", distance=T, operation="join", targets=[s.body], name="Flange")
+    v = (loop_area(start, segs) + (F - T) * L) * T
+    s.holes("Flange M4 tapped", (0, 0, 0), (0, 0, -1), [(5, sy * 10, 0), (75, sy * 10, 0)], 3.3)
+    a, sg = slot_loop((40, sy * 10), (62, sy * 10), 4.5)
+    s.sketch("Flange slot", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(a, sg)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, direction="negative", operation="cut", targets=[s.body], name="Flange slot")
+    y0 = -1 if not mirror else 1
+    s.holes("Leg holes", (0, y0, 0), (0, -y0, 0), [(7, y0, -13), (71, y0, -13)], 2.5)
+    s.holes("Leg Ø6 hole", (0, y0, 0), (0, -y0, 0), [(XC, y0, ZC)], 6)
+    v -= (2 * math.pi / 4 * 3.3 ** 2 + loop_area(a, sg)) * T + math.pi / 4 * (2 * 2.5 ** 2 + 36) * T
+    return v
+
+
+@part("2-03", "LH-steering and fuel tank bracket", "Aluminum")
+def steering_bracket_lh(s):
+    """Sheet 04, 2-03: see angle_bracket()."""
+    return angle_bracket(s, False)
+
+
+@part("2-04", "RH-steering and fuel tank bracket", "Aluminum")
+def steering_bracket_rh(s):
+    """Sheet 04, 2-04: the mirror image of 2-03; see angle_bracket()."""
+    return angle_bracket(s, True)
+
+
+# ----------------------------------------------------------------------------- 2-05
+@part("2-05", "Steering floor bracket", "Aluminum")
+def steering_floor_bracket(s):
+    """Sheet 04, 2-05: 1.5 thick aluminium, made with the sheet-metal tools from its flat pattern:
+    15 wide, an R7.5 end round a Ø4 hole (the origin), a second Ø4 hole 22 along, the square end 5
+    beyond it (R1 corners, read from the drawing), folds 11.5 and 18 from the square end. The side
+    view shows a Z: 90 deg at the first fold, about 45 deg (not dimensioned) at the second.
+    Bend radius 0.2, K-factor 0.5."""
+    T = s.param("sfb_t", 1.5, "thickness")
+    R = s.param("sfb_end_r", 7.5, "end radius (15 wide)")
+    X2 = s.param("sfb_hole2", 22, "second hole")
+    XE = s.param("sfb_end", 27, "square end (22 + 5)")
+    F1 = s.param("sfb_fold1", 27 - 11.5, "first fold, 11.5 from the square end")
+    F2 = s.param("sfb_fold2", 27 - 11.5 - 6.5, "second fold, 6.5 further")
+    A2 = s.param("sfb_angle2", 45, "second bend (drawn, not dimensioned)", unit="deg")
+    rc = 1
+    s.cmd("sheet.manage_rules", name="Lanz 1.5", thickness=f"{T} mm", k_factor="0.5", bend_radius="0.2 mm",
+          active=True)
+    start = (0, -R)
+    segs = [("line", (XE - rc, -R)), ("arc", (XE - rc, -R + rc), (XE, -R + rc), True), ("line", (XE, R - rc)),
+            ("arc", (XE - rc, R - rc), (XE - rc, R), True), ("line", (0, R)), ("arc", (0, 0), start, True)]
+    s.sketch("Flat pattern", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("sheet.flange", base="Flat pattern", body_name=s.body)
+    s.holes("Holes", (0, 0, T), (0, 0, -1), [(0, 0, T), (X2, 0, T)], 4)
+    s.cmd("sheet.fold", points=[[F2, -R - 2, T], [F2, R + 2, T]], angle=A2, position="centerline")
+    s.cmd("sheet.fold", points=[[F1, -R - 2, T], [F1, R + 2, T]], angle=90, position="centerline", flip=True)
+    s.cmd("browser.visibility", visible=False, items=["Flat pattern"])
+    return (loop_area(start, segs) - 2 * math.pi / 4 * 16) * T
+
+
+def rounded_rect(w, h, r):
+    """Script.loop() arguments for a w x h rectangle centred on the origin with corner radius r."""
+    a, b = w / 2, h / 2
+    start = (-a + r, -b)
+    return start, [("line", (a - r, -b)), ("arc", (a - r, -b + r), (a, -b + r), True), ("line", (a, b - r)),
+                   ("arc", (a - r, b - r), (a - r, b), True), ("line", (-a + r, b)),
+                   ("arc", (-a + r, b - r), (-a, b - r), True), ("line", (-a, -b + r)),
+                   ("arc", (-a + r, -b + r), start, True)]
+
+
+def in_rounded_rect(y, z, w, h, r):
+    a, b = w / 2 - r, h / 2 - r
+    dy, dz = max(abs(y) - a, 0), max(abs(z) - b, 0)
+    return (abs(y) <= w / 2 and abs(z) <= h / 2) and dy * dy + dz * dz <= r * r
+
+
+# ----------------------------------------------------------------------------- 2-06
+@part("2-06", "Fuel tank", "Brass")
+def fuel_tank(s):
+    """Sheet 04, 2-06 (scale 1:2, section F-F): soldered brass box: a 90 long tube, 40 x 30 outside
+    with R2 corners and a 1 wall, closed by end plates made separately and soldered in 2 from each
+    end (modelled 1 thick, flush with the tube's inside). In the top: a Ø11 hole for the 1-07 spout
+    19 from one end, 2 x M3 (Ø2.5) 20 apart and 6 from the side for the 2-10 bracket; a Ø10 hole
+    drilled at 45 deg through the top edge 58 from that end (the gear wheel of 2-12 runs in it).
+    X along, Y across, Z up from the bottom; the drilled edge is on -Y."""
+    L = s.param("ft_l", 90, "length")
+    W = s.param("ft_w", 40, "width (20 + 20)")
+    H = s.param("ft_h", 30, "height")
+    T = s.param("ft_wall", 1, "wall")
+    R = s.param("ft_r", 2, "outside corner radius (read from section F-F)")
+    XE = s.param("ft_end_inset", 2, "end plates' inner faces from the tube ends")
+    zc = H / 2
+    so, go = rounded_rect(W, H, R)
+    si, gi = rounded_rect(W - 2 * T, H - 2 * T, R - T)
+    s.sketch("Tube section", (0, 0, zc), (0, 1, 0), (0, 0, 1))      # normal +X
+    s.loop(so, go)
+    s.loop(si, gi)
+    s.finish()
+    s.cmd("solid.extrude", distance=L, profiles=[{"point": [W / 2 - T / 2, 0]}], name="Tube", body_name=s.body)
+    ai = loop_area(si, gi)
+    v = (loop_area(so, go) - ai) * L
+    # end plates: overlapping 0.3 into the wall so that they join (their faces would only touch)
+    sp, gp = rounded_rect(W - 2 * T + 0.6, H - 2 * T + 0.6, R - T + 0.3)
+    for x0, name in ((XE - 1, "End plate 1"), (L - XE, "End plate 2")):
+        s.sketch(name, (x0, 0, zc), (0, 1, 0), (0, 0, 1))
+        s.loop(sp, gp)
+        s.finish()
+        s.cmd("solid.extrude", distance=1, operation="join", targets=[s.body], name=name)
+        v += ai * 1
+    s.holes("Spout hole", (0, 0, H), (0, 0, -1), [(19, 0, H)], 11, 2 * T)
+    s.holes("M3 tapped", (0, 0, H), (0, 0, -1), [(38, W / 2 - 6, H), (58, W / 2 - 6, H)], 2.5, 2 * T)
+    v -= math.pi / 4 * (121 + 2 * 2.5 ** 2) * T
+    # the Ø10 hole at 45 deg through the edge (top and -Y side meet at the sharp corner (y, z) = (-20, 30))
+    d = (0, 1 / math.sqrt(2), -1 / math.sqrt(2))
+    p0 = (58, -W / 2 - 3 * d[1], H - 3 * d[2])
+    s.cmd("solid.cylinder", diameter=10, height=9, base=[p0[0], round(p0[1], 6), round(p0[2], 6)],
+          axis=[0, round(d[1], 9), round(d[2], 9)], operation="cut", targets=[s.body], name="Edge hole")
+    wall = lambda x, y, z: 0 <= x <= L and in_rounded_rect(y, z - zc, W, H, R) and not \
+        in_rounded_rect(y, z - zc, W - 2 * T, H - 2 * T, R - T)
+    return v - removed_by_cylinder(wall, p0, d, 10, 9, n=160)
+
+
+# ----------------------------------------------------------------------------- 2-07
+@part("2-07", "Fuel tank spout", "Brass")
+def fuel_tank_spout(s):
+    """Sheet 04, 2-07 (scale 1:1.5): a Ø10 x 31 tube with a Ø8 bore soldered into a Ø12 x 10 collar
+    tapped M10 (Ø8.5) 6.5 deep (34.5 from the bottom) for the 2-08 cover. Axis = Z from the
+    bottom of the tube."""
+    D1 = s.param("fs_tube_d", 10, "tube (in the tank's Ø11 hole)")
+    L1 = s.param("fs_tube_l", 31, "tube length")
+    DB = s.param("fs_bore", 8, "bore")
+    D2 = s.param("fs_collar_d", 12, "collar")
+    L2 = s.param("fs_collar_l", 10, "collar length")
+    ZT = s.param("fs_thread_from", 34.5, "M10 from here to the top (tap drill Ø8.5)")
+    return s.turned("Spout", [(DB / 2, 0), (D1 / 2, 0), (D1 / 2, L1), (D2 / 2, L1), (D2 / 2, L1 + L2),
+                              (4.25, L1 + L2), (4.25, ZT), (DB / 2, ZT)])
+
+
+# ----------------------------------------------------------------------------- 2-08, 2-09
+@part("2-08", "Fuel tank spout cover", "Brass")
+def spout_cover(s):
+    """Sheet 04, 2-08: M10 x 7 (at Ø10), Ø12 x 2 collar, Ø10 x 2 neck, 12 hex x 3, Ø4 vent through.
+    Axis = Z from the thread end."""
+    AF = s.param("sc_hex_af", 12, "hex across flats")
+    TH = s.param("sc_hex_t", 3, "hex thickness")
+    LT = s.param("sc_thread_l", 7, "M10 length")
+    s.turned("Body", [(0, 0), (5, 0), (5, LT), (6, LT), (6, LT + 2), (5, LT + 2), (5, LT + 4.5), (0, LT + 4.5)])
+    s.sketch("Hex", (0, 0, LT + 4), (1, 0, 0), (0, 1, 0))
+    s.polyline(hexagon(AF))
+    s.finish()
+    s.cmd("solid.extrude", distance=TH, operation="join", targets=[s.body], name="Hex")
+    s.holes("Vent", (0, 0, LT + 4 + TH), (0, 0, -1), [(0, 0, LT + 4 + TH)], 4)
+    v = math.pi / 4 * (100 * LT + 144 * 2 + 100 * 2) + math.sqrt(3) / 2 * AF * AF * TH
+    return v - math.pi / 4 * 16 * (LT + 4 + TH)
+
+
+@part("2-09", "Fuel tank inner wick holding pipe", "Brass")
+def wick_pipe(s):
+    """Sheet 04, 2-09 (scale 1:2): Ø12 x 26 tube on a Ø11 x 4 spigot (into the tank's Ø11 hole),
+    Ø9 bore through. Axis = Z from the spigot end."""
+    return s.turned("Pipe", [(4.5, 0), (5.5, 0), (5.5, 4), (6, 4), (6, 30), (4.5, 30)])
+
+
+# ----------------------------------------------------------------------------- 2-10
+@part("2-10", "Fuel tank gear wheel axle bracket", "Brass")
+def gear_axle_bracket(s):
+    """Sheet 04, 2-10 (scale 1:1.5): a 1 thick brass U, 42 long and 10 wide, walls 18 high inside
+    ending in R5 ears with Ø4 holes (the 2-12 shaft), soldered on a 34 x 10 x 7 block (5 from one
+    end) with 2 x Ø3 holes 20 apart (12 from the other end) for the M3 screws into the tank.
+    X along, Y across, Z up; the U's base on Z = 0..1, the block under it."""
+    T = s.param("gab_t", 1, "sheet thickness")
+    L = s.param("gab_l", 42, "length outside")
+    W = s.param("gab_w", 10, "width")
+    HW = s.param("gab_wall", 18, "wall height above the base")
+    RE = s.param("gab_ear_r", 5, "ear radius (Ø4 holes at its centre)")
+    s.sketch("U section", (0, 0, 0), (1, 0, 0), (0, 0, 1))                 # normal -Y
+    s.polyline([(0, 0), (L, 0), (L, T + HW), (L - T, T + HW), (L - T, T), (T, T), (T, T + HW), (0, T + HW)])
+    s.finish()
+    s.cmd("solid.extrude", distance=W / 2, direction="symmetric", name="U", body_name=s.body)
+    v = (L * T + 2 * T * HW) * W
+    # round the walls' tops: cut the corners above the ear centres outside R5 (both walls at once)
+    zc = T + HW - RE
+    s.sketch("Ear rounding", (-1, 0, 0), (0, 1, 0), (0, 0, 1))         # normal +X; sketch (y, z)
+    for sy in (1, -1):
+        p0, p1 = (sy * RE, zc), (0, zc + RE)
+        s.loop(p0, [("arc", (0, zc), p1, sy > 0), ("line", (0, zc + RE + 1)), ("line", (sy * (RE + 1), zc + RE + 1)),
+                    ("line", (sy * (RE + 1), zc)), ("line", p0)])
+    s.finish()
+    s.cmd("solid.extrude", through_all=True, operation="cut", targets=[s.body], name="Ear rounding")
+    v -= 2 * T * 2 * (RE * RE - math.pi / 4 * RE * RE)
+    s.holes("Ear holes", (-1, 0, 0), (1, 0, 0), [(-1, 0, zc)], 4)
+    v -= 2 * math.pi / 4 * 16 * T
+    s.sketch("Block", (0, 0, -7), (1, 0, 0), (0, 1, 0))
+    s.polyline([(5, -W / 2), (39, -W / 2), (39, W / 2), (5, W / 2)])
+    s.finish()
+    s.cmd("solid.extrude", distance=7.5, operation="join", targets=[s.body], name="Block")
+    s.holes("Screw holes", (0, 0, -7), (0, 0, 1), [(10, 0, -7), (30, 0, -7)], 3, 7 + T + 0.5)
+    return v + 34 * W * 7 - 2 * math.pi / 4 * 9 * (7 + T)
+
+
+# ----------------------------------------------------------------------------- 2-12
+@part("2-12", "Fuel tank gearwheel and shaft", {"gear": "Brass", "shaft": "Steel"})
+def tank_gear_shaft(s):
+    """Sheet 04, 2-12: a brass gear (12 teeth, Ø13 over the tips, Ø11 at the roots, teeth 2 wide at
+    the root and 1.5 at the tip, 8 wide) pressed on the end of a Ø4 x 77 M/S shaft. The tooth count
+    is read off the drawing; the tooth form is simplified to straight flanks. Axis = Z, the gear on
+    Z = 0..8."""
+    N = s.param("tg_teeth", 12, "teeth (counted)", unit="")
+    DT = s.param("tg_tip_d", 13, "tip diameter")
+    DR = s.param("tg_root_d", 11, "root diameter")
+    WT = s.param("tg_tip_w", 1.5, "tooth width at the tip")
+    WR = s.param("tg_root_w", 2, "tooth width at the root")
+    B = s.param("tg_w", 8, "gear width")
+    DS = s.param("tg_shaft_d", 4, "shaft")
+    LS = s.param("tg_shaft_l", 77, "shaft length")
+    n = s.body.split()[0]
+    pts = []
+    for k in range(int(N)):
+        t = 2 * math.pi * k / N
+        ar, at = math.asin(WR / DR), math.asin(WT / DT)
+        for r, a in ((DR / 2, t - ar), (DT / 2, t - at), (DT / 2, t + at), (DR / 2, t + ar)):
+            pts.append((r * math.cos(a), r * math.sin(a)))
+    s.sketch("Gear", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.polyline(pts)
+    s.cmd("sketch.circle.center", center=[0, 0], diameter=DS)
+    s.finish()
+    s.cmd("solid.extrude", distance=B, profiles=[{"point": [DR / 2 - 1, 0]}], operation="new", name="Gear",
+          body_name=f"{n} gear")
+    v = (polygon_area(pts) - math.pi / 4 * DS * DS) * B
+    v += s.turned("Shaft", [(0, 0), (DS / 2, 0), (DS / 2, LS), (0, LS)], body=f"{n} shaft")
+    return v
+
+
+# ----------------------------------------------------------------------------- 2-14, 2-15
+@part("2-14", "Fuel tank wick holder", "Brass")
+def wick_holder(s):
+    """Sheet 04, 2-14 (scale 1:1.5): 36 high: a Ø14.5 body with 7 cooling fins Ø18 x 1 at 3.5 pitch
+    from the bottom, then a cone to Ø12.5 at the top; Ø12 bore 26 deep from below (over the 2-09
+    pipe), Ø8 above it. Axis = Z from the bottom."""
+    H = s.param("wh_h", 36, "height")
+    D = s.param("wh_d", 14.5, "body")
+    DT = s.param("wh_top_d", 12.5, "top of the cone")
+    HC = s.param("wh_cone_from", 26, "cone starts (= the Ø12 bore's depth)")
+    DF = s.param("wh_fin_d", 18, "fins")
+    P = s.param("wh_pitch", 3.5, "fin pitch (6 x 3.5 = 21)")
+    pts = [(6, 0)]
+    for i in range(7):
+        z = i * P
+        pts += [(DF / 2, z), (DF / 2, z + 1), (D / 2, z + 1)] if i else [(DF / 2, 0), (DF / 2, 1), (D / 2, 1)]
+        if i < 6:
+            pts += [(D / 2, (i + 1) * P)]
+    pts = [(6, 0)] + [p for p in pts[1:]]
+    pts += [(D / 2, HC), (DT / 2, H), (4, H), (4, HC), (6, HC)]
+    # drop repeated points
+    clean = [pts[0]]
+    for p in pts[1:]:
+        if math.dist(p, clean[-1]) > 1e-9:
+            clean.append(p)
+    return s.turned("Holder", clean)
+
+
+@part("2-15", "Fuel tank wick", "Default")
+def wick(s):
+    """Sheet 04, 2-15 (scale 1:2): wick material, Ø8 x 85 with a pointed end (cone about 6.7 long,
+    measured). The library has no wick material: SolidCraft's default density is used."""
+    D = s.param("wk_d", 8, "diameter")
+    L = s.param("wk_l", 85, "length")
+    LT = s.param("wk_tip", 6.7, "pointed end (measured)")
+    return s.turned("Wick", [(0, 0), (D / 2, 0), (D / 2, L - LT), (0, L)])
+
+
+# ----------------------------------------------------------------------------- 2-16
+@part("2-16", "Axle body support bracket", "Aluminum")
+def axle_support_bracket(s):
+    """Sheet 04, 2-16 (scale 1:1.5): 3.5 thick aluminium L: a flange 88 wide and 18 deep (corners
+    cut 11 x 8), a notch 46 wide and 8.5 deep with R4 corners in its front edge and 2 x M4 (Ø3.3)
+    at ±32, 8.5 from it; under its back edge a web 66 wide narrowing to an R8 nose round a Ø6
+    hole 23 below the flange top. X across, Y back from the front edge, Z up; flange top Z = 0."""
+    T = s.param("asb_t", 3.5, "thickness")
+    W = s.param("asb_w", 88, "flange width (44 + 44)")
+    D = s.param("asb_d", 18, "flange depth")
+    WN = s.param("asb_notch_w", 46, "notch width (23 + 23)")
+    DN = s.param("asb_notch_d", 8.5, "notch depth")
+    WW = s.param("asb_web_w", 66, "web width at the top (33 + 33)")
+    ZH = s.param("asb_hole_z", 23, "Ø6 hole below the flange top")
+    RN = s.param("asb_nose_r", 8, "nose radius")
+    # flange (top view outline), the notch with R4 corners
+    a, rn = W / 2, 4
+    start = (-a, 0)
+    segs = [("line", (-WN / 2, 0)), ("line", (-WN / 2, DN - rn)), ("arc", (-WN / 2 + rn, DN - rn), (-WN / 2 + rn, DN), False),
+            ("line", (WN / 2 - rn, DN)), ("arc", (WN / 2 - rn, DN - rn), (WN / 2, DN - rn), False),
+            ("line", (WN / 2, 0)), ("line", (a, 0)), ("line", (a, 10)), ("line", (WW / 2, D)), ("line", (-WW / 2, D)),
+            ("line", (-a, 10)), ("line", start)]
+    s.sketch("Flange", (0, 0, -T), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, name="Flange", body_name=s.body)
+    v = loop_area(start, segs) * T
+    # web: in the plane Y = D - T .. D, from inside the flange down to the nose
+    c = (0, -ZH)
+    A = (-WW / 2, -T)
+    dx, dz = c[0] - A[0], c[1] - A[1]
+    dd = math.hypot(dx, dz)
+    ang = math.atan2(dz, dx) - math.asin(RN / dd)
+    tl = (A[0] + math.sqrt(dd * dd - RN * RN) * math.cos(ang), A[1] + math.sqrt(dd * dd - RN * RN) * math.sin(ang))
+    m = lambda p: (-p[0], p[1])
+    wstart = (-WW / 2, -T + 1)
+    wsegs = [("line", A), ("line", tl), ("arc", c, m(tl), True), ("line", m(A)), ("line", m(wstart)), ("line", wstart)]
+    s.sketch("Web", (0, D, 0), (1, 0, 0), (0, 0, 1))                   # normal -Y
+    s.loop(wstart, wsegs)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, operation="join", targets=[s.body], name="Web")
+    v += (loop_area(wstart, wsegs) - WW * 1) * T
+    s.holes("M4 tapped", (0, 0, 0), (0, 0, -1), [(-32, DN, 0), (32, DN, 0)], 3.3)
+    s.holes("Ø6 hole", (0, D, 0), (0, -1, 0), [(0, D, -ZH)], 6)
+    return v - math.pi / 4 * (2 * 3.3 ** 2 + 36) * T
+
+
+# ----------------------------------------------------------------------------- 2-17
+@part("2-17", "Front axle yoke support bracket", "Aluminum")
+def yoke_support_bracket(s):
+    """Sheet 04, 2-17: 3.5 thick aluminium angle, 16 wide: a flange 17 deep with an M4 hole (Ø3.3)
+    8 from its free edge, and a leg 31 high (from the flange top) with an M6 hole (Ø5) 8 above its
+    end, both on the centre line. X across, the leg's outer face on Y = 0, flange toward +Y, flange
+    top Z = 0."""
+    T = s.param("ysb_t", 3.5, "thickness")
+    W = s.param("ysb_w", 16, "width (8 + 8)")
+    D = s.param("ysb_d", 17, "flange depth (9 + 8)")
+    H = s.param("ysb_h", 31, "leg height")
+    s.sketch("Section", (0, 0, 0), (0, 1, 0), (0, 0, 1))                 # normal +X
+    s.polyline([(0, 0), (D, 0), (D, -T), (T, -T), (T, -H), (0, -H)])
+    s.finish()
+    s.cmd("solid.extrude", distance=W / 2, direction="symmetric", name="Angle", body_name=s.body)
+    s.holes("M4 tapped", (0, 0, 0), (0, 0, -1), [(0, D - 8, 0)], 3.3)
+    s.holes("M6 tapped", (0, 0, 0), (0, 1, 0), [(0, 0, -H + 8)], 5.0)
+    return ((D + H - T) * T) * W - math.pi / 4 * (3.3 ** 2 + 25) * T
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]

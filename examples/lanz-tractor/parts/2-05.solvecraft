@@ -1,0 +1,492 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "sfb_t",
+      "expr": "1.5",
+      "unit": "mm",
+      "comment": "thickness",
+      "model": false
+    },
+    {
+      "name": "sfb_end_r",
+      "expr": "7.5",
+      "unit": "mm",
+      "comment": "end radius (15 wide)",
+      "model": false
+    },
+    {
+      "name": "sfb_hole2",
+      "expr": "22",
+      "unit": "mm",
+      "comment": "second hole",
+      "model": false
+    },
+    {
+      "name": "sfb_end",
+      "expr": "27",
+      "unit": "mm",
+      "comment": "square end (22 + 5)",
+      "model": false
+    },
+    {
+      "name": "sfb_fold1",
+      "expr": "15.5",
+      "unit": "mm",
+      "comment": "first fold, 11.5 from the square end",
+      "model": false
+    },
+    {
+      "name": "sfb_fold2",
+      "expr": "9",
+      "unit": "mm",
+      "comment": "second fold, 6.5 further",
+      "model": false
+    },
+    {
+      "name": "sfb_angle2",
+      "expr": "45",
+      "unit": "deg",
+      "comment": "second bend (drawn, not dimensioned)",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Flat pattern",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              0.0,
+              -7.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              26.0,
+              -7.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              26.0,
+              -6.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              26.0,
+              -7.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              27.0,
+              -6.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              27.0,
+              -6.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              27.0,
+              6.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              26.0,
+              6.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              27.0,
+              6.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              26.0,
+              7.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              26.0,
+              7.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              0.0,
+              7.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.start",
+            "pos": [
+              0.0,
+              7.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.end",
+            "pos": [
+              0.0,
+              -7.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 3,
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 8,
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 11,
+            "b": 12,
+            "construction": false
+          },
+          {
+            "id": "a3",
+            "type": "arc",
+            "c": 13,
+            "a": 14,
+            "b": 15,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 2,
+            "q": 4
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 5,
+            "q": 6
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 7,
+            "q": 9
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 10,
+            "q": 11
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 0,
+            "q": 13
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 12,
+            "q": 14
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 1,
+            "q": 15
+          }
+        ],
+        "counters": {
+          "a": 3,
+          "k": 7,
+          "l": 3
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "BaseFlange1",
+      "suppressed": false,
+      "body_names": [
+        "2-05 Steering floor bracket"
+      ],
+      "type": "sheet_base",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Holes",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            1.5
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              -22.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 2.0,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 2.0,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 1
+          }
+        ],
+        "counters": {
+          "c": 2,
+          "k": 1
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Holes",
+      "suppressed": false,
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 3,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "2-05 Steering floor bracket"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Fold1",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "sheet_fold",
+      "a": [
+        9.0,
+        -9.5,
+        1.5
+      ],
+      "b": [
+        9.0,
+        9.5,
+        1.5
+      ],
+      "angle": "45",
+      "position": "centerline"
+    },
+    {
+      "id": 6,
+      "name": "Fold2",
+      "suppressed": false,
+      "param_names": [
+        "d3"
+      ],
+      "type": "sheet_fold",
+      "a": [
+        15.5,
+        -9.5,
+        1.5
+      ],
+      "b": [
+        15.5,
+        9.5,
+        1.5
+      ],
+      "angle": "90",
+      "position": "centerline",
+      "flip": true
+    }
+  ],
+  "next_id": 7,
+  "sheet": {
+    "rules": [
+      {
+        "name": "Lanz 1.5",
+        "thickness": "1.5 mm",
+        "k_factor": "0.5",
+        "bend_radius": "0.2 mm",
+        "relief_width": "Thickness",
+        "relief_depth": "Thickness * 0.5",
+        "corner_relief": "Thickness * 4.0",
+        "hem_gap": "0.01 mm",
+        "gap": "Thickness"
+      }
+    ],
+    "active": "Lanz 1.5"
+  },
+  "materials": {
+    "2-05 Steering floor bracket": "Aluminum"
+  }
+}

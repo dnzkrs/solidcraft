@@ -1,0 +1,540 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "asb_t",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "asb_w",
+    "expression": "88",
+    "unit": "mm",
+    "comment": "flange width (44 + 44)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "asb_d",
+    "expression": "18",
+    "unit": "mm",
+    "comment": "flange depth"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "asb_notch_w",
+    "expression": "46",
+    "unit": "mm",
+    "comment": "notch width (23 + 23)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "asb_notch_d",
+    "expression": "8.5",
+    "unit": "mm",
+    "comment": "notch depth"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "asb_web_w",
+    "expression": "66",
+    "unit": "mm",
+    "comment": "web width at the top (33 + 33)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "asb_hole_z",
+    "expression": "23",
+    "unit": "mm",
+    "comment": "\u00d86 hole below the flange top"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "asb_nose_r",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "nose radius"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -3.5
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Flange"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -44.0,
+      0
+     ],
+     [
+      -23.0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -23.0,
+      0
+     ],
+     [
+      -23.0,
+      4.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -19.0,
+     4.5
+    ],
+    "start": [
+     -19.0,
+     8.5
+    ],
+    "end": [
+     -23.0,
+     4.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -19.0,
+      8.5
+     ],
+     [
+      19.0,
+      8.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     19.0,
+     4.5
+    ],
+    "start": [
+     23.0,
+     4.5
+    ],
+    "end": [
+     19.0,
+     8.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      4.5
+     ],
+     [
+      23.0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      0
+     ],
+     [
+      44.0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      44.0,
+      0
+     ],
+     [
+      44.0,
+      10
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      44.0,
+      10
+     ],
+     [
+      33.0,
+      18
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      18
+     ],
+     [
+      -33.0,
+      18
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -33.0,
+      18
+     ],
+     [
+      -44.0,
+      10
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -44.0,
+      10
+     ],
+     [
+      -44.0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3.5,
+    "name": "Flange",
+    "body_name": "2-16 Axle body support bracket"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      18,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Web"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -33.0,
+      -2.5
+     ],
+     [
+      -33.0,
+      -3.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -33.0,
+      -3.5
+     ],
+     [
+      -5.417675,
+      -28.886323
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     -23
+    ],
+    "start": [
+     -5.417675,
+     -28.886323
+    ],
+    "end": [
+     5.417675,
+     -28.886323
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.417675,
+      -28.886323
+     ],
+     [
+      33.0,
+      -3.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      -3.5
+     ],
+     [
+      33.0,
+      -2.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      -2.5
+     ],
+     [
+      -33.0,
+      -2.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3.5,
+    "operation": "join",
+    "targets": [
+     "2-16 Axle body support bracket"
+    ],
+    "name": "Web"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     32.0,
+     8.5
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -32.0,
+     8.5
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-16 Axle body support bracket"
+    ],
+    "name": "M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      18,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      -0.0,
+      -0.0,
+      -1.0
+     ]
+    },
+    "name": "\u00d86 hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     23.0
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-16 Axle body support bracket"
+    ],
+    "name": "\u00d86 hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-16 Axle body support bracket"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

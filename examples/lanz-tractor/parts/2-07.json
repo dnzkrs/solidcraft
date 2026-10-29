@@ -1,0 +1,143 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fs_tube_d",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "tube (in the tank's \u00d811 hole)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fs_tube_l",
+    "expression": "31",
+    "unit": "mm",
+    "comment": "tube length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fs_bore",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "bore"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fs_collar_d",
+    "expression": "12",
+    "unit": "mm",
+    "comment": "collar"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fs_collar_l",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "collar length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fs_thread_from",
+    "expression": "34.5",
+    "unit": "mm",
+    "comment": "M10 from here to the top (tap drill \u00d88.5)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Spout section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      4.0,
+      0
+     ],
+     [
+      5.0,
+      0
+     ],
+     [
+      5.0,
+      31
+     ],
+     [
+      6.0,
+      31
+     ],
+     [
+      6.0,
+      41
+     ],
+     [
+      4.25,
+      41
+     ],
+     [
+      4.25,
+      34.5
+     ],
+     [
+      4.0,
+      34.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Spout",
+    "body_name": "2-07 Fuel tank spout"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-07 Fuel tank spout"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

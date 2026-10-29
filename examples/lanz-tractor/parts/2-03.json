@@ -1,0 +1,531 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ab_t",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ab_l",
+    "expression": "80",
+    "unit": "mm",
+    "comment": "length (5 + 35 + 22 + 13 + 5)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ab_flange",
+    "expression": "19.5",
+    "unit": "mm",
+    "comment": "flange width over the leg"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Leg"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      -20.602398
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     4,
+     -20.602398
+    ],
+    "start": [
+     0,
+     -20.602398
+    ],
+    "end": [
+     3.348074,
+     -24.548915
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.348074,
+      -24.548915
+     ],
+     [
+      54.022111,
+      -32.919775
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     55,
+     -27
+    ],
+    "start": [
+     54.022111,
+     -32.919775
+    ],
+    "end": [
+     57.126725,
+     -32.61044
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      57.126725,
+      -32.61044
+     ],
+     [
+      77.417817,
+      -24.918783
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     76,
+     -21.17849
+    ],
+    "start": [
+     77.417817,
+     -24.918783
+    ],
+    "end": [
+     80,
+     -21.17849
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      80,
+      -21.17849
+     ],
+     [
+      80,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      80,
+      0
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3.5,
+    "direction": "negative",
+    "name": "Leg",
+    "body_name": "2-03 LH-steering and fuel tank bracket"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -3.5
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Flange"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      80,
+      1
+     ],
+     [
+      80,
+      19.5
+     ],
+     [
+      0,
+      19.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3.5,
+    "operation": "join",
+    "targets": [
+     "2-03 LH-steering and fuel tank bracket"
+    ],
+    "name": "Flange"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Flange M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -5.0,
+     10.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -75.0,
+     10.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-03 LH-steering and fuel tank bracket"
+    ],
+    "name": "Flange M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Flange slot"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.0,
+      5.5
+     ],
+     [
+      62.0,
+      5.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     62,
+     10
+    ],
+    "start": [
+     62.0,
+     5.5
+    ],
+    "end": [
+     62.0,
+     14.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      62.0,
+      14.5
+     ],
+     [
+      40.0,
+      14.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     40,
+     10
+    ],
+    "start": [
+     40.0,
+     14.5
+    ],
+    "end": [
+     40.0,
+     5.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3.5,
+    "direction": "negative",
+    "operation": "cut",
+    "targets": [
+     "2-03 LH-steering and fuel tank bracket"
+    ],
+    "name": "Flange slot"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -1,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Leg holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     7.0,
+     13.0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     71.0,
+     13.0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-03 LH-steering and fuel tank bracket"
+    ],
+    "name": "Leg holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -1,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Leg \u00d86 hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     55.0,
+     27.0
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-03 LH-steering and fuel tank bracket"
+    ],
+    "name": "Leg \u00d86 hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-03 LH-steering and fuel tank bracket"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

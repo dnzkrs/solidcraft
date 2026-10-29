@@ -383,5 +383,103 @@
   "bodies": 1,
   "volume_mm3": 1574.5,
   "mass_g": 12.4
+ },
+ "2-01": {
+  "name": "Chassis front end",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 91743.5,
+  "mass_g": 247.7
+ },
+ "2-03": {
+  "name": "LH-steering and fuel tank bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 11360.1,
+  "mass_g": 30.7
+ },
+ "2-04": {
+  "name": "RH-steering and fuel tank bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 11360.1,
+  "mass_g": 30.7
+ },
+ "2-05": {
+  "name": "Steering floor bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 701.7,
+  "mass_g": 1.9
+ },
+ "2-06": {
+  "name": "Fuel tank",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 13925.4,
+  "mass_g": 118.4
+ },
+ "2-07": {
+  "name": "Fuel tank spout",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1462.4,
+  "mass_g": 12.4
+ },
+ "2-08": {
+  "name": "Fuel tank spout cover",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1131.2,
+  "mass_g": 9.6
+ },
+ "2-09": {
+  "name": "Fuel tank inner wick holding pipe",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1411.9,
+  "mass_g": 12.0
+ },
+ "2-10": {
+  "name": "Fuel tank gear wheel axle bracket",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 3000.3,
+  "mass_g": 25.5
+ },
+ "2-12": {
+  "name": "Fuel tank gearwheel and shaft",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 1790.6,
+  "mass_g": 14.6
+ },
+ "2-14": {
+  "name": "Fuel tank wick holder",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 2909.3,
+  "mass_g": 24.7
+ },
+ "2-15": {
+  "name": "Fuel tank wick",
+  "material": "Default",
+  "bodies": 1,
+  "volume_mm3": 4047.3,
+  "mass_g": 5.2
+ },
+ "2-16": {
+  "name": "Axle body support bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 7201.2,
+  "mass_g": 19.4
+ },
+ "2-17": {
+  "name": "Front axle yoke support bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 2393.4,
+  "mass_g": 6.5
  }
 }

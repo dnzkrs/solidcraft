@@ -1,0 +1,1034 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cfe_t",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cfe_l",
+    "expression": "254",
+    "unit": "mm",
+    "comment": "length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cfe_half_w",
+    "expression": "44",
+    "unit": "mm",
+    "comment": "half width (88)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cfe_nose",
+    "expression": "34.5",
+    "unit": "mm",
+    "comment": "length of the pointed end"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Plate"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      34.5,
+      -44
+     ],
+     [
+      254,
+      -44
+     ],
+     [
+      254,
+      44
+     ],
+     [
+      34.5,
+      44
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 6,
+    "name": "Plate",
+    "body_name": "2-01 Chassis front end"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      6
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Window"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.5,
+      -23
+     ],
+     [
+      132.5,
+      -23
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     132.5,
+     -19
+    ],
+    "start": [
+     132.5,
+     -23
+    ],
+    "end": [
+     136.5,
+     -19
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      136.5,
+      -19
+     ],
+     [
+      136.5,
+      19
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     132.5,
+     19
+    ],
+    "start": [
+     136.5,
+     19
+    ],
+    "end": [
+     132.5,
+     23
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      132.5,
+      23
+     ],
+     [
+      38.5,
+      23
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     38.5,
+     19
+    ],
+    "start": [
+     38.5,
+     23
+    ],
+    "end": [
+     34.5,
+     19
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      34.5,
+      19
+     ],
+     [
+      34.5,
+      -19
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     38.5,
+     -19
+    ],
+    "start": [
+     34.5,
+     -19
+    ],
+    "end": [
+     38.5,
+     -23
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 6,
+    "direction": "negative",
+    "operation": "cut",
+    "targets": [
+     "2-01 Chassis front end"
+    ],
+    "name": "Window"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      6
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Slots"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      108.0,
+      -34.5
+     ],
+     [
+      120.0,
+      -34.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     120,
+     -32
+    ],
+    "start": [
+     120.0,
+     -34.5
+    ],
+    "end": [
+     120.0,
+     -29.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      120.0,
+      -29.5
+     ],
+     [
+      108.0,
+      -29.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     108,
+     -32
+    ],
+    "start": [
+     108.0,
+     -29.5
+    ],
+    "end": [
+     108.0,
+     -34.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      197.5,
+      -36.0
+     ],
+     [
+      233.5,
+      -36.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     233.5,
+     -32
+    ],
+    "start": [
+     233.5,
+     -36.0
+    ],
+    "end": [
+     233.5,
+     -28.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      233.5,
+      -28.0
+     ],
+     [
+      197.5,
+      -28.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     197.5,
+     -32
+    ],
+    "start": [
+     197.5,
+     -28.0
+    ],
+    "end": [
+     197.5,
+     -36.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 6,
+    "direction": "negative",
+    "operation": "cut",
+    "targets": [
+     "2-01 Chassis front end"
+    ],
+    "name": "Slots"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      6
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Holes A (\u00d84)"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -61.0,
+     32.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -61.0,
+     -32.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -131.0,
+     32.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -131.0,
+     -32.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -142.0,
+     0.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -144.5,
+     -32.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -186.5,
+     24.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -186.5,
+     -24.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -221.5,
+     24.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -240.5,
+     -24.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-01 Chassis front end"
+    ],
+    "name": "Holes A (\u00d84)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      6
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Holes B (M4 tapped)"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -34.5,
+     32.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -34.5,
+     -32.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -13.5,
+     0.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-01 Chassis front end"
+    ],
+    "name": "Holes B (M4 tapped)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Recess"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      222.0,
+      -12.0
+     ],
+     [
+      243.0,
+      -12.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     243,
+     -8
+    ],
+    "start": [
+     243.0,
+     -12.0
+    ],
+    "end": [
+     243.0,
+     -4.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      243.0,
+      -4.0
+     ],
+     [
+      222.0,
+      -4.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     222,
+     -8
+    ],
+    "start": [
+     222.0,
+     -4.0
+    ],
+    "end": [
+     222.0,
+     -12.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3,
+    "operation": "cut",
+    "targets": [
+     "2-01 Chassis front end"
+    ],
+    "name": "Recess (detail A)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      164,
+      16,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Hole C1 (\u00d86, c'sunk below)"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -1
+     ],
+     [
+      7.0,
+      -1
+     ],
+     [
+      6.0,
+      0
+     ],
+     [
+      3.0,
+      3.0
+     ],
+     [
+      3.0,
+      7
+     ],
+     [
+      0,
+      7
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "y",
+    "operation": "cut",
+    "targets": [
+     "2-01 Chassis front end"
+    ],
+    "name": "Hole C1 (\u00d86, c'sunk below)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      164,
+      -16,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Hole C2 (\u00d86, c'sunk below)"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -1
+     ],
+     [
+      7.0,
+      -1
+     ],
+     [
+      6.0,
+      0
+     ],
+     [
+      3.0,
+      3.0
+     ],
+     [
+      3.0,
+      7
+     ],
+     [
+      0,
+      7
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "y",
+    "operation": "cut",
+    "targets": [
+     "2-01 Chassis front end"
+    ],
+    "name": "Hole C2 (\u00d86, c'sunk below)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      236,
+      16,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Hole C3 (\u00d86, c'sunk below)"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -1
+     ],
+     [
+      7.0,
+      -1
+     ],
+     [
+      6.0,
+      0
+     ],
+     [
+      3.0,
+      3.0
+     ],
+     [
+      3.0,
+      7
+     ],
+     [
+      0,
+      7
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "y",
+    "operation": "cut",
+    "targets": [
+     "2-01 Chassis front end"
+    ],
+    "name": "Hole C3 (\u00d86, c'sunk below)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      236,
+      -16,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Hole C4 (\u00d86, c'sunk below)"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -1
+     ],
+     [
+      7.0,
+      -1
+     ],
+     [
+      6.0,
+      0
+     ],
+     [
+      3.0,
+      3.0
+     ],
+     [
+      3.0,
+      7
+     ],
+     [
+      0,
+      7
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "y",
+    "operation": "cut",
+    "targets": [
+     "2-01 Chassis front end"
+    ],
+    "name": "Hole C4 (\u00d86, c'sunk below)"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-01 Chassis front end"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

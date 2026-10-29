@@ -1,0 +1,234 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sc_hex_af",
+    "expression": "12",
+    "unit": "mm",
+    "comment": "hex across flats"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sc_hex_t",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "hex thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sc_thread_l",
+    "expression": "7",
+    "unit": "mm",
+    "comment": "M10 length"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Body section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      5,
+      0
+     ],
+     [
+      5,
+      7
+     ],
+     [
+      6,
+      7
+     ],
+     [
+      6,
+      9
+     ],
+     [
+      5,
+      9
+     ],
+     [
+      5,
+      11.5
+     ],
+     [
+      0,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Body",
+    "body_name": "2-08 Fuel tank spout cover"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      11
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Hex"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      6.928203,
+      0.0
+     ],
+     [
+      3.464102,
+      6.0
+     ],
+     [
+      -3.464102,
+      6.0
+     ],
+     [
+      -6.928203,
+      0.0
+     ],
+     [
+      -3.464102,
+      -6.0
+     ],
+     [
+      3.464102,
+      -6.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3,
+    "operation": "join",
+    "targets": [
+     "2-08 Fuel tank spout cover"
+    ],
+    "name": "Hex"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      14
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Vent"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-08 Fuel tank spout cover"
+    ],
+    "name": "Vent"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-08 Fuel tank spout cover"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}
