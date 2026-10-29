@@ -72,6 +72,17 @@ Units are mm. Each part has its own coordinate system, stated in its docstring i
 | 1-37 | Exhaust base ring | Brass | 1 | 7,624.5 | 64.8 |
 | 1-38 | Exhaust stack | Brass | 1 | 14,499.7 | 123.2 |
 | 1-39 | Exhaust stack top ring | Brass | 1 | 1,363.9 | 11.6 |
+| 1-43 | Top steering shaft bracket | Aluminum | 1 | 725.3 | 2.0 |
+| 1-44 | Accelerator bridge bracket | Steel | 1 | 3,632.8 | 28.5 |
+| 1-45 | Accelerator lever-1 guide plate | Steel | 1 | 1,315.1 | 10.3 |
+| 1-46 | Accelerator bridge shaft | Steel | 1 | 724.8 | 5.7 |
+| 1-47 | Accelerator lever-1 | Steel | 1 | 476.6 | 3.7 |
+| 1-48 | Accelerator lever-2 | Steel | 1 | 364.6 | 2.9 |
+| 1-49 | Accelerator lever-3 | Brass, Steel | 2 | 1,073.8 | 8.9 |
+| 1-50 | Accelerator lever-1 spring bolt | Steel | 1 | 146.1 | 1.1 |
+| 1-51 | Accelerator lever-1 spring | Steel | 1 | 13.9 | 0.1 |
+| 1-52 | Accelerator levers bolt | Steel | 1 | 119.4 | 0.9 |
+| 1-53 | Accelerator crank | Steel | 1 | 1,574.5 | 12.4 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,
@@ -115,6 +126,18 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
 - Parts built from a hex or a square with a turned part of the same size (1-07, 1-12, 1-13,
   1-24B) overlap the two solids: butting them, or turning the bar down, fails in SolidCraft where
   the round is tangent to the flats.
+- **1-43**: made with SolidCraft's sheet-metal tools (base flange from the drawn flat pattern,
+  then a 46° fold; bend radius 0.2, K-factor 0.5, so the volume is the flat area × 1.5). The fold
+  line sits 0.43 past the drawn one: SolidCraft needs the bend zone clear of the tab's step, which
+  lies on the drawn fold line. The tab is folded toward −Z.
+- **1-44**: bends modelled sharp, as drawn; the arc centre (32.2 below the strip) and the M2 hole
+  (1.93 above it) are read off the vector lines; the M2 hole is modelled at Ø1.6.
+- **1-45**: the Ø2 hole's countersink is not dimensioned and not modelled.
+- **1-51**: 5 turns, counted on the drawing; modelled free (7 long). Its 0.5 wire is measured to
+  about 0.5 %, so its check tolerance is 1 %.
+- **1-53** is drawn on sheet 04 but missing from the parts list; "Accelerator crank" is our name.
+  The inside radius of the top bend is R3.5 as drawn; the lower bend (R3.5 on the centre line)
+  ends at the collar.
 - **1-04**: from the detail: a 20 wide, 0.5 deep valve channel across the face, with 0.5 wide,
   1 deep relief grooves along its edges; the Ø10 port countersunk 90° to Ø15 on the other face.
 - **1-05**: its thickness is not on the drawing ("refer to 1-04"): not modelled yet.
@@ -126,3 +149,7 @@ shallow**. The timeline only shows a warning ("Boolean retry: temporary coincide
 up to 3.423684e0 mm per face"); the temporary separation stays in the result. The generator
 therefore makes every hole pattern one sketch of circles and one cut extrude, and `--build`
 treats any "coincident-face separation" retry as an error.
+
+A sketch hidden with `browser.visibility` (1-43's flat pattern) is shown again when the saved
+`.solvecraft` file is reopened: SolidCraft does not save sketch visibility. The snapshots are
+therefore rendered from the scripts.

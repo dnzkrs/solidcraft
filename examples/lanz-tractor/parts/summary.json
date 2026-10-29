@@ -278,5 +278,82 @@
   "bodies": 1,
   "volume_mm3": 1363.9,
   "mass_g": 11.6
+ },
+ "1-43": {
+  "name": "Top steering shaft bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 725.3,
+  "mass_g": 2.0
+ },
+ "1-44": {
+  "name": "Accelerator bridge bracket",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 3632.8,
+  "mass_g": 28.5
+ },
+ "1-45": {
+  "name": "Accelerator lever-1 guide plate",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1315.1,
+  "mass_g": 10.3
+ },
+ "1-46": {
+  "name": "Accelerator bridge shaft",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 724.8,
+  "mass_g": 5.7
+ },
+ "1-47": {
+  "name": "Accelerator lever-1",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 476.6,
+  "mass_g": 3.7
+ },
+ "1-48": {
+  "name": "Accelerator lever-2",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 364.6,
+  "mass_g": 2.9
+ },
+ "1-49": {
+  "name": "Accelerator lever-3",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 1073.8,
+  "mass_g": 8.9
+ },
+ "1-50": {
+  "name": "Accelerator lever-1 spring bolt",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 146.1,
+  "mass_g": 1.1
+ },
+ "1-51": {
+  "name": "Accelerator lever-1 spring",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 13.9,
+  "mass_g": 0.1
+ },
+ "1-52": {
+  "name": "Accelerator levers bolt",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 119.4,
+  "mass_g": 0.9
+ },
+ "1-53": {
+  "name": "Accelerator crank",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1574.5,
+  "mass_g": 12.4
  }
 }

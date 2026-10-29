@@ -1,0 +1,150 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "l1_centres",
+    "expression": "25",
+    "unit": "mm",
+    "comment": "hole centres"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Link"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.0,
+      -4.0
+     ],
+     [
+      25.0,
+      -4.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     25,
+     0
+    ],
+    "start": [
+     25.0,
+     -4.0
+    ],
+    "end": [
+     25.0,
+     4.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.0,
+      4.0
+     ],
+     [
+      0.0,
+      4.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     0.0,
+     4.0
+    ],
+    "end": [
+     0.0,
+     -4.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     25,
+     0
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "profiles": [
+     {
+      "point": [
+       12.5,
+       0
+      ]
+     }
+    ],
+    "operation": "new",
+    "name": "Link",
+    "body_name": "1-47 Accelerator lever-1"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-47 Accelerator lever-1"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

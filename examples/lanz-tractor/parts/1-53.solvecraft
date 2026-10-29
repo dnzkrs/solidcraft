@@ -1,0 +1,320 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "ac_d",
+      "expr": "5",
+      "unit": "mm",
+      "comment": "rod",
+      "model": false
+    },
+    {
+      "name": "ac_top",
+      "expr": "27.5",
+      "unit": "mm",
+      "comment": "end to the drop's centre line",
+      "model": false
+    },
+    {
+      "name": "ac_drop",
+      "expr": "30",
+      "unit": "mm",
+      "comment": "drop between centre lines (35 - 5)",
+      "model": false
+    },
+    {
+      "name": "ac_r1",
+      "expr": "6",
+      "unit": "mm",
+      "comment": "top bend, centre line (R3.5 inside)",
+      "model": false
+    },
+    {
+      "name": "ac_r2",
+      "expr": "3.5",
+      "unit": "mm",
+      "comment": "bottom bend, centre line (to the collar)",
+      "model": false
+    },
+    {
+      "name": "ac_collar_d",
+      "expr": "12",
+      "unit": "mm",
+      "comment": "collar",
+      "model": false
+    },
+    {
+      "name": "ac_collar_t",
+      "expr": "3",
+      "unit": "mm",
+      "comment": "collar thickness",
+      "model": false
+    },
+    {
+      "name": "ac_stub",
+      "expr": "6",
+      "unit": "mm",
+      "comment": "stub length",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Path",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              -27.5,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              -6.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              -6.0,
+              -6.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              0.0,
+              -6.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              -6.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              0.0,
+              -6.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              0.0,
+              -26.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              3.5,
+              -26.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              0.0,
+              -26.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              3.5,
+              -30.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              3.5,
+              -30.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              12.5,
+              -30.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 3,
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 8,
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 11,
+            "b": 12,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 2,
+            "q": 5
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 4,
+            "q": 6
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 7,
+            "q": 9
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 10,
+            "q": 11
+          }
+        ],
+        "counters": {
+          "a": 2,
+          "k": 4
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Rod",
+      "suppressed": false,
+      "body_names": [
+        "1-53 Accelerator crank"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "pipe",
+      "path_sketch": 1,
+      "path": [
+        "l1",
+        "a1",
+        "l2",
+        "a2",
+        "l3"
+      ],
+      "diameter": "5",
+      "operation": "new_body"
+    },
+    {
+      "id": 3,
+      "name": "Collar",
+      "suppressed": false,
+      "param_names": [
+        "d2",
+        "d3"
+      ],
+      "participants": [
+        "1-53 Accelerator crank"
+      ],
+      "type": "cylinder",
+      "base": [
+        3.5,
+        0.0,
+        -30.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "radius": "(12) / 2",
+      "height": "3",
+      "operation": "join"
+    }
+  ],
+  "next_id": 4,
+  "materials": {
+    "1-53 Accelerator crank": "Steel"
+  }
+}

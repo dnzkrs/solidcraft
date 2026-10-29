@@ -1,0 +1,89 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Bolt section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      1.5,
+      0
+     ],
+     [
+      1.5,
+      2.5
+     ],
+     [
+      2,
+      2.5
+     ],
+     [
+      2,
+      4.6
+     ],
+     [
+      4,
+      4.6
+     ],
+     [
+      4,
+      6.1
+     ],
+     [
+      0,
+      6.1
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Bolt",
+    "body_name": "1-52 Accelerator levers bolt"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-52 Accelerator levers bolt"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

@@ -1,0 +1,440 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "ssb_t",
+      "expr": "1.5",
+      "unit": "mm",
+      "comment": "thickness",
+      "model": false
+    },
+    {
+      "name": "ssb_end_r",
+      "expr": "7.5",
+      "unit": "mm",
+      "comment": "end radius (15 wide)",
+      "model": false
+    },
+    {
+      "name": "ssb_fold_x",
+      "expr": "15.2",
+      "unit": "mm",
+      "comment": "fold line (drawn)",
+      "model": false
+    },
+    {
+      "name": "ssb_tab_w",
+      "expr": "11.4",
+      "unit": "mm",
+      "comment": "tab width",
+      "model": false
+    },
+    {
+      "name": "ssb_tab_top",
+      "expr": "13",
+      "unit": "mm",
+      "comment": "tab top (8.5 + 4.5)",
+      "model": false
+    },
+    {
+      "name": "ssb_corner_x",
+      "expr": "17.5",
+      "unit": "mm",
+      "comment": "45 deg corner starts",
+      "model": false
+    },
+    {
+      "name": "ssb_hole2",
+      "expr": "21.6",
+      "unit": "mm",
+      "comment": "second hole, along",
+      "model": false
+    },
+    {
+      "name": "ssb_hole2_y",
+      "expr": "8.5",
+      "unit": "mm",
+      "comment": "second hole, up",
+      "model": false
+    },
+    {
+      "name": "ssb_hole_d",
+      "expr": "4",
+      "unit": "mm",
+      "comment": "holes",
+      "model": false
+    },
+    {
+      "name": "ssb_fold_angle",
+      "expr": "46",
+      "unit": "deg",
+      "comment": "fold angle (180 - 134)",
+      "model": false
+    },
+    {
+      "name": "ssb_bend_r",
+      "expr": "0.2",
+      "unit": "mm",
+      "comment": "bend radius (sharp on the drawing)",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Flat pattern",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              0.0,
+              -7.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              17.5,
+              -7.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              26.6,
+              1.6000000000000014
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              26.6,
+              13.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              15.2,
+              13.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              15.2,
+              7.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              0.0,
+              7.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              0.0,
+              7.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              0.0,
+              -7.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 8,
+            "a": 9,
+            "b": 10,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 8
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 7,
+            "q": 9
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 1,
+            "q": 10
+          }
+        ],
+        "counters": {
+          "a": 1,
+          "k": 3,
+          "l": 6
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "BaseFlange1",
+      "suppressed": false,
+      "body_names": [
+        "1-43 Top steering shaft bracket"
+      ],
+      "type": "sheet_base",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Holes",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            1.5
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              -21.6,
+              8.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 2.0,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 2.0,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 1
+          }
+        ],
+        "counters": {
+          "c": 2,
+          "k": 1
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Holes",
+      "suppressed": false,
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 3,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "1-43 Top steering shaft bracket"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Fold1",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "sheet_fold",
+      "a": [
+        15.631354441560761,
+        -9.5,
+        1.5
+      ],
+      "b": [
+        15.631354441560761,
+        15.0,
+        1.5
+      ],
+      "angle": "46",
+      "position": "centerline",
+      "flip": true
+    }
+  ],
+  "next_id": 6,
+  "sheet": {
+    "rules": [
+      {
+        "name": "Lanz 1.5",
+        "thickness": "1.5 mm",
+        "k_factor": "0.5",
+        "bend_radius": "0.2 mm",
+        "relief_width": "Thickness",
+        "relief_depth": "Thickness * 0.5",
+        "corner_relief": "Thickness * 4.0",
+        "hem_gap": "0.01 mm",
+        "gap": "Thickness"
+      }
+    ],
+    "active": "Lanz 1.5"
+  },
+  "materials": {
+    "1-43 Top steering shaft bracket": "Aluminum"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "sp_od",
+      "expr": "5",
+      "unit": "mm",
+      "comment": "outside diameter",
+      "model": false
+    },
+    {
+      "name": "sp_wire",
+      "expr": "0.5",
+      "unit": "mm",
+      "comment": "wire diameter ((5 - 4) / 2)",
+      "model": false
+    },
+    {
+      "name": "sp_free_l",
+      "expr": "7",
+      "unit": "mm",
+      "comment": "free length",
+      "model": false
+    },
+    {
+      "name": "sp_turns",
+      "expr": "5",
+      "unit": "",
+      "comment": "turns",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Spring",
+      "suppressed": false,
+      "body_names": [
+        "1-51 Accelerator lever-1 spring"
+      ],
+      "param_names": [
+        "d1",
+        "d2",
+        "d3",
+        "d4"
+      ],
+      "type": "coil",
+      "base": [
+        0.0,
+        0.0,
+        0.25
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "diameter": "4.5",
+      "pitch": "(6.5) / (5)",
+      "turns": "5",
+      "section_size": "0.5",
+      "section": "circular",
+      "operation": "new_body"
+    }
+  ],
+  "next_id": 2,
+  "materials": {
+    "1-51 Accelerator lever-1 spring": "Steel"
+  }
+}

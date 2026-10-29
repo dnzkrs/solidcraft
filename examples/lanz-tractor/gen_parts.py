@@ -37,10 +37,15 @@ OUT = os.path.join(_here, "parts")
 PARTS = {}
 
 
-def part(number, name, material):
-    """Registers a part builder: fn(Script) fills the script, returns the hand-estimated volume (mm³)."""
+TOLERANCE = {}
+
+
+def part(number, name, material, tol=0.001):
+    """Registers a part builder: fn(Script) fills the script, returns the hand-estimated volume (mm³).
+    `tol`: how far SolidCraft's measured volume may be from it (relative)."""
     def reg(fn):
         PARTS[number] = (name, material, fn)
+        TOLERANCE[number] = tol
         return fn
     return reg
 
@@ -1397,6 +1402,280 @@ def exhaust_top_ring(s):
     return revolved_volume(poly) + 2 * math.pi * (rb + 2 * T / (3 * math.pi)) * half
 
 
+def link(s, centres, r1, r2, d1, d2, t, body=None, name="Link"):
+    """A flat link on the XY plane, Z = 0..t: ends of radius r1 at the origin and r2 at (centres, 0),
+    joined by their outer tangents, holes d1 and d2 at the ends. Returns its volume."""
+    sp = (r1 - r2) / centres
+    cp = math.sqrt(1 - sp * sp)
+    p1l, p2l = (r1 * sp, -r1 * cp), (centres + r2 * sp, -r2 * cp)
+    p1u, p2u = (r1 * sp, r1 * cp), (centres + r2 * sp, r2 * cp)
+    segs = [("line", p2l), ("arc", (centres, 0), p2u, True), ("line", p1u), ("arc", (0, 0), p1l, True)]
+    s.sketch(name, (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(p1l, segs)
+    s.cmd("sketch.circle.center", center=[0, 0], diameter=d1)
+    s.cmd("sketch.circle.center", center=[centres, 0], diameter=d2)
+    s.finish()
+    s.cmd("solid.extrude", distance=t, profiles=[{"point": [centres / 2, 0]}], operation="new", name=name,
+          body_name=body or s.body)
+    return (loop_area(p1l, segs) - math.pi / 4 * (d1 * d1 + d2 * d2)) * t
+
+
+# ----------------------------------------------------------------------------- 1-43
+@part("1-43", "Top steering shaft bracket", "Aluminum")
+def steering_shaft_bracket(s):
+    """Sheet 04, 1-43 (scale 1:1.5): 1.5 thick aluminium, made with SolidCraft's sheet-metal tools
+    from the drawn flat pattern: an R7.5 end round a Ø4 hole, 15 wide, a tab with a second Ø4
+    hole (21.6 along, 8.5 up), a 45 deg corner, and a fold of 46 deg (134 deg between the legs)
+    at the tab. Flat pattern on the XY plane, the first hole on the origin; the tab folds down (-Z).
+    The fold line sits 0.43 past the drawn one (at the tab's step): SolidCraft needs the bend
+    zone clear of the step's corner."""
+    T = s.param("ssb_t", 1.5, "thickness")
+    R = s.param("ssb_end_r", 7.5, "end radius (15 wide)")
+    XF = s.param("ssb_fold_x", 15.2, "fold line (drawn)")
+    XT = s.param("ssb_tab_w", 11.4, "tab width")
+    YT = s.param("ssb_tab_top", 13, "tab top (8.5 + 4.5)")
+    XC = s.param("ssb_corner_x", 17.5, "45 deg corner starts")
+    H2 = s.param("ssb_hole2", 21.6, "second hole, along")
+    Y2 = s.param("ssb_hole2_y", 8.5, "second hole, up")
+    DH = s.param("ssb_hole_d", 4, "holes")
+    A = s.param("ssb_fold_angle", 46, "fold angle (180 - 134)", unit="deg")
+    RB = s.param("ssb_bend_r", 0.2, "bend radius (sharp on the drawing)")
+    xe = XF + XT
+    s.cmd("sheet.manage_rules", name="Lanz 1.5", thickness=f"{T} mm", k_factor="0.5", bend_radius=f"{RB} mm",
+          active=True)
+    s.sketch("Flat pattern", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    pts = [(0, -R), (XC, -R), (xe, -R + (xe - XC)), (xe, YT), (XF, YT), (XF, R), (0, R)]
+    s.cmd("sketch.line", points=[list(p) for p in pts])
+    s.cmd("sketch.arc.center_point", center=[0, 0], start=[0, R], end=[0, -R])
+    s.finish()
+    s.cmd("sheet.flange", base="Flat pattern", body_name=s.body)
+    s.holes("Holes", (0, 0, T), (0, 0, -1), [(0, 0, T), (H2, Y2, T)], DH)
+    zone = (RB + 0.5 * T) * math.radians(A)
+    xf = XF + zone / 2 + 0.05
+    s.cmd("sheet.fold", points=[[xf, -R - 2, T], [xf, YT + 2, T]], angle=A, position="centerline",
+          flip=True)
+    s.cmd("browser.visibility", visible=False, items=["Flat pattern"])
+    return (polygon_area(pts) + math.pi / 2 * R * R - 2 * math.pi / 4 * DH * DH) * T
+
+
+# ----------------------------------------------------------------------------- 1-44
+@part("1-44", "Accelerator bridge bracket", "Steel")
+def accelerator_bridge_bracket(s):
+    """Sheet 04, 1-44 (scale 1:1.5, vector lines): 2 thick M/S, sharp bends: a 60 x 14 top strip,
+    an ear turned up at each end (12 wide, 12.5 high, R6 top, Ø4 hole and an M2 hole, Ø1.6) and a
+    plate hanging from the strip's front edge, narrowing to two R4.5 lobes round Ø4 holes on R22 at
+    45 deg, joined by an R17.5 arc. Strip top at Z = 0, X across (ears at X = ±28..30), the plate
+    on Y = -2..0, the ears on Y = 0..12."""
+    T = s.param("abb_t", 2, "thickness")
+    HW = s.param("abb_half_w", 28, "centre to the ears' inside")
+    D = s.param("abb_strip_d", 14, "strip depth (12 + 2)")
+    EW = s.param("abb_ear_w", 12, "ear width")
+    EH = s.param("abb_ear_h", 12.5, "ear height above the strip")
+    ZA = s.param("abb_arc_z", 32.2, "R17.5 / R22 centre below the strip top (measured)")
+    RA = s.param("abb_arc_r", 17.5, "concave arc")
+    PCR = s.param("abb_pcr", 22, "holes on R22 at 45 deg")
+    RL = s.param("abb_lobe_r", 4.5, "lobe radius")
+    DH = s.param("abb_hole_d", 4, "holes")
+    ZM = s.param("abb_m2_z", 1.93, "M2 hole above the strip top (measured)")
+    W = HW + T
+    # strip
+    s.sketch("Strip", (0, 0, -T), (1, 0, 0), (0, 1, 0))
+    s.polyline([(-W, -T), (W, -T), (W, D - T), (-W, D - T)])
+    s.finish()
+    s.cmd("solid.extrude", distance=T, name="Strip", body_name=s.body)
+    # ears: profile in (y, z), from inside the strip up to the R6 top
+    re = EW / 2
+    ear_start = (0, -1)
+    ear = [("line", (EW, -1)), ("line", (EW, EH - re)), ("arc", (re, EH - re), (0, EH - re), True), ("line", ear_start)]
+    for x0, name in ((HW, "Ear R"), (-W, "Ear L")):
+        s.sketch(name, (x0, 0, 0), (0, 1, 0), (0, 0, 1))      # normal +X
+        s.loop(ear_start, ear)
+        s.finish()
+        s.cmd("solid.extrude", distance=T, operation="join", targets=[s.body], name=name)
+    # plate: outline in (x, z), from inside the strip down to the lobes
+    zc = -ZA
+    hx = PCR * math.sin(math.pi / 4)
+    cl, cr = (-hx, zc + hx), (hx, zc + hx)
+    a = (-HW, -T)
+    dx, dz = cl[0] - a[0], cl[1] - a[1]
+    dd = math.hypot(dx, dz)
+    ang = math.atan2(dz, dx) - math.asin(RL / dd)        # the outer tangent from the corner
+    tl = (a[0] + math.sqrt(dd * dd - RL * RL) * math.cos(ang), a[1] + math.sqrt(dd * dd - RL * RL) * math.sin(ang))
+    m = lambda p: (-p[0], p[1])
+    pl = (RA * math.cos(math.radians(135)), zc + RA * math.sin(math.radians(135)))
+    start = (-HW, -T / 2)
+    segs = [("line", a), ("line", tl), ("arc", cl, pl, True), ("arc", (0, zc), m(pl), False),
+            ("arc", cr, m(tl), True), ("line", m(a)), ("line", m(start)), ("line", start)]
+    s.sketch("Plate", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, operation="join", targets=[s.body], name="Plate")   # toward -Y
+    s.holes("Ear holes", (W, 0, 0), (-1, 0, 0), [(W, re, EH - re)], DH)
+    s.holes("Ear M2 holes", (W, 0, 0), (-1, 0, 0), [(W, re, ZM)], 1.6)
+    s.holes("Plate holes", (0, 1, 0), (0, -1, 0), [(cl[0], 1, cl[1]), (cr[0], 1, cr[1])], DH)
+    ear_area = EW * (EH - re) + math.pi / 2 * re * re - math.pi / 4 * (DH * DH + 1.6 ** 2)
+    plate = loop_area(start, segs) - 2 * HW * T / 2 - 2 * math.pi / 4 * DH * DH
+    return 2 * W * D * T + 2 * ear_area * T + plate * T
+
+
+# ----------------------------------------------------------------------------- 1-45
+@part("1-45", "Accelerator lever-1 guide plate", "Steel")
+def guide_plate(s):
+    """Sheet 04, 1-45 (scale 1:1.5): 2 thick M/S sector: R22 top arc about the Ø4 pivot (origin),
+    flanks at 30 deg to the centre line tangent to an R7 round about a Ø2 countersunk hole 4.5 below
+    the pivot (countersink not modelled), R3 corners; a 4 wide slot on R18 over ±30 deg (R2 ends).
+    On the XY plane, the arc toward +Y, Z = 0..2."""
+    T = s.param("gp_t", 2, "thickness")
+    R1 = s.param("gp_r_top", 22, "top arc radius")
+    RB = s.param("gp_r_bottom", 7, "bottom round radius")
+    YB = s.param("gp_bottom_y", 4.5, "bottom round centre below the pivot")
+    RF = s.param("gp_r_corner", 3, "corner radius")
+    A = math.radians(s.param("gp_flank", 30, "flank angle to the centre line", unit="deg"))
+    RS = s.param("gp_slot_r", 18, "slot centre radius")
+    WS = s.param("gp_slot_w", 4, "slot width")
+    AS = math.radians(s.param("gp_slot_a", 30, "slot half angle", unit="deg"))
+    c2 = (0, -YB)
+    nL, wL = (-math.cos(A), -math.sin(A)), (-math.sin(A), math.cos(A))
+    base = (c2[0] + (RB - RF) * nL[0], c2[1] + (RB - RF) * nL[1])
+    bw = base[0] * wL[0] + base[1] * wL[1]
+    sd = -bw + math.sqrt(bw * bw - (base[0] ** 2 + base[1] ** 2 - (R1 - RF) ** 2))
+    cL = (base[0] + sd * wL[0], base[1] + sd * wL[1])
+    t1L = (cL[0] + RF * nL[0], cL[1] + RF * nL[1])
+    t2L = (cL[0] * R1 / (R1 - RF), cL[1] * R1 / (R1 - RF))
+    pL = (c2[0] + RB * nL[0], c2[1] + RB * nL[1])
+    m = lambda p: (-p[0], p[1])
+    segs = [("arc", c2, m(pL), True), ("line", m(t1L)), ("arc", m(cL), m(t2L), True),
+            ("arc", (0, 0), t2L, True), ("arc", cL, t1L, True), ("line", pL)]
+    pol = lambda r, a: (r * math.sin(a), r * math.cos(a))      # angle from +Y, positive toward +X
+    ro, ri = RS + WS / 2, RS - WS / 2
+    sseg = [("arc", (0, 0), pol(ri, AS), False), ("arc", pol(RS, AS), pol(ro, AS), True),
+            ("arc", (0, 0), pol(ro, -AS), True), ("arc", pol(RS, -AS), pol(ri, -AS), True)]
+    s.sketch("Plate", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(pL, segs)
+    s.loop(pol(ri, -AS), sseg)
+    s.cmd("sketch.circle.center", center=[0, 0], diameter=4)
+    s.cmd("sketch.circle.center", center=list(c2), diameter=2)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [0, 10]}], name="Plate", body_name=s.body)
+    return (loop_area(pL, segs) - loop_area(pol(ri, -AS), sseg) - math.pi / 4 * (16 + 4)) * T
+
+
+# ----------------------------------------------------------------------------- 1-46
+@part("1-46", "Accelerator bridge shaft", "Steel")
+def bridge_shaft(s):
+    """Sheet 04, 1-46 (scale 1:2): Ø4 x 65.5, M3 tapped 10 deep at both ends (Ø2.5). Axis = Z."""
+    D = s.param("bs_d", 4, "diameter")
+    L = s.param("bs_l", 65.5, "length")
+    TD = s.param("bs_tap_depth", 10, "M3 depth")
+    v = s.turned("Shaft", [(0, 0), (D / 2, 0), (D / 2, L), (0, L)])
+    s.holes("M3 tapped end 1", (0, 0, 0), (0, 0, 1), [(0, 0, 0)], 2.5, TD)
+    s.holes("M3 tapped end 2", (0, 0, L), (0, 0, -1), [(0, 0, L)], 2.5, TD)
+    return v - 2 * math.pi / 4 * 2.5 ** 2 * TD
+
+
+# ----------------------------------------------------------------------------- 1-47, 1-48
+@part("1-47", "Accelerator lever-1", "Steel")
+def lever_1(s):
+    """Sheet 04, 1-47: 2 thick M/S link, R4 ends 25 apart, M3 tapped (Ø2.5) at the origin end and
+    Ø3 at the other, on X."""
+    C = s.param("l1_centres", 25, "hole centres")
+    return link(s, C, 4, 4, 2.5, 3, 2)
+
+
+@part("1-48", "Accelerator lever-2", "Steel")
+def lever_2(s):
+    """Sheet 04, 1-48 ("refer to part 1-47 for all other dimension details"): as 1-47 with the
+    holes 18 apart."""
+    C = s.param("l2_centres", 18, "hole centres")
+    return link(s, C, 4, 4, 2.5, 3, 2)
+
+
+# ----------------------------------------------------------------------------- 1-49
+@part("1-49", "Accelerator lever-3", {"lever": "Steel", "hub": "Brass"})
+def lever_3(s):
+    """Sheet 04, 1-49: a 2 thick M/S lever (R6 end round the Ø8 hole at the origin, R4 end with
+    an M3 hole (Ø2.5) 18 along X) with a brass hub pressed into the Ø8 hole: Ø8 spigot through the
+    lever, Ø12 x 6 collar on Z = 2..8, Ø4 bore (the 1-46 shaft) and an M3 grub screw hole 3 above
+    the lever, on -X."""
+    C = s.param("l3_centres", 18, "hole centres")
+    DC = s.param("l3_hub_d", 12, "hub collar")
+    LC = s.param("l3_hub_l", 6, "hub collar length")
+    DS = s.param("l3_spigot_d", 8, "hub spigot, 8PF")
+    DB = s.param("l3_bore", 4, "hub bore")
+    ZG = s.param("l3_grub_z", 3, "M3 grub screw above the lever")
+    n = s.body.split()[0]
+    v = link(s, C, 6, 4, DS, 2.5, 2, body=f"{n} lever", name="Lever")
+    v += s.turned("Hub", [(DB / 2, 0), (DS / 2, 0), (DS / 2, 2), (DC / 2, 2), (DC / 2, 2 + LC), (DB / 2, 2 + LC)],
+                  body=f"{n} hub")
+    s.holes("M3 grub tapped", (-DC / 2, 0, 0), (1, 0, 0), [(-DC / 2, 0, 2 + ZG)], 2.5, (DC - DB) / 2 + 1,
+            target=f"{n} hub")
+    return v - radial_hole(2.5, DC / 2, DB / 2)
+
+
+# ----------------------------------------------------------------------------- 1-50, 1-52
+@part("1-50", "Accelerator lever-1 spring bolt", "Steel")
+def spring_bolt(s):
+    """Sheet 04, 1-50: M3 x 4 (at Ø3), Ø4 x 6 shank, Ø6 x 1.5 head (its screwdriver slot not
+    modelled). Axis = Z from the thread end."""
+    return s.turned("Bolt", [(0, 0), (1.5, 0), (1.5, 4), (2, 4), (2, 10), (3, 10), (3, 11.5), (0, 11.5)])
+
+
+@part("1-52", "Accelerator levers bolt", "Steel")
+def levers_bolt(s):
+    """Sheet 04, 1-52 (scale 1:1, vector lines): M3 x 2.5 (at Ø3), Ø4 x 2.1 shoulder, Ø8 x 1.5 head
+    (its screwdriver slot not modelled). Axis = Z from the thread end."""
+    return s.turned("Bolt", [(0, 0), (1.5, 0), (1.5, 2.5), (2, 2.5), (2, 4.6), (4, 4.6), (4, 6.1), (0, 6.1)])
+
+
+# ----------------------------------------------------------------------------- 1-53
+@part("1-53", "Accelerator crank", "Steel")
+def accelerator_crank(s):
+    """Sheet 04, 1-53 (scale 1:1.5; the part is not in the parts list on sheet 02, the name is
+    ours): Ø5 M/S rod, 27.5 from its end to the centre of the drop, bent down R3.5 inside (R6 on
+    the centre line), a 30 drop between centre lines (35 overall), bent R3.5 on the centre line
+    into a Ø12 x 3 collar and a Ø5 x 6 stub (12.5 from the drop's centre line). In the XZ plane:
+    the top leg on Z = 0 from X = -27.5, the drop on X = 0."""
+    D = s.param("ac_d", 5, "rod")
+    L1 = s.param("ac_top", 27.5, "end to the drop's centre line")
+    H = s.param("ac_drop", 30, "drop between centre lines (35 - 5)")
+    R1 = s.param("ac_r1", 6, "top bend, centre line (R3.5 inside)")
+    R2 = s.param("ac_r2", 3.5, "bottom bend, centre line (to the collar)")
+    DC = s.param("ac_collar_d", 12, "collar")
+    TC = s.param("ac_collar_t", 3, "collar thickness")
+    LS = s.param("ac_stub", 6, "stub length")
+    s.sketch("Path", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    s.cmd("sketch.line", points=[[-L1, 0], [-R1, 0]], ids=["l1"])
+    s.cmd("sketch.arc.center_point", center=[-R1, -R1], start=[0, -R1], end=[-R1, 0], ids=["a1"])
+    s.cmd("sketch.line", points=[[0, -R1], [0, -H + R2]], ids=["l2"])
+    s.cmd("sketch.arc.center_point", center=[R2, -H + R2], start=[0, -H + R2], end=[R2, -H], ids=["a2"])
+    s.cmd("sketch.line", points=[[R2, -H], [R2 + TC + LS, -H]], ids=["l3"])
+    s.finish()
+    # the rod runs on through the collar to the end of the stub; the collar is pressed on
+    s.cmd("solid.pipe", path_sketch="Path", path=["l1", "a1", "l2", "a2", "l3"], diameter=D, name="Rod",
+          body_name=s.body)
+    s.cmd("solid.cylinder", diameter=DC, height=TC, base=[R2, 0, -H], axis=[1, 0, 0], operation="join",
+          targets=[s.body], name="Collar")
+    length = (L1 - R1) + math.pi / 2 * R1 + (H - R1 - R2) + math.pi / 2 * R2 + TC + LS
+    return math.pi / 4 * (D * D * length + (DC * DC - D * D) * TC)
+
+
+# ----------------------------------------------------------------------------- 1-51
+# a 0.5 wire: its measured volume (from a tessellation) is good to about 0.5 %
+@part("1-51", "Accelerator lever-1 spring", "Steel", tol=0.01)
+def lever_spring(s):
+    """Sheet 04, 1-51: compression spring (spring steel), Ø5 outside, Ø4 inside (0.5 wire),
+    7 long uncompressed (3 installed); 5 turns (counted on the drawing). Modelled uncompressed,
+    plain ends. Axis = Z from Z = 0."""
+    DO = s.param("sp_od", 5, "outside diameter")
+    DW = s.param("sp_wire", 0.5, "wire diameter ((5 - 4) / 2)")
+    L = s.param("sp_free_l", 7, "free length")
+    N = s.param("sp_turns", 5, "turns", unit="")
+    dm = DO - DW
+    s.cmd("solid.coil", diameter=dm, turns=N, height=L - DW, section_size=DW, section="circular",
+          section_position="center", base=[0, 0, DW / 2], name="Spring", body_name=s.body)
+    return math.pi / 4 * DW * DW * N * math.hypot(math.pi * dm, (L - DW) / N)
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]
@@ -1466,14 +1745,16 @@ def build(number, path, estimate, n_bodies):
     dv, dm = (vol - estimate) / estimate, (mesh_vol - estimate) / estimate
     # the kernel's measure must agree with the hand volume; the exported mesh is a second check
     # when it is closed (an open STL gives no volume)
-    ok = len(bodies) == n_bodies and not errors and abs(dv) < 0.001 and (open_edges or abs(dm) < 0.015)
+    ok = len(bodies) == n_bodies and not errors and abs(dv) < TOLERANCE[number] and (open_edges or abs(dm) < 0.015)
     mesh = f"{mesh_vol:.1f} ({dm * 100:+.2f} %)" if not open_edges else f"not closed ({open_edges} open edges)"
     print(f"{number}: {'OK  ' if ok else 'FAIL'} {len(bodies)}/{n_bodies} bodies, hand volume {estimate:.1f} mm³, "
           f"STL mesh {mesh}, SolidCraft {vol:.1f} ({dv * 100:+.2f} %), mass {mass:.1f} g, "
           f"box {' x '.join(f'{hi[i] - lo[i]:.2f}' for i in range(3))} from ({', '.join(f'{v:.2f}' for v in lo)})")
     for t in errors + notes:
         print(f"   {t['name']}: {t.get('error') or t.get('warning')}")
-    subprocess.run([ARGS.cli, "snapshot", base + ".solvecraft", "--out", base + ".png", "--view", "iso"],
+    # rendered from the script: a sketch hidden with browser.visibility shows again in a reopened
+    # .solvecraft file (SolidCraft does not save sketch visibility)
+    subprocess.run([ARGS.cli, "snapshot", path, "--out", base + ".png", "--view", "iso"],
                    check=True, capture_output=True)
     if ok:
         name, material, _ = PARTS[number]
