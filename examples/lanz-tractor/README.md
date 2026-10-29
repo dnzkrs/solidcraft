@@ -260,6 +260,11 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
   1 deep relief grooves along its edges; the Ø10 port countersunk 90° to Ø15 on the other face.
 - **1-05**: its thickness is not on the drawing ("refer to 1-04"): not modelled yet.
 
+- **3-01**: the flange's depth under the plate (31.5) is measured; the M4 and M6 holes are taken as
+  through. **3-02**: the clamp screw is Ø5 clearance from the foot to the slot and M4 18 deep above.
+- **3-03/3-04**: read from their sections' lines; the 8 flange holes are turned 22.5° from the
+  drawing (off the revolve's seam), and 3-04's Ø6 radial hole is placed at 45° for the same reason.
+
 ## SolidCraft issue found while modelling
 
 Adding blind holes one at a time with `solid.hole` to 1-01 left most of them **3.42 mm too
