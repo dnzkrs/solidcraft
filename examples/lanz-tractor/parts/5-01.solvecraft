@@ -1,0 +1,599 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [],
+  "features": [
+    {
+      "id": 1,
+      "name": "Path upper loop",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              16.3,
+              -107.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              15.999937945095672,
+              0.04464199977017752
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              3.2082439855166717e-10,
+              4.882755337194467e-11
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              15.999937945040768,
+              0.0446419997699477
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              -15.293996256439858,
+              -4.700392072528115
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              -15.293996256183673,
+              -4.700392072455659
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              16.3,
+              -107.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 3,
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 3
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 2,
+            "q": 4
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 5,
+            "q": 6
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 1,
+            "q": 7
+          }
+        ],
+        "counters": {
+          "a": 1,
+          "k": 4,
+          "l": 2
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Section upper loop",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            16.3,
+            -107.5,
+            0.0
+          ],
+          "x_dir": [
+            -0.9999961076438918,
+            -0.0027901069990064163,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              -0.25,
+              -1.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p2",
+            "pos": [
+              0.25,
+              -1.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p3",
+            "pos": [
+              0.25,
+              1.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p4",
+            "pos": [
+              -0.25,
+              1.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          }
+        ],
+        "counters": {
+          "k": 4,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 3,
+      "name": "Upper loop",
+      "suppressed": false,
+      "body_names": [
+        "5-01 upper loop"
+      ],
+      "type": "sweep",
+      "sketch": 2,
+      "profiles": {
+        "type": "all"
+      },
+      "path_sketch": 1,
+      "path": [
+        "l1",
+        "a1",
+        "l2"
+      ],
+      "operation": "new_body"
+    },
+    {
+      "id": 4,
+      "name": "Path lower loop",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              16.3,
+              -107.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              56.864636012118844,
+              -122.36641496055171
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              54.79999999299541,
+              -128.00000000372972
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              51.27833400530153,
+              -132.8577639956632
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              56.864636012119085,
+              -122.36641496055121
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              51.27833400529624,
+              -132.8577639956675
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              16.3,
+              -107.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 3,
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 2,
+            "q": 5
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 4,
+            "q": 6
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 1,
+            "q": 7
+          }
+        ],
+        "counters": {
+          "a": 1,
+          "k": 3,
+          "l": 2
+        }
+      }
+    },
+    {
+      "id": 5,
+      "name": "Section lower loop",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            16.3,
+            -107.5,
+            0.0
+          ],
+          "x_dir": [
+            0.344106011945499,
+            0.9389308028512879,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              -0.25,
+              -1.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p2",
+            "pos": [
+              0.25,
+              -1.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p3",
+            "pos": [
+              0.25,
+              1.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p4",
+            "pos": [
+              -0.25,
+              1.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          }
+        ],
+        "counters": {
+          "k": 4,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 6,
+      "name": "Lower loop",
+      "suppressed": false,
+      "body_names": [
+        "5-01 lower loop"
+      ],
+      "type": "sweep",
+      "sketch": 5,
+      "profiles": {
+        "type": "all"
+      },
+      "path_sketch": 4,
+      "path": [
+        "l1",
+        "a1",
+        "l2"
+      ],
+      "operation": "new_body"
+    }
+  ],
+  "next_id": 7,
+  "materials": {
+    "5-01 lower loop": "Nylon",
+    "5-01 upper loop": "Nylon"
+  }
+}

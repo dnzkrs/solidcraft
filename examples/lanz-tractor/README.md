@@ -206,8 +206,12 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 4-23 | GB-output shaft reversing gearwheel | Brass, Stainless Steel, Steel | 5 | 5,561.2 | 44.3 |
 | 4-24 | GB-external output shaft gearwheel | Brass, Steel | 2 | 5,917.9 | 47.0 |
 | 4-25 | Reversing shaft bearing plate | Steel | 1 | 3,140.0 | 24.6 |
+| 4-27 | Reversing shaft rack | Brass | 1 | 4,278.7 | 36.4 |
 | 4-28 | Reversing shaft rack cover plate | Brass | 1 | 638.1 | 5.4 |
+| 4-29 | Reversing shaft pinion | Brass, Steel | 3 | 1,357.5 | 11.0 |
+| 4-30 | V-belt | Default | 1 | 2,632.9 | 3.4 |
 | 4-31 | Coupling guide pillar | Brass | 1 | 492.4 | 4.2 |
+| 5-01 | Belt | Nylon | 2 | 565.5 | 0.6 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,
@@ -359,7 +363,10 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
   tip and 1.5 at the root (assumed), the 10 tooth pinions as 4-13 (0.75 / 1.5), 4-24's 19 teeth as
   3-18 (1 / 2.5). The Ø8 collars and hubs against the pinions are Ø7.9 so they stay inside the
   pinions' roots. 4-14's two Ø3 holes are placed as 4-25's. Not yet modelled: 4-26 (reversing
-  shaft operating ring), 4-27 (rack), 4-29, 4-30.
+  shaft operating ring).
+- **4-27**: the Ø29 step on the flange's back is not modelled. **4-29**: the shaft is drawn broken;
+  its length (68) is assumed. **4-30**: rubber, default density, black. **5-01**: nylon, taken 3
+  wide and 0.5 thick; its two loops are separate sweeps meeting at the sharp corner (R2 drawn).
 
 ## SolidCraft issue found while modelling
 

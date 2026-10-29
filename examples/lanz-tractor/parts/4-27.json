@@ -1,0 +1,187 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Rack section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5,
+      0
+     ],
+     [
+      15.5,
+      0
+     ],
+     [
+      15.5,
+      2
+     ],
+     [
+      8.5,
+      2
+     ],
+     [
+      8.5,
+      6.2
+     ],
+     [
+      6.5,
+      6.95
+     ],
+     [
+      6.5,
+      7.95
+     ],
+     [
+      8.5,
+      8.7
+     ],
+     [
+      8.5,
+      9.7
+     ],
+     [
+      6.5,
+      10.45
+     ],
+     [
+      6.5,
+      11.45
+     ],
+     [
+      8.5,
+      12.2
+     ],
+     [
+      8.5,
+      13.2
+     ],
+     [
+      6.5,
+      13.95
+     ],
+     [
+      6.5,
+      14.95
+     ],
+     [
+      8.5,
+      15.7
+     ],
+     [
+      8.5,
+      25.2
+     ],
+     [
+      5,
+      25.2
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Rack",
+    "body_name": "4-27 Reversing shaft rack"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -1
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M2.5 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     10.0
+    ],
+    "diameter": 2.05
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -10.0
+    ],
+    "diameter": 2.05
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 4,
+    "operation": "cut",
+    "targets": [
+     "4-27 Reversing shaft rack"
+    ],
+    "name": "M2.5 tapped"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-27 Reversing shaft rack"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

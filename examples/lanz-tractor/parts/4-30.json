@@ -1,0 +1,179 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Path"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.991472,
+      -101.166929
+     ],
+     [
+      6.994573,
+      0.275591
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     6.994573,
+     0.275591
+    ],
+    "end": [
+     -6.994573,
+     0.275591
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -6.994573,
+      0.275591
+     ],
+     [
+      -10.991472,
+      -101.166929
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     -101.6
+    ],
+    "start": [
+     -10.991472,
+     -101.166929
+    ],
+    "end": [
+     10.991472,
+     -101.166929
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      10.99147167693659,
+      -101.16692913385826,
+      0
+     ],
+     "x_dir": [
+      0.999224698,
+      0.039370079,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -1.25
+     ],
+     [
+      3,
+      -2.0
+     ],
+     [
+      3,
+      2.0
+     ],
+     [
+      0,
+      1.25
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.sweep",
+   "params": {
+    "sketch": "Section",
+    "path_sketch": "Path",
+    "path": [
+     "l1",
+     "a1",
+     "l2",
+     "a2"
+    ],
+    "name": "Belt",
+    "body_name": "4-30 V-belt"
+   }
+  },
+  {
+   "command": "appearance.assign",
+   "params": {
+    "bodies": [
+     "4-30 V-belt"
+    ],
+    "appearance": "Rubber - Black"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-30 V-belt"
+    ],
+    "material": "Default"
+   }
+  }
+ ]
+}

@@ -1203,6 +1203,13 @@
   "volume_mm3": 3140.0,
   "mass_g": 24.6
  },
+ "4-27": {
+  "name": "Reversing shaft rack",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 4278.7,
+  "mass_g": 36.4
+ },
  "4-28": {
   "name": "Reversing shaft rack cover plate",
   "material": "Brass",
@@ -1210,11 +1217,32 @@
   "volume_mm3": 638.1,
   "mass_g": 5.4
  },
+ "4-29": {
+  "name": "Reversing shaft pinion",
+  "material": "Brass, Steel",
+  "bodies": 3,
+  "volume_mm3": 1357.5,
+  "mass_g": 11.0
+ },
+ "4-30": {
+  "name": "V-belt",
+  "material": "Default",
+  "bodies": 1,
+  "volume_mm3": 2632.9,
+  "mass_g": 3.4
+ },
  "4-31": {
   "name": "Coupling guide pillar",
   "material": "Brass",
   "bodies": 1,
   "volume_mm3": 492.4,
   "mass_g": 4.2
+ },
+ "5-01": {
+  "name": "Belt",
+  "material": "Nylon",
+  "bodies": 2,
+  "volume_mm3": 565.5,
+  "mass_g": 0.6
  }
 }

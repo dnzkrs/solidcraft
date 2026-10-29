@@ -4570,6 +4570,120 @@ def guide_pillar(s):
                                (1.5, 25.5), (0, 25.5)])
 
 
+# ----------------------------------------------------------------------------- 4-27, 4-29, 4-30, 5-01
+@part("4-27", "Reversing shaft rack", "Brass")
+def reversing_rack(s):
+    """Sheet 08, 4-27 (scale 1:1): a brass Ø31 x 2 flange with two M2.5 (Ø2.05) holes 10 either side,
+    and a Ø17 body 23.2 long (3.7 + 19.5) with three V grooves 2.5 wide at the top and 1 at the
+    bottom (to Ø13) at a 3.5 pitch, starting 3.7 from the flange; bored Ø10. The Ø29 step drawn on
+    the flange's back is not modelled. Axis = Z, the flange's face on Z = 0."""
+    pts = [(5, 0), (15.5, 0), (15.5, 2), (8.5, 2)]
+    z = 2 + 3.7
+    for k in range(3):
+        z0 = z + 3.5 * k + 0.5
+        pts += [(8.5, z0), (6.5, z0 + 0.75), (6.5, z0 + 1.75), (8.5, z0 + 2.5)]
+    pts += [(8.5, 2 + 3.7 + 19.5), (5, 2 + 3.7 + 19.5)]
+    v = s.turned("Rack", pts)
+    s.holes("M2.5 tapped", (0, 0, -1), (0, 0, 1), [(0, 10, -1), (0, -10, -1)], 2.05, depth=4)
+    return v - 2 * math.pi / 4 * 2.05 ** 2 * 2
+
+
+@part("4-29", "Reversing shaft pinion", {"pinion": "Brass", "shaft": "Steel", "sleeve": "Brass"})
+def reversing_pinion(s):
+    """Sheet 08, 4-29 (the shaft drawn broken): a brass pinion, 9 teeth, Ø11 over the tips and Ø7 at
+    the roots (1 wide at the tip, 1.5 at the root), 6 wide, 5 from the end of a Ø4 steel shaft; a
+    brass sleeve Ø5.5 x 20 with Ø2 cross holes 4 from each end. The shaft's length is taken as 68
+    (60 drawn to the sleeve, the sleeve at its far end). Axis = Z."""
+    n = s.body.split()[0]
+    v = gear_prism(s, "Pinion", gear_points(9, 11, 7, 1, 1.5), 5, 6, 4, f"{n} pinion", operation="new")
+    v += s.turned("Shaft", [(0, 0), (2, 0), (2, 68), (0, 68)], body=f"{n} shaft")
+    v += s.turned("Sleeve", [(2, 48), (2.75, 48), (2.75, 68), (2, 68)], body=f"{n} sleeve")
+    s.holes("Sleeve cross holes", (-4, 0, 0), (1, 0, 0), [(-4, 0, 52), (-4, 0, 64)], 2, target=f"{n} sleeve")
+    return v - 2 * cross_hole(2.75, 1, 2)
+
+
+def belt_trapezoid_centroid(a, b, h):
+    """Distance of a trapezoid's centroid from its side a (sides a, b parallel, height h)."""
+    return h * (a + 2 * b) / (3 * (a + b))
+
+
+@part("4-30", "V-belt", "Default")
+def v_belt(s):
+    """Sheet 08, 4-30 (section A-A): a rubber V-belt, 4 wide outside, 2.5 inside, 3 deep, running over
+    ends of R10 and R14 (outside) 101.6 apart. Swept along its inside edge. Default density with the
+    black rubber appearance. The loop in the XY plane, the R10 end on the origin."""
+    D, R1, R2, H, A, B = 101.6, 10, 14, 3, 2.5, 4
+    r1, r2 = R1 - H, R2 - H                                    # the inside edge
+    c1, c2 = (0, 0), (0, -D)
+    phi = math.asin((r2 - r1) / D)
+    # the tangent points on the right (+X) and left sides
+    p1r = (r1 * math.cos(phi), r1 * math.sin(phi))
+    p2r = (r2 * math.cos(phi), -D + r2 * math.sin(phi))
+    p1l, p2l = (-p1r[0], p1r[1]), (-p2r[0], p2r[1])
+    rnd = lambda q: [round(q[0], 6), round(q[1], 6)]
+    s.sketch("Path", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.line", points=[rnd(p2r), rnd(p1r)])                               # l1
+    s.cmd("sketch.arc.center_point", center=[0, 0], start=rnd(p1r), end=rnd(p1l))   # a1
+    s.cmd("sketch.line", points=[rnd(p1l), rnd(p2l)])                               # l2
+    s.cmd("sketch.arc.center_point", center=[0, -D], start=rnd(p2l), end=rnd(p2r))  # a2
+    s.finish()
+    d = (p1r[0] - p2r[0], p1r[1] - p2r[1])
+    L = math.hypot(*d)
+    u = (d[0] / L, d[1] / L)
+    out = (u[1], -u[0])                                        # outward (+X side)
+    # the section at the start of l1: inside edge on the path, the wide side outward
+    s.sketch("Section", (p2r[0], p2r[1], 0), (round(out[0], 9), round(out[1], 9), 0), (0, 0, 1))
+    s.polyline([(0, -A / 2), (H, -B / 2), (H, B / 2), (0, A / 2)])
+    s.finish()
+    s.cmd("solid.sweep", sketch="Section", path_sketch="Path", path=["l1", "a1", "l2", "a2"], name="Belt",
+          body_name=s.body)
+    s.cmd("appearance.assign", bodies=[s.body], appearance="Rubber - Black")
+    area = (A + B) / 2 * H
+    k = belt_trapezoid_centroid(A, B, H)
+    return area * (2 * L + (r1 + k) * (math.pi - 2 * phi) + (r2 + k) * (math.pi + 2 * phi))
+
+
+@part("5-01", "Belt", {"upper loop": "Nylon", "lower loop": "Nylon"})
+def nylon_belt(s):
+    """Sheet 11, 5-01: a nylon band 3 wide and 0.5 thick in a figure of two loops: an R16 loop whose
+    legs meet 107.5 below its centre and 16.3 to the side, and an R6 loop 38.5 further across and
+    20.5 below that point. Each loop is one sweep (line, arc, line) from the meeting point; the drawn
+    R2 there is sharp, and the two loops are separate solids that meet there. XY plane."""
+    n = s.body.split()[0]
+    W, T = 3, 0.5
+    V = (16.3, -107.5)
+    v = 0.0
+    for name, c, r, left_first in (("upper loop", (0, 0), 16, False), ("lower loop", (16.3 + 38.5, -107.5 - 20.5), 6, True)):
+        t1 = tangent_from(V, c, r, left=left_first)
+        t2 = tangent_from(V, c, r, left=not left_first)
+        rnd = lambda q: [round(q[0], 6), round(q[1], 6)]
+        a1 = math.atan2(t1[1] - c[1], t1[0] - c[0])
+        a2 = math.atan2(t2[1] - c[1], t2[0] - c[0])
+        sk = f"Path {name}"
+        s.sketch(sk, (0, 0, 0), (1, 0, 0), (0, 1, 0))
+        s.cmd("sketch.line", points=[rnd(V), rnd(t1)])                                          # l1
+        # the arc runs the long way round, from t1 to t2: counter-clockwise when the first tangent
+        # is on the right of V→centre
+        ccw = not left_first
+        start, end = (t1, t2) if ccw else (t2, t1)
+        s.cmd("sketch.arc.center_point", center=rnd(c), start=rnd(start), end=rnd(end))         # a1
+        s.cmd("sketch.line", points=[rnd(t2), rnd(V)])                                          # l2
+        s.finish()
+        sweep = (a2 - a1) % (2 * math.pi) if ccw else (a1 - a2) % (2 * math.pi)
+        d = (t1[0] - V[0], t1[1] - V[1])
+        L = math.hypot(*d)
+        u = (d[0] / L, d[1] / L)
+        nrm = (-u[1], u[0])
+        sec = f"Section {name}"
+        s.sketch(sec, (V[0], V[1], 0), (round(nrm[0], 9), round(nrm[1], 9), 0), (0, 0, 1))
+        s.cmd("sketch.rectangle.two_point", p0=[-T / 2, -W / 2], p1=[T / 2, W / 2])
+        s.finish()
+        s.cmd("solid.sweep", sketch=sec, path_sketch=sk, path=["l1", "a1", "l2"], name=name.capitalize(),
+              body_name=f"{n} {name}")
+        v += W * T * (2 * L + r * sweep)
+    return v
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]
