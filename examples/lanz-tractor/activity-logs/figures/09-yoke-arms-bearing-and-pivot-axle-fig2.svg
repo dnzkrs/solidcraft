@@ -1,0 +1,22 @@
+<svg width="720" height="340" viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg" font-size="13"><style>svg{--ink:#16212B;--muted:#5A6B76;--line:#D4DDDA;--accent:#1D6A86;background:#FAFBFB;font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}@media (prefers-color-scheme:dark){svg{--ink:#DCE6E9;--muted:#8FA2AA;--line:#28383F;--accent:#5BB4D3;background:#101A1E}}</style>
+<text x="20" y="24" fill="var(--ink)" font-weight="bold" font-size="15">2-24: the twist is a loft started 1 mm inside the plate</text>
+<text x="20" y="54" fill="var(--muted)">top view (X, Y)</text>
+<polygon points="60.0,178.5 168.0,178.5 168.0,61.5 60.0,61.5" fill="var(--line)" stroke="var(--ink)"/>
+<polygon points="159.0,157.7 312.0,129.0 312.0,111.0 159.0,82.3" fill="var(--accent)" fill-opacity="0.35" stroke="var(--accent)"/>
+<polygon points="312.0,129.0 357.0,129.0 357.0,111.0 312.0,111.0" fill="var(--line)" stroke="var(--ink)"/>
+<line x1="168" y1="60" x2="168" y2="180" stroke="var(--muted)" stroke-dasharray="4 3"/>
+<text x="20" y="204" fill="var(--muted)">side view (X, Z)</text>
+<polygon points="60.0,279.0 168.0,279.0 168.0,261.0 60.0,261.0" fill="var(--line)" stroke="var(--ink)"/>
+<polygon points="159.0,277.3 312.0,306.0 312.0,234.0 159.0,262.7" fill="var(--accent)" fill-opacity="0.35" stroke="var(--accent)"/>
+<polygon points="312.0,306.0 357.0,306.0 357.0,234.0 312.0,234.0" fill="var(--line)" stroke="var(--ink)"/>
+<line x1="168" y1="210" x2="168" y2="330" stroke="var(--muted)" stroke-dasharray="4 3"/>
+<text x="420" y="70" fill="var(--ink)">plate 12 x 13 x 2 (grey, left), tab right</text>
+<text x="420" y="92" fill="var(--accent)">loft (blue): 8 x 2 at X = 6 → 2 x 8 at X = 22</text>
+<text x="420" y="114" fill="var(--accent)">started at X = 5 with 8.375 x 1.625,</text>
+<text x="420" y="136" fill="var(--accent)">the same planes extended back</text>
+<text x="420" y="158" fill="var(--muted)">dashed: the plate's end face, X = 6</text>
+<text x="420" y="180" fill="var(--ink)"></text>
+<text x="420" y="202" fill="var(--ink)">touching at X = 6: a separation retry,</text>
+<text x="420" y="224" fill="var(--ink)">or +0.98 mm³ with no warning</text>
+<text x="420" y="246" fill="var(--ink)">crossing from X = 5: exact, 745.2 mm³</text>
+</svg>

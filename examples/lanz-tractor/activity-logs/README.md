@@ -1,6 +1,6 @@
 # Lanz mini tractor in SolidCraft: activity logs
 
-7 activities, written after the work, in the order it happened.
+12 activities, written after the work, in the order it happened.
 
 | # | Activity | Date | What it covers |
 | --- | --- | --- | --- |
@@ -11,6 +11,11 @@
 | 05 | [Model the exhaust stack parts](05-exhaust-parts.md) | 2026-10-29 | The four turned parts of the exhaust stack on sheet 04 (1-36 to 1-39) were read from the drawing's vector lines and modelled, and the readings were confirmed by how the parts fit each other |
 | 06 | [Model the accelerator linkage and steering bracket](06-accelerator-linkage-and-steering-bracket.md) | 2026-10-29 | Eleven parts from sheet 04 (1-43 to 1-53) were modelled, using SolidCraft's sheet-metal tools for the folded bracket and its coil command for a spring, and a second SolidCraft bug (hidden sketches reappear after reopening) was found |
 | 07 | [Model the flame guards and the valve spring](07-flame-guards-and-valve-spring.md) | 2026-10-29 | The two perforated flame protectors (1-40, 1-41), the front flame guard (1-42) and the wire valve spring (1-34) were modelled, completing the motor group 1-01 to 1-53, after several construction approaches failed and a third SolidCraft bug (an inside-out pipe) was found |
+| 08 | [Model the chassis front end, steering brackets and fuel tank](08-chassis-front-end-and-fuel-tank.md) | 2026-10-29 | Fourteen group 2 parts from sheet 04 (2-01 and 2-03 to 2-17) were modelled and checked, including a sheet-metal bracket and a fuel tank with its fittings. A wrongly placed flank on 2-03 passed the volume check but was caught in a render |
+| 09 | [Model the axle yoke parts, pivot axle and handle collar](09-yoke-arms-bearing-and-pivot-axle.md) | 2026-10-29 | The last eight parts on sheet 04 (2-13 and 2-18 to 2-24) were modelled from the drawing and its vector lines. One needed a 90° twisted neck, built as a loft that starts inside the plate so the boolean join stays exact |
+| 10 | [Model the front wheels, steering arm and lay shaft parts](10-front-wheels-and-lay-shaft.md) | 2026-10-29 | Fourteen parts from sheet 05 (2-25 to 2-37) were modelled, the rim and hub cap profiles taken line by line from their sections. A counterbore pattern placed on a revolved part's seam needed a separation retry and came out 46 mm³ short, until the pattern was turned 45° |
+| 11 | [Model the tie rod ends, steering column, steering wheel and lights](11-tie-rod-ends-steering-column-and-lights.md) | 2026-10-29 | Nine parts from sheet 05 (2-38 to 2-46) were modelled. On the way, four more SolidCraft limits were found and worked around: an inside-out revolve, a tangential wire join, a contact-work limit on coils and a hole tangent to a tube wall |
+| 12 | [Model the motor covers](12-motor-covers.md) | 2026-10-29 | The three 0.5 mm motor covers (2-47 to 2-49) were modelled after plain extrude cuts on the large thin brass sheets went wrong without a warning. The tray was hollowed with `solid.shell`, and the U-shaped side cover was built with the sheet-metal flange and folds |
 
 Figures live in `figures/` and are referenced relatively, so keep the
 folder next to the Markdown files when moving them.

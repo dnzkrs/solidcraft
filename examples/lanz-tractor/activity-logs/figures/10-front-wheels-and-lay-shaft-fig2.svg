@@ -1,0 +1,24 @@
+<svg width="720" height="370" viewBox="0 0 720 370" xmlns="http://www.w3.org/2000/svg" font-size="13"><style>svg{--ink:#16212B;--muted:#5A6B76;--line:#D4DDDA;--accent:#1D6A86;background:#FAFBFB;font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}@media (prefers-color-scheme:dark){svg{--ink:#DCE6E9;--muted:#8FA2AA;--line:#28383F;--accent:#5BB4D3;background:#101A1E}}</style>
+<text x="20" y="24" fill="var(--ink)" font-weight="bold" font-size="15">2-31: rim profile (r, z) revolved, and where the holes go</text>
+<line x1="40" y1="300" x2="260" y2="300" stroke="var(--muted)" stroke-dasharray="8 3 2 3"/>
+<text x="40" y="318" fill="var(--muted)">axis</text>
+<polygon points="60.0,244.0 60.0,188.0 67.0,188.0 97.1,125.0 97.1,97.0 67.0,67.2 67.0,48.0 72.6,48.0 107.6,83.0 177.6,83.0 212.6,48.0 218.2,48.0 218.2,67.2 188.1,97.0 130.0,97.0 130.0,251.0 123.0,251.0 123.0,244.0" fill="var(--line)" stroke="var(--ink)" stroke-width="1.5"/>
+<polygon points="60.0,224.8 60.0,207.2 102.0,207.2 102.0,224.8" fill="var(--accent)" fill-opacity="0.45" stroke="var(--accent)"/>
+<polygon points="102.0,237.0 102.0,195.0 130.0,195.0 130.0,237.0" fill="var(--accent)" fill-opacity="0.45" stroke="var(--accent)"/>
+<text x="160" y="232" fill="var(--accent)">M3 + Ø6 x 4 counterbore at r = 12</text>
+<text x="40" y="345" fill="var(--muted)">Ø72, groove floor Ø62, 21.6 wide</text>
+<circle cx="520" cy="190" r="110" fill="none" stroke="var(--ink)"/>
+<circle cx="520" cy="190" r="88.6" fill="none" stroke="var(--line)"/>
+<line x1="520" y1="190" x2="645" y2="190" stroke="var(--muted)" stroke-width="2"/>
+<text x="560" y="184" fill="var(--muted)">seam (XZ plane)</text>
+<circle cx="556.7" cy="190.0" r="9" fill="none" stroke="var(--muted)" stroke-opacity="0.5" stroke-dasharray="3 2"/>
+<circle cx="545.9" cy="164.1" r="9" fill="none" stroke="var(--accent)" stroke-opacity="1" stroke-dasharray="none"/>
+<circle cx="520.0" cy="153.3" r="9" fill="none" stroke="var(--muted)" stroke-opacity="0.5" stroke-dasharray="3 2"/>
+<circle cx="494.1" cy="164.1" r="9" fill="none" stroke="var(--accent)" stroke-opacity="1" stroke-dasharray="none"/>
+<circle cx="483.3" cy="190.0" r="9" fill="none" stroke="var(--muted)" stroke-opacity="0.5" stroke-dasharray="3 2"/>
+<circle cx="494.1" cy="215.9" r="9" fill="none" stroke="var(--accent)" stroke-opacity="1" stroke-dasharray="none"/>
+<circle cx="520.0" cy="226.7" r="9" fill="none" stroke="var(--muted)" stroke-opacity="0.5" stroke-dasharray="3 2"/>
+<circle cx="545.9" cy="215.9" r="9" fill="none" stroke="var(--accent)" stroke-opacity="1" stroke-dasharray="none"/>
+<text x="420" y="330" fill="var(--muted)">dashed: as drawn (one on the seam)</text>
+<text x="420" y="350" fill="var(--accent)">solid: turned 45°, as modelled</text>
+</svg>
