@@ -1,0 +1,97 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [],
+  "features": [
+    {
+      "id": 1,
+      "name": "Coil",
+      "suppressed": false,
+      "body_names": [
+        "3-27F coil"
+      ],
+      "param_names": [
+        "d1",
+        "d2",
+        "d3",
+        "d4"
+      ],
+      "type": "coil",
+      "base": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "diameter": "4",
+      "pitch": "0.505",
+      "turns": "2.5",
+      "section_size": "0.5",
+      "section": "circular",
+      "operation": "new_body"
+    },
+    {
+      "id": 2,
+      "name": "Leg 1",
+      "suppressed": false,
+      "body_names": [
+        "3-27F leg 1"
+      ],
+      "param_names": [
+        "d5",
+        "d6"
+      ],
+      "type": "cylinder",
+      "base": [
+        2.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "radius": "(0.5) / 2",
+      "height": "14",
+      "operation": "new_body"
+    },
+    {
+      "id": 3,
+      "name": "Leg 2",
+      "suppressed": false,
+      "body_names": [
+        "3-27F leg 2"
+      ],
+      "param_names": [
+        "d7",
+        "d8"
+      ],
+      "type": "cylinder",
+      "base": [
+        -2.0,
+        0.0,
+        1.2625
+      ],
+      "axis": [
+        -0.0,
+        -1.0,
+        0.0
+      ],
+      "radius": "(0.5) / 2",
+      "height": "14",
+      "operation": "new_body"
+    }
+  ],
+  "next_id": 4,
+  "materials": {
+    "3-27F coil": "Steel",
+    "3-27F leg 1": "Steel",
+    "3-27F leg 2": "Steel"
+  }
+}

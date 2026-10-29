@@ -1,0 +1,228 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Pulley section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      17.75,
+      0
+     ],
+     [
+      17.75,
+      1
+     ],
+     [
+      16,
+      1
+     ],
+     [
+      16,
+      5
+     ],
+     [
+      17.75,
+      5
+     ],
+     [
+      17.75,
+      6
+     ],
+     [
+      2,
+      6
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Pulley",
+    "body_name": "3-32 pulley"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      12.727922061357857,
+      12.727922061357855,
+      0
+     ],
+     "x_dir": [
+      -0.7071067811865475,
+      0.7071067811865476,
+      0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "M3 set screw"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -3.0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 17,
+    "operation": "cut",
+    "targets": [
+     "3-32 pulley"
+    ],
+    "name": "M3 set screw"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Shaft section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      62.5
+     ],
+     [
+      0,
+      62.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Shaft",
+    "body_name": "3-32 shaft"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 2.5,
+    "height": 13,
+    "base": [
+     -4.59619407771256,
+     -4.596194077712559,
+     25.6
+    ],
+    "axis": [
+     0.707107,
+     0.707107,
+     0
+    ],
+    "operation": "join",
+    "targets": [
+     "3-32 shaft"
+    ],
+    "name": "Pin"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-32 pulley"
+    ],
+    "material": "Brass"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-32 shaft"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

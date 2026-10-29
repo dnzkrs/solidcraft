@@ -1,0 +1,175 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Path"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      1.6,
+      64.2
+     ],
+     [
+      -21.262431,
+      8.76978
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     -21.262431,
+     8.76978
+    ],
+    "end": [
+     23,
+     0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23,
+      0
+     ],
+     [
+      23,
+      46.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     25,
+     46.5
+    ],
+    "start": [
+     25,
+     48.5
+    ],
+    "end": [
+     23,
+     46.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25,
+      48.5
+     ],
+     [
+      35,
+      48.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      1.6,
+      0,
+      64.2
+     ],
+     "x_dir": [
+      0,
+      1,
+      0
+     ],
+     "y_dir": [
+      0.924453505,
+      0,
+      -0.381294791
+     ]
+    },
+    "name": "Section"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -3.0,
+     -0.25
+    ],
+    "p1": [
+     3.0,
+     0.25
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.sweep",
+   "params": {
+    "sketch": "Section",
+    "path_sketch": "Path",
+    "path": [
+     "l1",
+     "a1",
+     "l2",
+     "a2",
+     "l3"
+    ],
+    "name": "Band",
+    "body_name": "3-27I Hand brake band"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-27I Hand brake band"
+    ],
+    "material": "Stainless Steel"
+   }
+  }
+ ]
+}

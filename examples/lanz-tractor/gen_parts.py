@@ -1402,7 +1402,7 @@ def exhaust_top_ring(s):
     return revolved_volume(poly) + 2 * math.pi * (rb + 2 * T / (3 * math.pi)) * half
 
 
-def link(s, centres, r1, r2, d1, d2, t, body=None, name="Link"):
+def link(s, centres, r1, r2, d1, d2, t, body=None, name="Link", z0=0):
     """A flat link on the XY plane, Z = 0..t: ends of radius r1 at the origin and r2 at (centres, 0),
     joined by their outer tangents, holes d1 and d2 at the ends. Returns its volume."""
     sp = (r1 - r2) / centres
@@ -1410,7 +1410,7 @@ def link(s, centres, r1, r2, d1, d2, t, body=None, name="Link"):
     p1l, p2l = (r1 * sp, -r1 * cp), (centres + r2 * sp, -r2 * cp)
     p1u, p2u = (r1 * sp, r1 * cp), (centres + r2 * sp, r2 * cp)
     segs = [("line", p2l), ("arc", (centres, 0), p2u, True), ("line", p1u), ("arc", (0, 0), p1l, True)]
-    s.sketch(name, (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.sketch(name, (0, 0, z0), (1, 0, 0), (0, 1, 0))
     s.loop(p1l, segs)
     s.cmd("sketch.circle.center", center=[0, 0], diameter=d1)
     s.cmd("sketch.circle.center", center=[centres, 0], diameter=d2)
@@ -3852,6 +3852,372 @@ def towbar_bracket(s):
           profiles=[{"point": [-0.5, 0]}, {"point": [xe + 0.5, 0]}], name="End rounds")
     s.holes("Ø4 holes", (0, 0, -1), (0, 0, 1), [(5, 0, -1), (35, 0, -1), (xe - 5, 0, -1)], 4, depth=H + 2)
     return v - 2 * (2 * r * r - math.pi / 2 * r * r) * T - 3 * math.pi * 4 * T
+
+
+# ----------------------------------------------------------------------------- 3-26B to 3-37 (sheet 07)
+@part("3-26B", "Bumper-towbar", "Steel")
+def bumper_towbar(s):
+    """Sheet 07, 3-26B (scale 1:2): a 2 thick steel bar 144 x 10 with R3 corners and Ø4 holes 18 from
+    each end. XY plane."""
+    L, W, T = 144, 10, 2
+    start = (3, -5)
+    segs = [("line", (L - 3, -5)), ("arc", (L - 3, -2), (L, -2), True), ("line", (L, 2)), ("arc", (L - 3, 2), (L - 3, 5), True),
+            ("line", (3, 5)), ("arc", (3, 2), (0, 2), True), ("line", (0, -2)), ("arc", (3, -2), start, True)]
+    s.sketch("Bar", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    for x in (18, L - 18):
+        s.cmd("sketch.circle.center", center=[x, 0], diameter=4)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [10, 0]}], name="Bar", body_name=s.body)
+    return (loop_area(start, segs) - 2 * math.pi * 4) * T
+
+
+@part("3-27A", "Hand brake shaft", "Steel")
+def hand_brake_shaft(s):
+    """Sheet 07, 3-27A: a Ø4 x 58 steel shaft. Axis = Z."""
+    return s.turned("Shaft", [(0, 0), (2, 0), (2, 58), (0, 58)])
+
+
+@part("3-27C", "Hand brake pivot", "Brass")
+def hand_brake_pivot(s):
+    """Sheet 07, 3-27C (scale 1:1.5): a brass collar Ø12 x 6 with a Ø8 x 2 spigot (8PF), bored Ø4, a
+    Ø3 cross hole 3 from its plain face. Axis = Z; the cross hole at 45° (off the seam)."""
+    v = s.turned("Pivot", [(2, 0), (6, 0), (6, 6), (4, 6), (4, 8), (2, 8)])
+    u = (math.cos(math.radians(45)), math.sin(math.radians(45)), 0)
+    s.holes("Ø3 cross hole", (-8 * u[0], -8 * u[1], 0), u, [(-8 * u[0], -8 * u[1], 3)], 3)
+    return v - cross_hole(6, 1.5, 2)
+
+
+@part("3-27D", "Hand brake teethed bracket plate", "Brass")
+def hand_brake_toothed_plate(s):
+    """Sheet 07, 3-27D (scale 1:1.5): a 1 thick brass plate 30 wide with an R15 top round a Ø4 hole
+    9.5 up (measured), toothed over 63° either side of the top (1 deep, 1.5 pitch: 21 teeth); along
+    its foot two 1 wide slits make three tabs, bent over 4.5: the outer ones to one side, the middle
+    one to the other. The bends are sharp. Plate in the XZ plane on Y = 0..1, Z up from the foot."""
+    T, R, H = 1, 15, 9.5
+    n = 21
+    a0, a1 = math.radians(90 - 63), math.radians(90 + 63)
+    pts = []
+    for i in range(2 * n + 1):
+        a = a0 + (a1 - a0) * i / (2 * n)
+        r = R if i % 2 == 0 else R - 1
+        pts.append((r * math.cos(a), H + r * math.sin(a)))
+    start = (-R, 0)
+    segs = [("line", (R, 0)), ("line", (R, H)), ("arc", (0, H), pts[0], True)] + [("line", p) for p in pts[1:]] + \
+           [("arc", (0, H), (-R, H), True), ("line", start)]
+    s.sketch("Plate", (0, 0, 0), (1, 0, 0), (0, 0, 1))                    # normal -Y
+    s.loop(start, segs)
+    s.cmd("sketch.circle.center", center=[0, H], diameter=4)
+    for x0 in (-8, 7):
+        s.cmd("sketch.rectangle.two_point", p0=[x0, 0], p1=[x0 + 1, 1])
+    s.finish()
+    s.cmd("solid.extrude", distance=T, direction="negative", profiles=[{"point": [0, 3]}], name="Plate", body_name=s.body)
+    v = (loop_area(start, segs) - math.pi * 4 - 2 * 1) * T
+    s.sketch("Feet", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.rectangle.two_point", p0=[-15, 0], p1=[-8, 4.5])
+    s.cmd("sketch.rectangle.two_point", p0=[8, 0], p1=[15, 4.5])
+    s.cmd("sketch.rectangle.two_point", p0=[-7, -3.5], p1=[7, 1])
+    s.finish()
+    s.cmd("solid.extrude", distance=T, operation="join", targets=[s.body], name="Feet")
+    return v + (2 * 7 * 3.5 + 14 * 3.5) * T
+
+
+@part("3-27F", "Hand brake release handle spring", {"coil": "Steel", "leg 1": "Steel", "leg 2": "Steel"}, tol=0.01)
+def release_spring(s):
+    """Sheet 07, 3-27F: a torsion spring of Ø0.5 spring steel wire, Ø4.5 over the coil, 2.5 turns
+    (1.75 long at most), legs 14 long leaving the coil tangentially. The legs are separate solids
+    touching the coil's ends. Coil axis = Z."""
+    n = s.body.split()[0]
+    d, D, turns = 0.5, 4.5, 2.5
+    rm = (D - d) / 2
+    pitch = 0.505
+    s.cmd("solid.coil", diameter=D - d, turns=turns, pitch=pitch, section_size=d, section="circular", section_position="center",
+          base=[0, 0, 0], axis="Z", name="Coil", body_name=f"{n} coil")
+    v = math.pi / 4 * d * d * 2 * math.pi * rm * turns
+    ends = [(0.0, 0.0, -1), (turns * 2 * math.pi, turns * pitch, 1)]
+    for k, (a, z, sgn) in enumerate(ends):
+        p = (rm * math.cos(a), rm * math.sin(a), z)
+        t = (-math.sin(a) * sgn, math.cos(a) * sgn, 0)
+        s.cmd("solid.cylinder", diameter=d, height=14, base=[round(c, 6) for c in p], axis=[round(c, 6) for c in t],
+              name=f"Leg {k + 1}", body_name=f"{n} leg {k + 1}")
+        v += math.pi / 4 * d * d * 14
+    return v
+
+
+@part("3-27G", "Hand brake release crank", "Steel")
+def release_crank(s):
+    """Sheet 07, 3-27G: a steel crank plate, R6 round a Ø8 hole and R3.25 round an M3 (Ø2.5) hole 10
+    away; 1.5 thick (not dimensioned: taken from the 3D view). XY plane."""
+    return link(s, 10, 6, 3.25, 8, 2.5, 1.5)
+
+
+@part("3-27H", "Hand brake release crank break band holder", "Brass")
+def band_holder(s):
+    """Sheet 07, 3-27H (scale 1.5:1): a brass Ø5 x 8 holder slotted 1 wide 7 deep from its end, a 6 AF
+    x 2 hex and an M3 x 4 stud (at Ø3). Axis = Z, the slotted end on Z = 0."""
+    v = s.turned("Holder", [(0, 0), (2.5, 0), (2.5, 8), (1.5, 8), (1.5, 14), (0, 14)])
+    s.sketch("Hex", (0, 0, 8), (1, 0, 0), (0, 1, 0))
+    s.polyline(hexagon(6))
+    s.finish()
+    s.cmd("solid.extrude", distance=2, operation="join", targets=[s.body], name="Hex")
+    v += (math.sqrt(3) / 2 * 36 - math.pi * 2.25) * 2
+    s.sketch("Slot", (0, 0, -1), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.rectangle.two_point", p0=[-0.5, -4], p1=[0.5, 4])
+    s.finish()
+    s.cmd("solid.extrude", distance=8, operation="cut", targets=[s.body], name="Slot")
+    h, strip = 1.0 / 400, 0.0
+    for i in range(400):
+        x = -0.5 + (i + 0.5) * h
+        strip += 2 * math.sqrt(6.25 - x * x) * h
+    return v - strip * 7
+
+
+@part("3-27J", "Hand brake bandend strap", "Brass")
+def bandend_strap(s):
+    """Sheet 07, 3-27J (scale 1:1.5): a 1 thick brass strap: a tab 8 wide with an R4 end round a Ø4
+    hole 9 from the bend, and a tongue 6 wide bent down 10 with an R3 end. The bend (R2 drawn) is
+    sharp here. Built as one L section 8 wide, then trimmed (joining the round-ended tongue to the
+    tab needs a separation retry). Tab on Z = 0..1 along X, the tongue on X = 0..1."""
+    T = 1
+    pts = [(0, -9), (T, -9), (T, 0), (13, 0), (13, T), (0, T)]
+    s.sketch("Section", (0, 0, 0), (1, 0, 0), (0, 0, 1))                  # normal -Y
+    s.polyline(pts)
+    s.finish()
+    s.cmd("solid.extrude", distance=4, direction="symmetric", name="Strap", body_name=s.body)
+    v = polygon_area(pts) * 8
+    # tab: R4 end and Ø4 hole (cut down through Z); tongue: 6 wide with an R3 end (cut along X)
+    # the end round and the hole as two cuts: picked as two regions of one sketch, the cut took
+    # 13.15 instead of 19.44
+    s.sketch("Tab end", (0, 0, -1), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.rectangle.two_point", p0=[9, -5], p1=[14, 5])
+    s.cmd("sketch.circle.center", center=[9, 0], diameter=8)
+    s.finish()
+    s.cmd("solid.extrude", distance=3, operation="cut", targets=[s.body], profiles=[{"point": [13.5, 0]}],
+          name="Tab end")
+    s.holes("Ø4 hole", (0, 0, -1), (0, 0, 1), [(9, 0, -1)], 4, depth=3)
+    v -= ((4 * 8 - math.pi * 16 / 2) + math.pi * 4) * T
+    s.sketch("Tongue", (-1, 0, 0), (0, 1, 0), (0, 0, 1))                 # normal +X
+    s.cmd("sketch.rectangle.two_point", p0=[3, -10], p1=[5, -0.5])
+    s.cmd("sketch.rectangle.two_point", p0=[-5, -10], p1=[-3, -0.5])
+    s.cmd("sketch.rectangle.two_point", p0=[-3, -10], p1=[3, -6])
+    s.cmd("sketch.circle.center", center=[0, -6], diameter=6)
+    s.finish()
+    s.cmd("solid.extrude", distance=3, operation="cut", targets=[s.body],
+          profiles=[{"point": [4, -3]}, {"point": [-4, -3]}, {"point": [2.9, -9.5]}], name="Tongue width and end")
+    v -= (2 * 1 * (9 - 0.5) + (6 * 3 - math.pi * 9 / 2)) * T      # the sides from Z = -0.5 down, the R3 end
+    return v
+
+
+@part("3-27K", "Hand brake spring screw", "Steel")
+def spring_screw(s):
+    """Sheet 07, 3-27K: a Ø7 x 2 head, a Ø5 x 3.3 shoulder and an M4 x 5 end (at Ø4); the head's slot
+    is not dimensioned and not modelled. Axis = Z."""
+    return s.turned("Screw", [(0, 0), (3.5, 0), (3.5, 2), (2.5, 2), (2.5, 5.3), (2, 5.3), (2, 10.3), (0, 10.3)])
+
+
+@part("3-28", "Reversing operating handle", "Brass")
+def reversing_handle(s):
+    """Sheet 07, 3-28: a brass knob 20.5 high, tapering from Ø8 at the foot to Ø10 (measured) under an
+    SR5 dome; tapped M4 (Ø3.3) 10 deep in the foot. Axis = Z."""
+    start = (1.65, 0)
+    segs = [("line", (4, 0)), ("line", (5, 15.5)), ("arc", (0, 15.5), (0, 20.5), True), ("line", (0, 10)),
+            ("line", (1.65, 10)), ("line", start)]
+    revolved_loop(s, "Knob", start, segs)
+    return revolved_loop_volume(start, segs)
+
+
+@part("3-29", "Rev operating handle crank and spindle", {"lever": "Steel", "hub": "Brass", "spindle": "Steel"})
+def rev_crank_spindle(s):
+    """Sheet 07, 3-29 (scale 1:1.5, partly measured): a Ø4 x 111 steel spindle; at its top a 2 thick
+    steel crank (R6 and R4 ends 20 apart, Ø4 at the end) pressed on a brass hub Ø12.5 x 6.5 with a
+    Ø8 x 2 spigot (8PF), pinned to the spindle by a Ø2 x 12.5 pin 5.5 below the top; a second Ø2 x
+    12.5 pin 14 below the top. Axis = Z, the spindle from Z = 0 up to the crank's top at 111."""
+    n = s.body.split()[0]
+    top = 111
+    v = link(s, 20, 6, 4, 8, 4, 2, body=f"{n} lever", name="Crank", z0=top - 2)
+    v += s.turned("Hub", [(2, top - 8.5), (6.25, top - 8.5), (6.25, top - 2), (4, top - 2), (4, top), (2, top)],
+                  body=f"{n} hub")
+    v += s.turned("Spindle", [(0, 0), (2, 0), (2, top), (0, top)], body=f"{n} spindle")
+    for k, z in enumerate((top - 5.5, top - 14)):
+        a = math.radians(45)
+        s.cmd("solid.cylinder", diameter=2, height=12.5, base=[round(-6.25 * math.cos(a), 6), round(-6.25 * math.sin(a), 6), z],
+              axis=[round(math.cos(a), 6), round(math.sin(a), 6), 0], operation="join", targets=[f"{n} spindle"],
+              name=f"Pin {k + 1}")
+        v += math.pi * 12.5 - cross_hole(2, 1)
+    s.holes("Hub pin hole", (-8 * math.cos(math.radians(45)), -8 * math.sin(math.radians(45)), 0),
+            (math.cos(math.radians(45)), math.sin(math.radians(45)), 0),
+            [(-8 * math.cos(math.radians(45)), -8 * math.sin(math.radians(45)), top - 5.5)], 2, target=f"{n} hub")
+    return v - cross_hole(6.25, 1, 2)
+
+
+@part("3-30", "Rev spindle locking collar", "Brass")
+def locking_collar(s):
+    """Sheet 07, 3-30: a brass collar Ø12 x 8 bored Ø4, a Ø2 cross hole at the middle. Axis = Z; the
+    cross hole at 45° (off the seam)."""
+    v = s.turned("Collar", [(2, 0), (6, 0), (6, 8), (2, 8)])
+    u = (math.cos(math.radians(45)), math.sin(math.radians(45)), 0)
+    s.holes("Ø2 cross hole", (-8 * u[0], -8 * u[1], 0), u, [(-8 * u[0], -8 * u[1], 4)], 2)
+    return v - cross_hole(6, 1, 2)
+
+
+@part("3-31", "Coupling operating handle", {"lever": "Steel", "collar": "Brass", "knob": "Brass"})
+def coupling_handle(s):
+    """Sheet 07, 3-31 (scale 1:1.5): a 2 thick steel lever as 3-21 (R6 round a Ø8 hole, tapering to 6
+    wide 36 up, a 4 wide tip 14 long) in a brass knob (Ø6 at its foot tapering to the Ø9 of an SR4.5
+    dome, 18.5 high, a 4 x 2 slot 14 deep for the tip); a brass collar Ø12 x 6 with a Ø8 x 2 spigot
+    in the lever (8PF), bored Ø4, cross-drilled Ø2.5 3 from the lever. Lever in the XZ plane on
+    Y = -1..1, its axis Z; the collar along Y."""
+    n = s.body.split()[0]
+    tr = tangent_from((3, 36), (0, 0), 6, left=True)
+    tl = (-tr[0], tr[1])
+    start = (2, 50)
+    segs = [("line", (-2, 50)), ("line", (-2, 36)), ("line", (-3, 36)), ("line", tl), ("arc", (0, 0), tr, True),
+            ("line", (3, 36)), ("line", (2, 36)), ("line", start)]
+    s.sketch("Lever", (0, 0, 0), (1, 0, 0), (0, 0, 1))                    # normal -Y
+    s.loop(start, segs)
+    s.cmd("sketch.circle.center", center=[0, 0], diameter=8)
+    s.finish()
+    s.cmd("solid.extrude", distance=1, direction="symmetric", profiles=[{"point": [0, 30]}], name="Lever",
+          body_name=f"{n} lever")
+    v = (loop_area(start, segs) - math.pi * 16) * 2
+    kst = (0, 36)
+    ksg = [("line", (3, 36)), ("line", (4.5, 50)), ("arc", (0, 50), (0, 54.5), True), ("line", kst)]
+    revolved_loop(s, "Knob", kst, ksg, body=f"{n} knob")
+    s.sketch("Knob slot", (0, 0, 35), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.rectangle.two_point", p0=[-2, -1], p1=[2, 1])
+    s.finish()
+    s.cmd("solid.extrude", distance=15, operation="cut", targets=[f"{n} knob"], name="Knob slot")
+    v += revolved_loop_volume(kst, ksg) - 4 * 2 * 14
+    # the spigot reaches 0.5 into the Ø12 so the two overlap
+    s.cmd("solid.cylinder", diameter=8, height=2.5, base=[0, -1, 0], axis="Y", name="Collar spigot", body_name=f"{n} collar")
+    s.cmd("solid.cylinder", diameter=12, height=6, base=[0, 1, 0], axis="Y", operation="join", targets=[f"{n} collar"],
+          name="Collar")
+    s.cmd("solid.cylinder", diameter=4, height=10, base=[0, -2, 0], axis="Y", operation="cut", targets=[f"{n} collar"],
+          name="Collar bore")
+    u = (math.cos(math.radians(45)), 0, math.sin(math.radians(45)))
+    s.holes("Ø2.5 cross hole", (-8 * u[0], 4, -8 * u[2]), u, [(-8 * u[0], 4, -8 * u[2])], 2.5, target=f"{n} collar")
+    v += math.pi * 16 * 2 + math.pi * 36 * 6 - math.pi * 4 * 8 - cross_hole(6, 1.25, 2)
+    return v
+
+
+@part("3-32", "Coupling operating pulley and shaft", {"pulley": "Brass", "shaft": "Steel"})
+def coupling_pulley(s):
+    """Sheet 07, 3-32 (scale 1:1.5): a brass pulley Ø35.5 x 6 with a groove 4 wide down to Ø32, bored
+    Ø4 with an M3 (Ø2.5) set screw through the rim; a Ø4 x 62.5 steel shaft from its face with a
+    Ø2.5 x 13 pin 25.6 along (measured). Axis = Z."""
+    n = s.body.split()[0]
+    v = s.turned("Pulley", [(2, 0), (17.75, 0), (17.75, 1), (16, 1), (16, 5), (17.75, 5), (17.75, 6), (2, 6)],
+                 body=f"{n} pulley")
+    u = (math.cos(math.radians(45)), math.sin(math.radians(45)), 0)
+    s.holes("M3 set screw", (18 * u[0], 18 * u[1], 0), (-u[0], -u[1], 0), [(18 * u[0], 18 * u[1], 3)], 2.5, depth=17,
+            target=f"{n} pulley")
+    v -= cross_hole(16, 1.25, 2) / 2
+    v += s.turned("Shaft", [(0, 0), (2, 0), (2, 62.5), (0, 62.5)], body=f"{n} shaft")
+    s.cmd("solid.cylinder", diameter=2.5, height=13, base=[-6.5 * u[0], -6.5 * u[1], 25.6], axis=[round(c, 6) for c in u],
+          operation="join", targets=[f"{n} shaft"], name="Pin")
+    return v + math.pi / 4 * 6.25 * 13 - cross_hole(2, 1.25)
+
+
+@part("3-33", "Shaft adjuster", "Brass")
+def shaft_adjuster(s):
+    """Sheet 07, 3-33: a brass 12 AF x 5 hex on a Ø10 x 8 body, bored Ø4 2 off centre right through
+    (an eccentric). Axis = Z."""
+    s.sketch("Hex", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.polyline(hexagon(12))
+    s.finish()
+    s.cmd("solid.extrude", distance=5, name="Hex", body_name=s.body)
+    v = math.sqrt(3) / 2 * 144 * 5
+    v += s.turned("Body", [(0, 4.5), (5, 4.5), (5, 13), (0, 13)], operation="join") - math.pi * 25 * 0.5
+    s.holes("Eccentric bore", (0, 0, -1), (0, 0, 1), [(0, 2, -1)], 4, depth=15)
+    return v - math.pi * 4 * 13
+
+
+@part("3-34", "Shaft spacer", "Brass")
+def shaft_spacer(s):
+    """Sheet 07, 3-34: a brass Ø9 x 13 spacer bored Ø4. Axis = Z."""
+    return s.turned("Spacer", [(2, 0), (4.5, 0), (4.5, 13), (2, 13)])
+
+
+@part("3-35", "Accelerator levers bolt", "Steel")
+def accelerator_levers_bolt(s):
+    """Sheet 07, 3-35: a Ø8 x 1.5 head (slot not modelled), a Ø4 x 2.1 shoulder and an M3 x 2.5 end
+    (at Ø3). Axis = Z, the threaded end on Z = 0."""
+    return s.turned("Bolt", [(0, 0), (1.5, 0), (1.5, 2.5), (2, 2.5), (2, 4.6), (4, 4.6), (4, 6.1), (0, 6.1)])
+
+
+@part("3-36", "Accelerator connector lever", "Steel")
+def accelerator_connector(s):
+    """Sheet 07, 3-36 (scale 1:2): a steel link, Ø4 holes 112 apart in R4 eyes joined by a 4 wide bar;
+    1.5 thick (measured from the side view, which also shows a slight crank, not modelled). XY plane."""
+    T, L = 1.5, 112
+    xe = math.sqrt(16 - 4)
+    start = (xe, 2)
+    segs = [("line", (L - xe, 2)), ("arc", (L, 0), (L - xe, -2), False), ("line", (xe, -2)), ("arc", (0, 0), start, False)]
+    s.sketch("Link", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    for x in (0, L):
+        s.cmd("sketch.circle.center", center=[x, 0], diameter=4)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [L / 2, 0]}], name="Link", body_name=s.body)
+    return (loop_area(start, segs) - 2 * math.pi * 4) * T
+
+
+@part("3-37", "Rear stop lights", {"housing": "Brass", "lens": "Polycarbonate"})
+def stop_light(s):
+    """Sheet 07, 3-37: a brass housing: a 24 x 10 x 3 base with Ø3 holes at ±8 and an R4.5 boss whose
+    centre is 7.5 up, bored Ø6.5 9 deep from the front with a Ø7.5 x 1 recess for a red plastic lens
+    (Ø7.5 x 1, modelled in polycarbonate, red). Front view in the XZ plane, depth along +Y."""
+    n = s.body.split()[0]
+    start = (-12, 0)
+    segs = [("line", (12, 0)), ("line", (12, 3)), ("line", (4.5, 3)), ("line", (4.5, 7.5)), ("arc", (0, 7.5), (-4.5, 7.5), True),
+            ("line", (-4.5, 3)), ("line", (-12, 3)), ("line", start)]
+    s.sketch("Housing", (0, 0, 0), (1, 0, 0), (0, 0, 1))                  # normal -Y
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.extrude", distance=10, direction="negative", name="Housing", body_name=f"{n} housing")
+    v = loop_area(start, segs) * 10
+    s.holes("Lens recess", (0, -1, 0), (0, 1, 0), [(0, -1, 7.5)], 7.5, depth=2, target=f"{n} housing")
+    s.holes("Bore", (0, 0.5, 0), (0, 1, 0), [(0, 0.5, 7.5)], 6.5, depth=8.5, target=f"{n} housing")
+    s.holes("Fixing holes", (0, 0, -1), (0, 0, 1), [(-8, 5, -1), (8, 5, -1)], 3, depth=5, target=f"{n} housing")
+    v -= math.pi / 4 * 7.5 ** 2 * 1 + math.pi / 4 * 6.5 ** 2 * 8 + 2 * math.pi / 4 * 9 * 3
+    s.cmd("solid.cylinder", diameter=7.5, height=1, base=[0, 0, 7.5], axis="Y", name="Lens", body_name=f"{n} lens")
+    s.cmd("appearance.assign", bodies=[f"{n} lens"], color="#d01818")
+    return v + math.pi / 4 * 7.5 ** 2 * 1
+
+
+# ----------------------------------------------------------------------------- 3-27I
+@part("3-27I", "Hand brake band", "Stainless Steel")
+def hand_brake_band(s):
+    """Sheet 07, 3-27I (scale 1:2): a stainless band (stretched length about 175) bent into a loop:
+    an R23 bottom, one leg straight up 48.5 then bent R2 into a 12 tab, the other leg running from
+    the loop's side to a tip 64.2 above the loop's centre, 1.6 to the side. Taken 0.5 thick and 6
+    wide (the width is not dimensioned: the strap 3-27J's tongue); the copper lining is not
+    modelled. The band's centre line in the XZ plane, the loop's centre on the origin."""
+    T, W, R = 0.5, 6, 23
+    tip = (1.6, 64.2)
+    p = tangent_from(tip, (0, 0), R, left=False)                # on the loop's far side
+    s.sketch("Path", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    rnd = lambda q: [round(q[0], 6), round(q[1], 6)]
+    s.cmd("sketch.line", points=[rnd(tip), rnd(p)])                                       # l1
+    s.cmd("sketch.arc.center_point", center=[0, 0], start=rnd(p), end=[R, 0])              # a1
+    s.cmd("sketch.line", points=[[R, 0], [R, 46.5]])                                       # l2
+    s.cmd("sketch.arc.center_point", center=[R + 2, 46.5], start=[R + 2, 48.5], end=[R, 46.5])  # a2 (CCW from start)
+    s.cmd("sketch.line", points=[[R + 2, 48.5], [R + 12, 48.5]])                           # l3
+    s.finish()
+    d = (p[0] - tip[0], p[1] - tip[1])
+    L1 = math.hypot(*d)
+    u = (d[0] / L1, d[1] / L1)
+    nrm = (-u[1], u[0])
+    # the band's section at the tip, normal to the first line
+    s.sketch("Section", (tip[0], 0, tip[1]), (0, 1, 0), (round(nrm[0], 9), 0, round(nrm[1], 9)))
+    s.cmd("sketch.rectangle.two_point", p0=[-W / 2, -T / 2], p1=[W / 2, T / 2])
+    s.finish()
+    s.cmd("solid.sweep", sketch="Section", path_sketch="Path", path=["l1", "a1", "l2", "a2", "l3"], name="Band",
+          body_name=s.body)
+    a0 = math.atan2(p[1], p[0]) % (2 * math.pi)
+    sweep = (2 * math.pi - a0)                                 # round the bottom to (R, 0)
+    length = L1 + R * sweep + 46.5 + math.pi / 2 * 2 + 10
+    return W * T * length
 
 
 # ----------------------------------------------------------------------------- driver

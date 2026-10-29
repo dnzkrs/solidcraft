@@ -887,5 +887,145 @@
   "bodies": 1,
   "volume_mm3": 1426.9,
   "mass_g": 11.2
+ },
+ "3-26B": {
+  "name": "Bumper-towbar",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 2814.3,
+  "mass_g": 22.1
+ },
+ "3-27A": {
+  "name": "Hand brake shaft",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 728.7,
+  "mass_g": 5.7
+ },
+ "3-27C": {
+  "name": "Hand brake pivot",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 620.5,
+  "mass_g": 5.3
+ },
+ "3-27D": {
+  "name": "Hand brake teethed bracket plate",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 705.3,
+  "mass_g": 6.0
+ },
+ "3-27F": {
+  "name": "Hand brake release handle spring",
+  "material": "Steel",
+  "bodies": 3,
+  "volume_mm3": 11.7,
+  "mass_g": 0.1
+ },
+ "3-27G": {
+  "name": "Hand brake release crank",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 171.0,
+  "mass_g": 1.3
+ },
+ "3-27H": {
+  "name": "Hand brake release crank break band holder",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 212.9,
+  "mass_g": 1.8
+ },
+ "3-27I": {
+  "name": "Hand brake band",
+  "material": "Stainless Steel",
+  "bodies": 1,
+  "volume_mm3": 602.6,
+  "mass_g": 4.8
+ },
+ "3-27J": {
+  "name": "Hand brake bandend strap",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 135.7,
+  "mass_g": 1.2
+ },
+ "3-27K": {
+  "name": "Hand brake spring screw",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 204.6,
+  "mass_g": 1.6
+ },
+ "3-28": {
+  "name": "Reversing operating handle",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1166.3,
+  "mass_g": 9.9
+ },
+ "3-29": {
+  "name": "Rev operating handle crank and spindle",
+  "material": "Brass, Steel",
+  "bodies": 3,
+  "volume_mm3": 2652.9,
+  "mass_g": 21.3
+ },
+ "3-30": {
+  "name": "Rev spindle locking collar",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 778.8,
+  "mass_g": 6.6
+ },
+ "3-31": {
+  "name": "Coupling operating handle",
+  "material": "Brass, Steel",
+  "bodies": 3,
+  "volume_mm3": 2118.1,
+  "mass_g": 17.5
+ },
+ "3-32": {
+  "name": "Coupling operating pulley and shaft",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 5882.4,
+  "mass_g": 49.5
+ },
+ "3-33": {
+  "name": "Shaft adjuster",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1088.5,
+  "mass_g": 9.3
+ },
+ "3-34": {
+  "name": "Shaft spacer",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 663.7,
+  "mass_g": 5.6
+ },
+ "3-35": {
+  "name": "Accelerator levers bolt",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 119.4,
+  "mass_g": 0.9
+ },
+ "3-36": {
+  "name": "Accelerator connector lever",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 739.2,
+  "mass_g": 5.8
+ },
+ "3-37": {
+  "name": "Rear stop lights",
+  "material": "Brass, Polycarbonate",
+  "bodies": 2,
+  "volume_mm3": 1135.2,
+  "mass_g": 9.3
  }
 }

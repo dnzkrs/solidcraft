@@ -161,6 +161,26 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 3-25A | Drivers seat base | Brass | 1 | 4,811.7 | 40.9 |
 | 3-25B | Drivers seat | Oak | 1 | 27,807.3 | 20.9 |
 | 3-26A | Bumper-towbar mounting bracket | Steel | 1 | 1,426.9 | 11.2 |
+| 3-26B | Bumper-towbar | Steel | 1 | 2,814.3 | 22.1 |
+| 3-27A | Hand brake shaft | Steel | 1 | 728.7 | 5.7 |
+| 3-27C | Hand brake pivot | Brass | 1 | 620.5 | 5.3 |
+| 3-27D | Hand brake teethed bracket plate | Brass | 1 | 705.3 | 6.0 |
+| 3-27F | Hand brake release handle spring | Steel | 3 | 11.7 | 0.1 |
+| 3-27G | Hand brake release crank | Steel | 1 | 171.0 | 1.3 |
+| 3-27H | Hand brake release crank break band holder | Brass | 1 | 212.9 | 1.8 |
+| 3-27I | Hand brake band | Stainless Steel | 1 | 602.6 | 4.8 |
+| 3-27J | Hand brake bandend strap | Brass | 1 | 135.7 | 1.2 |
+| 3-27K | Hand brake spring screw | Steel | 1 | 204.6 | 1.6 |
+| 3-28 | Reversing operating handle | Brass | 1 | 1,166.3 | 9.9 |
+| 3-29 | Rev operating handle crank and spindle | Brass, Steel | 3 | 2,652.9 | 21.3 |
+| 3-30 | Rev spindle locking collar | Brass | 1 | 778.8 | 6.6 |
+| 3-31 | Coupling operating handle | Brass, Steel | 3 | 2,118.1 | 17.5 |
+| 3-32 | Coupling operating pulley and shaft | Brass, Steel | 2 | 5,882.4 | 49.5 |
+| 3-33 | Shaft adjuster | Brass | 1 | 1,088.5 | 9.3 |
+| 3-34 | Shaft spacer | Brass | 1 | 663.7 | 5.6 |
+| 3-35 | Accelerator levers bolt | Steel | 1 | 119.4 | 0.9 |
+| 3-36 | Accelerator connector lever | Steel | 1 | 739.2 | 5.8 |
+| 3-37 | Rear stop lights | Brass, Polycarbonate | 2 | 1,135.2 | 9.3 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,
@@ -294,6 +314,18 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
   **3-25B**: oak; its R6 top round is modelled R5 (SolidCraft refuses 5.5 and more on the 6 high
   top).
 
+- **3-26A**: the bends are modelled sharp. **3-27D**: its R15's centre height (9.5) is measured; 21
+  teeth (1 deep, 1.5 pitch over ±63°); the bends of its feet are sharp. **3-27F**: 2.5 turns
+  (1.75 long at most); its legs are separate solids touching the coil's ends.
+- **3-27G** and **3-36**: thicknesses (1.5) are not dimensioned. **3-27I**: the band is taken 0.5
+  thick and 6 wide, the copper lining is not modelled, and following the drawn shape it comes to
+  201 long, where the drawing says "approx 175" stretched. **3-27J**'s R2 bend is sharp.
+- **3-29**: the hub's height (6.5) and the pins' heights are partly measured. **3-32**: the pin's
+  position (25.6) is measured. **3-37**: the lens (Ø7.5 x 1, red) is modelled in polycarbonate.
+- Not yet modelled from sheet 06/07: 3-20 (console top plate: a flat pattern with four folds and a
+  throttle quadrant), 3-23/3-24 (mudguards), 3-25C (seat leg), 3-25D (back rest), 3-27E (release
+  handle).
+
 ## SolidCraft issue found while modelling
 
 Adding blind holes one at a time with `solid.hole` to 1-01 left most of them **3.42 mm too
@@ -338,3 +370,7 @@ built with the sheet-metal commands, which give the exact volumes.
 A cut whose end face lies in the plane of another face of the part needs a separation retry and
 can come out deeper, even when the two faces are far apart: 3-19's M4 at 66, ending in the plane
 of the notch's floor (Y = 8), was cut 2.5 too deep. It ends at Y = 9 instead.
+
+Cutting two regions of one sketch picked by points, a rectangle less a circle and a smaller
+circle inside it (3-27J's end round and hole), removed 13.15 mm³ instead of 19.44; as two cuts
+both are right.

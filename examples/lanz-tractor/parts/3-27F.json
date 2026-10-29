@@ -1,0 +1,88 @@
+{
+ "commands": [
+  {
+   "command": "solid.coil",
+   "params": {
+    "diameter": 4.0,
+    "turns": 2.5,
+    "pitch": 0.505,
+    "section_size": 0.5,
+    "section": "circular",
+    "section_position": "center",
+    "base": [
+     0,
+     0,
+     0
+    ],
+    "axis": "Z",
+    "name": "Coil",
+    "body_name": "3-27F coil"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 0.5,
+    "height": 14,
+    "base": [
+     2.0,
+     0.0,
+     0.0
+    ],
+    "axis": [
+     0.0,
+     -1.0,
+     0
+    ],
+    "name": "Leg 1",
+    "body_name": "3-27F leg 1"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 0.5,
+    "height": 14,
+    "base": [
+     -2.0,
+     0.0,
+     1.2625
+    ],
+    "axis": [
+     -0.0,
+     -1.0,
+     0
+    ],
+    "name": "Leg 2",
+    "body_name": "3-27F leg 2"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-27F coil"
+    ],
+    "material": "Steel"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-27F leg 1"
+    ],
+    "material": "Steel"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-27F leg 2"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

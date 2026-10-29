@@ -1,0 +1,202 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Holder section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      2.5,
+      0
+     ],
+     [
+      2.5,
+      8
+     ],
+     [
+      1.5,
+      8
+     ],
+     [
+      1.5,
+      14
+     ],
+     [
+      0,
+      14
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Holder",
+    "body_name": "3-27H Hand brake release crank break band holder"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      8
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Hex"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.464102,
+      0.0
+     ],
+     [
+      1.732051,
+      3.0
+     ],
+     [
+      -1.732051,
+      3.0
+     ],
+     [
+      -3.464102,
+      0.0
+     ],
+     [
+      -1.732051,
+      -3.0
+     ],
+     [
+      1.732051,
+      -3.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "operation": "join",
+    "targets": [
+     "3-27H Hand brake release crank break band holder"
+    ],
+    "name": "Hex"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -1
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Slot"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -0.5,
+     -4
+    ],
+    "p1": [
+     0.5,
+     4
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 8,
+    "operation": "cut",
+    "targets": [
+     "3-27H Hand brake release crank break band holder"
+    ],
+    "name": "Slot"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-27H Hand brake release crank break band holder"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

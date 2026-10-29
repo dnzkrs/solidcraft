@@ -1,0 +1,379 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      109
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Crank"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.6,
+      -5.969925
+     ],
+     [
+      20.4,
+      -3.97995
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     20,
+     0
+    ],
+    "start": [
+     20.4,
+     -3.97995
+    ],
+    "end": [
+     20.4,
+     3.97995
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.4,
+      3.97995
+     ],
+     [
+      0.6,
+      5.969925
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     0.6,
+     5.969925
+    ],
+    "end": [
+     0.6,
+     -5.969925
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     20,
+     0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "profiles": [
+     {
+      "point": [
+       10.0,
+       0
+      ]
+     }
+    ],
+    "operation": "new",
+    "name": "Crank",
+    "body_name": "3-29 lever"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Hub section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2,
+      102.5
+     ],
+     [
+      6.25,
+      102.5
+     ],
+     [
+      6.25,
+      109
+     ],
+     [
+      4,
+      109
+     ],
+     [
+      4,
+      111
+     ],
+     [
+      2,
+      111
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Hub",
+    "body_name": "3-29 hub"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Spindle section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      111
+     ],
+     [
+      0,
+      111
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Spindle",
+    "body_name": "3-29 spindle"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 2,
+    "height": 12.5,
+    "base": [
+     -4.419417,
+     -4.419417,
+     105.5
+    ],
+    "axis": [
+     0.707107,
+     0.707107,
+     0
+    ],
+    "operation": "join",
+    "targets": [
+     "3-29 spindle"
+    ],
+    "name": "Pin 1"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 2,
+    "height": 12.5,
+    "base": [
+     -4.419417,
+     -4.419417,
+     97
+    ],
+    "axis": [
+     0.707107,
+     0.707107,
+     0
+    ],
+    "operation": "join",
+    "targets": [
+     "3-29 spindle"
+    ],
+    "name": "Pin 2"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -5.656854249492381,
+      -5.65685424949238,
+      0
+     ],
+     "x_dir": [
+      0.7071067811865475,
+      -0.7071067811865476,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Hub pin hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -105.5
+    ],
+    "diameter": 2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "3-29 hub"
+    ],
+    "name": "Hub pin hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-29 lever"
+    ],
+    "material": "Steel"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-29 hub"
+    ],
+    "material": "Brass"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-29 spindle"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}
