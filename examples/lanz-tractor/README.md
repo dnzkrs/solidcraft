@@ -99,10 +99,18 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 2-09 | Fuel tank inner wick holding pipe | Brass | 1 | 1,411.9 | 12.0 |
 | 2-10 | Fuel tank gear wheel axle bracket | Brass | 1 | 3,000.3 | 25.5 |
 | 2-12 | Fuel tank gearwheel and shaft | Brass, Steel | 2 | 1,790.6 | 14.6 |
+| 2-13 | Fuel tank gear wheel shaft handle collar | Brass, Steel | 2 | 1,797.1 | 15.0 |
 | 2-14 | Fuel tank wick holder | Brass | 1 | 2,909.3 | 24.7 |
 | 2-15 | Fuel tank wick | Default | 1 | 4,047.3 | 5.2 |
 | 2-16 | Axle body support bracket | Aluminum | 1 | 7,201.2 | 19.4 |
 | 2-17 | Front axle yoke support bracket | Aluminum | 1 | 2,393.4 | 6.5 |
+| 2-18 | Rear axle yoke arm | Aluminum | 1 | 4,961.7 | 13.4 |
+| 2-19 | Front axle yoke tie rod | Steel | 1 | 2,425.3 | 19.0 |
+| 2-20 | Front axle yoke arm | Aluminum | 1 | 11,099.4 | 30.0 |
+| 2-21 | Front axle yoke bearing | Brass, Steel | 2 | 1,815.8 | 14.8 |
+| 2-22 | Front axle yoke wheel hinge bracket | Brass | 1 | 3,615.2 | 30.7 |
+| 2-23 | Wheel pivot axle | Brass, Steel | 2 | 3,630.3 | 28.5 |
+| 2-24 | Wheel pivot axle connector bracket | Steel | 1 | 745.2 | 5.8 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,
@@ -175,6 +183,16 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
 - **2-12**: 12 teeth counted on the drawing; straight-flanked teeth. **2-15**: no wick material in
   SolidCraft's library; the default density is used. **2-11** (tank hanger) is not yet modelled:
   its length and rod positions are not in its view.
+- **2-18**: the top edges are the outer tangents from the R4.5 ends to the R9.5 boss (their virtual
+  sharp comes out 10 above the Ø12, as dimensioned); the R20 is a concave round where the bottom
+  edges meet. **2-20**: the Ø12 is 10 above the hole line and the R11 is taken as centred on it,
+  the top edges tangent to it from the straight end portions; the R50 rounds the bottom centre.
+- **2-21**: measured from the section's lines: pin head Ø12 x 3 (R1 round), bush 8.1 long (4 flange,
+  4.1 spigot for the arm's Ø12), M6 x 10, Ø2 drilled through. **2-23**: the Ø1.5 x 9 pin is
+  modelled in brass (the label on the 3D view); its end form ("2PF") is not modelled.
+- **2-13**: the Ø4 cross hole goes right through the collar (a pin hole for the Ø4 shaft).
+  **2-24**: the 90° twist is a loft between the 8 x 2 and 2 x 8 sections from X = 6 to 22
+  (measured), so its faces are flat where the drawing shows curved outlines; steel assumed.
 - **1-04**: from the detail: a 20 wide, 0.5 deep valve channel across the face, with 0.5 wide,
   1 deep relief grooves along its edges; the Ø10 port countersunk 90° to Ø15 on the other face.
 - **1-05**: its thickness is not on the drawing ("refer to 1-04"): not modelled yet.
@@ -194,3 +212,8 @@ fine, so 1-34 joins two pipes. Its checks were met with a 1 % tolerance (a Ø1 w
 A sketch hidden with `browser.visibility` (1-43's flat pattern) is shown again when the saved
 `.solvecraft` file is reopened: SolidCraft does not save sketch visibility. The snapshots are
 therefore rendered from the scripts.
+
+Joining a 12 x 13 x 2 plate to the end face of a loft built before it (2-24's twist) gave a body
+0.98 mm³ larger than the two solids, with no warning; built the other way round the join needed a
+separation retry. 2-24 therefore starts the (flat-faced) loft 1 mm inside the plate, so the solids
+cross instead of touching.

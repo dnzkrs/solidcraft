@@ -1,0 +1,216 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ybr_head",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "pin head length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ybr_bush",
+    "expression": "8.1",
+    "unit": "mm",
+    "comment": "bush length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ybr_flange",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "flange width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ybr_thread",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "M6 end"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Pin section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      1,
+      0
+     ],
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      3
+     ],
+     [
+      4,
+      3
+     ],
+     [
+      4,
+      11.1
+     ],
+     [
+      3,
+      11.1
+     ],
+     [
+      3,
+      21.1
+     ],
+     [
+      1,
+      21.1
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Pin",
+    "body_name": "2-21 pin"
+   }
+  },
+  {
+   "command": "solid.fillet",
+   "params": {
+    "edges": [
+     [
+      6,
+      0,
+      0
+     ]
+    ],
+    "radius": 1,
+    "name": "Head round"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Bush section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      4,
+      3
+     ],
+     [
+      8,
+      3
+     ],
+     [
+      8,
+      7
+     ],
+     [
+      6,
+      7
+     ],
+     [
+      6,
+      11.1
+     ],
+     [
+      4,
+      11.1
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Bush",
+    "body_name": "2-21 bush"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-21 bush"
+    ],
+    "material": "Brass"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-21 pin"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

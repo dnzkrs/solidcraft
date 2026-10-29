@@ -1,0 +1,480 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "rya_t",
+      "expr": "4",
+      "unit": "mm",
+      "comment": "thickness",
+      "model": false
+    },
+    {
+      "name": "rya_x",
+      "expr": "47",
+      "unit": "mm",
+      "comment": "end holes either side",
+      "model": false
+    },
+    {
+      "name": "rya_ends",
+      "expr": "10",
+      "unit": "mm",
+      "comment": "end holes below the Ø12 centre",
+      "model": false
+    },
+    {
+      "name": "rya_boss_r",
+      "expr": "9.5",
+      "unit": "mm",
+      "comment": "boss radius",
+      "model": false
+    },
+    {
+      "name": "rya_end_r",
+      "expr": "4.5",
+      "unit": "mm",
+      "comment": "end radius",
+      "model": false
+    },
+    {
+      "name": "rya_valley",
+      "expr": "8.5",
+      "unit": "mm",
+      "comment": "bottom point below the Ø12 centre",
+      "model": false
+    },
+    {
+      "name": "rya_valley_r",
+      "expr": "20",
+      "unit": "mm",
+      "comment": "round at the bottom point",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Arm",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              -46.42670204980474,
+              -14.463331526114956
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              -2.54799,
+              -8.82728
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              0.0,
+              -28.664309
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              2.54799,
+              -8.82728
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              -2.54799,
+              -8.827279999999998
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              2.54799,
+              -8.82728
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              46.42670200793056,
+              -14.463331958280776
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              46.99999988370334,
+              -10.000000050008948
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              46.42670200793298,
+              -14.463331958268013
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              48.389391124823604,
+              -5.719860548030153
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              48.38939112481789,
+              -5.719860548042996
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              2.933159,
+              9.035849
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.start",
+            "pos": [
+              2.933159,
+              9.035849
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.end",
+            "pos": [
+              -2.933159,
+              9.035849
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              -2.933159,
+              9.035849
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              -48.389391017499825,
+              -5.719860961112997
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.center",
+            "pos": [
+              -46.99999988995827,
+              -10.000000047320118
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.start",
+            "pos": [
+              -48.389391017505176,
+              -5.719860961101099
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.end",
+            "pos": [
+              -46.426702049807055,
+              -14.463331526102591
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              -46.999999890068196,
+              -10.000000047272843
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c3.center",
+            "pos": [
+              46.99999988381952,
+              -10.00000004995899
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 3,
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 8,
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 11,
+            "b": 12,
+            "construction": false
+          },
+          {
+            "id": "a3",
+            "type": "arc",
+            "c": 13,
+            "a": 14,
+            "b": 15,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 16,
+            "b": 17,
+            "construction": false
+          },
+          {
+            "id": "a4",
+            "type": "arc",
+            "c": 18,
+            "a": 19,
+            "b": 20,
+            "construction": false
+          },
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 21,
+            "r": 6.0,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 22,
+            "r": 1.5,
+            "construction": false
+          },
+          {
+            "id": "c3",
+            "type": "circle",
+            "c": 23,
+            "r": 1.5,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 2,
+            "q": 5
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 4,
+            "q": 6
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 7,
+            "q": 9
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 10,
+            "q": 11
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 0,
+            "q": 13
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 12,
+            "q": 14
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 15,
+            "q": 16
+          },
+          {
+            "id": "k8",
+            "type": "coincident",
+            "p": 17,
+            "q": 19
+          },
+          {
+            "id": "k9",
+            "type": "coincident",
+            "p": 1,
+            "q": 20
+          },
+          {
+            "id": "k10",
+            "type": "coincident",
+            "p": 0,
+            "q": 21
+          },
+          {
+            "id": "k11",
+            "type": "coincident",
+            "p": 18,
+            "q": 22
+          },
+          {
+            "id": "k12",
+            "type": "coincident",
+            "p": 8,
+            "q": 23
+          }
+        ],
+        "counters": {
+          "a": 4,
+          "c": 3,
+          "k": 12,
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Arm",
+      "suppressed": false,
+      "body_names": [
+        "2-18 Rear axle yoke arm"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 1,
+      "profiles": {
+        "type": "curves",
+        "loops": [
+          [
+            "l1",
+            "a1",
+            "l2",
+            "a2",
+            "l3",
+            "a3",
+            "l4",
+            "a4"
+          ]
+        ]
+      },
+      "extent": {
+        "distance": "4",
+        "direction": "positive"
+      },
+      "operation": "new_body"
+    }
+  ],
+  "next_id": 3,
+  "materials": {
+    "2-18 Rear axle yoke arm": "Aluminum"
+  }
+}

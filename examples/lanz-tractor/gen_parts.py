@@ -2302,6 +2302,281 @@ def yoke_support_bracket(s):
     return ((D + H - T) * T) * W - math.pi / 4 * (3.3 ** 2 + 25) * T
 
 
+# ----------------------------------------------------------------------------- tangent helpers
+def tangent_from(p, c, r, left=True):
+    """The point where a line from p touches the circle (c, r): on the left of the direction p→c
+    when `left`, else on the right."""
+    dx, dy = c[0] - p[0], c[1] - p[1]
+    d = math.hypot(dx, dy)
+    a = math.atan2(dy, dx) + (1 if left else -1) * math.asin(r / d)
+    t = math.sqrt(d * d - r * r)
+    return (p[0] + t * math.cos(a), p[1] + t * math.sin(a))
+
+
+def outer_tangent(c1, r1, c2, r2):
+    """The outer tangent of two circles on the left of the direction c1→c2: its two touch points."""
+    a = math.atan2(c2[1] - c1[1], c2[0] - c1[0])
+    phi = a + math.acos((r1 - r2) / math.dist(c1, c2))
+    n = (math.cos(phi), math.sin(phi))
+    return (c1[0] + r1 * n[0], c1[1] + r1 * n[1]), (c2[0] + r2 * n[0], c2[1] + r2 * n[1])
+
+
+def valley_fillet(left, v, r):
+    """A concave round of radius r in the symmetric valley left → v → mirror(left), the valley
+    pointing up (v above the line's other end): (left touch point, centre)."""
+    u = _unit((v[0] - left[0], v[1] - left[1], 0))
+    half = math.atan2(u[1], u[0])                      # each flank's slope = half the deflection
+    t = r * math.tan(half)
+    return (v[0] - u[0] * t, v[1] - u[1] * t), (v[0], v[1] - r / math.cos(half))
+
+
+def cross_hole(R, a, rb=0.0, n=4000):
+    """Volume a Ø2a hole removes going right through a Ø2R round bar (with a Ø2rb bore), the axes
+    crossing at right angles: ∫ hole width x chord through the material."""
+    h, v = 2 * a / n, 0.0
+    for i in range(n):
+        y = -a + (i + 0.5) * h
+        chord = 2 * math.sqrt(R * R - y * y) - (2 * math.sqrt(rb * rb - y * y) if abs(y) < rb else 0)
+        v += 2 * math.sqrt(a * a - y * y) * chord * h
+    return v
+
+
+# ----------------------------------------------------------------------------- 2-18
+@part("2-18", "Rear axle yoke arm", "Aluminum")
+def rear_yoke_arm(s):
+    """Sheet 04, 2-18 (scale 1:2): a 4 thick aluminium arm. A Ø12 hole in an R9.5 boss at the
+    origin; Ø3 holes in R4.5 ends at (±47, -10). The top edges run tangent from the ends to the
+    boss (their virtual sharp is 10 above the Ø12 centre); the bottom edges run from the ends to a
+    point 8.5 below the Ø12 centre, rounded R20 there. XY plane, Z = 0..4."""
+    T = s.param("rya_t", 4, "thickness")
+    X = s.param("rya_x", 47, "end holes either side")
+    YE = s.param("rya_ends", 10, "end holes below the Ø12 centre")
+    RB = s.param("rya_boss_r", 9.5, "boss radius")
+    RE = s.param("rya_end_r", 4.5, "end radius")
+    YV = s.param("rya_valley", 8.5, "bottom point below the Ø12 centre")
+    RV = s.param("rya_valley_r", 20, "round at the bottom point")
+    m = lambda p: (-p[0], p[1])
+    cl, c0 = (-X, -YE), (0, 0)
+    tl_end, tl_boss = outer_tangent(cl, RE, c0, RB)        # left top edge, on the left of cl→c0
+    v = (0, -YV)
+    # the bottom flank from the end circle's underside to v
+    bl = tangent_from(v, cl, RE, left=True)
+    fl, fc = valley_fillet(bl, v, RV)
+    start = bl
+    segs = [("line", fl), ("arc", fc, m(fl), False), ("line", m(bl)), ("arc", m(cl), m(tl_end), True),
+            ("line", m(tl_boss)), ("arc", c0, tl_boss, True), ("line", tl_end), ("arc", cl, bl, True)]
+    s.sketch("Arm", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    s.cmd("sketch.circle.center", center=[0, 0], diameter=12)
+    for x in (-X, X):
+        s.cmd("sketch.circle.center", center=[x, -YE], diameter=3)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [0, -YV + 1]}], name="Arm", body_name=s.body)
+    return (loop_area(start, segs) - math.pi / 4 * (144 + 2 * 9)) * T
+
+
+# ----------------------------------------------------------------------------- 2-19
+@part("2-19", "Front axle yoke tie rod", "Steel")
+def yoke_tie_rod(s):
+    """Sheet 04, 2-19: a Ø5 x 118.5 rod with M3 x 7 ends (threads at the Ø3 major diameter).
+    Axis = Z."""
+    D = s.param("ytr_d", 5, "rod")
+    L = s.param("ytr_l", 118.5, "rod length")
+    LT = s.param("ytr_thread", 7, "M3 ends")
+    return s.turned("Rod", [(0, 0), (1.5, 0), (1.5, LT), (D / 2, LT), (D / 2, LT + L), (1.5, LT + L),
+                            (1.5, 2 * LT + L), (0, 2 * LT + L)])
+
+
+# ----------------------------------------------------------------------------- 2-20
+@part("2-20", "Front axle yoke arm", "Aluminum")
+def front_yoke_arm(s):
+    """Sheet 04, 2-20 (scale 1:2.5): a 4 thick aluminium arm 165 long, the ends 16 high about the
+    hole line (Y = 0). A Ø12 hole 10 above the hole line at the centre, in an R11 round; the top
+    edges run tangent to it from the ends of the straight end portions (±56.5, 8). The bottom edges
+    run from (±56.5, -8) up to the hole line at the centre, rounded R50 there. Ø3 / Ø4 / Ø3 holes at
+    47 / 64.5 / 78.5 either side. XY plane, Z = 0..4."""
+    T = s.param("fya_t", 4, "thickness")
+    L = s.param("fya_l", 165, "length (82.5 + 82.5)")
+    H = s.param("fya_end_h", 16, "end height (8 + 8)")
+    XS = s.param("fya_straight", 56.5, "straight end portions start")
+    YC = s.param("fya_hole_y", 10, "Ø12 above the hole line")
+    RC = s.param("fya_top_r", 11, "round over the Ø12")
+    RV = s.param("fya_valley_r", 50, "round at the bottom centre")
+    m = lambda p: (-p[0], p[1])
+    a, h = L / 2, H / 2
+    c = (0, YC)
+    tl = tangent_from((-XS, h), c, RC, left=True)
+    fl, fc = valley_fillet((-XS, -h), (0, 0), RV)
+    start = (-a, -h)
+    segs = [("line", (-XS, -h)), ("line", fl), ("arc", fc, m(fl), False), ("line", (XS, -h)), ("line", (a, -h)),
+            ("line", (a, h)), ("line", (XS, h)), ("line", m(tl)), ("arc", c, tl, True), ("line", (-XS, h)),
+            ("line", (-a, h)), ("line", start)]
+    holes = [(x, 3) for x in (-78.5, -47, 47, 78.5)] + [(x, 4) for x in (-64.5, 64.5)]
+    s.sketch("Arm", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    s.cmd("sketch.circle.center", center=[0, YC], diameter=12)
+    for x, d in holes:
+        s.cmd("sketch.circle.center", center=[x, 0], diameter=d)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [-a + 1, -h + 1]}], name="Arm", body_name=s.body)
+    return (loop_area(start, segs) - math.pi / 4 * (144 + sum(d * d for _, d in holes))) * T
+
+
+# ----------------------------------------------------------------------------- 2-21
+@part("2-21", "Front axle yoke bearing", {"bush": "Brass", "pin": "Steel"})
+def yoke_bearing(s):
+    """Sheet 04, 2-21 (scale 1:1.5, measured from the section's lines): a brass flanged bush, Ø16 x 4
+    flange and a Ø12 x 4.1 spigot (pressed into the arm's Ø12 hole: 12PF), reamed Ø8; on a steel
+    pin: a Ø12 x 3 head with an R1 round, a Ø8 x 8.1 shank in the bush and an M6 x 10 end (at the
+    Ø6 major diameter), drilled Ø2 right through. Axis = Z, the head's end face on Z = 0."""
+    HD = s.param("ybr_head", 3, "pin head length")
+    LB = s.param("ybr_bush", 8.1, "bush length")
+    LF = s.param("ybr_flange", 4, "flange width")
+    LT = s.param("ybr_thread", 10, "M6 end")
+    n = s.body.split()[0]
+    z1, z2 = HD, HD + LB
+    v = s.turned("Pin", [(1, 0), (6, 0), (6, z1), (4, z1), (4, z2), (3, z2), (3, z2 + LT), (1, z2 + LT)],
+                 body=f"{n} pin")
+    s.cmd("solid.fillet", edges=[[6, 0, 0]], radius=1, name="Head round")
+    k = (10 - 3 * math.pi) / (12 - 3 * math.pi)                # spandrel centroid from the corner, x r
+    v -= 2 * math.pi * (6 - k) * (1 - math.pi / 4)
+    v += s.turned("Bush", [(4, z1), (8, z1), (8, z1 + LF), (6, z1 + LF), (6, z2), (4, z2)], body=f"{n} bush")
+    return v
+
+
+# ----------------------------------------------------------------------------- 2-22
+@part("2-22", "Front axle yoke wheel hinge bracket", "Brass")
+def wheel_hinge_bracket(s):
+    """Sheet 04, 2-22 (scale 1:2): a brass block 16 wide: a bar 25 long and 6 thick, then an eye
+    10 high (4 deeper than the bar), its end an R5 round 32 from the bar's end, bored Ø6 across.
+    M4 (Ø3.3) and M3 (Ø2.5) holes down through the bar at 7 and 21 from its end. X along, Y across,
+    Z = 0 the top face."""
+    W = s.param("whb_w", 16, "width (8 + 8)")
+    LB = s.param("whb_bar", 25, "bar length")
+    T = s.param("whb_t", 6, "bar thickness")
+    XE = s.param("whb_eye", 32, "eye centre from the bar's end (25 + 7)")
+    R = s.param("whb_eye_r", 5, "eye radius")
+    start = (0, 0)
+    segs = [("line", (XE, 0)), ("arc", (XE, -R), (XE, -2 * R), False), ("line", (LB, -2 * R)),
+            ("line", (LB, -T)), ("line", (0, -T)), ("line", start)]
+    s.sketch("Side", (0, -W / 2, 0), (1, 0, 0), (0, 0, 1))              # normal -Y
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.extrude", distance=W, direction="negative", name="Block", body_name=s.body)
+    v = loop_area(start, segs) * W
+    s.holes("Ø6 eye", (0, -W / 2, 0), (0, 1, 0), [(XE, -W / 2, -R)], 6)
+    s.holes("M4 tapped", (0, 0, 0), (0, 0, -1), [(7, 0, 0)], 3.3)
+    s.holes("M3 tapped", (0, 0, 0), (0, 0, -1), [(21, 0, 0)], 2.5)
+    return v - math.pi / 4 * (36 * W + (3.3 ** 2 + 2.5 ** 2) * T)
+
+
+# ----------------------------------------------------------------------------- 2-23
+@part("2-23", "Wheel pivot axle", {"axle": "Steel", "pin": "Brass"})
+def wheel_pivot_axle(s):
+    """Sheet 04, 2-23 (scale 1:1.5): a steel block Ø18 x 16 with two flats 13 apart (6.5 + 6.5),
+    bored Ø5 through the flats 8 up; on it a Ø6 x 16 axle with a Ø4 x 3 top, cross-drilled Ø1.5 at
+    1.5 below the top for a Ø1.5 x 9 brass pin. Axis = Z, flats normal to Y, block bottom Z = 0."""
+    D = s.param("wpa_d", 18, "block")
+    F = s.param("wpa_flats", 13, "across the flats")
+    HB = s.param("wpa_block_h", 16, "block height (8 + 8)")
+    DA = s.param("wpa_axle_d", 6, "axle")
+    HA = s.param("wpa_axle_h", 16, "axle length")
+    HT = s.param("wpa_top_h", 3, "Ø4 top")
+    LP = s.param("wpa_pin", 9, "pin length")
+    n = s.body.split()[0]
+    r, h = D / 2, F / 2
+    x = math.sqrt(r * r - h * h)
+    start = (x, -h)
+    segs = [("arc", (0, 0), (x, h), True), ("line", (-x, h)), ("arc", (0, 0), (-x, -h), True), ("line", start)]
+    s.sketch("Block", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.extrude", distance=HB, name="Block", body_name=f"{n} axle")
+    v = loop_area(start, segs) * HB
+    # the axle starts 1 inside the block so the two overlap instead of touching
+    z2 = HB + HA
+    v += s.turned("Axle", [(0, HB - 1), (DA / 2, HB - 1), (DA / 2, z2), (2, z2), (2, z2 + HT), (0, z2 + HT)],
+                  body=f"{n} axle", operation="join") - math.pi * (DA / 2) ** 2 * 1
+    s.holes("Ø5 cross hole", (0, -D, 0), (0, 1, 0), [(0, -D, HB / 2)], 5, target=f"{n} axle")
+    zp = z2 + HT - 1.5
+    s.holes("Pin hole", (0, -D, 0), (0, 1, 0), [(0, -D, zp)], 1.5, target=f"{n} axle")
+    v -= math.pi / 4 * 25 * F + cross_hole(2, 0.75)
+    s.sketch("Pin", (0, -LP / 2, 0), (1, 0, 0), (0, 0, 1))               # normal -Y
+    s.cmd("sketch.circle.center", center=[0, zp], diameter=1.5)
+    s.finish()
+    s.cmd("solid.extrude", distance=LP, direction="negative", operation="new", name="Pin", body_name=f"{n} pin")
+    return v + math.pi / 4 * 1.5 ** 2 * LP
+
+
+# ----------------------------------------------------------------------------- 2-24
+@part("2-24", "Wheel pivot axle connector bracket", "Steel")
+def axle_connector_bracket(s):
+    """Sheet 04, 2-24 (scale 1:1.5): a 2 thick steel plate 12 x 13 with a Ø5 hole at the origin; a
+    neck 8 wide leaves it and twists through 90° into a tab 8 high and 2 thick, its end an R4
+    round with an M3 (Ø2.5) hole 27 from the Ø5. The twist (drawn from X = 6 to about 22) is a
+    loft from the plate's 8 x 2 section to the tab's 2 x 8 section. Plate on Z = -1..1."""
+    T = s.param("acb_t", 2, "thickness")
+    W = s.param("acb_w", 12, "plate along X (6 + 6)")
+    D = s.param("acb_d", 13, "plate across (6.5 + 6.5)")
+    B = s.param("acb_neck", 8, "neck and tab width")
+    X1 = s.param("acb_twist_end", 22, "twist ends (measured)")
+    XH = s.param("acb_hole_x", 27, "M3 from the Ø5")
+    R = B / 2
+    s.sketch("Plate", (0, 0, -T / 2), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.rectangle.two_point", p0=[-W / 2, -D / 2], p1=[W / 2, D / 2])
+    s.finish()
+    s.cmd("solid.extrude", distance=T, name="Plate", body_name=s.body)
+    v = W * D * T
+    # the twist: a loft whose faces are all planar. It starts 1 mm inside the plate, its section
+    # there extrapolated so the faces are the same planes: the two solids cross instead of
+    # touching (touching faces need a separation retry)
+    e = -1 / (X1 - W / 2)
+    s.sketch("Neck start", (W / 2 - 1, 0, 0), (0, 1, 0), (0, 0, 1))      # normal +X
+    s.cmd("sketch.rectangle.two_point", p0=[-(B - (B - T) * e) / 2, -(T + (B - T) * e) / 2],
+          p1=[(B - (B - T) * e) / 2, (T + (B - T) * e) / 2])
+    s.finish()
+    s.sketch("Neck end", (X1, 0, 0), (0, 1, 0), (0, 0, 1))
+    s.cmd("sketch.rectangle.two_point", p0=[-T / 2, -B / 2], p1=[T / 2, B / 2])
+    s.finish()
+    s.cmd("solid.loft", sections=[{"sketch": "Neck start"}, {"sketch": "Neck end"}], operation="join",
+          targets=[s.body], name="Twist")
+    # ruled loft between corresponding corners: a (B - (B-T)t) x (T + (B-T)t) section
+    v += (X1 - W / 2) * (B * T + (B - T) ** 2 / 6)
+    # tab: square-ended in the plane Y = -T/2 .. T/2, then its end rounded R4 by a cut
+    s.sketch("Tab", (0, T / 2, 0), (1, 0, 0), (0, 0, 1))                 # normal -Y
+    s.cmd("sketch.rectangle.two_point", p0=[X1, -R], p1=[XH + R, R])
+    s.finish()
+    s.cmd("solid.extrude", distance=T, operation="join", targets=[s.body], name="Tab")
+    s.sketch("Tab end", (0, T, 0), (1, 0, 0), (0, 0, 1))
+    s.cmd("sketch.rectangle.two_point", p0=[XH, -R - 1], p1=[XH + R + 1, R + 1])
+    s.cmd("sketch.circle.center", center=[XH, 0], diameter=B)
+    s.finish()
+    s.cmd("solid.extrude", distance=2 * T, operation="cut", targets=[s.body],
+          profiles=[{"point": [XH + R + 0.5, 0]}], name="Tab end round")
+    v += ((XH - X1) * B + math.pi / 2 * R * R) * T
+    s.holes("Ø5", (0, 0, T / 2), (0, 0, -1), [(0, 0, T / 2)], 5)
+    s.holes("M3 tapped", (0, T / 2, 0), (0, -1, 0), [(XH, T / 2, 0)], 2.5)
+    return v - math.pi / 4 * (25 + 2.5 ** 2) * T
+
+
+# ----------------------------------------------------------------------------- 2-13
+@part("2-13", "Fuel tank gear wheel shaft handle collar", {"collar": "Brass", "lever": "Steel"})
+def handle_collar(s):
+    """Sheet 04, 2-13 (scale 1:1.5): a brass collar on the Ø4 gear shaft (2-12): Ø11.5 x 14 with a
+    Ø8 x 4 spigot on one side and a Ø6 x 4 spigot on the other, bored Ø4, cross-drilled Ø4 9 from
+    the Ø6 side. A 2 thick steel lever pressed on the Ø6 spigot: R5 round the Ø6 hole, R4 round an M3
+    (Ø2.5) hole 19 away. Axis = Z, the collar's Ø6-side face on Z = 0, the lever on Z = 0..2 along X."""
+    D = s.param("hc_d", 11.5, "collar")
+    L = s.param("hc_l", 14, "collar length")
+    C = s.param("hc_centres", 19, "lever hole centres")
+    n = s.body.split()[0]
+    v = link(s, C, 5, 4, 6, 2.5, 2, body=f"{n} lever", name="Lever")
+    v += s.turned("Collar", [(2, -L - 4), (4, -L - 4), (4, -L), (D / 2, -L), (D / 2, 0), (3, 0), (3, 4), (2, 4)],
+                  body=f"{n} collar")
+    s.holes("Ø4 cross hole", (-D, 0, 0), (1, 0, 0), [(-D, 0, -9)], 4, target=f"{n} collar")
+    return v - cross_hole(D / 2, 2, 2)
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]

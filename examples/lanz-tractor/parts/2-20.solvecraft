@@ -1,0 +1,624 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "fya_t",
+      "expr": "4",
+      "unit": "mm",
+      "comment": "thickness",
+      "model": false
+    },
+    {
+      "name": "fya_l",
+      "expr": "165",
+      "unit": "mm",
+      "comment": "length (82.5 + 82.5)",
+      "model": false
+    },
+    {
+      "name": "fya_end_h",
+      "expr": "16",
+      "unit": "mm",
+      "comment": "end height (8 + 8)",
+      "model": false
+    },
+    {
+      "name": "fya_straight",
+      "expr": "56.5",
+      "unit": "mm",
+      "comment": "straight end portions start",
+      "model": false
+    },
+    {
+      "name": "fya_hole_y",
+      "expr": "10",
+      "unit": "mm",
+      "comment": "Ø12 above the hole line",
+      "model": false
+    },
+    {
+      "name": "fya_top_r",
+      "expr": "11",
+      "unit": "mm",
+      "comment": "round over the Ø12",
+      "model": false
+    },
+    {
+      "name": "fya_valley_r",
+      "expr": "50",
+      "unit": "mm",
+      "comment": "round at the bottom centre",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Arm",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              -82.5,
+              -8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              -56.5,
+              -8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              -56.5,
+              -8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              -7.009727,
+              -0.992528
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              0.0,
+              -50.498727
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              7.009727,
+              -0.992528
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              -7.009727000000001,
+              -0.9925280000000001
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              7.009727,
+              -0.992528
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              56.5,
+              -8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              56.5,
+              -8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              82.5,
+              -8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.start",
+            "pos": [
+              82.5,
+              -8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              82.5,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.start",
+            "pos": [
+              82.5,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              56.5,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.start",
+            "pos": [
+              56.5,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              2.520613,
+              20.707311
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              0.0,
+              10.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              2.520613,
+              20.707311
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              -2.520613,
+              20.707311
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.start",
+            "pos": [
+              -2.520613,
+              20.707311
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.end",
+            "pos": [
+              -56.5,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l9.start",
+            "pos": [
+              -56.5,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l9.end",
+            "pos": [
+              -82.5,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l10.start",
+            "pos": [
+              -82.5,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l10.end",
+            "pos": [
+              -82.5,
+              -8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              10.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              -78.5,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c3.center",
+            "pos": [
+              -47.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c4.center",
+            "pos": [
+              47.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c5.center",
+            "pos": [
+              78.5,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c6.center",
+            "pos": [
+              -64.5,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c7.center",
+            "pos": [
+              64.5,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 5,
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 10,
+            "b": 11,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 12,
+            "b": 13,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 14,
+            "b": 15,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 16,
+            "b": 17,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 18,
+            "a": 19,
+            "b": 20,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 21,
+            "b": 22,
+            "construction": false
+          },
+          {
+            "id": "l9",
+            "type": "line",
+            "a": 23,
+            "b": 24,
+            "construction": false
+          },
+          {
+            "id": "l10",
+            "type": "line",
+            "a": 25,
+            "b": 26,
+            "construction": false
+          },
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 27,
+            "r": 6.0,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 28,
+            "r": 1.5,
+            "construction": false
+          },
+          {
+            "id": "c3",
+            "type": "circle",
+            "c": 29,
+            "r": 1.5,
+            "construction": false
+          },
+          {
+            "id": "c4",
+            "type": "circle",
+            "c": 30,
+            "r": 1.5,
+            "construction": false
+          },
+          {
+            "id": "c5",
+            "type": "circle",
+            "c": 31,
+            "r": 1.5,
+            "construction": false
+          },
+          {
+            "id": "c6",
+            "type": "circle",
+            "c": 32,
+            "r": 2.0,
+            "construction": false
+          },
+          {
+            "id": "c7",
+            "type": "circle",
+            "c": 33,
+            "r": 2.0,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 2,
+            "q": 3
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 4,
+            "q": 7
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 6,
+            "q": 8
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 9,
+            "q": 10
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 11,
+            "q": 12
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 13,
+            "q": 14
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 15,
+            "q": 16
+          },
+          {
+            "id": "k8",
+            "type": "coincident",
+            "p": 17,
+            "q": 19
+          },
+          {
+            "id": "k9",
+            "type": "coincident",
+            "p": 20,
+            "q": 21
+          },
+          {
+            "id": "k10",
+            "type": "coincident",
+            "p": 22,
+            "q": 23
+          },
+          {
+            "id": "k11",
+            "type": "coincident",
+            "p": 24,
+            "q": 25
+          },
+          {
+            "id": "k12",
+            "type": "coincident",
+            "p": 1,
+            "q": 26
+          },
+          {
+            "id": "k13",
+            "type": "coincident",
+            "p": 18,
+            "q": 27
+          }
+        ],
+        "counters": {
+          "a": 2,
+          "c": 7,
+          "k": 13,
+          "l": 10
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Arm",
+      "suppressed": false,
+      "body_names": [
+        "2-20 Front axle yoke arm"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 1,
+      "profiles": {
+        "type": "curves",
+        "loops": [
+          [
+            "l1",
+            "l2",
+            "a1",
+            "l3",
+            "l4",
+            "l5",
+            "l6",
+            "l7",
+            "a2",
+            "l8",
+            "l9",
+            "l10"
+          ]
+        ]
+      },
+      "extent": {
+        "distance": "4",
+        "direction": "positive"
+      },
+      "operation": "new_body"
+    }
+  ],
+  "next_id": 3,
+  "materials": {
+    "2-20 Front axle yoke arm": "Aluminum"
+  }
+}

@@ -454,6 +454,13 @@
   "volume_mm3": 1790.6,
   "mass_g": 14.6
  },
+ "2-13": {
+  "name": "Fuel tank gear wheel shaft handle collar",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 1797.1,
+  "mass_g": 15.0
+ },
  "2-14": {
   "name": "Fuel tank wick holder",
   "material": "Brass",
@@ -481,5 +488,54 @@
   "bodies": 1,
   "volume_mm3": 2393.4,
   "mass_g": 6.5
+ },
+ "2-18": {
+  "name": "Rear axle yoke arm",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 4961.7,
+  "mass_g": 13.4
+ },
+ "2-19": {
+  "name": "Front axle yoke tie rod",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 2425.3,
+  "mass_g": 19.0
+ },
+ "2-20": {
+  "name": "Front axle yoke arm",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 11099.4,
+  "mass_g": 30.0
+ },
+ "2-21": {
+  "name": "Front axle yoke bearing",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 1815.8,
+  "mass_g": 14.8
+ },
+ "2-22": {
+  "name": "Front axle yoke wheel hinge bracket",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 3615.2,
+  "mass_g": 30.7
+ },
+ "2-23": {
+  "name": "Wheel pivot axle",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 3630.3,
+  "mass_g": 28.5
+ },
+ "2-24": {
+  "name": "Wheel pivot axle connector bracket",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 745.2,
+  "mass_g": 5.8
  }
 }

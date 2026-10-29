@@ -1,0 +1,548 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "whb_w",
+      "expr": "16",
+      "unit": "mm",
+      "comment": "width (8 + 8)",
+      "model": false
+    },
+    {
+      "name": "whb_bar",
+      "expr": "25",
+      "unit": "mm",
+      "comment": "bar length",
+      "model": false
+    },
+    {
+      "name": "whb_t",
+      "expr": "6",
+      "unit": "mm",
+      "comment": "bar thickness",
+      "model": false
+    },
+    {
+      "name": "whb_eye",
+      "expr": "32",
+      "unit": "mm",
+      "comment": "eye centre from the bar's end (25 + 7)",
+      "model": false
+    },
+    {
+      "name": "whb_eye_r",
+      "expr": "5",
+      "unit": "mm",
+      "comment": "eye radius",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Side",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            -8.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              32.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              32.0,
+              -5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              32.0,
+              -10.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              32.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              32.0,
+              -10.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              25.0,
+              -10.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              25.0,
+              -10.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              25.0,
+              -6.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              25.0,
+              -6.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              0.0,
+              -6.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.start",
+            "pos": [
+              0.0,
+              -6.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 3,
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 10,
+            "b": 11,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 12,
+            "b": 13,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 1
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 2,
+            "q": 5
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 4,
+            "q": 6
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 7,
+            "q": 8
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 9,
+            "q": 10
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 11,
+            "q": 12
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 0,
+            "q": 13
+          }
+        ],
+        "counters": {
+          "a": 1,
+          "k": 7,
+          "l": 5
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Block",
+      "suppressed": false,
+      "body_names": [
+        "2-22 Front axle yoke wheel hinge bracket"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "16",
+        "direction": "negative"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 3,
+      "name": "Ø6 eye",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            -8.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              32.0,
+              5.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 3.0,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Ø6 eye",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "extrude",
+      "sketch": 3,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "2-22 Front axle yoke wheel hinge bracket"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "M4 tapped",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              -7.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 1.65,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 6,
+      "name": "M4 tapped",
+      "suppressed": false,
+      "param_names": [
+        "d3"
+      ],
+      "type": "extrude",
+      "sketch": 5,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "2-22 Front axle yoke wheel hinge bracket"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "M3 tapped",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              -21.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 1.25,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 8,
+      "name": "M3 tapped",
+      "suppressed": false,
+      "param_names": [
+        "d4"
+      ],
+      "type": "extrude",
+      "sketch": 7,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "2-22 Front axle yoke wheel hinge bracket"
+      ]
+    }
+  ],
+  "next_id": 9,
+  "materials": {
+    "2-22 Front axle yoke wheel hinge bracket": "Brass"
+  }
+}

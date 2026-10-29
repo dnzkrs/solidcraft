@@ -1,0 +1,277 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rya_t",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rya_x",
+    "expression": "47",
+    "unit": "mm",
+    "comment": "end holes either side"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rya_ends",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "end holes below the \u00d812 centre"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rya_boss_r",
+    "expression": "9.5",
+    "unit": "mm",
+    "comment": "boss radius"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rya_end_r",
+    "expression": "4.5",
+    "unit": "mm",
+    "comment": "end radius"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rya_valley",
+    "expression": "8.5",
+    "unit": "mm",
+    "comment": "bottom point below the \u00d812 centre"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rya_valley_r",
+    "expression": "20",
+    "unit": "mm",
+    "comment": "round at the bottom point"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Arm"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -46.426702,
+      -14.463332
+     ],
+     [
+      -2.54799,
+      -8.82728
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     -28.664309
+    ],
+    "start": [
+     2.54799,
+     -8.82728
+    ],
+    "end": [
+     -2.54799,
+     -8.82728
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2.54799,
+      -8.82728
+     ],
+     [
+      46.426702,
+      -14.463332
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     47,
+     -10
+    ],
+    "start": [
+     46.426702,
+     -14.463332
+    ],
+    "end": [
+     48.389391,
+     -5.719861
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.389391,
+      -5.719861
+     ],
+     [
+      2.933159,
+      9.035849
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     2.933159,
+     9.035849
+    ],
+    "end": [
+     -2.933159,
+     9.035849
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -2.933159,
+      9.035849
+     ],
+     [
+      -48.389391,
+      -5.719861
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -47,
+     -10
+    ],
+    "start": [
+     -48.389391,
+     -5.719861
+    ],
+    "end": [
+     -46.426702,
+     -14.463332
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 12
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -47,
+     -10
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     47,
+     -10
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 4,
+    "profiles": [
+     {
+      "point": [
+       0,
+       -7.5
+      ]
+     }
+    ],
+    "name": "Arm",
+    "body_name": "2-18 Rear axle yoke arm"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-18 Rear axle yoke arm"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

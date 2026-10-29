@@ -1,0 +1,973 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "acb_t",
+      "expr": "2",
+      "unit": "mm",
+      "comment": "thickness",
+      "model": false
+    },
+    {
+      "name": "acb_w",
+      "expr": "12",
+      "unit": "mm",
+      "comment": "plate along X (6 + 6)",
+      "model": false
+    },
+    {
+      "name": "acb_d",
+      "expr": "13",
+      "unit": "mm",
+      "comment": "plate across (6.5 + 6.5)",
+      "model": false
+    },
+    {
+      "name": "acb_neck",
+      "expr": "8",
+      "unit": "mm",
+      "comment": "neck and tab width",
+      "model": false
+    },
+    {
+      "name": "acb_twist_end",
+      "expr": "22",
+      "unit": "mm",
+      "comment": "twist ends (measured)",
+      "model": false
+    },
+    {
+      "name": "acb_hole_x",
+      "expr": "27",
+      "unit": "mm",
+      "comment": "M3 from the Ø5",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Plate",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              -6.0,
+              -6.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p2",
+            "pos": [
+              6.0,
+              -6.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p3",
+            "pos": [
+              6.0,
+              6.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p4",
+            "pos": [
+              -6.0,
+              6.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          }
+        ],
+        "counters": {
+          "k": 4,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Plate",
+      "suppressed": false,
+      "body_names": [
+        "2-24 Wheel pivot axle connector bracket"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "2",
+        "direction": "positive"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 3,
+      "name": "Neck start",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            5.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              -4.1875,
+              -0.8125
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p2",
+            "pos": [
+              4.1875,
+              -0.8125
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p3",
+            "pos": [
+              4.1875,
+              0.8125
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p4",
+            "pos": [
+              -4.1875,
+              0.8125
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          }
+        ],
+        "counters": {
+          "k": 4,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Neck end",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            22.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              -1.0,
+              -4.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p2",
+            "pos": [
+              1.0,
+              -4.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p3",
+            "pos": [
+              1.0,
+              4.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p4",
+            "pos": [
+              -1.0,
+              4.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          }
+        ],
+        "counters": {
+          "k": 4,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 5,
+      "name": "Twist",
+      "suppressed": false,
+      "type": "loft",
+      "sections": [
+        {
+          "sketch": 3,
+          "profiles": {
+            "type": "all"
+          }
+        },
+        {
+          "sketch": 4,
+          "profiles": {
+            "type": "all"
+          }
+        }
+      ],
+      "operation": "join",
+      "targets": [
+        "2-24 Wheel pivot axle connector bracket"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Tab",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              22.0,
+              -4.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p2",
+            "pos": [
+              31.0,
+              -4.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p3",
+            "pos": [
+              31.0,
+              4.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p4",
+            "pos": [
+              22.0,
+              4.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          }
+        ],
+        "counters": {
+          "k": 4,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 7,
+      "name": "Tab",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "extrude",
+      "sketch": 6,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "2",
+        "direction": "positive"
+      },
+      "operation": "join",
+      "targets": [
+        "2-24 Wheel pivot axle connector bracket"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Tab end",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            2.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "p1",
+            "pos": [
+              27.0,
+              -5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p2",
+            "pos": [
+              32.0,
+              -5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p3",
+            "pos": [
+              32.0,
+              5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "p4",
+            "pos": [
+              27.0,
+              5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              27.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          },
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 5,
+            "r": 4.0,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "horizontal",
+            "l": 0
+          },
+          {
+            "id": "k2",
+            "type": "horizontal",
+            "l": 2
+          },
+          {
+            "id": "k3",
+            "type": "vertical",
+            "l": 1
+          },
+          {
+            "id": "k4",
+            "type": "vertical",
+            "l": 3
+          }
+        ],
+        "counters": {
+          "c": 1,
+          "k": 4,
+          "l": 4,
+          "p": 4
+        }
+      }
+    },
+    {
+      "id": 9,
+      "name": "Tab end round",
+      "suppressed": false,
+      "param_names": [
+        "d3"
+      ],
+      "type": "extrude",
+      "sketch": 8,
+      "profiles": {
+        "type": "curves",
+        "loops": [
+          [
+            "l1",
+            "l2",
+            "l3",
+            "l4",
+            "c1",
+            "l4"
+          ]
+        ]
+      },
+      "extent": {
+        "distance": "4",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "2-24 Wheel pivot axle connector bracket"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Ø5",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 2.5,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 1
+          }
+        ],
+        "counters": {
+          "c": 1,
+          "k": 1
+        }
+      }
+    },
+    {
+      "id": 11,
+      "name": "Ø5",
+      "suppressed": false,
+      "param_names": [
+        "d4"
+      ],
+      "type": "extrude",
+      "sketch": 10,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "2-24 Wheel pivot axle connector bracket"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "M3 tapped",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            -0.0,
+            -1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              -27.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 1.25,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 13,
+      "name": "M3 tapped",
+      "suppressed": false,
+      "param_names": [
+        "d5"
+      ],
+      "type": "extrude",
+      "sketch": 12,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "2-24 Wheel pivot axle connector bracket"
+      ]
+    }
+  ],
+  "next_id": 14,
+  "materials": {
+    "2-24 Wheel pivot axle connector bracket": "Steel"
+  }
+}

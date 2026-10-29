@@ -1,0 +1,330 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "whb_w",
+    "expression": "16",
+    "unit": "mm",
+    "comment": "width (8 + 8)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "whb_bar",
+    "expression": "25",
+    "unit": "mm",
+    "comment": "bar length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "whb_t",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "bar thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "whb_eye",
+    "expression": "32",
+    "unit": "mm",
+    "comment": "eye centre from the bar's end (25 + 7)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "whb_eye_r",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "eye radius"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -8.0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Side"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      32,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     32,
+     -5
+    ],
+    "start": [
+     32,
+     -10
+    ],
+    "end": [
+     32,
+     0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      32,
+      -10
+     ],
+     [
+      25,
+      -10
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25,
+      -10
+     ],
+     [
+      25,
+      -6
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25,
+      -6
+     ],
+     [
+      0,
+      -6
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -6
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 16,
+    "direction": "negative",
+    "name": "Block",
+    "body_name": "2-22 Front axle yoke wheel hinge bracket"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -8.0,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "\u00d86 eye"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     32.0,
+     5.0
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-22 Front axle yoke wheel hinge bracket"
+    ],
+    "name": "\u00d86 eye"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -7.0,
+     0.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-22 Front axle yoke wheel hinge bracket"
+    ],
+    "name": "M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M3 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -21.0,
+     0.0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-22 Front axle yoke wheel hinge bracket"
+    ],
+    "name": "M3 tapped"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-22 Front axle yoke wheel hinge bracket"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

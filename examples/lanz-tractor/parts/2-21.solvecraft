@@ -1,0 +1,425 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "ybr_head",
+      "expr": "3",
+      "unit": "mm",
+      "comment": "pin head length",
+      "model": false
+    },
+    {
+      "name": "ybr_bush",
+      "expr": "8.1",
+      "unit": "mm",
+      "comment": "bush length",
+      "model": false
+    },
+    {
+      "name": "ybr_flange",
+      "expr": "4",
+      "unit": "mm",
+      "comment": "flange width",
+      "model": false
+    },
+    {
+      "name": "ybr_thread",
+      "expr": "10",
+      "unit": "mm",
+      "comment": "M6 end",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Pin section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              1.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              6.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              6.0,
+              3.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              4.0,
+              3.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              4.0,
+              11.1
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              3.0,
+              11.1
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              3.0,
+              21.1
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              1.0,
+              21.1
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 8,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 8
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Pin",
+      "suppressed": false,
+      "body_names": [
+        "2-21 pin"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "revolve",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      },
+      "axis": {
+        "type": "world",
+        "axis": "Z"
+      },
+      "angle": "360 deg",
+      "operation": "new_body",
+      "convention": "sketch_normal"
+    },
+    {
+      "id": 3,
+      "name": "Head round",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "edge_refs": [
+        {
+          "dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "min": [
+            -6.000000000000006,
+            -5.995560487738421,
+            0.0
+          ],
+          "max": [
+            6.000000000000005,
+            5.995560487738427,
+            21.1
+          ]
+        }
+      ],
+      "edge_names": [
+        "F2:side:l1#1|F2:side:l1#3"
+      ],
+      "type": "fillet",
+      "edges": [
+        [
+          6.0,
+          0.0,
+          0.0
+        ]
+      ],
+      "radius": "1"
+    },
+    {
+      "id": 4,
+      "name": "Bush section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              4.0,
+              3.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              8.0,
+              3.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              8.0,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              6.0,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              6.0,
+              11.1
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              4.0,
+              11.1
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 6
+        }
+      }
+    },
+    {
+      "id": 5,
+      "name": "Bush",
+      "suppressed": false,
+      "body_names": [
+        "2-21 bush"
+      ],
+      "param_names": [
+        "d3"
+      ],
+      "type": "revolve",
+      "sketch": 4,
+      "profiles": {
+        "type": "all"
+      },
+      "axis": {
+        "type": "world",
+        "axis": "Z"
+      },
+      "angle": "360 deg",
+      "operation": "new_body",
+      "convention": "sketch_normal"
+    }
+  ],
+  "next_id": 6,
+  "materials": {
+    "2-21 bush": "Brass",
+    "2-21 pin": "Steel"
+  }
+}
