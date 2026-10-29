@@ -1,0 +1,599 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [],
+  "features": [
+    {
+      "id": 1,
+      "name": "Rim section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              8.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              16.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              16.0,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              25.0,
+              5.3
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              29.0,
+              5.3
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              33.25,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              36.0,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              36.0,
+              1.8
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.end",
+            "pos": [
+              31.0,
+              6.8
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l9.end",
+            "pos": [
+              31.0,
+              16.8
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l10.end",
+            "pos": [
+              36.0,
+              21.8
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l11.end",
+            "pos": [
+              36.0,
+              22.6
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l12.end",
+            "pos": [
+              33.25,
+              22.6
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l13.end",
+            "pos": [
+              29.0,
+              18.3
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l14.end",
+            "pos": [
+              29.0,
+              10.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l15.end",
+            "pos": [
+              7.0,
+              10.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l16.end",
+            "pos": [
+              7.0,
+              9.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l17.end",
+            "pos": [
+              8.0,
+              9.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "l9",
+            "type": "line",
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "l10",
+            "type": "line",
+            "a": 10,
+            "b": 11,
+            "construction": false
+          },
+          {
+            "id": "l11",
+            "type": "line",
+            "a": 11,
+            "b": 12,
+            "construction": false
+          },
+          {
+            "id": "l12",
+            "type": "line",
+            "a": 12,
+            "b": 13,
+            "construction": false
+          },
+          {
+            "id": "l13",
+            "type": "line",
+            "a": 13,
+            "b": 14,
+            "construction": false
+          },
+          {
+            "id": "l14",
+            "type": "line",
+            "a": 14,
+            "b": 15,
+            "construction": false
+          },
+          {
+            "id": "l15",
+            "type": "line",
+            "a": 15,
+            "b": 16,
+            "construction": false
+          },
+          {
+            "id": "l16",
+            "type": "line",
+            "a": 16,
+            "b": 17,
+            "construction": false
+          },
+          {
+            "id": "l17",
+            "type": "line",
+            "a": 17,
+            "b": 18,
+            "construction": false
+          },
+          {
+            "id": "l18",
+            "type": "line",
+            "a": 18,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 18
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Rim",
+      "suppressed": false,
+      "body_names": [
+        "2-31 Front wheel rim"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "revolve",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      },
+      "axis": {
+        "type": "world",
+        "axis": "Z"
+      },
+      "angle": "360 deg",
+      "operation": "new_body",
+      "convention": "sketch_normal"
+    },
+    {
+      "id": 3,
+      "name": "Ø6 counterbores",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            11.0
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              -8.485281,
+              8.485281
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              8.485281,
+              8.485281
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c3.center",
+            "pos": [
+              8.485281,
+              -8.485281
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c4.center",
+            "pos": [
+              -8.485281,
+              -8.485281
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 3.0,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 3.0,
+            "construction": false
+          },
+          {
+            "id": "c3",
+            "type": "circle",
+            "c": 3,
+            "r": 3.0,
+            "construction": false
+          },
+          {
+            "id": "c4",
+            "type": "circle",
+            "c": 4,
+            "r": 3.0,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 4
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Ø6 counterbores",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "extrude",
+      "sketch": 3,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "5",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "2-31 Front wheel rim"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "M3 tapped",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              8.485281,
+              8.485281
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              -8.485281,
+              8.485281
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c3.center",
+            "pos": [
+              -8.485281,
+              -8.485281
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c4.center",
+            "pos": [
+              8.485281,
+              -8.485281
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 1.25,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 1.25,
+            "construction": false
+          },
+          {
+            "id": "c3",
+            "type": "circle",
+            "c": 3,
+            "r": 1.25,
+            "construction": false
+          },
+          {
+            "id": "c4",
+            "type": "circle",
+            "c": 4,
+            "r": 1.25,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 4
+        }
+      }
+    },
+    {
+      "id": 6,
+      "name": "M3 tapped",
+      "suppressed": false,
+      "param_names": [
+        "d3"
+      ],
+      "type": "extrude",
+      "sketch": 5,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "8",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "2-31 Front wheel rim"
+      ]
+    }
+  ],
+  "next_id": 7,
+  "materials": {
+    "2-31 Front wheel rim": "Aluminum"
+  }
+}

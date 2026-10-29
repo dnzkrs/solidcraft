@@ -1,0 +1,826 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "sa_t",
+      "expr": "2",
+      "unit": "mm",
+      "comment": "thickness",
+      "model": false
+    },
+    {
+      "name": "sa_w",
+      "expr": "7",
+      "unit": "mm",
+      "comment": "arm width",
+      "model": false
+    },
+    {
+      "name": "sa_root_r",
+      "expr": "3.5",
+      "unit": "mm",
+      "comment": "root rounds",
+      "model": false
+    },
+    {
+      "name": "sa_bend_x",
+      "expr": "16",
+      "unit": "mm",
+      "comment": "bend starts (measured)",
+      "model": false
+    },
+    {
+      "name": "sa_bend_r",
+      "expr": "16.5",
+      "unit": "mm",
+      "comment": "bend radius, inside edge",
+      "model": false
+    },
+    {
+      "name": "sa_bend_a",
+      "expr": "26",
+      "unit": "deg",
+      "comment": "bend angle",
+      "model": false
+    },
+    {
+      "name": "sa_hole1",
+      "expr": "13.38",
+      "unit": "mm",
+      "comment": "first hole along the bent leg's centre line (measured)",
+      "model": false
+    },
+    {
+      "name": "sa_pitch",
+      "expr": "8",
+      "unit": "mm",
+      "comment": "hole pitch",
+      "model": false
+    },
+    {
+      "name": "sa_end_r",
+      "expr": "4",
+      "unit": "mm",
+      "comment": "end radius",
+      "model": false
+    },
+    {
+      "name": "sa_up_h",
+      "expr": "17",
+      "unit": "mm",
+      "comment": "upright height (2 + 8 + 7)",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Arm",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              0.0,
+              -7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              2.0,
+              -7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              5.5,
+              -7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              5.5,
+              -3.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              2.0,
+              -7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              5.5,
+              -3.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              16.0,
+              -3.499999990482693
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              16.000000005452755,
+              19.999999964953997
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              16.0,
+              -3.4999999904816126
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              26.301722019299667,
+              -1.1216600421274452
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              26.30172201929902,
+              -1.1216600421264078
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              43.7774309958387,
+              7.401812946141575
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.center",
+            "pos": [
+              43.98363989413361,
+              11.396494073197934
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.start",
+            "pos": [
+              43.77743099583749,
+              7.4018129461260065
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.end",
+            "pos": [
+              40.70883345906208,
+              13.693370698075437
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              40.7088334590475,
+              13.693370698087103
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              23.233123921415984,
+              5.169898174342535
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.center",
+            "pos": [
+              16.00000000545998,
+              19.999999964955684
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.start",
+            "pos": [
+              16.0,
+              3.4999999436777594
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.end",
+            "pos": [
+              23.233123921410012,
+              5.169898174352134
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.start",
+            "pos": [
+              16.0,
+              3.4999999437340255
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              5.5,
+              3.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.center",
+            "pos": [
+              5.5,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.start",
+            "pos": [
+              2.0,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.end",
+            "pos": [
+              5.5,
+              3.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.start",
+            "pos": [
+              2.0,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              0.0,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.start",
+            "pos": [
+              0.0,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              0.0,
+              -7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              36.793287,
+              7.889525
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              43.98363989423937,
+              11.39649407312481
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 3,
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 8,
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 11,
+            "b": 12,
+            "construction": false
+          },
+          {
+            "id": "a3",
+            "type": "arc",
+            "c": 13,
+            "a": 14,
+            "b": 15,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 16,
+            "b": 17,
+            "construction": false
+          },
+          {
+            "id": "a4",
+            "type": "arc",
+            "c": 18,
+            "a": 19,
+            "b": 20,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 21,
+            "b": 22,
+            "construction": false
+          },
+          {
+            "id": "a5",
+            "type": "arc",
+            "c": 23,
+            "a": 24,
+            "b": 25,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 26,
+            "b": 27,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 28,
+            "b": 29,
+            "construction": false
+          },
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 30,
+            "r": 1.65,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 31,
+            "r": 1.65,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 2,
+            "q": 5
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 4,
+            "q": 6
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 7,
+            "q": 9
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 10,
+            "q": 11
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 12,
+            "q": 14
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 15,
+            "q": 16
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 8,
+            "q": 18
+          },
+          {
+            "id": "k8",
+            "type": "coincident",
+            "p": 17,
+            "q": 20
+          },
+          {
+            "id": "k9",
+            "type": "coincident",
+            "p": 19,
+            "q": 21
+          },
+          {
+            "id": "k10",
+            "type": "coincident",
+            "p": 22,
+            "q": 25
+          },
+          {
+            "id": "k11",
+            "type": "coincident",
+            "p": 24,
+            "q": 26
+          },
+          {
+            "id": "k12",
+            "type": "coincident",
+            "p": 27,
+            "q": 28
+          },
+          {
+            "id": "k13",
+            "type": "coincident",
+            "p": 1,
+            "q": 29
+          },
+          {
+            "id": "k14",
+            "type": "coincident",
+            "p": 13,
+            "q": 31
+          }
+        ],
+        "counters": {
+          "a": 5,
+          "c": 2,
+          "k": 14,
+          "l": 7
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Arm",
+      "suppressed": false,
+      "body_names": [
+        "2-25 Wheel pivot axle steering arm"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 1,
+      "profiles": {
+        "type": "curves",
+        "loops": [
+          [
+            "l1",
+            "a1",
+            "l2",
+            "a2",
+            "l3",
+            "a3",
+            "l4",
+            "a4",
+            "l5",
+            "a5",
+            "l6",
+            "l7"
+          ]
+        ]
+      },
+      "extent": {
+        "distance": "2",
+        "direction": "positive"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 3,
+      "name": "Upright",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              -7.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              7.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              7.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              7.0,
+              10.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              0.0,
+              10.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              7.0,
+              10.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              -7.0,
+              10.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              -7.0,
+              10.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              -7.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              10.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 5,
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 10,
+            "r": 2.5,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 2,
+            "q": 3
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 4,
+            "q": 6
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 7,
+            "q": 8
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 1,
+            "q": 9
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 5,
+            "q": 10
+          }
+        ],
+        "counters": {
+          "a": 1,
+          "c": 1,
+          "k": 5,
+          "l": 3
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Upright",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "extrude",
+      "sketch": 3,
+      "profiles": {
+        "type": "curves",
+        "loops": [
+          [
+            "l1",
+            "l2",
+            "a1",
+            "l3"
+          ]
+        ]
+      },
+      "extent": {
+        "distance": "2",
+        "direction": "positive"
+      },
+      "operation": "join",
+      "targets": [
+        "2-25 Wheel pivot axle steering arm"
+      ]
+    }
+  ],
+  "next_id": 5,
+  "materials": {
+    "2-25 Wheel pivot axle steering arm": "Steel"
+  }
+}

@@ -2577,6 +2577,257 @@ def handle_collar(s):
     return v - cross_hole(D / 2, 2, 2)
 
 
+# ----------------------------------------------------------------------------- 2-25
+@part("2-25", "Wheel pivot axle steering arm", "Steel")
+def steering_arm(s):
+    """Sheet 05, 2-25 (scale 1:1.5, bend read from the vector lines): a 2 thick steel upright 14
+    wide, 17 high with an R7 top round a Ø5 hole 10 up, and a flat arm 2 thick, 7 wide, leaving its
+    foot with R3.5 roots. 16 from the upright's back the arm bends 26° on R16.5 (inside edge), then
+    runs on to two M4 (Ø3.3) holes 8 apart, the end one in an R4 end. X along the arm from the
+    upright's back face, Y across, Z up from the arm's underside."""
+    T = s.param("sa_t", 2, "thickness")
+    W = s.param("sa_w", 7, "arm width")
+    RR = s.param("sa_root_r", 3.5, "root rounds")
+    XB = s.param("sa_bend_x", 16, "bend starts (measured)")
+    RB = s.param("sa_bend_r", 16.5, "bend radius, inside edge")
+    A = math.radians(s.param("sa_bend_a", 26, "bend angle", unit="deg"))
+    D1 = s.param("sa_hole1", 13.38, "first hole along the bent leg's centre line (measured)")
+    P = s.param("sa_pitch", 8, "hole pitch")
+    RE = s.param("sa_end_r", 4, "end radius")
+    HU = s.param("sa_up_h", 17, "upright height (2 + 8 + 7)")
+    h = W / 2
+    c = (XB, h + RB)                                       # bend centre (the bend turns toward +Y)
+    ro, ri = RB + W, RB
+    u = (math.cos(A), math.sin(A))
+    n = (math.sin(A), -math.cos(A))                       # the bent leg's right-hand side
+    e0 = (XB + (RB + h) * math.sin(A), h + RB - (RB + h) * math.cos(A))   # bent leg's centre-line start
+    ce = (e0[0] + (D1 + P) * u[0], e0[1] + (D1 + P) * u[1])                # end hole
+    c1 = (e0[0] + D1 * u[0], e0[1] + D1 * u[1])
+    back = math.sqrt(RE * RE - h * h)
+    pr = (ce[0] - back * u[0] + h * n[0], ce[1] - back * u[1] + h * n[1])
+    pl = (ce[0] - back * u[0] - h * n[0], ce[1] - back * u[1] - h * n[1])
+    oe = (c[0] + ro * math.sin(A), c[1] - ro * math.cos(A))
+    ie = (c[0] + ri * math.sin(A), c[1] - ri * math.cos(A))
+    start = (0, -7)
+    segs = [("line", (T, -7)), ("arc", (T + RR, -7), (T + RR, -h), False), ("line", (XB, -h)),
+            ("arc", c, oe, True), ("line", pr), ("arc", ce, pl, True), ("line", ie), ("arc", c, (XB, h), False),
+            ("line", (T + RR, h)), ("arc", (T + RR, 7), (T, 7), False), ("line", (0, 7)), ("line", start)]
+    s.sketch("Arm", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    for p in (c1, ce):
+        s.cmd("sketch.circle.center", center=[round(p[0], 6), round(p[1], 6)], diameter=3.3)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [1, 0]}], name="Arm", body_name=s.body)
+    v = (loop_area(start, segs) - 2 * math.pi / 4 * 3.3 ** 2) * T
+    s.sketch("Upright", (0, 0, 0), (0, 1, 0), (0, 0, 1))                 # normal +X
+    ru, zc = 7, HU - 7
+    s.loop((-ru, 0), [("line", (ru, 0)), ("line", (ru, zc)), ("arc", (0, zc), (-ru, zc), True), ("line", (-ru, 0))])
+    s.cmd("sketch.circle.center", center=[0, zc], diameter=5)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [0, 1]}], operation="join", targets=[s.body],
+          name="Upright")
+    return v + (2 * ru * zc + math.pi / 2 * ru * ru - math.pi / 4 * 25 - 2 * ru * T) * T
+
+
+# ----------------------------------------------------------------------------- 2-26
+@part("2-26", "Wheel pivot axle connecting rod", "Steel")
+def connecting_rod(s):
+    """Sheet 05, 2-26: a 2 thick, 8 wide steel strip with R4 ends and Ø4 holes 164 apart (172
+    overall), cranked down 10 between 28 and 64 from one end (outer faces of the two legs). The bends
+    are drawn round but not dimensioned: R1 inside, R3 outside. X along, Z = 0 the top face."""
+    T = s.param("cr_t", 2, "thickness")
+    W = s.param("cr_w", 8, "width")
+    L = s.param("cr_l", 172, "overall (164 + 4 + 4)")
+    X1 = s.param("cr_crank_from", 28, "crank's first leg, outer face")
+    X2 = s.param("cr_crank_to", 64, "crank's second leg, outer face (28 + 36)")
+    DZ = s.param("cr_drop", 10, "drop")
+    ri, ro = 1, 1 + T
+    zb = -T - DZ                                            # underside of the lowered part
+    start = (0, -T)
+    segs = [("line", (X1 - ri, -T)), ("arc", (X1 - ri, -T - ri), (X1, -T - ri), False),
+            ("line", (X1, zb + ro)), ("arc", (X1 + ro, zb + ro), (X1 + ro, zb), True),
+            ("line", (X2 - ro, zb)), ("arc", (X2 - ro, zb + ro), (X2, zb + ro), True),
+            ("line", (X2, -T - ri)), ("arc", (X2 + ri, -T - ri), (X2 + ri, -T), False),
+            ("line", (L, -T)), ("line", (L, 0)), ("line", (X2 + ri, 0)),
+            ("arc", (X2 + ri, -T - ri), (X2 - T, -T - ri), True), ("line", (X2 - T, zb + ro)),
+            ("arc", (X2 - ro, zb + ro), (X2 - ro, zb + T), False), ("line", (X1 + ro, zb + T)),
+            ("arc", (X1 + ro, zb + ro), (X1 + T, zb + ro), False), ("line", (X1 + T, -T - ri)),
+            ("arc", (X1 - ri, -T - ri), (X1 - ri, 0), True), ("line", (0, 0)), ("line", start)]
+    s.sketch("Side", (0, 0, 0), (1, 0, 0), (0, 0, 1))                    # normal -Y
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.extrude", distance=W / 2, direction="symmetric", name="Rod", body_name=s.body)
+    v = loop_area(start, segs) * W
+    r = W / 2
+    s.sketch("End rounds", (0, 0, 1), (1, 0, 0), (0, -1, 0))       # normal -Z
+    for xc, x0, x1 in ((r, -1, r), (L - r, L - r, L + 1)):
+        s.cmd("sketch.rectangle.two_point", p0=[x0, -r - 1], p1=[x1, r + 1])
+        s.cmd("sketch.circle.center", center=[xc, 0], diameter=W)
+    s.finish()
+    s.cmd("solid.extrude", distance=4, operation="cut", targets=[s.body],
+          profiles=[{"point": [-0.5, 0]}, {"point": [L + 0.5, 0]}], name="End rounds")
+    s.holes("Ø4 holes", (0, 0, 1), (0, 0, -1), [(r, 0, 1), (L - r, 0, 1)], 4, depth=4)
+    return v - 2 * (2 * r * r - math.pi / 2 * r * r) * T - 2 * math.pi * 4 * T
+
+
+# ----------------------------------------------------------------------------- 2-27A, 2-27B
+@part("2-27A", "Wheel pivot spacer ring-1", "Steel")
+def spacer_ring_1(s):
+    """Sheet 05, 2-27A: a Ø8 / Ø5 x 1 steel washer. Axis = Z."""
+    return s.turned("Ring", [(2.5, 0), (4, 0), (4, 1), (2.5, 1)])
+
+
+@part("2-27B", "Wheel pivot spacer ring-2", "Steel")
+def spacer_ring_2(s):
+    """Sheet 05, 2-27B: a Ø12 / Ø5 x 2 steel washer. Axis = Z."""
+    return s.turned("Ring", [(2.5, 0), (6, 0), (6, 2), (2.5, 2)])
+
+
+# ----------------------------------------------------------------------------- 2-28
+@part("2-28", "Wheel axle", "Steel")
+def wheel_axle(s):
+    """Sheet 05, 2-28: a Ø8 x 2 head with a 2 wide, 1 deep screwdriver slot, Ø6 x 8, Ø5 x 18 and an
+    M4 x 4 end (at the Ø4 major diameter). Axis = Z, the head's end on Z = 0."""
+    v = s.turned("Axle", [(0, 0), (4, 0), (4, 2), (3, 2), (3, 10), (2.5, 10), (2.5, 28), (2, 28), (2, 32), (0, 32)])
+    s.sketch("Slot", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.rectangle.two_point", p0=[-5, -1], p1=[5, 1])
+    s.finish()
+    s.cmd("solid.extrude", distance=1, operation="cut", targets=[s.body], name="Slot")
+    band = 2 * (math.sqrt(15) + 16 * math.asin(0.25))       # the |y| < 1 band of the Ø8 head
+    return v - band * 1
+
+
+# ----------------------------------------------------------------------------- 2-29
+@part("2-29", "Wheel axle ball bearing", "Steel")
+def wheel_bearing(s):
+    """Sheet 05, 2-29: a bought-in ball bearing, Ø16 / Ø6, 8 thick as noted on the drawing, modelled
+    as its envelope (a plain ring). Axis = Z."""
+    return s.turned("Bearing", [(3, 0), (8, 0), (8, 8), (3, 8)])
+
+
+# ----------------------------------------------------------------------------- 2-30
+@part("2-30", "Connecting rod screw", "Steel")
+def connecting_rod_screw(s):
+    """Sheet 05, 2-30: a Ø8 x 2 head, a Ø4 x 2.1 shoulder and an M3 x 4 end (at the Ø3 major
+    diameter); the head's slot is not dimensioned and not modelled. Axis = Z."""
+    return s.turned("Screw", [(0, 0), (4, 0), (4, 2), (2, 2), (2, 4.1), (1.5, 4.1), (1.5, 8.1), (0, 8.1)])
+
+
+# ----------------------------------------------------------------------------- 2-31, 2-32
+@part("2-31", "Front wheel rim", "Aluminum")
+def front_rim(s):
+    """Sheet 05, 2-31 (section A-A, 1:1.5, radii and steps read from the vector lines): Ø72 rim
+    21.6 wide with a 45° tyre groove (Ø62 floor, 10 wide), Ø66.5 chamfers to a Ø58 bore 4.3 deep on
+    each side; on one side a cone from Ø50 down to a Ø32 hub face 1 proud of the rim; web 10 thick
+    from the hub face, Ø16 counterbore 9 deep, Ø14 through; 4 x M3 (Ø2.5) on a Ø24 PCD, counterbored
+    Ø6 x 4 from the other side. Axis = Z, the hub face on Z = 0."""
+    z1, z2 = 1, 22.6
+    pts = [(8, 0), (16, 0), (16, z1), (25, z1 + 4.3), (29, z1 + 4.3), (33.25, z1), (36, z1), (36, z1 + 0.8),
+           (31, z1 + 5.8), (31, z1 + 15.8), (36, z2 - 0.8), (36, z2), (33.25, z2), (29, z2 - 4.3), (29, 10),
+           (7, 10), (7, 9), (8, 9)]
+    v = s.turned("Rim", pts)
+    # off the revolve's seam (in the XZ plane): a counterbore across it needed a separation retry
+    ctr = [(12 * math.cos(a), 12 * math.sin(a), 0) for a in (math.pi / 4 + k * math.pi / 2 for k in range(4))]
+    # both cuts start 1 clear of the faces (a cut sketched on the web face needed a separation retry)
+    s.holes("Ø6 counterbores", (0, 0, 11), (0, 0, -1), [(x, y, 11) for x, y, _ in ctr], 6, depth=5)
+    s.holes("M3 tapped", (0, 0, -1), (0, 0, 1), [(x, y, -1) for x, y, _ in ctr], 2.5, depth=8)
+    return v - 4 * math.pi / 4 * (2.5 ** 2 * 6 + 36 * 4)
+
+
+@part("2-32", "Front wheel tyre", "Default")
+def front_tyre(s):
+    """Sheet 05, 2-32: a rubber ring Ø110.3 over a Ø24 section (a torus). SolidCraft has no rubber
+    material: the default density (1.29, close to rubber's) with the black rubber appearance."""
+    D = s.param("ft_d", 110.3, "outside diameter")
+    DS = s.param("ft_section", 24, "section")
+    rc = (D - DS) / 2
+    s.sketch("Section", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    s.cmd("sketch.circle.center", center=[rc, 0], diameter=DS)
+    s.finish()
+    s.cmd("solid.revolve", axis="Z", name="Tyre", body_name=s.body)
+    s.cmd("appearance.assign", bodies=[s.body], appearance="Rubber - Black")
+    return 2 * math.pi ** 2 * rc * (DS / 2) ** 2
+
+
+# ----------------------------------------------------------------------------- 2-33
+@part("2-33", "Front wheel hub cap", "Brass")
+def hub_cap(s):
+    """Sheet 05, 2-33 (section B-B, read from the vector lines): a Ø32 x 2.5 flange with 4 x Ø3 on
+    a Ø24 PCD; a Ø16 hub standing 1 proud on one side, recessed Ø14 x 2.5, and 1.5 on the other,
+    then a Ø12.5 / Ø10 lip 1 high; Ø3 through the middle. Axis = Z, the recessed face on Z = 0."""
+    v = s.turned("Cap", [(1.5, 2.5), (7, 2.5), (7, 0), (8, 0), (8, 1), (16, 1), (16, 3.5), (8, 3.5), (8, 5),
+                         (6.25, 5), (6.25, 6), (5, 6), (5, 5), (1.5, 5)])
+    ctr = [(12 * math.cos(a), 12 * math.sin(a), 4) for a in (0, math.pi / 2, math.pi, 1.5 * math.pi)]
+    s.holes("Ø3 holes", (0, 0, 4), (0, 0, -1), ctr, 3, depth=4)
+    return v - 4 * math.pi / 4 * 9 * 2.5
+
+
+# ----------------------------------------------------------------------------- 2-34, 2-37
+@part("2-34", "Steering lay shaft", "Steel")
+def lay_shaft(s):
+    """Sheet 05, 2-34 (scale 1:1.5): a Ø6 x 86 shaft, cross-drilled Ø3 13.5 from one end; 18 from the
+    other a Ø3 x 18 pin pressed across it. Axis = Z."""
+    v = s.turned("Shaft", [(0, 0), (3, 0), (3, 86), (0, 86)])
+    s.holes("Ø3 cross hole", (-5, 0, 0), (1, 0, 0), [(-5, 0, 13.5)], 3)
+    s.sketch("Pin", (0, -9, 0), (1, 0, 0), (0, 0, 1))                    # normal -Y
+    s.cmd("sketch.circle.center", center=[0, 86 - 18], diameter=3)
+    s.finish()
+    s.cmd("solid.extrude", distance=18, direction="negative", operation="join", targets=[s.body], name="Pin")
+    return v - cross_hole(3, 1.5) + math.pi / 4 * 9 * 18 - cross_hole(3, 1.5)
+
+
+@part("2-37", "Steering tie rod", "Steel")
+def steering_tie_rod(s):
+    """Sheet 05, 2-37 (scale 1:1.5): a Ø5 x 47 rod with M4 x 10 ends (at the Ø4 major diameter).
+    Axis = Z."""
+    return s.turned("Rod", [(0, 0), (2, 0), (2, 10), (2.5, 10), (2.5, 57), (2, 57), (2, 67), (0, 67)])
+
+
+# ----------------------------------------------------------------------------- 2-35
+@part("2-35", "Steering lay shaft crank", {"collar": "Brass", "lever": "Steel"})
+def lay_shaft_crank(s):
+    """Sheet 05, 2-35 (scale 1:1.5): a brass collar Ø18 x 8 with a Ø10 spigot through the lever and
+    3 beyond, bored Ø6 for the lay shaft, an M3 (Ø2.5) set-screw hole 4 from its end; a 2 thick steel
+    lever, R7.5 round the spigot and R5.5 round an M4 (Ø3.3) hole 26 away. Axis = Z, the lever on
+    Z = 0..2 along X."""
+    n = s.body.split()[0]
+    v = link(s, 26, 7.5, 5.5, 10, 3.3, 2, body=f"{n} lever", name="Lever")
+    v += s.turned("Collar", [(3, -3), (5, -3), (5, 2), (9, 2), (9, 10), (3, 10)], body=f"{n} collar")
+    s.holes("M3 tapped", (10, 0, 0), (-1, 0, 0), [(10, 0, 6)], 2.5, depth=10, target=f"{n} collar")
+    return v - cross_hole(9, 1.25, 3) / 2
+
+
+# ----------------------------------------------------------------------------- 2-36
+@part("2-36", "Steering lay shaft gear wheel", "Brass")
+def lay_shaft_gear(s):
+    """Sheet 05, 2-36 (scale 1:1.5): a brass gear, 30 teeth, Ø32 over the tips and Ø28 at the roots,
+    the gaps 1.7 wide at the tip and 1.1 at the root, 6 wide (measured); a Ø18 x 8 hub with an M3
+    (Ø2.5) set-screw hole 4 from its end, a Ø12 x 3.5 boss on the other side, bored Ø6. The teeth's
+    R5 throat (for the worm) is not modelled. Axis = Z, the hub's end on Z = 0."""
+    N = s.param("lg_teeth", 30, "teeth", unit="")
+    RT = s.param("lg_tip_d", 32, "tip diameter") / 2
+    RR = s.param("lg_root_d", 28, "root diameter") / 2
+    GT = s.param("lg_gap_tip", 1.7, "gap at the tip")
+    GR = s.param("lg_gap_root", 1.1, "gap at the root")
+    B = s.param("lg_w", 6, "tooth width (measured)")
+    v = s.turned("Gear blank", [(3, 0), (9, 0), (9, 8), (RT, 8), (RT, 8 + B), (6, 8 + B), (6, 11.5 + B),
+                                (3, 11.5 + B)])
+    at, ar = math.asin(GT / 2 / RT), math.asin(GR / 2 / RR)
+    s.sketch("Tooth gaps", (0, 0, 7), (1, 0, 0), (0, 1, 0))
+    for k in range(int(N)):
+        t = 2 * math.pi * (k + 0.5) / N
+        pts = [(RR, t - ar), (RT, t - at), (RT + 1.5, t - at), (RT + 1.5, t + at), (RT, t + at), (RR, t + ar)]
+        s.polyline([(r * math.cos(a), r * math.sin(a)) for r, a in pts])
+    s.finish()
+    s.cmd("solid.extrude", distance=B + 2, operation="cut", targets=[s.body], name="Tooth gaps")
+    quad = polygon_area([(r * math.cos(a), r * math.sin(a)) for r, a in
+                         ((RR, -ar), (RT, -at), (RT, at), (RR, ar))])
+    gap = quad + RT * RT / 2 * (2 * at - math.sin(2 * at))
+    v -= N * gap * B
+    s.holes("M3 tapped", (10, 0, 0), (-1, 0, 0), [(10, 0, 4)], 2.5, depth=10)
+    return v - cross_hole(9, 1.25, 3) / 2
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]

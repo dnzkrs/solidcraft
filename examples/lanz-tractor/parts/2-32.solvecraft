@@ -1,0 +1,119 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "ft_d",
+      "expr": "110.3",
+      "unit": "mm",
+      "comment": "outside diameter",
+      "model": false
+    },
+    {
+      "name": "ft_section",
+      "expr": "24",
+      "unit": "mm",
+      "comment": "section",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              43.15,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 12.0,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Tyre",
+      "suppressed": false,
+      "body_names": [
+        "2-32 Front wheel tyre"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "revolve",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      },
+      "axis": {
+        "type": "world",
+        "axis": "Z"
+      },
+      "angle": "360 deg",
+      "operation": "new_body",
+      "convention": "sketch_normal"
+    }
+  ],
+  "next_id": 3,
+  "appearances": {
+    "bodies": {
+      "2-32 Front wheel tyre": {
+        "name": "Rubber - Black",
+        "color": [
+          28,
+          28,
+          28
+        ],
+        "opacity": 1.0
+      }
+    }
+  }
+}

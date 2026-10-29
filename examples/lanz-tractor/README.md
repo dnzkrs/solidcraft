@@ -111,6 +111,20 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 2-22 | Front axle yoke wheel hinge bracket | Brass | 1 | 3,615.2 | 30.7 |
 | 2-23 | Wheel pivot axle | Brass, Steel | 2 | 3,630.3 | 28.5 |
 | 2-24 | Wheel pivot axle connector bracket | Steel | 1 | 745.2 | 5.8 |
+| 2-25 | Wheel pivot axle steering arm | Steel | 1 | 1,046.2 | 8.2 |
+| 2-26 | Wheel pivot axle connecting rod | Steel | 1 | 2,939.3 | 23.1 |
+| 2-27A | Wheel pivot spacer ring-1 | Steel | 1 | 30.6 | 0.2 |
+| 2-27B | Wheel pivot spacer ring-2 | Steel | 1 | 186.9 | 1.5 |
+| 2-28 | Wheel axle | Steel | 1 | 714.5 | 5.6 |
+| 2-29 | Wheel axle ball bearing | Steel | 1 | 1,382.3 | 10.9 |
+| 2-30 | Connecting rod screw | Steel | 1 | 155.2 | 1.2 |
+| 2-31 | Front wheel rim | Aluminum | 1 | 27,922.1 | 75.4 |
+| 2-32 | Front wheel tyre | Default | 1 | 122,633.5 | 158.2 |
+| 2-33 | Front wheel hub cap | Brass | 1 | 2,084.2 | 17.7 |
+| 2-34 | Steering lay shaft | Steel | 1 | 2,476.3 | 19.4 |
+| 2-35 | Steering lay shaft crank | Brass, Steel | 2 | 2,806.7 | 23.4 |
+| 2-36 | Steering lay shaft gear wheel | Brass | 1 | 6,226.8 | 52.9 |
+| 2-37 | Steering tie rod | Steel | 1 | 1,174.0 | 9.2 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,
@@ -193,6 +207,17 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
 - **2-13**: the Ø4 cross hole goes right through the collar (a pin hole for the Ø4 shaft).
   **2-24**: the 90° twist is a loft between the 8 x 2 and 2 x 8 sections from X = 6 to 22
   (measured), so its faces are flat where the drawing shows curved outlines; steel assumed.
+- **2-25**: the bend's start (16 from the upright's back), the arm's outer R23.5 and the first hole
+  (13.4 along the bent leg) are read from the vector lines; both holes are taken as M4.
+  **2-26**: the crank's bend radii are not dimensioned: R1 inside, R3 outside.
+- **2-29** is a bought-in bearing, modelled as its Ø16 / Ø6 x 8 envelope. **2-30**: the head's
+  slot is not dimensioned and not modelled. **2-32**: no rubber in SolidCraft's materials; the
+  default density (1.29) with the "Rubber - Black" appearance.
+- **2-31** and **2-33**: every radius and step read from the sections' vector lines (2-33's Ø10 /
+  Ø12.5 lip is 1 high, its Ø14 recess 2.5 deep). 2-31's holes are placed at 45° (the drawing's
+  pattern turned, which a round part does not notice), off the revolve's seam.
+- **2-35**: the collar's bore is taken as Ø6, the 2-34 lay shaft's size. **2-36**: the tooth width
+  (6) is measured; the teeth are straight-sided and their R5 throat for the worm is not modelled.
 - **1-04**: from the detail: a 20 wide, 0.5 deep valve channel across the face, with 0.5 wide,
   1 deep relief grooves along its edges; the Ø10 port countersunk 90° to Ø15 on the other face.
 - **1-05**: its thickness is not on the drawing ("refer to 1-04"): not modelled yet.
@@ -217,3 +242,7 @@ Joining a 12 x 13 x 2 plate to the end face of a loft built before it (2-24's tw
 0.98 mm³ larger than the two solids, with no warning; built the other way round the join needed a
 separation retry. 2-24 therefore starts the (flat-faced) loft 1 mm inside the plate, so the solids
 cross instead of touching.
+
+Counterbores on 2-31's Ø24 PCD needed a separation retry (and came out 46 mm³ short) when one of
+them sat on the revolved rim's seam, the XZ half plane the profile was sketched in. Turning the
+pattern 45° off the seam fixed it.

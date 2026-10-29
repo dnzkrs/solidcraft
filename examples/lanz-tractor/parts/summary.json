@@ -537,5 +537,103 @@
   "bodies": 1,
   "volume_mm3": 745.2,
   "mass_g": 5.8
+ },
+ "2-25": {
+  "name": "Wheel pivot axle steering arm",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1046.2,
+  "mass_g": 8.2
+ },
+ "2-26": {
+  "name": "Wheel pivot axle connecting rod",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 2939.3,
+  "mass_g": 23.1
+ },
+ "2-27A": {
+  "name": "Wheel pivot spacer ring-1",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 30.6,
+  "mass_g": 0.2
+ },
+ "2-27B": {
+  "name": "Wheel pivot spacer ring-2",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 186.9,
+  "mass_g": 1.5
+ },
+ "2-28": {
+  "name": "Wheel axle",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 714.5,
+  "mass_g": 5.6
+ },
+ "2-29": {
+  "name": "Wheel axle ball bearing",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1382.3,
+  "mass_g": 10.9
+ },
+ "2-30": {
+  "name": "Connecting rod screw",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 155.2,
+  "mass_g": 1.2
+ },
+ "2-31": {
+  "name": "Front wheel rim",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 27922.1,
+  "mass_g": 75.4
+ },
+ "2-32": {
+  "name": "Front wheel tyre",
+  "material": "Default",
+  "bodies": 1,
+  "volume_mm3": 122633.5,
+  "mass_g": 158.2
+ },
+ "2-33": {
+  "name": "Front wheel hub cap",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 2084.2,
+  "mass_g": 17.7
+ },
+ "2-34": {
+  "name": "Steering lay shaft",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 2476.3,
+  "mass_g": 19.4
+ },
+ "2-35": {
+  "name": "Steering lay shaft crank",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 2806.7,
+  "mass_g": 23.4
+ },
+ "2-36": {
+  "name": "Steering lay shaft gear wheel",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 6226.8,
+  "mass_g": 52.9
+ },
+ "2-37": {
+  "name": "Steering tie rod",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1174.0,
+  "mass_g": 9.2
  }
 }
