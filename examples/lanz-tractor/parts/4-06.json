@@ -1,0 +1,121 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Pulley section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12,
+      0
+     ],
+     [
+      17,
+      0
+     ],
+     [
+      17,
+      2.03
+     ],
+     [
+      14,
+      2.75
+     ],
+     [
+      14,
+      5.29
+     ],
+     [
+      17,
+      5.97
+     ],
+     [
+      17,
+      8
+     ],
+     [
+      6,
+      8
+     ],
+     [
+      6,
+      8.38
+     ],
+     [
+      4.25,
+      8.38
+     ],
+     [
+      4.25,
+      14.94
+     ],
+     [
+      4,
+      14.94
+     ],
+     [
+      4,
+      13.89
+     ],
+     [
+      3,
+      13.89
+     ],
+     [
+      3,
+      5
+     ],
+     [
+      12,
+      5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Pulley",
+    "body_name": "4-06 Coupling drive pulley"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-06 Coupling drive pulley"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

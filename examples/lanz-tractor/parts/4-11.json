@@ -1,0 +1,73 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Bearing section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.25,
+      0
+     ],
+     [
+      6.25,
+      0
+     ],
+     [
+      6.25,
+      5
+     ],
+     [
+      3.25,
+      5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Bearing",
+    "body_name": "4-11 Coupling spring retainer ball bearing"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-11 Coupling spring retainer ball bearing"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

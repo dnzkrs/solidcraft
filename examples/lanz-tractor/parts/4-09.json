@@ -1,0 +1,32 @@
+{
+ "commands": [
+  {
+   "command": "solid.coil",
+   "params": {
+    "diameter": 5.0,
+    "turns": 13,
+    "pitch": 1.384615,
+    "section_size": 0.5,
+    "section": "circular",
+    "section_position": "center",
+    "base": [
+     0,
+     0,
+     0.25
+    ],
+    "axis": "Z",
+    "name": "Spring",
+    "body_name": "4-09 Coupling spring"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-09 Coupling spring"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

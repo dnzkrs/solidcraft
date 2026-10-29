@@ -1027,5 +1027,75 @@
   "bodies": 2,
   "volume_mm3": 1135.2,
   "mass_g": 9.3
+ },
+ "4-01": {
+  "name": "GB RH-side plate",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 9460.0,
+  "mass_g": 80.4
+ },
+ "4-02": {
+  "name": "GB LH-side plate",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 8893.5,
+  "mass_g": 75.6
+ },
+ "4-03": {
+  "name": "GB side plate spacer",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 932.9,
+  "mass_g": 7.3
+ },
+ "4-04": {
+  "name": "Coupling unit outer bearing plate",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 4946.0,
+  "mass_g": 42.0
+ },
+ "4-05": {
+  "name": "Coupling unit outer plate ball bearing",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1474.1,
+  "mass_g": 11.6
+ },
+ "4-06": {
+  "name": "Coupling drive pulley",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 4159.1,
+  "mass_g": 32.6
+ },
+ "4-08": {
+  "name": "Coupling spacer",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 62.8,
+  "mass_g": 0.5
+ },
+ "4-09": {
+  "name": "Coupling spring",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 40.1,
+  "mass_g": 0.3
+ },
+ "4-11": {
+  "name": "Coupling spring retainer ball bearing",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 447.7,
+  "mass_g": 3.5
+ },
+ "4-12": {
+  "name": "Coupling ball bearing retainer",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 253.8,
+  "mass_g": 2.0
  }
 }

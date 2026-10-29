@@ -4220,6 +4220,130 @@ def hand_brake_band(s):
     return W * T * length
 
 
+# ----------------------------------------------------------------------------- 4-01 to 4-12 (sheet 07)
+def gearbox_plate(s, slots, holes):
+    """A 2 thick brass angle: a 90 x 13 flange (R5 free corners) on Y = 0..2 with 4 wide slots 9 up,
+    and a plate 77 x 51 (from the flange's outer face; R5 far corners) on Z = 0..2 from X = 13."""
+    T = 2
+    st, sg = (0, 0), [("line", (90, 0)), ("line", (90, 8)), ("arc", (85, 8), (85, 13), True), ("line", (5, 13)),
+                      ("arc", (5, 8), (0, 8), True), ("line", (0, 0))]
+    s.sketch("Flange", (0, 0, 0), (1, 0, 0), (0, 0, 1))                   # normal -Y
+    s.loop(st, sg)
+    sl = []
+    for a, b in slots:
+        lst, lsg = slot_loop((a, 9), (b, 9), 2)
+        s.loop(lst, lsg)
+        sl.append(loop_area(lst, lsg))
+    s.finish()
+    s.cmd("solid.extrude", distance=T, direction="negative", profiles=[{"point": [1, 1]}], name="Flange", body_name=s.body)
+    v = (loop_area(st, sg) - sum(sl)) * T
+    # the plate from Y = 1 so it overlaps the flange instead of sharing its outer face
+    pst, psg = (13, 1), [("line", (90, 1)), ("line", (90, 46)), ("arc", (85, 46), (85, 51), True), ("line", (18, 51)),
+                         ("arc", (18, 46), (13, 46), True), ("line", (13, 1))]
+    s.sketch("Plate", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(pst, psg)
+    for (x, y), d in holes:
+        s.cmd("sketch.circle.center", center=[round(x, 6), y], diameter=d)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, operation="join", targets=[s.body], profiles=[{"point": [14, 48]}], name="Plate")
+    return v + (loop_area(pst, psg) - sum(math.pi / 4 * d * d for _, d in holes)) * T - 77 * 1 * T
+
+
+X1, X2, XD = 36.5, 36.5 + 2 * 20 * math.cos(math.radians(30)), 36.5 + 20 * math.cos(math.radians(30))
+
+
+@part("4-01", "GB RH-side plate", "Brass")
+def gearbox_plate_1(s):
+    """Sheet 07, 4-01 (scale 1:1.5): a 2 thick brass angle, the flange 90 x 13 with slots 4 wide from
+    5.5 to 11 and 40.5 to 46 (centres, 9 up), the plate 77 x 51 from X = 13. Holes: A = Ø3 at
+    (17.5, 6), (17.5, 44), (86, 6), (86, 44); B = M3 (Ø2.5) at (36.5, 13), (36.5, 38), (71.1, 13),
+    (71.1, 38); C = M4 (Ø3.3) at (75, 5); D = Ø4 at (36.5, 25.5) and 20 from it at ±30° (53.8,
+    15.5 / 35.5); Ø6 at (71.1, 25.5). Y from the flange's outer face. The bend is sharp."""
+    holes = ([((x, y), 3) for x in (17.5, 86) for y in (6, 44)] + [((x, y), 2.5) for x in (X1, X2) for y in (13, 38)]
+             + [((75, 5), 3.3), ((X1, 25.5), 4), ((XD, 15.5), 4), ((XD, 35.5), 4), ((X2, 25.5), 6)])
+    return gearbox_plate(s, [(5.5, 11), (40.5, 46)], holes)
+
+
+@part("4-02", "GB LH-side plate", "Brass")
+def gearbox_plate_2(s):
+    """Sheet 07, 4-02 (scale 1:1.5): as 4-01 ("for all other dimension details refer to 4-01"), with
+    slots from 5.5 to 11 and 59.5 to 65, a Ø20 at (36.5, 25.5) in place of the Ø4, M3 (Ø2.5) at
+    (36.5, 6) and (36.5, 44), Ø4 at (53.8, 15.5 / 35.5), Ø6 at (71.1, 25.5), the A holes as 4-01 and
+    no M4."""
+    holes = ([((x, y), 3) for x in (17.5, 86) for y in (6, 44)] + [((X1, 6), 2.5), ((X1, 44), 2.5), ((X1, 25.5), 20),
+                                                                   ((XD, 15.5), 4), ((XD, 35.5), 4), ((X2, 25.5), 6)])
+    return gearbox_plate(s, [(5.5, 11), (59.5, 65)], holes)
+
+
+@part("4-03", "GB side plate spacer", "Steel")
+def gearbox_shaft(s):
+    """Sheet 07, 4-03: a Ø6 x 30 steel spacer with M3 x 6 ends (at Ø3). Axis = Z."""
+    return s.turned("Shaft", [(0, 0), (1.5, 0), (1.5, 6), (3, 6), (3, 36), (1.5, 36), (1.5, 42), (0, 42)])
+
+
+@part("4-04", "Coupling unit outer bearing plate", "Brass")
+def bearing_flange(s):
+    """Sheet 07, 4-04 (scale 1:1.5, section F-F): a brass Ø20 x 2 spigot, a Ø44 x 3 flange cut flat
+    13 from the centre on one side with Ø3 holes at ±19, and a Ø24 x 8 hub; bored Ø16, Ø19 6.5 deep
+    from the hub's end. Axis = Z; the flat toward -X (off the revolve's seam)."""
+    v = s.turned("Flange", [(8, 0), (10, 0), (10, 2), (22, 2), (22, 5), (12, 5), (12, 13), (9.5, 13), (9.5, 6.5), (8, 6.5)])
+    s.sketch("Flat", (0, 0, 1), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.rectangle.two_point", p0=[-25, -25], p1=[-13, 25])
+    s.finish()
+    s.cmd("solid.extrude", distance=5, operation="cut", targets=[s.body], name="Flat")
+    R, d = 22, 13
+    v -= (R * R * math.acos(d / R) - d * math.sqrt(R * R - d * d)) * 3
+    s.holes("Ø3 holes", (0, 0, 1), (0, 0, 1), [(0, 19, 1), (0, -19, 1)], 3, depth=5)
+    return v - 2 * math.pi / 4 * 9 * 3
+
+
+@part("4-05", "Coupling unit outer plate ball bearing", "Steel")
+def gearbox_bearing(s):
+    """Sheet 07, 4-05: a bought-in ball bearing Ø19 / Ø8.5 (as labelled), 6.5 thick, modelled as its
+    envelope. Axis = Z."""
+    return s.turned("Bearing", [(4.25, 0), (9.5, 0), (9.5, 6.5), (4.25, 6.5)])
+
+
+@part("4-06", "Coupling drive pulley", "Steel")
+def coupling_cup_pulley(s):
+    """Sheet 07, 4-06 (scale 1:1.5, from a 900 dpi render of the section): a steel cup pulley 8 wide:
+    Ø34 flanges 2 wide each side of a 20° V groove to a Ø28 floor 2.5 wide, a Ø24 cup 5 deep, a 3
+    thick web, a Ø8.5 hub to 14.9 (measured) with a step to Ø12 at the web; bored Ø6 and Ø8 1 deep at
+    the hub's end. Axis = Z, the cup's rim on Z = 0."""
+    pts = [(12, 0), (17, 0), (17, 2.03), (14, 2.75), (14, 5.29), (17, 5.97), (17, 8), (6, 8), (6, 8.38), (4.25, 8.38),
+           (4.25, 14.94), (4, 14.94), (4, 13.89), (3, 13.89), (3, 5), (12, 5)]
+    return s.turned("Pulley", pts)
+
+
+@part("4-08", "Coupling spacer", "Steel")
+def coupling_washer(s):
+    """Sheet 07, 4-08: a Ø12 / Ø8 x 1 steel spacer washer. Axis = Z."""
+    return s.turned("Washer", [(4, 0), (6, 0), (6, 1), (4, 1)])
+
+
+@part("4-09", "Coupling spring", "Steel", tol=0.01)
+def coupling_spring(s):
+    """Sheet 07, 4-09: a compression spring of Ø0.5 spring steel wire, Ø5.5 / Ø4.5, 18.5 free; 13
+    turns (counted). Axis = Z."""
+    turns, d, L = 13, 0.5, 18.5
+    s.cmd("solid.coil", diameter=5.0, turns=turns, pitch=round((L - d) / turns, 6), section_size=d, section="circular",
+          section_position="center", base=[0, 0, d / 2], axis="Z", name="Spring", body_name=s.body)
+    return math.pi / 4 * d * d * 2 * math.pi * 2.5 * turns
+
+
+@part("4-11", "Coupling spring retainer ball bearing", "Steel")
+def coupling_bearing(s):
+    """Sheet 07, 4-11: a bought-in ball bearing Ø12.5 / Ø6.5, 5 thick (as labelled), modelled as its
+    envelope. Axis = Z."""
+    return s.turned("Bearing", [(3.25, 0), (6.25, 0), (6.25, 5), (3.25, 5)])
+
+
+@part("4-12", "Coupling ball bearing retainer", "Steel")
+def bearing_retainer(s):
+    """Sheet 07, 4-12 (scale 1:1.5): a steel bush Ø6.5 x 5 and Ø8 x 4, bored Ø4. Axis = Z."""
+    return s.turned("Retainer", [(2, 0), (3.25, 0), (3.25, 5), (4, 5), (4, 9), (2, 9)])
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]

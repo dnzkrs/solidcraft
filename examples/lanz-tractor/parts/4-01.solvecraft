@@ -1,0 +1,1022 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [],
+  "features": [
+    {
+      "id": 1,
+      "name": "Flange",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              90.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              90.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              90.0,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              85.0,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              90.0,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              85.0,
+              13.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              85.0,
+              13.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              5.0,
+              13.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              5.0,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              5.0,
+              13.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              0.0,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              0.0,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.start",
+            "pos": [
+              5.5,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              11.0,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.center",
+            "pos": [
+              11.0,
+              9.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.start",
+            "pos": [
+              11.0,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.end",
+            "pos": [
+              11.0,
+              11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.start",
+            "pos": [
+              11.0,
+              11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              5.5,
+              11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.center",
+            "pos": [
+              5.5,
+              9.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.start",
+            "pos": [
+              5.5,
+              11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.end",
+            "pos": [
+              5.5,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.start",
+            "pos": [
+              40.5,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              46.0,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.center",
+            "pos": [
+              46.0,
+              9.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.start",
+            "pos": [
+              46.0,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.end",
+            "pos": [
+              46.0,
+              11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.start",
+            "pos": [
+              46.0,
+              11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.end",
+            "pos": [
+              40.5,
+              11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a6.center",
+            "pos": [
+              40.5,
+              9.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a6.start",
+            "pos": [
+              40.5,
+              11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a6.end",
+            "pos": [
+              40.5,
+              7.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 5,
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 10,
+            "a": 11,
+            "b": 12,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 13,
+            "b": 14,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 15,
+            "b": 16,
+            "construction": false
+          },
+          {
+            "id": "a3",
+            "type": "arc",
+            "c": 17,
+            "a": 18,
+            "b": 19,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 20,
+            "b": 21,
+            "construction": false
+          },
+          {
+            "id": "a4",
+            "type": "arc",
+            "c": 22,
+            "a": 23,
+            "b": 24,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 25,
+            "b": 26,
+            "construction": false
+          },
+          {
+            "id": "a5",
+            "type": "arc",
+            "c": 27,
+            "a": 28,
+            "b": 29,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 30,
+            "b": 31,
+            "construction": false
+          },
+          {
+            "id": "a6",
+            "type": "arc",
+            "c": 32,
+            "a": 33,
+            "b": 34,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 1
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 2,
+            "q": 3
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 4,
+            "q": 6
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 7,
+            "q": 8
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 9,
+            "q": 11
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 12,
+            "q": 13
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 0,
+            "q": 14
+          },
+          {
+            "id": "k8",
+            "type": "coincident",
+            "p": 16,
+            "q": 18
+          },
+          {
+            "id": "k9",
+            "type": "coincident",
+            "p": 19,
+            "q": 20
+          },
+          {
+            "id": "k10",
+            "type": "coincident",
+            "p": 21,
+            "q": 23
+          },
+          {
+            "id": "k11",
+            "type": "coincident",
+            "p": 15,
+            "q": 24
+          },
+          {
+            "id": "k12",
+            "type": "coincident",
+            "p": 26,
+            "q": 28
+          },
+          {
+            "id": "k13",
+            "type": "coincident",
+            "p": 29,
+            "q": 30
+          },
+          {
+            "id": "k14",
+            "type": "coincident",
+            "p": 31,
+            "q": 33
+          },
+          {
+            "id": "k15",
+            "type": "coincident",
+            "p": 25,
+            "q": 34
+          }
+        ],
+        "counters": {
+          "a": 6,
+          "k": 15,
+          "l": 8
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Flange",
+      "suppressed": false,
+      "body_names": [
+        "4-01 GB RH-side plate"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 1,
+      "profiles": {
+        "type": "curves",
+        "loops": [
+          [
+            "l1",
+            "l2",
+            "a1",
+            "l3",
+            "a2",
+            "l4"
+          ]
+        ]
+      },
+      "extent": {
+        "distance": "2",
+        "direction": "negative"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 3,
+      "name": "Plate",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              13.0,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              90.0,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              90.0,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              90.0,
+              46.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              85.0,
+              46.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              90.0,
+              46.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              85.0,
+              51.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              85.0,
+              51.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              18.0,
+              51.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              18.0,
+              46.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              18.0,
+              51.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              13.0,
+              46.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              13.0,
+              46.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              13.0,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              17.5,
+              6.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              17.5,
+              44.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c3.center",
+            "pos": [
+              86.0,
+              6.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c4.center",
+            "pos": [
+              86.0,
+              44.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c5.center",
+            "pos": [
+              36.5,
+              13.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c6.center",
+            "pos": [
+              36.5,
+              38.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c7.center",
+            "pos": [
+              71.141016,
+              13.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c8.center",
+            "pos": [
+              71.141016,
+              38.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c9.center",
+            "pos": [
+              75.0,
+              5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c10.center",
+            "pos": [
+              36.5,
+              25.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c11.center",
+            "pos": [
+              53.820508,
+              15.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c12.center",
+            "pos": [
+              53.820508,
+              35.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c13.center",
+            "pos": [
+              71.141016,
+              25.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 5,
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 10,
+            "a": 11,
+            "b": 12,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 13,
+            "b": 14,
+            "construction": false
+          },
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 15,
+            "r": 1.5,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 16,
+            "r": 1.5,
+            "construction": false
+          },
+          {
+            "id": "c3",
+            "type": "circle",
+            "c": 17,
+            "r": 1.5,
+            "construction": false
+          },
+          {
+            "id": "c4",
+            "type": "circle",
+            "c": 18,
+            "r": 1.5,
+            "construction": false
+          },
+          {
+            "id": "c5",
+            "type": "circle",
+            "c": 19,
+            "r": 1.25,
+            "construction": false
+          },
+          {
+            "id": "c6",
+            "type": "circle",
+            "c": 20,
+            "r": 1.25,
+            "construction": false
+          },
+          {
+            "id": "c7",
+            "type": "circle",
+            "c": 21,
+            "r": 1.25,
+            "construction": false
+          },
+          {
+            "id": "c8",
+            "type": "circle",
+            "c": 22,
+            "r": 1.25,
+            "construction": false
+          },
+          {
+            "id": "c9",
+            "type": "circle",
+            "c": 23,
+            "r": 1.65,
+            "construction": false
+          },
+          {
+            "id": "c10",
+            "type": "circle",
+            "c": 24,
+            "r": 2.0,
+            "construction": false
+          },
+          {
+            "id": "c11",
+            "type": "circle",
+            "c": 25,
+            "r": 2.0,
+            "construction": false
+          },
+          {
+            "id": "c12",
+            "type": "circle",
+            "c": 26,
+            "r": 2.0,
+            "construction": false
+          },
+          {
+            "id": "c13",
+            "type": "circle",
+            "c": 27,
+            "r": 3.0,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 2,
+            "q": 3
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 4,
+            "q": 6
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 7,
+            "q": 8
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 9,
+            "q": 11
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 12,
+            "q": 13
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 1,
+            "q": 14
+          }
+        ],
+        "counters": {
+          "a": 2,
+          "c": 13,
+          "k": 6,
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Plate",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "extrude",
+      "sketch": 3,
+      "profiles": {
+        "type": "curves",
+        "loops": [
+          [
+            "l1",
+            "l2",
+            "a1",
+            "l3",
+            "a2",
+            "l4"
+          ]
+        ]
+      },
+      "extent": {
+        "distance": "2",
+        "direction": "positive"
+      },
+      "operation": "join",
+      "targets": [
+        "4-01 GB RH-side plate"
+      ]
+    }
+  ],
+  "next_id": 5,
+  "materials": {
+    "4-01 GB RH-side plate": "Brass"
+  }
+}

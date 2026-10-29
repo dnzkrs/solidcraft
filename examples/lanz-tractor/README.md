@@ -181,6 +181,16 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 3-35 | Accelerator levers bolt | Steel | 1 | 119.4 | 0.9 |
 | 3-36 | Accelerator connector lever | Steel | 1 | 739.2 | 5.8 |
 | 3-37 | Rear stop lights | Brass, Polycarbonate | 2 | 1,135.2 | 9.3 |
+| 4-01 | GB RH-side plate | Brass | 1 | 9,460.0 | 80.4 |
+| 4-02 | GB LH-side plate | Brass | 1 | 8,893.5 | 75.6 |
+| 4-03 | GB side plate spacer | Steel | 1 | 932.9 | 7.3 |
+| 4-04 | Coupling unit outer bearing plate | Brass | 1 | 4,946.0 | 42.0 |
+| 4-05 | Coupling unit outer plate ball bearing | Steel | 1 | 1,474.1 | 11.6 |
+| 4-06 | Coupling drive pulley | Steel | 1 | 4,159.1 | 32.6 |
+| 4-08 | Coupling spacer | Steel | 1 | 62.8 | 0.5 |
+| 4-09 | Coupling spring | Steel | 1 | 40.1 | 0.3 |
+| 4-11 | Coupling spring retainer ball bearing | Steel | 1 | 447.7 | 3.5 |
+| 4-12 | Coupling ball bearing retainer | Steel | 1 | 253.8 | 2.0 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,
