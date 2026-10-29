@@ -27,6 +27,8 @@ volume of the exported mesh agrees within 1.5 % (when the STL is closed; thin ro
 
 Units are mm. Each part has its own coordinate system, stated in its docstring in `gen_parts.py`.
 
+How the parts were made, step by step, with the problems met on the way: [activity logs](activity-logs/README.md).
+
 ## Parts
 
 <!-- parts -->

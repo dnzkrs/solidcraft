@@ -1,0 +1,21 @@
+<svg width="560" height="300" viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" font-size="12"><style>svg{--ink:#16212B;--muted:#5A6B76;--line:#D4DDDA;--accent:#1D6A86;background:#FAFBFB;font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}@media (prefers-color-scheme:dark){svg{--ink:#DCE6E9;--muted:#8FA2AA;--line:#28383F;--accent:#5BB4D3;background:#101A1E}}</style>
+<text x="10" y="20" fill="var(--ink)" font-weight="bold" font-size="14">Exhaust parts: half sections right of each axis, all at the same scale</text>
+<line x1="40" y1="30" x2="40" y2="255" stroke="var(--muted)" stroke-dasharray="6 4"/>
+<polygon points="67.0,250.0 71.0,250.0 71.0,222.0 78.5,188.0 73.0,188.0 73.0,174.0 64.0,174.0 67.0,237.0" fill="var(--line)" stroke="var(--ink)" stroke-width="1.2"/>
+<text x="40" y="275" fill="var(--accent)" font-weight="bold">1-36</text>
+<text x="40" y="292" fill="var(--ink)">lower bracket</text>
+<line x1="175" y1="30" x2="175" y2="255" stroke="var(--muted)" stroke-dasharray="6 4"/>
+<polygon points="208.0,250.0 215.0,250.0 215.0,230.0 208.0,218.0 202.0,218.0 202.0,236.0 208.0,236.0" fill="var(--line)" stroke="var(--ink)" stroke-width="1.2"/>
+<text x="175" y="275" fill="var(--accent)" font-weight="bold">1-37</text>
+<text x="175" y="292" fill="var(--ink)">base ring</text>
+<line x1="310" y1="30" x2="310" y2="255" stroke="var(--muted)" stroke-dasharray="6 4"/>
+<polygon points="334.0,250.0 343.0,250.0 343.0,246.0 337.0,246.0 337.0,208.0 331.0,58.0 329.0,58.0 329.0,50.0 327.0,50.0" fill="var(--line)" stroke="var(--ink)" stroke-width="1.2"/>
+<text x="310" y="275" fill="var(--accent)" font-weight="bold">1-38</text>
+<text x="310" y="292" fill="var(--ink)">stack</text>
+<line x1="445" y1="30" x2="445" y2="255" stroke="var(--muted)" stroke-dasharray="6 4"/>
+<polygon points="464.0,250.0 467.0,250.0 467.0,246.0 467.5,246.0 470.3,244.8 471.5,242.0 470.3,239.2 467.5,238.0 459.5,238.0 459.5,242.0 464.0,242.0" fill="var(--line)" stroke="var(--ink)" stroke-width="1.2"/>
+<text x="445" y="275" fill="var(--accent)" font-weight="bold">1-39</text>
+<text x="445" y="292" fill="var(--ink)">top ring</text>
+<text x="82" y="180" fill="var(--muted)">← Ø33 band</text>
+<text x="218" y="240" fill="var(--muted)">← Ø33 × 7 bore</text>
+</svg>
