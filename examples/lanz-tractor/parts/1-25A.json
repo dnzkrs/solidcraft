@@ -1,0 +1,248 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv_w",
+    "expression": "19.8",
+    "unit": "mm",
+    "comment": "width (9.9 + 9.9)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv_l",
+    "expression": "50",
+    "unit": "mm",
+    "comment": "length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv_t",
+    "expression": "0.1",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv_r",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "corner radius"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv_hole_y",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "hole position"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv_hole_d",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "hole"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Plate"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -5.9,
+      0
+     ],
+     [
+      5.9,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     5.9,
+     4
+    ],
+    "start": [
+     5.9,
+     0
+    ],
+    "end": [
+     9.9,
+     4
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      9.9,
+      4
+     ],
+     [
+      9.9,
+      46
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     5.9,
+     46
+    ],
+    "start": [
+     9.9,
+     46
+    ],
+    "end": [
+     5.9,
+     50
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.9,
+      50
+     ],
+     [
+      -5.9,
+      50
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -5.9,
+     46
+    ],
+    "start": [
+     -5.9,
+     50
+    ],
+    "end": [
+     -9.9,
+     46
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -9.9,
+      46
+     ],
+     [
+      -9.9,
+      4
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -5.9,
+     4
+    ],
+    "start": [
+     -9.9,
+     4
+    ],
+    "end": [
+     -5.9,
+     0
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     6
+    ],
+    "diameter": 5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 0.1,
+    "profiles": [
+     {
+      "point": [
+       0,
+       25.0
+      ]
+     }
+    ],
+    "name": "Plate",
+    "body_name": "1-25A Motor cylinder slide valve-1"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-25A Motor cylinder slide valve-1"
+    ],
+    "material": "Stainless Steel"
+   }
+  }
+ ]
+}

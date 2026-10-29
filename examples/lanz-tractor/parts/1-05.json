@@ -1,0 +1,260 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "oh_d",
+    "expression": "56",
+    "unit": "mm",
+    "comment": "diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "oh_t",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "thickness: not given, taken from 1-04"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "oh_pcd",
+    "expression": "44",
+    "unit": "mm",
+    "comment": "bolt holes PCD"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "oh_hole_d",
+    "expression": "4.5",
+    "unit": "mm",
+    "comment": "M4 clearance"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "oh_port_d",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "central port"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "oh_csink_d",
+    "expression": "15",
+    "unit": "mm",
+    "comment": "countersink, 90 deg"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Disc"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 56
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3.5,
+    "name": "Disc",
+    "body_name": "1-05 Motor outer cylinder head"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      3.5
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Bolt holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.556349,
+     15.556349
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.556349,
+     15.556349
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.556349,
+     -15.556349
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.556349,
+     -15.556349
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-05 Motor outer cylinder head"
+    ],
+    "name": "Bolt holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Port section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -1
+     ],
+     [
+      8.5,
+      -1
+     ],
+     [
+      7.5,
+      0
+     ],
+     [
+      5.0,
+      2.5
+     ],
+     [
+      5.0,
+      4.5
+     ],
+     [
+      0,
+      4.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "cut",
+    "targets": [
+     "1-05 Motor outer cylinder head"
+    ],
+    "name": "Countersunk port"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-05 Motor outer cylinder head"
+    ],
+    "material": "Cast Iron"
+   }
+  }
+ ]
+}

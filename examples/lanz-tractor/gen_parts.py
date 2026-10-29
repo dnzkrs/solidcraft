@@ -89,16 +89,32 @@ class Script:
         to `into`, cut `depth` deep along `into` (through all without a depth). `centres` are world
         points on that plane. (One cut per pattern: holes added one by one with solid.hole can come
         out 3.4 mm short after a 'coincident-face separation' boolean retry.)"""
+        local = self.plane(name, origin, into)
+        for c in centres:
+            self.cmd("sketch.circle.center", center=[round(v, 6) for v in local(c)], diameter=diameter)
+        self.finish()
+        cut = {"through_all": True} if depth is None else {"distance": depth}
+        self.cmd("solid.extrude", **cut, operation="cut", targets=[target or self.body], name=name)
+
+    def plane(self, name, origin, into):
+        """Starts a sketch on the plane through `origin` normal to `into` (a positive extrude goes
+        along `into`); returns the world-point → sketch-point mapping for it."""
         n = _unit(into)
         x = _unit(_cross(n, (0, 0, 1)) if abs(n[2]) < 0.9 else _cross((0, 1, 0), n))
-        y = _cross(n, x)                       # x × y = n: the cut goes along `into`
+        y = _cross(n, x)                       # x × y = n
         self.sketch(name, origin, x, y)
-        for c in centres:
-            d = [c[i] - origin[i] for i in range(3)]
-            assert abs(sum(d[i] * n[i] for i in range(3))) < 1e-9, f"{name}: centre off the sketch plane"
-            self.cmd("sketch.circle.center", center=[round(sum(d[i] * x[i] for i in range(3)), 6),
-                                                      round(sum(d[i] * y[i] for i in range(3)), 6)],
-                     diameter=diameter)
+
+        def local(p):
+            d = [p[i] - origin[i] for i in range(3)]
+            assert abs(sum(d[i] * n[i] for i in range(3))) < 1e-9, f"{name}: point off the sketch plane"
+            return (sum(d[i] * x[i] for i in range(3)), sum(d[i] * y[i] for i in range(3)))
+        return local
+
+    def cut_poly(self, name, origin, into, pts, depth=None, target=None):
+        """Cuts the closed polygon of world points `pts` (on the plane through `origin` normal to
+        `into`) along `into`, `depth` deep or through all."""
+        local = self.plane(name, origin, into)
+        self.polyline([local(p) for p in pts])
         self.finish()
         cut = {"through_all": True} if depth is None else {"distance": depth}
         self.cmd("solid.extrude", **cut, operation="cut", targets=[target or self.body], name=name)
@@ -698,6 +714,590 @@ def rocking_arm(s):
     return (loop_area(p1l, segs) - math.pi / 4 * (16 + 3.3 ** 2)) * T
 
 
+def integrate2(f, x0, x1, y0, y1, n=600):
+    """∬ f(x, y) over a box, midpoint rule on an n x n grid."""
+    hx, hy = (x1 - x0) / n, (y1 - y0) / n
+    return sum(f(x0 + (i + 0.5) * hx, y0 + (j + 0.5) * hy) for i in range(n) for j in range(n)) * hx * hy
+
+
+# ----------------------------------------------------------------------------- 1-07
+@part("1-07", "Motor cylinder oiler base", "Brass")
+def oiler_base(s):
+    """Sheet 03, 1-07 (scale 1:2): M4 x 6 stud (modelled at Ø4), Ø8 x 5 collar, 8 hex x 4.5,
+    M6 tapped 8 deep from the hex end (Ø5), Ø2 oil hole through. Axis = Z, the stud at Z = 0."""
+    LS = s.param("ob_stud_l", 6, "M4 stud length (into the 1-02 oiler hole)")
+    DC = s.param("ob_collar_d", 8, "collar")
+    LC = s.param("ob_collar_l", 5, "collar length")
+    AF = s.param("ob_hex_af", 8, "hex across flats")
+    LH = s.param("ob_hex_l", 4.5, "hex length")
+    TD = s.param("ob_m6_depth", 8, "M6 tapped depth from the top (tap drill Ø5)")
+    DO = s.param("ob_oil_hole", 2, "oil hole")
+    top = LS + LC + LH
+    # made like the part: 8 hex bar, the collar turned to Ø8, the stud, then the bores
+    s.sketch("Hex", (0, 0, LS), (1, 0, 0), (0, 1, 0))
+    s.polyline(hexagon(AF))
+    s.finish()
+    s.cmd("solid.extrude", distance=LC + LH, name="Hex bar", body_name=s.body)
+    s.turned("Collar", [(DC / 2, LS - 1), (AF, LS - 1), (AF, LS + LC), (DC / 2, LS + LC)], operation="cut")
+    s.turned("Stud", [(0, 0), (2, 0), (2, LS + 1), (0, LS + 1)], operation="join")
+    s.holes("M6 tapped", (0, 0, top), (0, 0, -1), [(0, 0, top)], 5.0, TD)
+    s.holes("Oil hole", (0, 0, 0), (0, 0, 1), [(0, 0, 0)], DO)
+    v = math.sqrt(3) / 2 * AF * AF * LH + math.pi / 4 * (DC * DC * LC + 16 * LS)
+    return v - math.pi / 4 * (25 * TD + DO * DO * (top - TD))
+
+
+# ----------------------------------------------------------------------------- 1-15
+@part("1-15", "Motor crank shaft drive pulley", "Brass")
+def drive_pulley(s):
+    """Sheet 03, 1-15 (scale 1:1; groove from the drawing's vector lines): Ø24 x 6.5 boss, then a
+    6 wide pulley: two 1 thick Ø26 flanges and a V groove 4 wide at the top, 2.5 at its Ø20 flat
+    bottom. M16 bore (tap drill Ø14), M4 grub screw 4 from the boss end (Ø3.3, on +X).
+    Axis = Z, the boss end at Z = 0."""
+    DB = s.param("pul_boss_d", 24, "boss")
+    LB = s.param("pul_boss_l", 6.5, "boss length")
+    DF = s.param("pul_d", 26, "flange diameter")
+    TF = s.param("pul_flange_t", 1, "flange thickness")
+    WT = s.param("pul_groove_top", 4, "groove width between the flanges")
+    WB = s.param("pul_groove_bottom", 2.5, "groove bottom width")
+    DG = s.param("pul_groove_d", 20, "groove bottom diameter")
+    DT = s.param("pul_tap_d", 14, "M16 (tap drill Ø14)")
+    ZG = s.param("pul_grub_z", 4, "M4 grub screw position")
+    z0 = LB + TF
+    c = (WT - WB) / 2
+    pts = [(DT / 2, 0), (DB / 2, 0), (DB / 2, LB), (DF / 2, LB), (DF / 2, z0), (DG / 2, z0 + c),
+           (DG / 2, z0 + c + WB), (DF / 2, z0 + WT), (DF / 2, z0 + WT + TF), (DT / 2, z0 + WT + TF)]
+    v = s.turned("Pulley", pts)
+    s.holes("M4 grub tapped", (DB / 2, 0, 0), (-1, 0, 0), [(DB / 2, 0, ZG)], 3.3, (DB - DT) / 2 + 1)
+    return v - radial_hole(3.3, DB / 2, DT / 2)
+
+
+# ----------------------------------------------------------------------------- 1-23
+@part("1-23", "Motor piston cross head", "Brass")
+def cross_head(s):
+    """Sheet 03, 1-23 (scale 1:2): Ø10 x 18, M5 tapped 9 deep from Z = 0 (Ø4.2) for the piston
+    rod, 5 wide fork slot 9 deep from Z = 18 (the slot across X), Ø3.5 pin hole along X 13.5 from
+    Z = 0. Axis = Z."""
+    D = s.param("ch_d", 10, "diameter")
+    L = s.param("ch_l", 18, "length")
+    TD = s.param("ch_tap_depth", 9, "M5 tapped depth (meets the slot)")
+    SW = s.param("ch_slot_w", 5, "fork slot width")
+    SD = s.param("ch_slot_depth", 9, "fork slot depth")
+    ZP = s.param("ch_pin_z", 13.5, "pin hole position")
+    DP = s.param("ch_pin_d", 3.5, "pin hole")
+    R = D / 2
+    v = s.turned("Body", [(0, 0), (R, 0), (R, L), (0, L)])
+    s.holes("M5 tapped", (0, 0, 0), (0, 0, 1), [(0, 0, 0)], 4.2, TD)
+    s.cut_poly("Fork slot", (0, -R - 1, 0), (0, 1, 0),
+               [(-SW / 2, -R - 1, L - SD), (SW / 2, -R - 1, L - SD), (SW / 2, -R - 1, L + 1), (-SW / 2, -R - 1, L + 1)])
+    s.holes("Pin hole", (R, 0, 0), (-1, 0, 0), [(R, 0, ZP)], DP)
+    v -= math.pi / 4 * 4.2 ** 2 * TD + strip(R, -SW / 2, SW / 2) * SD
+    # pin hole: through the two fork cheeks (|x| > 2.5) of the Ø10 section
+    v -= integrate2(lambda y, z: 2 * max(0.0, math.sqrt(max(0.0, R * R - y * y)) - SW / 2)
+                    if y * y + z * z < DP * DP / 4 else 0.0, -DP / 2, DP / 2, -DP / 2, DP / 2)
+    return v
+
+
+# ----------------------------------------------------------------------------- 1-24A
+@part("1-24A", "Motor piston rod", {"rod": "Steel", "pin": "Stainless Steel"})
+def piston_rod(s):
+    """Sheet 03, 1-24A (scale 1:1.5): M/S rod, Ø4.9 x 10 (through the 1-22 piston crown) then
+    Ø6 x 79, with a Ø3.5 x 27 S/S cross pin pressed in 4 from the Ø4.9 end (along Y) and a Ø4
+    cross hole 5 from the other end (along X, for the 1-24B pin). Axis = Z from the Ø4.9 end."""
+    D1 = s.param("pr_d1", 4.9, "end through the piston")
+    L1 = s.param("pr_l1", 10, "its length")
+    D2 = s.param("pr_d2", 6, "rod")
+    L2 = s.param("pr_l2", 79, "rod length")
+    DP = s.param("pr_pin_d", 3.5, "cross pin, 3.5PF")
+    LP = s.param("pr_pin_l", 27, "cross pin length (from the drawing's vector lines)")
+    ZP = s.param("pr_pin_z", 4, "cross pin position")
+    DH = s.param("pr_hole_d", 4, "cross hole at the other end")
+    ZH = s.param("pr_hole_z", L1 + L2 - 5, "5 from the end")
+    n = s.body.split()[0]
+    rod, pin = f"{n} rod", f"{n} pin"
+    v = s.turned("Rod", [(0, 0), (D1 / 2, 0), (D1 / 2, L1), (D2 / 2, L1), (D2 / 2, L1 + L2), (0, L1 + L2)], body=rod)
+    s.holes("Pin hole", (0, D1 / 2, 0), (0, -1, 0), [(0, D1 / 2, ZP)], DP, target=rod)
+    s.holes("Cross hole", (D2 / 2, 0, 0), (-1, 0, 0), [(D2 / 2, 0, ZH)], DH, target=rod)
+    v -= radial_hole(DP, D1 / 2, walls=2) + radial_hole(DH, D2 / 2, walls=2)
+    s.sketch("Cross pin", (0, -LP / 2, 0), (1, 0, 0), (0, 0, -1))
+    s.cmd("sketch.circle.center", center=[0, -ZP], diameter=DP)
+    s.finish()
+    s.cmd("solid.extrude", distance=LP, operation="new", name="Cross pin", body_name=pin)
+    return v + math.pi / 4 * DP * DP * LP
+
+
+# ----------------------------------------------------------------------------- 1-24B
+@part("1-24B", "Motor piston rod big end part-1", "Brass")
+def big_end_1(s):
+    """Sheet 03, 1-24B (scale 1:2): Ø10 x 12 socket for the 1-24A rod (Ø6 bore 11 deep, Ø4 pin
+    hole 6 from the end, along X) and a 10 x 10 x 11 block ending in half of the Ø8 crankpin bearing
+    (axis Y). M4 tapped through the block along X, 3.5 from the socket, for the 1-24C screws.
+    Axis = Z from the socket end."""
+    D = s.param("be_d", 10, "socket diameter; block 10 x 10")
+    LS = s.param("be_socket_l", 12, "socket length")
+    LB = s.param("be_block_l", 11, "block length")
+    DB = s.param("be_bore", 6, "rod bore")
+    BD = s.param("be_bore_depth", 11, "rod bore depth")
+    ZP = s.param("be_pin_z", 6, "pin hole position (1-24A hole is 5 from its end)")
+    DP = s.param("be_pin_d", 4, "pin hole")
+    DC = s.param("be_crank_d", 8, "crankpin bearing")
+    ZS = s.param("be_screw_z", LS + 3.5, "M4 tapped, 3.5 into the block")
+    R = D / 2
+    # the block, then the socket overlapping 0.5 into it (a socket butted against the block, or
+    # turned down from square bar, fails: its Ø10 is tangent to the block's faces)
+    s.sketch("Block", (0, 0, LS), (1, 0, 0), (0, 1, 0))
+    s.polyline([(-R, -R), (R, -R), (R, R), (-R, R)])
+    s.finish()
+    s.cmd("solid.extrude", distance=LB, name="Block", body_name=s.body)
+    s.turned("Socket", [(0, 0), (R, 0), (R, LS + 0.5), (0, LS + 0.5)], operation="join")
+    s.holes("Rod bore", (0, 0, 0), (0, 0, 1), [(0, 0, 0)], DB, BD)
+    v = math.pi / 4 * D * D * LS + D * D * LB - math.pi / 4 * DB * DB * BD
+    s.holes("Bearing half", (0, -R, 0), (0, 1, 0), [(0, -R, LS + LB)], DC)
+    s.holes("M4 tapped", (R, 0, 0), (-1, 0, 0), [(R, 0, ZS)], 3.3)
+    s.holes("Pin hole", (R, 0, 0), (-1, 0, 0), [(R, 0, ZP)], DP)
+    v -= math.pi / 8 * DC * DC * D + math.pi / 4 * 3.3 ** 2 * D + radial_hole(DP, R, DB / 2, walls=2)
+    return v
+
+
+# ----------------------------------------------------------------------------- 1-24C
+@part("1-24C", "Motor piston rod big end part-2", "Brass")
+def big_end_2(s):
+    """Sheet 03, 1-24C (scale 1:2): U-shaped cap over the 1-24B block: two 8 thick arms 11 long
+    with a 10 opening, an 8 long bridge holding the other half of the Ø8 crankpin bearing, 10
+    wide. Ø4.3 holes (M4 clearance, sheet 02 note 3) through both arms, a Ø2 oil hole from the
+    top into the bearing. X along the rod (the arms' open end at X = 0), Z up, Y across."""
+    LA = s.param("cap_arm_l", 11, "arm length")
+    LB = s.param("cap_bridge_l", 8, "bridge length")
+    TA = s.param("cap_arm_t", 8, "arm thickness")
+    OP = s.param("cap_opening", 10, "opening (5 + 5) for the 1-24B block")
+    W = s.param("cap_w", 10, "width")
+    DC = s.param("cap_crank_d", 8, "crankpin bearing, centred on the bridge face")
+    XS = s.param("cap_screw_x", 3.5, "screw holes")
+    DS = s.param("cap_screw_d", 4.3, "M4 clearance")
+    XO = s.param("cap_oil_x", 15, "oil hole (3.5 + 11.5)")
+    H = OP / 2 + TA
+    s.sketch("Side profile", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    s.polyline([(0, -H), (LA + LB, -H), (LA + LB, H), (0, H), (0, OP / 2), (LA, OP / 2), (LA, -OP / 2), (0, -OP / 2)])
+    s.finish()
+    s.cmd("solid.extrude", distance=W / 2, direction="symmetric", name="Cap", body_name=s.body)
+    s.holes("Bearing half", (0, -W / 2, 0), (0, 1, 0), [(LA, -W / 2, 0)], DC)
+    s.holes("Screw holes", (0, 0, H), (0, 0, -1), [(XS, 0, H)], DS)
+    s.holes("Oil hole", (0, 0, H), (0, 0, -1), [(XO, 0, H)], 2, H)
+    v = ((LA + LB) * 2 * H - LA * OP - math.pi / 8 * DC * DC) * W
+    v -= math.pi / 4 * DS * DS * 2 * TA
+    rc = DC / 2
+    v -= integrate2(lambda x, y: (H - (math.sqrt(max(0.0, rc * rc - (x - LA) ** 2)) if x - LA < rc else 0.0))
+                    if (x - XO) ** 2 + y * y < 1 else 0.0, XO - 1, XO + 1, -1, 1)
+    return v
+
+
+# ----------------------------------------------------------------------------- 1-25A
+@part("1-25A", "Motor cylinder slide valve-1", "Stainless Steel")
+def slide_valve_1(s):
+    """Sheet 03, 1-25A (scale 1:2): flat plate 19.8 x 50 x 0.1 (S/S or spring steel), R4 corners,
+    Ø5 hole on the centre line 6 from one end. On the XY plane, the hole end at Y = 0."""
+    W = s.param("sv_w", 19.8, "width (9.9 + 9.9)")
+    L = s.param("sv_l", 50, "length")
+    T = s.param("sv_t", 0.1, "thickness")
+    RC = s.param("sv_r", 4, "corner radius")
+    YH = s.param("sv_hole_y", 6, "hole position")
+    DH = s.param("sv_hole_d", 5, "hole")
+    x0, x1 = -W / 2, W / 2
+    segs = [("line", (x1 - RC, 0)), ("arc", (x1 - RC, RC), (x1, RC), True), ("line", (x1, L - RC)),
+            ("arc", (x1 - RC, L - RC), (x1 - RC, L), True), ("line", (x0 + RC, L)),
+            ("arc", (x0 + RC, L - RC), (x0, L - RC), True), ("line", (x0, RC)), ("arc", (x0 + RC, RC), (x0 + RC, 0), True)]
+    s.sketch("Plate", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop((x0 + RC, 0), segs)
+    s.cmd("sketch.circle.center", center=[0, YH], diameter=DH)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [0, L / 2]}], name="Plate", body_name=s.body)
+    return (loop_area((x0 + RC, 0), segs) - math.pi / 4 * DH * DH) * T
+
+
+# ----------------------------------------------------------------------------- 1-25B
+@part("1-25B", "Motor cylinder slide valve-2", "Stainless Steel")
+def slide_valve_2(s):
+    """Sheet 03, 1-25B (scale 1:2): 0.1 spring sheet 19.8 x 50, flat for 10 (with the Ø5 hole 6
+    from the end) and 4 at the other end, bowed R162 in between (bow 1.0: 1.1 over the sheet).
+    The side profile is on the XZ plane (Z along the sheet, the bow toward +X), extruded across Y."""
+    W = s.param("sv2_w", 19.8, "width")
+    L = s.param("sv2_l", 50, "length")
+    T = s.param("sv2_t", 0.1, "thickness")
+    F1 = s.param("sv2_flat1", 10, "flat end with the hole")
+    F2 = s.param("sv2_flat2", 4, "flat end at the other side")
+    RB = s.param("sv2_bow_r", 162, "bow radius")
+    DH = s.param("sv2_hole_d", 5, "hole")
+    ZH = s.param("sv2_hole_z", 6, "hole position")
+    zm = (F1 + L - F2) / 2
+    half = (L - F2 - F1) / 2
+    sag = RB - math.sqrt(RB * RB - half * half)
+    c = (T / 2 + sag - RB, zm)                   # centre of the bow's mid surface
+    dz = lambda r, x: math.sqrt(r * r - (x - c[0]) ** 2)
+    zo, zi = dz(RB + T / 2, T), dz(RB - T / 2, 0)
+    segs = [("line", (T, 0)), ("line", (T, zm - zo)), ("arc", c, (T, zm + zo), True), ("line", (T, L)),
+            ("line", (0, L)), ("line", (0, zm + zi)), ("arc", c, (0, zm - zi), False), ("line", (0, 0))]
+    s.sketch("Side profile", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    s.loop((0, 0), segs)
+    s.finish()
+    s.cmd("solid.extrude", distance=W / 2, direction="symmetric", name="Sheet", body_name=s.body)
+    s.holes("Hole", (-1, 0, 0), (1, 0, 0), [(-1, 0, ZH)], DH)
+    return loop_area((0, 0), segs) * W - math.pi / 4 * DH * DH * T
+
+
+# ----------------------------------------------------------------------------- 1-29
+@part("1-29", "Motor valve rod lock nut", "Brass")
+def valve_rod_lock_nut(s):
+    """Sheet 03, 1-29: Ø6 x 9 with an 8 hex x 4 at one end; M4 tapped 3 deep from the Ø6 end
+    (Ø3.3), Ø4.5 through the rest (clearance for the Ø4 1-28 rod). Axis = Z from the Ø6 end."""
+    D = s.param("vh_d", 6, "body")
+    L = s.param("vh_l", 13, "overall length (3 + 10)")
+    LH = s.param("vh_hex_l", 4, "hex length")
+    AF = s.param("vh_hex_af", 8, "hex across flats")
+    LT = s.param("vh_tap_l", 3, "M4 tapped length")
+    DC = s.param("vh_clear_d", 4.5, "clearance bore")
+    s.sketch("Hex", (0, 0, L - LH), (1, 0, 0), (0, 1, 0))
+    s.polyline(hexagon(AF))
+    s.finish()
+    s.cmd("solid.extrude", distance=LH, name="Hex", body_name=s.body)
+    s.turned("Body", [(0, 0), (D / 2, 0), (D / 2, L - LH + 1), (0, L - LH + 1)], operation="join")
+    s.holes("Clearance bore", (0, 0, L), (0, 0, -1), [(0, 0, L)], DC, L - LT)
+    s.holes("M4 tapped", (0, 0, 0), (0, 0, 1), [(0, 0, 0)], 3.3, LT + 1)
+    v = math.sqrt(3) / 2 * AF * AF * LH + math.pi / 4 * D * D * (L - LH)
+    return v - math.pi / 4 * (DC * DC * (L - LT) + 3.3 ** 2 * LT)
+
+
+# ----------------------------------------------------------------------------- 1-30
+@part("1-30", "Motor valve rod valve holder", "Brass")
+def valve_holder(s):
+    """Sheet 03, 1-30: flange Ø10 x 3, spigot Ø5 x 6, M4 tapped through (Ø3.3). Axis = Z, the
+    flange at Z = 0. The Ø5 spigot carries the slide valves (1-25A/B, Ø5 holes)."""
+    DF = s.param("vb_flange_d", 10, "flange")
+    TF = s.param("vb_flange_t", 3, "flange thickness")
+    D = s.param("vb_d", 5, "spigot")
+    L = s.param("vb_l", 6, "spigot length")
+    return s.turned("Bush", [(1.65, 0), (DF / 2, 0), (DF / 2, TF), (D / 2, TF), (D / 2, TF + L), (1.65, TF + L)])
+
+
+# ----------------------------------------------------------------------------- 1-33
+@part("1-33", "Motor rocking arm cam follower axle", "Steel")
+def follower_axle(s):
+    """Sheet 03, 1-33: M4 x 4 (modelled at Ø4), Ø6 x 6, head Ø10 x 2 (its small notch is not
+    modelled). Axis = Z from the M4 end."""
+    LT = s.param("fa_thread_l", 4, "M4 length")
+    D = s.param("fa_d", 6, "axle")
+    L = s.param("fa_l", 6, "axle length")
+    DH = s.param("fa_head_d", 10, "head")
+    TH = s.param("fa_head_t", 2, "head thickness")
+    return s.turned("Axle", [(0, 0), (2, 0), (2, LT), (D / 2, LT), (D / 2, LT + L), (DH / 2, LT + L),
+                             (DH / 2, LT + L + TH), (0, LT + L + TH)])
+
+
+def clip_above(poly, z0):
+    """The part of the polygon of (y, z) points with z >= z0 (Sutherland-Hodgman)."""
+    out = []
+    for a, b in zip(poly, poly[1:] + poly[:1]):
+        ina, inb = a[1] >= z0, b[1] >= z0
+        if ina:
+            out.append(a)
+        if ina != inb:
+            t = (z0 - a[1]) / (b[1] - a[1])
+            out.append((a[0] + t * (b[0] - a[0]), z0))
+    return out
+
+
+def polygon_area(poly):
+    return abs(sum(a[0] * b[1] - b[0] * a[1] for a, b in zip(poly, poly[1:] + poly[:1]))) / 2
+
+
+def offset_polyline(pts, d):
+    """The open polyline of (y, z) points offset by d to its left (miter corners)."""
+    lines = []
+    for a, b in zip(pts, pts[1:]):
+        t = _unit((b[0] - a[0], b[1] - a[1], 0))
+        lines.append(((a[0] - d * t[1], a[1] + d * t[0]), (t[0], t[1])))
+    out = [lines[0][0]]
+    for (p, u), (q, w) in zip(lines, lines[1:]):
+        k = ((q[0] - p[0]) * w[1] - (q[1] - p[1]) * w[0]) / (u[0] * w[1] - u[1] * w[0])
+        out.append((p[0] + k * u[0], p[1] + k * u[1]))
+    (p, u), end = lines[-1], pts[-1]
+    out.append((end[0] - d * u[1], end[1] + d * u[0]))
+    return out
+
+
+# ----------------------------------------------------------------------------- 1-05
+@part("1-05", "Motor outer cylinder head", "Cast Iron")
+def outer_cylinder_head(s):
+    """Sheet 03, 1-05 ("refer to 1-04 for all dimension details", scale 1:2): the 1-04 disc
+    without the valve channel: Ø56 x 3.5 (thickness taken from 1-04), 4 x Ø4.5 on PCD 44 at 45 deg,
+    Ø10 port countersunk 90 deg to Ø15 on the Z = 0 face (dashed on the drawing: the hidden side)."""
+    D = s.param("oh_d", 56, "diameter")
+    T = s.param("oh_t", 3.5, "thickness: not given, taken from 1-04")
+    PCD = s.param("oh_pcd", 44, "bolt holes PCD")
+    DH = s.param("oh_hole_d", 4.5, "M4 clearance")
+    DP = s.param("oh_port_d", 10, "central port")
+    DCS = s.param("oh_csink_d", 15, "countersink, 90 deg")
+    s.sketch("Disc", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.circle.center", center=[0, 0], diameter=D)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, name="Disc", body_name=s.body)
+    s.holes("Bolt holes", (0, 0, T), (0, 0, -1), [(x, y, T) for x, y in ring_pts(4, PCD / 2, 45)], DH)
+    hcs = (DCS - DP) / 2
+    s.sketch("Port section", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    s.polyline([(0, -1), (DCS / 2 + 1, -1), (DCS / 2, 0), (DP / 2, hcs), (DP / 2, T + 1), (0, T + 1)])
+    s.finish()
+    s.cmd("solid.revolve", axis="Z", operation="cut", targets=[s.body], name="Countersunk port")
+    v = math.pi / 4 * (D * D - 4 * DH * DH) * T
+    return v - math.pi / 12 * hcs * (DCS ** 2 + DCS * DP + DP ** 2) - math.pi / 4 * DP * DP * (T - hcs)
+
+
+# ----------------------------------------------------------------------------- 1-06
+@part("1-06", "Motor crank shaft ball bearing", "Steel")
+def crank_bearing(s):
+    """Sheet 03, 1-06: bought ball bearing Ø19 x Ø9.5 x 9 (drawn as PPI). Modelled as its
+    envelope with the race faces 0.5 recessed, for fitting checks only. Axis = Z from Z = 0."""
+    D = s.param("brg_od", 19, "outside diameter")
+    DI = s.param("brg_id", 9.5, "bore (the 1-14 journal)")
+    W = s.param("brg_w", 9, "width")
+    pts = [(DI / 2, 0), (DI / 2 + 1.5, 0), (DI / 2 + 1.5, 0.5), (D / 2 - 1.5, 0.5), (D / 2 - 1.5, 0), (D / 2, 0),
+           (D / 2, W), (D / 2 - 1.5, W), (D / 2 - 1.5, W - 0.5), (DI / 2 + 1.5, W - 0.5), (DI / 2 + 1.5, W),
+           (DI / 2, W)]
+    return s.turned("Bearing envelope", pts)
+
+
+# ----------------------------------------------------------------------------- 1-32
+@part("1-32", "Motor rocking arm cam follower", "Steel")
+def cam_follower(s):
+    """Sheet 03, 1-32 (scale 1:1.5): roller Ø16 x 8, Ø6 bore (the 1-33 axle), Ø11 recess 2.5 deep
+    on one face, Ø10 x 0.5 thrust face on the other. Axis = Z, the thrust face at Z = 0."""
+    D = s.param("cf_d", 16, "roller diameter")
+    W = s.param("cf_w", 8, "roller width")
+    DB = s.param("cf_bore", 6, "bore")
+    DR = s.param("cf_recess_d", 11, "recess")
+    HR = s.param("cf_recess_depth", 2.5, "recess depth")
+    DT = s.param("cf_boss_d", 10, "thrust boss")
+    HT = s.param("cf_boss_h", 0.5, "thrust boss height")
+    return s.turned("Roller", [(DB / 2, 0), (DT / 2, 0), (DT / 2, HT), (D / 2, HT), (D / 2, HT + W),
+                               (DR / 2, HT + W), (DR / 2, HT + W - HR), (DB / 2, HT + W - HR)])
+
+
+# ----------------------------------------------------------------------------- 1-35
+@part("1-35", "Exhaust pipe holding bracket", "Brass")
+def exhaust_pipe_bracket(s):
+    """Sheet 03, 1-35 (scale 1:2): 3 thick brass strip, 10 wide, bent: an 8.5 tab with a Ø3 hole
+    (4.5 from the top), a 14.5 high joggle offsetting it 10.5, then a fork R26 / R18 about a centre
+    2 above its feet, with 2 x Ø4.5 on R22 at 45 deg. Z up from the feet (the top at Z = 54.5),
+    X across, the fork plate on Y = 10.5..13.5, the tab on Y = 0..3. Bends are sharp."""
+    T = s.param("epb_t", 3, "thickness")
+    W = s.param("epb_w", 10, "strip width (5 + 5)")
+    H1 = s.param("epb_tab", 8.5, "tab height")
+    H2 = s.param("epb_joggle_h", 14.5, "joggle height")
+    H3 = s.param("epb_fork_h", 31.5, "fork part height")
+    OFF = s.param("epb_offset", 10.5, "joggle offset")
+    RO = s.param("epb_r_out", 26, "fork outside radius")
+    RI = s.param("epb_r_in", 18, "fork inside radius (the pipe)")
+    LEG = s.param("epb_legs", 2, "fork feet below the centre")
+    PCR = s.param("epb_pcd_r", 22, "holes on R22 at 45 deg")
+    DH = s.param("epb_hole_d", 4.5, "fork holes")
+    DT = s.param("epb_tab_hole", 3, "tab hole")
+    ZT = s.param("epb_tab_hole_z", 4.5, "tab hole from the top")
+    top = H1 + H2 + H3
+    zc = LEG
+    zj = H3                                     # bottom of the joggle
+    # side profile (y, z): the −Y face of the strip as a polyline, offset by T toward +Y
+    inner = [(0, top), (0, top - H1), (OFF, zj), (OFF, zj - 7)]
+    side = inner + offset_polyline(inner, T)[::-1]
+    s.sketch("Side profile", (0, 0, 0), (0, 1, 0), (0, 0, 1))
+    s.polyline(side)
+    s.finish()
+    s.cmd("solid.extrude", distance=W / 2, direction="symmetric", name="Tab and joggle", body_name=s.body)
+    # the fork plate: front outline in (x, z), sketched on Y = OFF + T and extruded T toward −Y
+    ao = math.sqrt(RO * RO - (W / 2) ** 2)
+    start = (-W / 2, zj)
+    segs = [("line", (-W / 2, zc + ao)), ("arc", (0, zc), (-RO, zc), True), ("line", (-RO, zc - LEG)),
+            ("line", (-RI, zc - LEG)), ("line", (-RI, zc)), ("arc", (0, zc), (RI, zc), False),
+            ("line", (RI, zc - LEG)), ("line", (RO, zc - LEG)), ("line", (RO, zc)),
+            ("arc", (0, zc), (W / 2, zc + ao), True), ("line", (W / 2, zj)), ("line", start)]
+    s.sketch("Fork", (0, OFF + T, 0), (1, 0, 0), (0, 0, 1))
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, operation="join", targets=[s.body], name="Fork")
+    s.holes("Tab hole", (0, -1, 0), (0, 1, 0), [(0, -1, top - ZT)], DT)
+    hx = PCR * math.sin(math.pi / 4)
+    s.holes("Fork holes", (0, -1, 0), (0, 1, 0), [(-hx, -1, zc + hx), (hx, -1, zc + hx)], DH)
+    v = W * polygon_area(clip_above(side, zj)) + T * loop_area(start, segs)
+    return v - math.pi / 4 * (DT * DT + 2 * DH * DH) * T
+
+
+def removed_by_cylinder(inside, p0, d, dia, length, n=120):
+    """Volume of material (inside(x, y, z) is True) within the cylinder of diameter `dia` from p0
+    along the unit vector d for `length`: midpoint sampling."""
+    u = _unit(_cross(d, (0, 0, 1)) if abs(d[2]) < 0.9 else _cross(d, (1, 0, 0)))
+    w = _cross(d, u)
+    r, v, h = dia / 2, 0, dia / n
+    nl = max(1, int(length / h))
+    hl = length / nl
+    for i in range(n):
+        a = -r + (i + 0.5) * h
+        for j in range(n):
+            b = -r + (j + 0.5) * h
+            if a * a + b * b > r * r:
+                continue
+            for k in range(nl):
+                t = (k + 0.5) * hl
+                q = [p0[m] + a * u[m] + b * w[m] + t * d[m] for m in range(3)]
+                if inside(*q):
+                    v += 1
+    return v * h * h * hl
+
+
+def in_revolved(pts, x, y, z):
+    """Is (x, y, z) inside the closed (r, z) polygon `pts` revolved about the Z axis?"""
+    r, inside = math.hypot(x, y), False
+    for (r0, z0), (r1, z1) in zip(pts, pts[1:] + pts[:1]):
+        if (z0 > z) != (z1 > z) and r < r0 + (z - z0) * (r1 - r0) / (z1 - z0):
+            inside = not inside
+    return inside
+
+
+# ----------------------------------------------------------------------------- 1-08
+@part("1-08", "Motor cylinder oiler glass base", "Brass")
+def oiler_glass_base(s):
+    """Sheet 03, 1-08 (scale 1:1, read off the drawing's vector lines): Ø4 x 4 nozzle (its small
+    30 deg tip chamfer not modelled), M6 x 5 (at Ø6) into 1-07, Ø17 x 2 flange with a Ø15 x 1
+    recess for the 1-09 glass, Ø5 x 4 boss tapped M3 3 deep (Ø2.5) for the 1-10 screw, Ø3 bore
+    from below, and a Ø2 drain hole rising at 15 deg from the bore into the recess (on +X).
+    Axis = Z, the nozzle tip at Z = 0."""
+    LN = s.param("gb_nozzle_l", 4, "nozzle length")
+    LT = s.param("gb_thread_l", 5, "M6 length")
+    DF = s.param("gb_flange_d", 17, "flange")
+    TF = s.param("gb_flange_t", 2, "flange thickness")
+    DR = s.param("gb_recess_d", 15, "recess for the glass (Ø15)")
+    HR = s.param("gb_recess_h", 1, "recess depth")
+    DB = s.param("gb_boss_d", 5, "boss")
+    HB = s.param("gb_boss_h", 4, "boss height above the flange")
+    ZB = s.param("gb_bore_top", 9.88, "top of the Ø3 bore (measured)")
+    TD = s.param("gb_m3_depth", 3, "M3 tapped depth (measured 3.1)")
+    zf = LN + LT
+    top = zf + TF + HB
+    pts = [(1.5, 0), (2, 0), (2, LN), (3, LN), (3, zf), (DF / 2, zf), (DF / 2, zf + TF), (DR / 2, zf + TF),
+           (DR / 2, zf + TF - HR), (DB / 2, zf + TF - HR), (DB / 2, top), (0, top), (0, ZB), (1.5, ZB)]
+    v = s.turned("Body", pts)
+    s.holes("M3 tapped", (0, 0, top), (0, 0, -1), [(0, 0, top)], 2.5, TD)
+    a = math.radians(15)
+    d = (math.cos(a), 0, math.sin(a))
+    p0 = (-1, 0, 10.53 - math.tan(a))           # the hole axis crosses the bore axis at Z = 10.53
+    s.holes("Drain hole", p0, d, [p0], 2, 6)
+    v -= math.pi / 4 * 2.5 ** 2 * TD
+    v -= removed_by_cylinder(lambda x, y, z: in_revolved(pts, x, y, z) and not (z > top - TD and x * x + y * y < 1.5625),
+                             p0, d, 2, 6)
+    return v
+
+
+# ----------------------------------------------------------------------------- 1-10
+@part("1-10", "Motor cylinder oiler glass top", "Brass")
+def oiler_glass_top(s):
+    """Sheet 03, 1-10: funnel: Ø17 x 2 base with a Ø15 x 1 recess underneath (over the 1-09 glass),
+    1 thick wall at 60 deg up to Ø17 at a height of 6; Ø3 hole in the middle (the M3 screw into 1-08)
+    and two Ø2 feed holes 3 either side (on X). Axis = Z, the base at Z = 0."""
+    D = s.param("gt_d", 17, "base and rim diameter")
+    DR = s.param("gt_recess_d", 15, "recess underneath")
+    HR = s.param("gt_recess_h", 1, "recess depth")
+    TB = s.param("gt_base_t", 2, "base thickness")
+    H = s.param("gt_h", 6, "height")
+    A = math.radians(s.param("gt_angle", 60, "wall angle to the base", unit="deg"))
+    T = s.param("gt_wall", 1, "wall thickness")
+    DC = s.param("gt_hole_d", 3, "central hole")
+    XF = s.param("gt_feed_x", 3, "feed holes, Ø2")
+    R = D / 2
+    run = (H - TB) / math.tan(A)
+    dt = T / math.sin(A)
+    pts = [(DC / 2, HR), (DR / 2, HR), (DR / 2, 0), (R, 0), (R, TB), (R - run, TB), (R, H), (R - dt, H),
+           (R - dt - run, TB), (DC / 2, TB)]
+    v = s.turned("Funnel", pts)
+    s.holes("Feed holes", (0, 0, -1), (0, 0, 1), [(-XF, 0, -1), (XF, 0, -1)], 2, TB + 2)
+    return v - 2 * math.pi * (TB - HR)
+
+
+# ----------------------------------------------------------------------------- 1-11
+@part("1-11", "Motor block oil channel", "Steel")
+def oil_channel(s):
+    """Sheet 03, 1-11 (scale 1:2): 1.5 thick M/S strip, 20 long, bent into a channel: two 28 flats
+    (to the centre) and a semicircular trough of inside Ø15.5 between them, hanging below the flats'
+    top face. Side profile on the XZ plane (top face at Z = 0), extruded 20 along Y."""
+    T = s.param("oc_t", 1.5, "thickness")
+    L = s.param("oc_half", 28, "end to centre")
+    DI = s.param("oc_trough_d", 15.5, "trough inside diameter")
+    W = s.param("oc_w", 20, "length (20mm LONG)")
+    ri, ro = DI / 2, DI / 2 + T
+    xo = math.sqrt(ro * ro - T * T)
+    start = (-L, 0)
+    segs = [("line", (-ri, 0)), ("arc", (0, 0), (ri, 0), True), ("line", (L, 0)), ("line", (L, -T)),
+            ("line", (xo, -T)), ("arc", (0, 0), (-xo, -T), False), ("line", (-L, -T)), ("line", start)]
+    s.sketch("Side profile", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.extrude", distance=W / 2, direction="symmetric", name="Channel", body_name=s.body)
+    return loop_area(start, segs) * W
+
+
+# ----------------------------------------------------------------------------- 1-12
+@part("1-12", "Motor block oil valve part-1", "Brass")
+def oil_valve_1(s):
+    """Sheet 03, 1-12: M6 x 6 stud (at Ø6), 8 hex x 22 body tapped M6 8 deep from the far end (Ø5),
+    Ø2 through. Axis = Z from the stud end."""
+    LS = s.param("ov1_stud_l", 6, "M6 stud")
+    LH = s.param("ov1_hex_l", 22, "hex body")
+    AF = s.param("ov1_af", 8, "hex across flats")
+    TD = s.param("ov1_tap_depth", 8, "M6 tapped depth (for 1-13)")
+    top = LS + LH
+    s.sketch("Hex", (0, 0, LS), (1, 0, 0), (0, 1, 0))
+    s.polyline(hexagon(AF))
+    s.finish()
+    s.cmd("solid.extrude", distance=LH, name="Hex bar", body_name=s.body)
+    s.turned("Stud", [(0, 0), (3, 0), (3, LS + 1), (0, LS + 1)], operation="join")
+    s.holes("M6 tapped", (0, 0, top), (0, 0, -1), [(0, 0, top)], 5.0, TD)
+    s.holes("Oil hole", (0, 0, 0), (0, 0, 1), [(0, 0, 0)], 2)
+    v = math.sqrt(3) / 2 * AF * AF * LH + math.pi / 4 * 36 * LS
+    return v - math.pi / 4 * (25 * TD + 4 * (top - TD))
+
+
+# ----------------------------------------------------------------------------- 1-13
+@part("1-13", "Motor block oil valve part-2", "Brass")
+def oil_valve_2(s):
+    """Sheet 03, 1-13: valve screwed into 1-12: Ø4 x 5.5 tip with a 45 deg point chamfer (to Ø1.5)
+    and a Ø2 cross hole 3.5 from the tip (along X), M6 x 6 (at Ø6), 8 hex x 3.5, Ø3.5 x 5 spigot;
+    Ø2 bore from the spigot end to the cross hole. Axis = Z from the tip."""
+    LT = s.param("ov2_tip_l", 5.5, "tip length")
+    DT = s.param("ov2_tip_d", 4, "tip diameter (measured)")
+    LM = s.param("ov2_thread_l", 6, "M6 length")
+    LH = s.param("ov2_hex_l", 3.5, "hex length")
+    AF = s.param("ov2_af", 8, "hex across flats")
+    LS = s.param("ov2_spigot_l", 5, "spigot length")
+    DS = s.param("ov2_spigot_d", 3.5, "spigot diameter")
+    ZX = s.param("ov2_cross_z", 3.5, "cross hole position")
+    z1, z2 = LT, LT + LM
+    z3 = z2 + LH
+    top = z3 + LS
+    ch = (DT - 1.5) / 2
+    s.sketch("Hex", (0, 0, z1), (1, 0, 0), (0, 1, 0))
+    s.polyline(hexagon(AF))
+    s.finish()
+    s.cmd("solid.extrude", distance=LM + LH, name="Hex bar", body_name=s.body)
+    s.turned("Thread", [(3, z1 - 1), (AF, z1 - 1), (AF, z2), (3, z2)], operation="cut")
+    tip = [(0, 0), (0.75, 0), (DT / 2, ch), (DT / 2, z1 + 1), (0, z1 + 1)]
+    spig = [(0, z3 - 1), (DS / 2, z3 - 1), (DS / 2, top), (0, top)]
+    s.turned("Tip", tip, operation="join")
+    s.turned("Spigot", spig, operation="join")
+    s.holes("Bore", (0, 0, top), (0, 0, -1), [(0, 0, top)], 2, top - ZX)
+    s.holes("Cross hole", (DT / 2, 0, 0), (-1, 0, 0), [(DT / 2, 0, ZX)], 2)
+    v = revolved_volume([(0, 0), (0.75, 0), (DT / 2, ch), (DT / 2, z1), (0, z1)])
+    v += math.pi / 4 * 36 * LM + math.sqrt(3) / 2 * AF * AF * LH + math.pi / 4 * DS * DS * LS
+    v -= math.pi / 4 * 4 * (top - ZX)
+    # the cross hole, less what the bore already took out where they meet
+    v -= removed_by_cylinder(lambda x, y, z: x * x + y * y < DT * DT / 4 and not (x * x + y * y < 1 and z > ZX),
+                             (DT / 2, 0, ZX), (-1, 0, 0), 2, DT)
+    return v
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]
@@ -745,8 +1345,11 @@ def stl_volume(path):
 def build(number, path, estimate, n_bodies):
     base = os.path.join(OUT, number)
     stl = os.path.join(OUT, f".{number}.check.stl")
-    subprocess.run([ARGS.cli, "run", path, "--save", base + ".solvecraft", "--out", base + ".step", "--out", stl,
-                    "--quiet"], check=True)
+    run = subprocess.run([ARGS.cli, "run", path, "--save", base + ".solvecraft", "--out", base + ".step", "--out",
+                          stl, "--quiet"], capture_output=True, text=True)
+    if run.returncode:
+        print(f"{number}: FAIL {run.stderr.strip()[:400]}")
+        return False
     mesh_vol, open_edges = stl_volume(stl)
     os.remove(stl)
     res = json.loads(subprocess.run([ARGS.cli, "eval", base + ".solvecraft"], check=True,

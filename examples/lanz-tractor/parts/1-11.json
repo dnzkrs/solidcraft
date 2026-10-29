@@ -1,0 +1,209 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "oc_t",
+    "expression": "1.5",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "oc_half",
+    "expression": "28",
+    "unit": "mm",
+    "comment": "end to centre"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "oc_trough_d",
+    "expression": "15.5",
+    "unit": "mm",
+    "comment": "trough inside diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "oc_w",
+    "expression": "20",
+    "unit": "mm",
+    "comment": "length (20mm LONG)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Side profile"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -28,
+      0
+     ],
+     [
+      -7.75,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     -7.75,
+     0
+    ],
+    "end": [
+     7.75,
+     0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      7.75,
+      0
+     ],
+     [
+      28,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28,
+      0
+     ],
+     [
+      28,
+      -1.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28,
+      -1.5
+     ],
+     [
+      9.127568,
+      -1.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     -9.127568,
+     -1.5
+    ],
+    "end": [
+     9.127568,
+     -1.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -9.127568,
+      -1.5
+     ],
+     [
+      -28,
+      -1.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -28,
+      -1.5
+     ],
+     [
+      -28,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 10.0,
+    "direction": "symmetric",
+    "name": "Channel",
+    "body_name": "1-11 Motor block oil channel"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-11 Motor block oil channel"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

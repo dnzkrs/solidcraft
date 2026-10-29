@@ -1,0 +1,438 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ov2_tip_l",
+    "expression": "5.5",
+    "unit": "mm",
+    "comment": "tip length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ov2_tip_d",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "tip diameter (measured)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ov2_thread_l",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "M6 length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ov2_hex_l",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "hex length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ov2_af",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "hex across flats"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ov2_spigot_l",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "spigot length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ov2_spigot_d",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "spigot diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ov2_cross_z",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "cross hole position"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      5.5
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Hex"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      4.618802,
+      0.0
+     ],
+     [
+      2.309401,
+      4.0
+     ],
+     [
+      -2.309401,
+      4.0
+     ],
+     [
+      -4.618802,
+      0.0
+     ],
+     [
+      -2.309401,
+      -4.0
+     ],
+     [
+      2.309401,
+      -4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 9.5,
+    "name": "Hex bar",
+    "body_name": "1-13 Motor block oil valve part-2"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Thread section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3,
+      4.5
+     ],
+     [
+      8,
+      4.5
+     ],
+     [
+      8,
+      11.5
+     ],
+     [
+      3,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "cut",
+    "name": "Thread",
+    "targets": [
+     "1-13 Motor block oil valve part-2"
+    ]
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Tip section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      0.75,
+      0
+     ],
+     [
+      2.0,
+      1.25
+     ],
+     [
+      2.0,
+      6.5
+     ],
+     [
+      0,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "join",
+    "name": "Tip",
+    "targets": [
+     "1-13 Motor block oil valve part-2"
+    ]
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Spigot section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      14.0
+     ],
+     [
+      1.75,
+      14.0
+     ],
+     [
+      1.75,
+      20.0
+     ],
+     [
+      0,
+      20.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "join",
+    "name": "Spigot",
+    "targets": [
+     "1-13 Motor block oil valve part-2"
+    ]
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      20.0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Bore"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 16.5,
+    "operation": "cut",
+    "targets": [
+     "1-13 Motor block oil valve part-2"
+    ],
+    "name": "Bore"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      2.0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Cross hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -3.5
+    ],
+    "diameter": 2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-13 Motor block oil valve part-2"
+    ],
+    "name": "Cross hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-13 Motor block oil valve part-2"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

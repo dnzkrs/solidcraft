@@ -1,0 +1,314 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cap_arm_l",
+    "expression": "11",
+    "unit": "mm",
+    "comment": "arm length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cap_bridge_l",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "bridge length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cap_arm_t",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "arm thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cap_opening",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "opening (5 + 5) for the 1-24B block"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cap_w",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cap_crank_d",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "crankpin bearing, centred on the bridge face"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cap_screw_x",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "screw holes"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cap_screw_d",
+    "expression": "4.3",
+    "unit": "mm",
+    "comment": "M4 clearance"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cap_oil_x",
+    "expression": "15",
+    "unit": "mm",
+    "comment": "oil hole (3.5 + 11.5)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Side profile"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -13.0
+     ],
+     [
+      19,
+      -13.0
+     ],
+     [
+      19,
+      13.0
+     ],
+     [
+      0,
+      13.0
+     ],
+     [
+      0,
+      5.0
+     ],
+     [
+      11,
+      5.0
+     ],
+     [
+      11,
+      -5.0
+     ],
+     [
+      0,
+      -5.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 5.0,
+    "direction": "symmetric",
+    "name": "Cap",
+    "body_name": "1-24C Motor piston rod big end part-2"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -5.0,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Bearing half"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     11.0,
+     0.0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-24C Motor piston rod big end part-2"
+    ],
+    "name": "Bearing half"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      13.0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Screw holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -3.5,
+     0.0
+    ],
+    "diameter": 4.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-24C Motor piston rod big end part-2"
+    ],
+    "name": "Screw holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      13.0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Oil hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.0,
+     0.0
+    ],
+    "diameter": 2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 13.0,
+    "operation": "cut",
+    "targets": [
+     "1-24C Motor piston rod big end part-2"
+    ],
+    "name": "Oil hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-24C Motor piston rod big end part-2"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

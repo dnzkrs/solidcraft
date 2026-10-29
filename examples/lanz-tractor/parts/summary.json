@@ -27,6 +27,34 @@
   "volume_mm3": 7447.7,
   "mass_g": 53.6
  },
+ "1-05": {
+  "name": "Motor outer cylinder head",
+  "material": "Cast Iron",
+  "bodies": 1,
+  "volume_mm3": 8008.4,
+  "mass_g": 57.7
+ },
+ "1-06": {
+  "name": "Motor crank shaft ball bearing",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1835.5,
+  "mass_g": 14.4
+ },
+ "1-07": {
+  "name": "Motor cylinder oiler base",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 395.5,
+  "mass_g": 3.4
+ },
+ "1-08": {
+  "name": "Motor cylinder oiler glass base",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 472.0,
+  "mass_g": 4.0
+ },
  "1-09": {
   "name": "Motor cylinder oiler glass",
   "material": "Polycarbonate",
@@ -34,12 +62,47 @@
   "volume_mm3": 835.6,
   "mass_g": 1.0
  },
+ "1-10": {
+  "name": "Motor cylinder oiler glass top",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 460.3,
+  "mass_g": 3.9
+ },
+ "1-11": {
+  "name": "Motor block oil channel",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1928.5,
+  "mass_g": 15.1
+ },
+ "1-12": {
+  "name": "Motor block oil valve part-1",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1169.1,
+  "mass_g": 9.9
+ },
+ "1-13": {
+  "name": "Motor block oil valve part-2",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 411.7,
+  "mass_g": 3.5
+ },
  "1-14": {
   "name": "Motor crank shaft",
   "material": "Stainless Steel, Steel",
   "bodies": 5,
   "volume_mm3": 28817.5,
   "mass_g": 227.8
+ },
+ "1-15": {
+  "name": "Motor crank shaft drive pulley",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 3447.3,
+  "mass_g": 29.3
  },
  "1-17": {
   "name": "Motor crank shaft cam plate",
@@ -83,6 +146,48 @@
   "volume_mm3": 6846.8,
   "mass_g": 49.3
  },
+ "1-23": {
+  "name": "Motor piston cross head",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 811.9,
+  "mass_g": 6.9
+ },
+ "1-24A": {
+  "name": "Motor piston rod",
+  "material": "Stainless Steel, Steel",
+  "bodies": 2,
+  "volume_mm3": 2566.7,
+  "mass_g": 20.2
+ },
+ "1-24B": {
+  "name": "Motor piston rod big end part-1",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1342.5,
+  "mass_g": 11.4
+ },
+ "1-24C": {
+  "name": "Motor piston rod big end part-2",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 3318.1,
+  "mass_g": 28.2
+ },
+ "1-25A": {
+  "name": "Motor cylinder slide valve-1",
+  "material": "Stainless Steel",
+  "bodies": 1,
+  "volume_mm3": 95.7,
+  "mass_g": 0.8
+ },
+ "1-25B": {
+  "name": "Motor cylinder slide valve-2",
+  "material": "Stainless Steel",
+  "bodies": 1,
+  "volume_mm3": 97.2,
+  "mass_g": 0.8
+ },
  "1-26": {
   "name": "Motor valve rocking shaft bearing",
   "material": "Brass",
@@ -104,11 +209,46 @@
   "volume_mm3": 1181.0,
   "mass_g": 9.3
  },
+ "1-29": {
+  "name": "Motor valve rod lock nut",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 291.4,
+  "mass_g": 2.5
+ },
+ "1-30": {
+  "name": "Motor valve rod valve holder",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 276.4,
+  "mass_g": 2.3
+ },
  "1-31": {
   "name": "Motor valve rocking arm",
   "material": "Steel",
   "bodies": 1,
   "volume_mm3": 1754.5,
   "mass_g": 13.8
+ },
+ "1-32": {
+  "name": "Motor rocking arm cam follower",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1240.5,
+  "mass_g": 9.7
+ },
+ "1-33": {
+  "name": "Motor rocking arm cam follower axle",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 376.9,
+  "mass_g": 3.0
+ },
+ "1-35": {
+  "name": "Exhaust pipe holding bracket",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 2540.0,
+  "mass_g": 21.6
  }
 }

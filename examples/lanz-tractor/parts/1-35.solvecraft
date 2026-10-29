@@ -1,0 +1,921 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "epb_t",
+      "expr": "3",
+      "unit": "mm",
+      "comment": "thickness",
+      "model": false
+    },
+    {
+      "name": "epb_w",
+      "expr": "10",
+      "unit": "mm",
+      "comment": "strip width (5 + 5)",
+      "model": false
+    },
+    {
+      "name": "epb_tab",
+      "expr": "8.5",
+      "unit": "mm",
+      "comment": "tab height",
+      "model": false
+    },
+    {
+      "name": "epb_joggle_h",
+      "expr": "14.5",
+      "unit": "mm",
+      "comment": "joggle height",
+      "model": false
+    },
+    {
+      "name": "epb_fork_h",
+      "expr": "31.5",
+      "unit": "mm",
+      "comment": "fork part height",
+      "model": false
+    },
+    {
+      "name": "epb_offset",
+      "expr": "10.5",
+      "unit": "mm",
+      "comment": "joggle offset",
+      "model": false
+    },
+    {
+      "name": "epb_r_out",
+      "expr": "26",
+      "unit": "mm",
+      "comment": "fork outside radius",
+      "model": false
+    },
+    {
+      "name": "epb_r_in",
+      "expr": "18",
+      "unit": "mm",
+      "comment": "fork inside radius (the pipe)",
+      "model": false
+    },
+    {
+      "name": "epb_legs",
+      "expr": "2",
+      "unit": "mm",
+      "comment": "fork feet below the centre",
+      "model": false
+    },
+    {
+      "name": "epb_pcd_r",
+      "expr": "22",
+      "unit": "mm",
+      "comment": "holes on R22 at 45 deg",
+      "model": false
+    },
+    {
+      "name": "epb_hole_d",
+      "expr": "4.5",
+      "unit": "mm",
+      "comment": "fork holes",
+      "model": false
+    },
+    {
+      "name": "epb_tab_hole",
+      "expr": "3",
+      "unit": "mm",
+      "comment": "tab hole",
+      "model": false
+    },
+    {
+      "name": "epb_tab_hole_z",
+      "expr": "4.5",
+      "unit": "mm",
+      "comment": "tab hole from the top",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Side profile",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            0.0,
+            1.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              0.0,
+              54.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              0.0,
+              46.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              10.5,
+              31.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              10.5,
+              24.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              13.5,
+              24.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              13.5,
+              32.472147
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              3.0,
+              46.972147
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              3.0,
+              54.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 8,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 8
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Tab and joggle",
+      "suppressed": false,
+      "body_names": [
+        "1-35 Exhaust pipe holding bracket"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "5",
+        "direction": "symmetric"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 3,
+      "name": "Fork",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            13.5,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              -5.0,
+              31.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              -4.9999999911383854,
+              27.514701968911577
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              4.147742584561942e-9,
+              2.0000000504577775
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              -4.999999991140023,
+              27.514701968917322
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              -26.000000263960416,
+              2.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              -26.0000002639662,
+              2.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              -26.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              -26.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              -18.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              -18.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              -17.999999999033257,
+              2.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              4.232287853290153e-9,
+              2.000000050439383
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              18.000000007528545,
+              2.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              -17.99999999904093,
+              2.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.start",
+            "pos": [
+              18.00000000753622,
+              2.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              18.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.start",
+            "pos": [
+              18.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              26.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.start",
+            "pos": [
+              26.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              26.000000039845553,
+              2.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.center",
+            "pos": [
+              4.056590808723207e-9,
+              2.0000000505478166
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.start",
+            "pos": [
+              26.0000000398885,
+              2.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.end",
+            "pos": [
+              4.999999978299161,
+              27.51470173658636
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.start",
+            "pos": [
+              4.99999997832084,
+              27.51470173684951
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.end",
+            "pos": [
+              5.0,
+              31.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l9.start",
+            "pos": [
+              5.0,
+              31.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l9.end",
+            "pos": [
+              -5.0,
+              31.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 3,
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 10,
+            "b": 11,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 12,
+            "a": 13,
+            "b": 14,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 15,
+            "b": 16,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 17,
+            "b": 18,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 19,
+            "b": 20,
+            "construction": false
+          },
+          {
+            "id": "a3",
+            "type": "arc",
+            "c": 21,
+            "a": 22,
+            "b": 23,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 24,
+            "b": 25,
+            "construction": false
+          },
+          {
+            "id": "l9",
+            "type": "line",
+            "a": 26,
+            "b": 27,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 2,
+            "q": 4
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 5,
+            "q": 6
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 7,
+            "q": 8
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 9,
+            "q": 10
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 3,
+            "q": 12
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 11,
+            "q": 14
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 13,
+            "q": 15
+          },
+          {
+            "id": "k8",
+            "type": "coincident",
+            "p": 16,
+            "q": 17
+          },
+          {
+            "id": "k9",
+            "type": "coincident",
+            "p": 18,
+            "q": 19
+          },
+          {
+            "id": "k10",
+            "type": "coincident",
+            "p": 3,
+            "q": 21
+          },
+          {
+            "id": "k11",
+            "type": "coincident",
+            "p": 20,
+            "q": 22
+          },
+          {
+            "id": "k12",
+            "type": "coincident",
+            "p": 23,
+            "q": 24
+          },
+          {
+            "id": "k13",
+            "type": "coincident",
+            "p": 25,
+            "q": 26
+          },
+          {
+            "id": "k14",
+            "type": "coincident",
+            "p": 1,
+            "q": 27
+          }
+        ],
+        "counters": {
+          "a": 3,
+          "k": 14,
+          "l": 9
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Fork",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "extrude",
+      "sketch": 3,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "3",
+        "direction": "positive"
+      },
+      "operation": "join",
+      "targets": [
+        "1-35 Exhaust pipe holding bracket"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Tab hole",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              -50.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 1.5,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 6,
+      "name": "Tab hole",
+      "suppressed": false,
+      "param_names": [
+        "d3"
+      ],
+      "type": "extrude",
+      "sketch": 5,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "1-35 Exhaust pipe holding bracket"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Fork holes",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              -15.556349,
+              -17.556349
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              15.556349,
+              -17.556349
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 2.25,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 2.25,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 2
+        }
+      }
+    },
+    {
+      "id": 8,
+      "name": "Fork holes",
+      "suppressed": false,
+      "param_names": [
+        "d4"
+      ],
+      "type": "extrude",
+      "sketch": 7,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "1-35 Exhaust pipe holding bracket"
+      ]
+    }
+  ],
+  "next_id": 9,
+  "materials": {
+    "1-35 Exhaust pipe holding bracket": "Brass"
+  }
+}

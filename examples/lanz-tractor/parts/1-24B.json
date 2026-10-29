@@ -1,0 +1,407 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "be_d",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "socket diameter; block 10 x 10"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "be_socket_l",
+    "expression": "12",
+    "unit": "mm",
+    "comment": "socket length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "be_block_l",
+    "expression": "11",
+    "unit": "mm",
+    "comment": "block length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "be_bore",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "rod bore"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "be_bore_depth",
+    "expression": "11",
+    "unit": "mm",
+    "comment": "rod bore depth"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "be_pin_z",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "pin hole position (1-24A hole is 5 from its end)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "be_pin_d",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "pin hole"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "be_crank_d",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "crankpin bearing"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "be_screw_z",
+    "expression": "15.5",
+    "unit": "mm",
+    "comment": "M4 tapped, 3.5 into the block"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      12
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Block"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -5.0,
+      -5.0
+     ],
+     [
+      5.0,
+      -5.0
+     ],
+     [
+      5.0,
+      5.0
+     ],
+     [
+      -5.0,
+      5.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 11,
+    "name": "Block",
+    "body_name": "1-24B Motor piston rod big end part-1"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Socket section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      5.0,
+      0
+     ],
+     [
+      5.0,
+      12.5
+     ],
+     [
+      0,
+      12.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "join",
+    "name": "Socket",
+    "targets": [
+     "1-24B Motor piston rod big end part-1"
+    ]
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Rod bore"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 11,
+    "operation": "cut",
+    "targets": [
+     "1-24B Motor piston rod big end part-1"
+    ],
+    "name": "Rod bore"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -5.0,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Bearing half"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -23.0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-24B Motor piston rod big end part-1"
+    ],
+    "name": "Bearing half"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      5.0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -15.5
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-24B Motor piston rod big end part-1"
+    ],
+    "name": "M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      5.0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Pin hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -6.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-24B Motor piston rod big end part-1"
+    ],
+    "name": "Pin hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-24B Motor piston rod big end part-1"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

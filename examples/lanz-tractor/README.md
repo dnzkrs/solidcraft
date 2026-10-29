@@ -36,18 +36,38 @@ Units are mm. Each part has its own coordinate system, stated in its docstring i
 | 1-02 | Motor cylinder | Cast Iron | 1 | 60,778.4 | 437.6 |
 | 1-03 | Motor cylinder gasket ring | Copper | 1 | 719.5 | 6.4 |
 | 1-04 | Motor inner cylinder head | Cast Iron | 1 | 7,447.7 | 53.6 |
+| 1-05 | Motor outer cylinder head | Cast Iron | 1 | 8,008.4 | 57.7 |
+| 1-06 | Motor crank shaft ball bearing | Steel | 1 | 1,835.5 | 14.4 |
+| 1-07 | Motor cylinder oiler base | Brass | 1 | 395.5 | 3.4 |
+| 1-08 | Motor cylinder oiler glass base | Brass | 1 | 472.0 | 4.0 |
 | 1-09 | Motor cylinder oiler glass | Polycarbonate | 1 | 835.6 | 1.0 |
+| 1-10 | Motor cylinder oiler glass top | Brass | 1 | 460.3 | 3.9 |
+| 1-11 | Motor block oil channel | Steel | 1 | 1,928.5 | 15.1 |
+| 1-12 | Motor block oil valve part-1 | Brass | 1 | 1,169.1 | 9.9 |
+| 1-13 | Motor block oil valve part-2 | Brass | 1 | 411.7 | 3.5 |
 | 1-14 | Motor crank shaft | Stainless Steel, Steel | 5 | 28,817.5 | 227.8 |
+| 1-15 | Motor crank shaft drive pulley | Brass | 1 | 3,447.3 | 29.3 |
 | 1-17 | Motor crank shaft cam plate | Steel | 1 | 5,825.6 | 45.7 |
 | 1-18 | Motor crank shaft cam follower lock nut | Brass | 1 | 1,351.2 | 11.5 |
 | 1-19 | Motor crank shaft cam follower spacer | Brass | 1 | 537.3 | 4.6 |
 | 1-20 | Motor flywheel hub | Brass | 1 | 7,713.5 | 65.6 |
 | 1-21 | Motor flywheel | Brass | 1 | 74,187.7 | 630.6 |
 | 1-22 | Motor piston | Cast Iron | 1 | 6,846.8 | 49.3 |
+| 1-23 | Motor piston cross head | Brass | 1 | 811.9 | 6.9 |
+| 1-24A | Motor piston rod | Stainless Steel, Steel | 2 | 2,566.7 | 20.2 |
+| 1-24B | Motor piston rod big end part-1 | Brass | 1 | 1,342.5 | 11.4 |
+| 1-24C | Motor piston rod big end part-2 | Brass | 1 | 3,318.1 | 28.2 |
+| 1-25A | Motor cylinder slide valve-1 | Stainless Steel | 1 | 95.7 | 0.8 |
+| 1-25B | Motor cylinder slide valve-2 | Stainless Steel | 1 | 97.2 | 0.8 |
 | 1-26 | Motor valve rocking shaft bearing | Brass | 1 | 339.2 | 2.9 |
 | 1-27 | Motor valve rocking shaft | Stainless Steel | 1 | 1,898.2 | 15.2 |
 | 1-28 | Motor valve rod | Steel | 1 | 1,181.0 | 9.3 |
+| 1-29 | Motor valve rod lock nut | Brass | 1 | 291.4 | 2.5 |
+| 1-30 | Motor valve rod valve holder | Brass | 1 | 276.4 | 2.3 |
 | 1-31 | Motor valve rocking arm | Steel | 1 | 1,754.5 | 13.8 |
+| 1-32 | Motor rocking arm cam follower | Steel | 1 | 1,240.5 | 9.7 |
+| 1-33 | Motor rocking arm cam follower axle | Steel | 1 | 376.9 | 3.0 |
+| 1-35 | Exhaust pipe holding bracket | Brass | 1 | 2,540.0 | 21.6 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,
@@ -74,6 +94,23 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
 - **1-20**: the M16 part is modelled at Ø16 over its full 19.5 (thread 14).
 - **1-21**: the spoke windows' outer corners are left sharp (they look slightly rounded on the
   drawing, radius not given).
+- **1-05**: the drawing says "refer to 1-04 for all dimension details" and gives no thickness:
+  modelled as the 1-04 disc (3.5 thick) without the valve channel.
+- **1-06**: a bought ball bearing Ø19 × Ø9.5 × 9, modelled as an envelope only.
+- **1-08**: read off the drawing's vector lines; the 15° Ø2 drain hole crosses the bore axis at
+  Z = 10.53. The nozzle's small 30° tip chamfer is not modelled (it would leave a knife edge on
+  the Ø3 bore).
+- **1-15**: the V-groove is 4 wide at the top and 2.5 at its Ø20 flat bottom (vector lines).
+- **1-24A**: the rod is Ø4.9 for 10 (through the piston crown) and Ø6 for 79; the cross pin is
+  27 long (vector lines). **1-24B/C**: the cap's screw holes are Ø4.3, an M4 clearance per sheet 02
+  note 3; the block is tapped M4.
+- **1-25B**: the R162 bow over the middle 36 gives the 1.1 overall depth drawn; the ends are flat.
+- **1-32**: the roller's thrust face and recess are read from the section; the bore in the
+  assembly is the 1-33 axle.
+- **1-35**: the bends are modelled sharp; the 38° joggle is set by its 10.5 offset over 14.5.
+- Parts built from a hex or a square with a turned part of the same size (1-07, 1-12, 1-13,
+  1-24B) overlap the two solids: butting them, or turning the bar down, fails in SolidCraft where
+  the round is tangent to the flats.
 - **1-04**: from the detail: a 20 wide, 0.5 deep valve channel across the face, with 0.5 wide,
   1 deep relief grooves along its edges; the Ø10 port countersunk 90° to Ø15 on the other face.
 - **1-05**: its thickness is not on the drawing ("refer to 1-04"): not modelled yet.

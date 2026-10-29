@@ -1,0 +1,132 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "brg_od",
+    "expression": "19",
+    "unit": "mm",
+    "comment": "outside diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "brg_id",
+    "expression": "9.5",
+    "unit": "mm",
+    "comment": "bore (the 1-14 journal)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "brg_w",
+    "expression": "9",
+    "unit": "mm",
+    "comment": "width"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Bearing envelope section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      4.75,
+      0
+     ],
+     [
+      6.25,
+      0
+     ],
+     [
+      6.25,
+      0.5
+     ],
+     [
+      8.0,
+      0.5
+     ],
+     [
+      8.0,
+      0
+     ],
+     [
+      9.5,
+      0
+     ],
+     [
+      9.5,
+      9
+     ],
+     [
+      8.0,
+      9
+     ],
+     [
+      8.0,
+      8.5
+     ],
+     [
+      6.25,
+      8.5
+     ],
+     [
+      6.25,
+      9
+     ],
+     [
+      4.75,
+      9
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Bearing envelope",
+    "body_name": "1-06 Motor crank shaft ball bearing"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-06 Motor crank shaft ball bearing"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}
