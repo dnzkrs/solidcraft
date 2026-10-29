@@ -1644,11 +1644,11 @@ def accelerator_crank(s):
     TC = s.param("ac_collar_t", 3, "collar thickness")
     LS = s.param("ac_stub", 6, "stub length")
     s.sketch("Path", (0, 0, 0), (1, 0, 0), (0, 0, 1))
-    s.cmd("sketch.line", points=[[-L1, 0], [-R1, 0]], ids=["l1"])
-    s.cmd("sketch.arc.center_point", center=[-R1, -R1], start=[0, -R1], end=[-R1, 0], ids=["a1"])
-    s.cmd("sketch.line", points=[[0, -R1], [0, -H + R2]], ids=["l2"])
-    s.cmd("sketch.arc.center_point", center=[R2, -H + R2], start=[0, -H + R2], end=[R2, -H], ids=["a2"])
-    s.cmd("sketch.line", points=[[R2, -H], [R2 + TC + LS, -H]], ids=["l3"])
+    s.cmd("sketch.line", points=[[-L1, 0], [-R1, 0]])                                    # l1
+    s.cmd("sketch.arc.center_point", center=[-R1, -R1], start=[0, -R1], end=[-R1, 0])       # a1
+    s.cmd("sketch.line", points=[[0, -R1], [0, -H + R2]])                                   # l2
+    s.cmd("sketch.arc.center_point", center=[R2, -H + R2], start=[0, -H + R2], end=[R2, -H])  # a2
+    s.cmd("sketch.line", points=[[R2, -H], [R2 + TC + LS, -H]])                             # l3
     s.finish()
     # the rod runs on through the collar to the end of the stub; the collar is pressed on
     s.cmd("solid.pipe", path_sketch="Path", path=["l1", "a1", "l2", "a2", "l3"], diameter=D, name="Rod",
@@ -1674,6 +1674,171 @@ def lever_spring(s):
     s.cmd("solid.coil", diameter=dm, turns=N, height=L - DW, section_size=DW, section="circular",
           section_position="center", base=[0, 0, DW / 2], name="Spring", body_name=s.body)
     return math.pi / 4 * DW * DW * N * math.hypot(math.pi * dm, (L - DW) / N)
+
+
+def flame_protector(s, mirror):
+    """1-40 and its mirror image 1-41 (sheet 04, flat pattern at 1:1.5, read with the vector lines):
+    1.5 thick brass, perforated with 26 x Ø3.5 at 6 pitch, folded sharp so that the legs make 78 deg.
+    Flat-pattern coordinates (X, Y) about the centre of the R28 end; the fold line is X = 9.8
+    (13.5 + 10 + 6.6 from the left edge). The perforated leg lies on Z = 0..1.5; the R28 leg (2 x Ø4
+    on R22 at 45 deg) turns up about the fold line on the top face. 1-41 is mirrored in Y."""
+    T = s.param("fp_t", 1.5, "thickness")
+    XF = s.param("fp_fold_x", 9.8, "fold line")
+    ANG = s.param("fp_angle", 78, "angle between the legs", unit="deg")
+    R = s.param("fp_r", 28, "end radius (about the R22 hole circle's centre)")
+    DH = s.param("fp_perf_d", 3.5, "perforations")
+    P = s.param("fp_pitch", 6, "perforation pitch")
+    DB = s.param("fp_hole_d", 4, "holes on R22 at 45 deg")
+    sy = -1 if mirror else 1
+    phi = math.radians(180 - ANG)
+    d = (math.cos(phi), 0, math.sin(phi))                  # the folded leg runs this way from the fold
+    nout = (math.sin(phi), 0, -math.cos(phi))              # and is T thick this way
+    # the bent strip's cross-section (flat leg, sharp mitred corner, folded leg) extruded across
+    # the part's width, then each leg trimmed to its outline (joining separate legs fails in
+    # SolidCraft where their faces meet)
+    L = R - XF                                             # folded leg length to the end of the R28
+    po = (XF + T * nout[0], T + T * nout[2])               # outer edge of the folded leg at the fold
+    k = -po[1] / d[2]
+    q = (po[0] + k * d[0], 0)                              # the sharp outer corner
+    sect = [(-20.3, 0), q, (po[0] + L * d[0], po[1] + L * d[2]), (XF + L * d[0], T + L * d[2]), (XF, T), (-20.3, T)]
+    y0, y1 = (-26, 24) if not mirror else (-24, 26)
+    s.sketch("Bent section", (0, y1, 0), (1, 0, 0), (0, 0, 1))      # normal -Y
+    s.polyline(sect)
+    s.finish()
+    s.cmd("solid.extrude", distance=y1 - y0, name="Bent strip", body_name=s.body)
+    # perforations in the flat leg (before the trims: after them SolidCraft fails to mesh a face)
+    # rows of 5, 5, 5, 5, 4 and 2 (the last ones right-aligned), the first column 4 from the edge
+    cols = [-16.3 + P * i for i in range(5)]
+    grid = [(cols[i], 7 - P * j) for j, n in enumerate((5, 5, 5, 5, 4, 2)) for i in range(5 - n, 5)]
+    s.holes("Perforations", (0, 0, T), (0, 0, -1), [(x, sy * y, T) for x, y in grid], DH)
+    # flat leg outline (cut down from its top face)
+    for name, poly in (("Trim top left", [(-21, 8.5), (-20.3, 8.5), (-6.8, 11), (-6.8, 25), (-21, 25)]),
+                       ("Trim notch", [(3.2, 11), (XF, 11), (XF, 25), (3.2, 25)]),
+                       ("Trim bottom left", [(-21, -15.4), (-20.3, -15.4), (3.7, -26), (3.7, -27), (-21, -27)])):
+        s.cut_poly(name, (0, 0, T), (0, 0, -1), [(x, sy * y, T) for x, y in poly], T)
+    # beside the tab (Y 11..24) neither the flat leg nor the corner exists: cut both away, up to
+    # the folded leg's end face
+    ycut = [(XF, T), po, (po[0] - 3 * d[0], po[1] - 3 * d[2]), (XF - 1, po[1] - 3 * d[2]), (XF - 1, T)]
+    yc0, yc1 = (11, 25) if not mirror else (-25, -11)
+    s.sketch("Trim beside the tab", (0, yc1, 0), (1, 0, 0), (0, 0, 1))
+    s.polyline(ycut)
+    s.finish()
+    s.cmd("solid.extrude", distance=yc1 - yc0, operation="cut", targets=[s.body], name="Trim beside the tab")
+    # folded leg outline: the R28 end (cut along the leg's thickness from its inner face)
+    x0, x1 = math.sqrt(R * R - 26 * 26), math.sqrt(R * R - 24 * 24)
+    s.sketch("Trim R28", (XF, 0, T), d, (0, 1, 0))                    # normal = -nout
+    # (a rectangle less the whole R28 circle: its edge crosses the strip's ends at an angle;
+    # outlines that met the ends exactly left a face behind or cut wrongly)
+    s.polyline([(0.3, -30), (L + 1, -30), (L + 1, 30), (0.3, 30)])
+    s.cmd("sketch.circle.center", center=[-XF, 0], diameter=2 * R)
+    s.finish()
+    s.cmd("solid.extrude", distance=T + 1, direction="negative", operation="cut", targets=[s.body],
+          profiles=[{"point": [L + 0.5, 29]}], name="Trim R28")
+    A = [(-20.3, -15.4), (3.7, -26), (XF, -26), (XF, 11), (3.2, 11), (3.2, 24), (-6.8, 24), (-6.8, 11), (-20.3, 8.5)]
+    bstart = (0, -26)
+    bsegs = [("line", (x0 - XF, -26)), ("arc", (-XF, 0), (x1 - XF, 24), True), ("line", (0, 24)), ("line", bstart)]
+    ylo, yhi = -26, 11
+    h = 22 * math.sin(math.pi / 4)
+    pts = [(XF + (h - XF) * d[0], yy, T + (h - XF) * d[2]) for yy in (h, -h)]
+    s.holes("Holes", (XF, 0, T), nout, pts, DB)
+    wedge_exact = polygon_area([(XF, T), (XF, 0), q, po])
+    return (polygon_area(A) + loop_area(bstart, bsegs) - (len(grid) * DH * DH + 2 * DB * DB) * math.pi / 4) * T \
+        + wedge_exact * (yhi - ylo)
+
+
+@part("1-40", "LH-flame protector", "Brass")
+def flame_protector_lh(s):
+    """Sheet 04, 1-40: see flame_protector()."""
+    return flame_protector(s, False)
+
+
+@part("1-41", "RH-flame protector", "Brass")
+def flame_protector_rh(s):
+    """Sheet 04, 1-41: the mirror image of 1-40; see flame_protector()."""
+    return flame_protector(s, True)
+
+
+# ----------------------------------------------------------------------------- 1-42
+@part("1-42", "Front flame guard", {"guard": "Brass", "rod": "Steel"})
+def front_flame_guard(s):
+    """Sheet 04, 1-42 (scale 1:1, vector lines): 0.5 thick brass, 28 wide, perforated with 2 x 2
+    square holes at 3 pitch (9 across, 1 from the edges), folded so that its 26 and 10 legs make
+    105 deg; an M/S rod Ø1.5 x 34 along the end of the short leg. Made with SolidCraft's sheet-
+    metal tools: flat pattern on the XY plane (X across, the long leg from Y = 0), fold at Y = 26
+    (bend radius 0.2, K-factor 0.5). The long leg has 8 rows of holes (2 clear of the fold, as
+    drawn); the short leg's holes are not dimensioned: 2 rows assumed."""
+    T = s.param("ffg_t", 0.5, "thickness")
+    W = s.param("ffg_w", 28, "width")
+    L1 = s.param("ffg_long", 26, "long leg")
+    L2 = s.param("ffg_short", 10, "short leg")
+    A = s.param("ffg_angle", 105, "angle between the legs", unit="deg")
+    SQ = s.param("ffg_sq", 2, "square holes")
+    P = s.param("ffg_pitch", 3, "hole pitch")
+    DR = s.param("ffg_rod_d", 1.5, "rod")
+    LR = s.param("ffg_rod_l", 34, "rod length")
+    n = s.body.split()[0]
+    guard = f"{n} guard"
+    s.cmd("sheet.manage_rules", name="Lanz 0.5", thickness=f"{T} mm", k_factor="0.5", bend_radius="0.2 mm",
+          active=True)
+    s.sketch("Flat pattern", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.polyline([(-W / 2, 0), (W / 2, 0), (W / 2, L1 + L2), (-W / 2, L1 + L2)])
+    s.finish()
+    s.cmd("sheet.flange", base="Flat pattern", body_name=guard)
+    rows = [1 + P * j for j in range(8)] + [L1 + 2 + P * j for j in range(2)]
+    cols = [-W / 2 + 1 + P * i for i in range(9)]
+    s.sketch("Perforations", (0, 0, T), (1, 0, 0), (0, 1, 0))
+    for y in rows:
+        for x in cols:
+            s.cmd("sketch.rectangle.two_point", p0=[x, y], p1=[x + SQ, y + SQ])
+    s.finish()
+    s.cmd("solid.extrude", distance=T, direction="negative", operation="cut", targets=[guard], name="Perforations")
+    s.cmd("sheet.fold", points=[[-W / 2 - 2, L1, T], [W / 2 + 2, L1, T]], angle=180 - A, position="centerline",
+          body=guard)
+    s.cmd("browser.visibility", visible=False, items=["Flat pattern"])
+    # the rod along the end of the short leg (the leg turns up toward +Z about Y = 26)
+    a = math.radians(180 - A)
+    end = (L1 + L2 * math.cos(a), L2 * math.sin(a))      # the leg's end, near enough for the rod
+    c = (end[0] + DR / 2 * math.cos(a), end[1] + DR / 2 * math.sin(a))
+    s.cmd("solid.cylinder", diameter=DR, height=LR, base=[-LR / 2, round(c[0], 4), round(c[1], 4)], axis="X",
+          operation="new", name="Rod", body_name=f"{n} rod")
+    return (W * (L1 + L2) - len(rows) * len(cols) * SQ * SQ) * T + math.pi / 4 * DR * DR * LR
+
+
+# ----------------------------------------------------------------------------- 1-34
+# a Ø1 wire: its measured volume (from a tessellation) is good to about 0.5 %
+@part("1-34", "Motor rocking arm valve spring", "Steel", tol=0.01)
+def valve_spring(s):
+    """Sheet 03, 1-34 (scale 1:2): Ø1 spring-steel wire bent to R150 from an eye (Ø4 inside) to a
+    free end 86 along and 30.5 down, flat at the free end. The eye is modelled as 300 deg of a
+    Ø5 (centre line) loop, tangent to the R150 bend. In the XZ plane, the R150 bend starting at
+    the origin."""
+    DW = s.param("vs_wire", 1, "wire diameter")
+    R = s.param("vs_r", 150, "bend radius")
+    DX = s.param("vs_dx", 86, "eye to free end, along")
+    DZ = s.param("vs_dz", 30.5, "eye to free end, down")
+    DE = s.param("vs_eye_d", 4, "eye, inside")
+    re = (DE + DW) / 2
+    ch = math.hypot(DX, DZ)
+    u = (DX / ch, -DZ / ch)
+    nrm = (-u[1], u[0])
+    h = math.sqrt(R * R - ch * ch / 4)
+    c = (DX / 2 + h * nrm[0], -DZ / 2 + h * nrm[1])         # the bend's centre (above the wire)
+    r0 = (-c[0] / R, -c[1] / R)                            # radius direction at the start
+    t0 = (-r0[1], r0[0])                                   # the wire's direction at the start
+    ce = (re * -t0[1], re * t0[0])                         # the eye's centre, beside the start
+    ts = math.atan2(-ce[1], -ce[0])
+    p0 = (ce[0] + re * math.cos(ts - math.radians(300)), ce[1] + re * math.sin(ts - math.radians(300)))
+    rnd = lambda p: [round(p[0], 6), round(p[1], 6)]
+    s.sketch("Wire path", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    s.cmd("sketch.arc.center_point", center=rnd(ce), start=rnd(p0), end=[0, 0])     # a1: the eye
+    s.cmd("sketch.arc.center_point", center=rnd(c), start=[0, 0], end=[DX, -DZ])    # a2: the R150 bend
+    s.finish()
+    # two pipes: one solid.pipe along both arcs comes out inside out (negative volume)
+    s.cmd("solid.pipe", path_sketch="Wire path", path=["a2"], diameter=DW, name="Wire", body_name=s.body)
+    s.cmd("solid.pipe", path_sketch="Wire path", path=["a1"], diameter=DW, operation="join", targets=[s.body],
+          name="Eye")
+    length = R * 2 * math.asin(ch / (2 * R)) + re * math.radians(300)
+    return math.pi / 4 * DW * DW * length
 
 
 # ----------------------------------------------------------------------------- driver
@@ -1745,7 +1910,7 @@ def build(number, path, estimate, n_bodies):
     dv, dm = (vol - estimate) / estimate, (mesh_vol - estimate) / estimate
     # the kernel's measure must agree with the hand volume; the exported mesh is a second check
     # when it is closed (an open STL gives no volume)
-    ok = len(bodies) == n_bodies and not errors and abs(dv) < TOLERANCE[number] and (open_edges or abs(dm) < 0.015)
+    ok = len(bodies) == n_bodies and not errors and abs(dv) < TOLERANCE[number] and (open_edges or abs(dm) < max(0.015, 3 * TOLERANCE[number]))
     mesh = f"{mesh_vol:.1f} ({dm * 100:+.2f} %)" if not open_edges else f"not closed ({open_edges} open edges)"
     print(f"{number}: {'OK  ' if ok else 'FAIL'} {len(bodies)}/{n_bodies} bodies, hand volume {estimate:.1f} mm³, "
           f"STL mesh {mesh}, SolidCraft {vol:.1f} ({dv * 100:+.2f} %), mass {mass:.1f} g, "

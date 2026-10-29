@@ -244,6 +244,13 @@
   "volume_mm3": 376.9,
   "mass_g": 3.0
  },
+ "1-34": {
+  "name": "Motor rocking arm valve spring",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 83.1,
+  "mass_g": 0.7
+ },
  "1-35": {
   "name": "Exhaust pipe holding bracket",
   "material": "Brass",
@@ -278,6 +285,27 @@
   "bodies": 1,
   "volume_mm3": 1363.9,
   "mass_g": 11.6
+ },
+ "1-40": {
+  "name": "LH-flame protector",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 2371.6,
+  "mass_g": 20.2
+ },
+ "1-41": {
+  "name": "RH-flame protector",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 2371.6,
+  "mass_g": 20.2
+ },
+ "1-42": {
+  "name": "Front flame guard",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 384.1,
+  "mass_g": 3.2
  },
  "1-43": {
   "name": "Top steering shaft bracket",

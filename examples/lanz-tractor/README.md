@@ -67,11 +67,15 @@ Units are mm. Each part has its own coordinate system, stated in its docstring i
 | 1-31 | Motor valve rocking arm | Steel | 1 | 1,754.5 | 13.8 |
 | 1-32 | Motor rocking arm cam follower | Steel | 1 | 1,240.5 | 9.7 |
 | 1-33 | Motor rocking arm cam follower axle | Steel | 1 | 376.9 | 3.0 |
+| 1-34 | Motor rocking arm valve spring | Steel | 1 | 83.1 | 0.7 |
 | 1-35 | Exhaust pipe holding bracket | Brass | 1 | 2,540.0 | 21.6 |
 | 1-36 | Exhaust lower circular bracket | Aluminum | 1 | 12,826.8 | 34.6 |
 | 1-37 | Exhaust base ring | Brass | 1 | 7,624.5 | 64.8 |
 | 1-38 | Exhaust stack | Brass | 1 | 14,499.7 | 123.2 |
 | 1-39 | Exhaust stack top ring | Brass | 1 | 1,363.9 | 11.6 |
+| 1-40 | LH-flame protector | Brass | 1 | 2,371.6 | 20.2 |
+| 1-41 | RH-flame protector | Brass | 1 | 2,371.6 | 20.2 |
+| 1-42 | Front flame guard | Brass, Steel | 2 | 384.1 | 3.2 |
 | 1-43 | Top steering shaft bracket | Aluminum | 1 | 725.3 | 2.0 |
 | 1-44 | Accelerator bridge bracket | Steel | 1 | 3,632.8 | 28.5 |
 | 1-45 | Accelerator lever-1 guide plate | Steel | 1 | 1,315.1 | 10.3 |
@@ -126,6 +130,13 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
 - Parts built from a hex or a square with a turned part of the same size (1-07, 1-12, 1-13,
   1-24B) overlap the two solids: butting them, or turning the bar down, fails in SolidCraft where
   the round is tangent to the flats.
+- **1-34**: a Ø1 wire on R150 from the eye to the free end (86 along, 30.5 down), flat at the
+  free end; the eye is 300° of a loop (Ø4 inside) so the wire does not run into itself.
+- **1-40 / 1-41**: built with a sharp bend (the drawn 78° between the legs): the bent cross-section
+  is extruded across the part and each leg trimmed to its flat-pattern outline. SolidCraft's fold
+  cannot be used here: the drawn fold line runs through the tab's corner and into the R28 edge.
+  1-41 is 1-40 mirrored. **1-42**: the short leg's perforations are not dimensioned; 2 rows assumed.
+  It is made with the sheet-metal tools (bend radius 0.2); the hinge rod is a second body.
 - **1-43**: made with SolidCraft's sheet-metal tools (base flange from the drawn flat pattern,
   then a 46° fold; bend radius 0.2, K-factor 0.5, so the volume is the flat area × 1.5). The fold
   line sits 0.43 past the drawn one: SolidCraft needs the bend zone clear of the tab's step, which
@@ -149,6 +160,10 @@ shallow**. The timeline only shows a warning ("Boolean retry: temporary coincide
 up to 3.423684e0 mm per face"); the temporary separation stays in the result. The generator
 therefore makes every hole pattern one sketch of circles and one cut extrude, and `--build`
 treats any "coincident-face separation" retry as an error.
+
+`solid.pipe` along a path of two arcs that bend different ways (1-34: the eye and the R150 bend)
+gives an inside-out solid, with negative volume and mass and no warning; each arc on its own is
+fine, so 1-34 joins two pipes. Its checks were met with a 1 % tolerance (a Ø1 wire).
 
 A sketch hidden with `browser.visibility` (1-43's flat pattern) is shown again when the saved
 `.solvecraft` file is reopened: SolidCraft does not save sketch visibility. The snapshots are

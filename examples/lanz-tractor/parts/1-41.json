@@ -1,0 +1,840 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fp_t",
+    "expression": "1.5",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fp_fold_x",
+    "expression": "9.8",
+    "unit": "mm",
+    "comment": "fold line"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fp_angle",
+    "expression": "78",
+    "unit": "deg",
+    "comment": "angle between the legs"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fp_r",
+    "expression": "28",
+    "unit": "mm",
+    "comment": "end radius (about the R22 hole circle's centre)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fp_perf_d",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "perforations"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fp_pitch",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "perforation pitch"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fp_hole_d",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "holes on R22 at 45 deg"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      26,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Bent section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -20.3,
+      0
+     ],
+     [
+      11.652346,
+      0
+     ],
+     [
+      7.483229,
+      19.614154
+     ],
+     [
+      6.016007,
+      19.302286
+     ],
+     [
+      9.8,
+      1.5
+     ],
+     [
+      -20.3,
+      1.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 50,
+    "name": "Bent strip",
+    "body_name": "1-41 RH-flame protector"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      1.5
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Perforations"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     16.3,
+     -7.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     10.3,
+     -7.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     4.3,
+     -7.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -1.7,
+     -7.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -7.7,
+     -7.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     16.3,
+     -1.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     10.3,
+     -1.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     4.3,
+     -1.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -1.7,
+     -1.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -7.7,
+     -1.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     16.3,
+     5.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     10.3,
+     5.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     4.3,
+     5.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -1.7,
+     5.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -7.7,
+     5.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     16.3,
+     11.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     10.3,
+     11.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     4.3,
+     11.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -1.7,
+     11.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -7.7,
+     11.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     10.3,
+     17.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     4.3,
+     17.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -1.7,
+     17.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -7.7,
+     17.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -1.7,
+     23.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -7.7,
+     23.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-41 RH-flame protector"
+    ],
+    "name": "Perforations"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      1.5
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Trim top left"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      21.0,
+      -8.5
+     ],
+     [
+      20.3,
+      -8.5
+     ],
+     [
+      6.8,
+      -11.0
+     ],
+     [
+      6.8,
+      -25.0
+     ],
+     [
+      21.0,
+      -25.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1.5,
+    "operation": "cut",
+    "targets": [
+     "1-41 RH-flame protector"
+    ],
+    "name": "Trim top left"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      1.5
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Trim notch"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -3.2,
+      -11.0
+     ],
+     [
+      -9.8,
+      -11.0
+     ],
+     [
+      -9.8,
+      -25.0
+     ],
+     [
+      -3.2,
+      -25.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1.5,
+    "operation": "cut",
+    "targets": [
+     "1-41 RH-flame protector"
+    ],
+    "name": "Trim notch"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      1.5
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Trim bottom left"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      21.0,
+      15.4
+     ],
+     [
+      20.3,
+      15.4
+     ],
+     [
+      -3.7,
+      26.0
+     ],
+     [
+      -3.7,
+      27.0
+     ],
+     [
+      21.0,
+      27.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1.5,
+    "operation": "cut",
+    "targets": [
+     "1-41 RH-flame protector"
+    ],
+    "name": "Trim bottom left"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -11,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Trim beside the tab"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      9.8,
+      1.5
+     ],
+     [
+      11.267221,
+      1.811868
+     ],
+     [
+      11.890956,
+      -1.122575
+     ],
+     [
+      8.8,
+      -1.122575
+     ],
+     [
+      8.8,
+      1.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 14,
+    "operation": "cut",
+    "targets": [
+     "1-41 RH-flame protector"
+    ],
+    "name": "Trim beside the tab"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      9.8,
+      0,
+      1.5
+     ],
+     "x_dir": [
+      -0.20791169081775934,
+      0,
+      0.9781476007338057
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Trim R28"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.3,
+      -30
+     ],
+     [
+      19.2,
+      -30
+     ],
+     [
+      19.2,
+      30
+     ],
+     [
+      0.3,
+      30
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -9.8,
+     0
+    ],
+    "diameter": 56
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2.5,
+    "direction": "negative",
+    "operation": "cut",
+    "targets": [
+     "1-41 RH-flame protector"
+    ],
+    "profiles": [
+     {
+      "point": [
+       18.7,
+       29
+      ]
+     }
+    ],
+    "name": "Trim R28"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      9.8,
+      0,
+      1.5
+     ],
+     "x_dir": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "y_dir": [
+      0.20791169081775934,
+      0.0,
+      -0.9781476007338057
+     ]
+    },
+    "name": "Holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.556349,
+     -5.756349
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.556349,
+     -5.756349
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-41 RH-flame protector"
+    ],
+    "name": "Holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-41 RH-flame protector"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

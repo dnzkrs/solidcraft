@@ -1,0 +1,146 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "vs_wire",
+    "expression": "1",
+    "unit": "mm",
+    "comment": "wire diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "vs_r",
+    "expression": "150",
+    "unit": "mm",
+    "comment": "bend radius"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "vs_dx",
+    "expression": "86",
+    "unit": "mm",
+    "comment": "eye to free end, along"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "vs_dz",
+    "expression": "30.5",
+    "unit": "mm",
+    "comment": "eye to free end, down"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "vs_eye_d",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "eye, inside"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Wire path"
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     1.512707,
+     1.990406
+    ],
+    "start": [
+     2.480096,
+     -0.31484
+    ],
+    "end": [
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     90.762425,
+     119.424379
+    ],
+    "start": [
+     0,
+     0
+    ],
+    "end": [
+     86,
+     -30.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.pipe",
+   "params": {
+    "path_sketch": "Wire path",
+    "path": [
+     "a2"
+    ],
+    "diameter": 1,
+    "name": "Wire",
+    "body_name": "1-34 Motor rocking arm valve spring"
+   }
+  },
+  {
+   "command": "solid.pipe",
+   "params": {
+    "path_sketch": "Wire path",
+    "path": [
+     "a1"
+    ],
+    "diameter": 1,
+    "operation": "join",
+    "targets": [
+     "1-34 Motor rocking arm valve spring"
+    ],
+    "name": "Eye"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-34 Motor rocking arm valve spring"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

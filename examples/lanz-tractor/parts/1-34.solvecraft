@@ -1,0 +1,206 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "vs_wire",
+      "expr": "1",
+      "unit": "mm",
+      "comment": "wire diameter",
+      "model": false
+    },
+    {
+      "name": "vs_r",
+      "expr": "150",
+      "unit": "mm",
+      "comment": "bend radius",
+      "model": false
+    },
+    {
+      "name": "vs_dx",
+      "expr": "86",
+      "unit": "mm",
+      "comment": "eye to free end, along",
+      "model": false
+    },
+    {
+      "name": "vs_dz",
+      "expr": "30.5",
+      "unit": "mm",
+      "comment": "eye to free end, down",
+      "model": false
+    },
+    {
+      "name": "vs_eye_d",
+      "expr": "4",
+      "unit": "mm",
+      "comment": "eye, inside",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Wire path",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              1.5127071048807612,
+              1.990405173819634
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              2.480095731117079,
+              -0.3148398871641537
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              -4.071253848237324e-10,
+              -6.243028705353618e-10
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              90.762425,
+              119.424379
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              86.00000000201081,
+              -30.499999936698586
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 1,
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 4,
+            "a": 5,
+            "b": 6,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 3
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 0,
+            "q": 5
+          }
+        ],
+        "counters": {
+          "a": 2,
+          "k": 2
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Wire",
+      "suppressed": false,
+      "body_names": [
+        "1-34 Motor rocking arm valve spring"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "pipe",
+      "path_sketch": 1,
+      "path": [
+        "a2"
+      ],
+      "diameter": "1",
+      "operation": "new_body"
+    },
+    {
+      "id": 3,
+      "name": "Eye",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "pipe",
+      "path_sketch": 1,
+      "path": [
+        "a1"
+      ],
+      "diameter": "1",
+      "operation": "join",
+      "targets": [
+        "1-34 Motor rocking arm valve spring"
+      ]
+    }
+  ],
+  "next_id": 4,
+  "materials": {
+    "1-34 Motor rocking arm valve spring": "Steel"
+  }
+}
