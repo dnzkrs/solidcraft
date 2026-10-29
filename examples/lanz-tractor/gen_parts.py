@@ -1298,6 +1298,105 @@ def oil_valve_2(s):
     return v
 
 
+# ----------------------------------------------------------------------------- 1-36
+@part("1-36", "Exhaust lower circular bracket", "Aluminum")
+def exhaust_lower_bracket(s):
+    """Sheet 04, 1-36 (scale 1:2, read with the drawing's vector lines): Ø31 x 14 base, a cone
+    from Ø31 up to Ø38.5 over 17, and a Ø33 x 7 band on top; the bore tapers from Ø27 at 6.5 up to
+    Ø24 at the top, Ø27 below. 4 x M3 (Ø2.5) radially through the band 3.5 from the top, on X and
+    Y, for the 1-37 ring. Axis = Z from the base."""
+    DB = s.param("elb_base_d", 31, "base diameter")
+    HB = s.param("elb_base_h", 14, "base height")
+    DC = s.param("elb_cone_d", 38.5, "cone top diameter")
+    HC = s.param("elb_cone_h", 17, "cone height")
+    DT = s.param("elb_band_d", 33, "top band diameter (1-37 sits on it)")
+    HT = s.param("elb_band_h", 7, "band height")
+    DI1 = s.param("elb_bore_bottom", 27, "bore at the bottom")
+    HI = s.param("elb_bore_step", 6.5, "Ø27 bore height, then the taper")
+    DI2 = s.param("elb_bore_top", 24, "bore at the top")
+    ZS = s.param("elb_screw_z", 3.5, "M3 holes below the top")
+    top = HB + HC + HT
+    pts = [(DI1 / 2, 0), (DB / 2, 0), (DB / 2, HB), (DC / 2, HB + HC), (DT / 2, HB + HC), (DT / 2, top),
+           (DI2 / 2, top), (DI1 / 2, HI)]
+    v = s.turned("Bracket", pts)
+    z = top - ZS
+    ri = DI2 / 2 + (DI1 - DI2) / 2 * (top - z) / (top - HI)
+    s.holes("M3 tapped X", (DT / 2, 0, 0), (-1, 0, 0), [(DT / 2, 0, z)], 2.5)
+    s.holes("M3 tapped Y", (0, DT / 2, 0), (0, -1, 0), [(0, DT / 2, z)], 2.5)
+    return v - 2 * radial_hole(2.5, DT / 2, ri, walls=2)
+
+
+# ----------------------------------------------------------------------------- 1-37
+@part("1-37", "Exhaust base ring", "Brass")
+def exhaust_base_ring(s):
+    """Sheet 04, 1-37 (scale 1:2, vector lines): Ø40 x 10 with a 6 high cone to Ø33 on top; Ø27
+    bore, counterbored Ø33 x 7 from below over the 1-36 band; 4 x Ø3 radial holes 3.5 from the
+    bottom, on X and Y (the 1-36 M3 screws). Axis = Z from the bottom."""
+    D = s.param("ebr_d", 40, "diameter")
+    H1 = s.param("ebr_h1", 10, "cylindrical height")
+    H2 = s.param("ebr_h2", 6, "cone height")
+    DTP = s.param("ebr_top_d", 33, "cone top diameter")
+    DI = s.param("ebr_bore", 27, "bore")
+    DCB = s.param("ebr_cbore_d", 33, "counterbore from below")
+    HCB = s.param("ebr_cbore_h", 7, "counterbore depth")
+    ZH = s.param("ebr_hole_z", 3.5, "Ø3 holes from the bottom")
+    v = s.turned("Ring", [(DCB / 2, 0), (D / 2, 0), (D / 2, H1), (DTP / 2, H1 + H2), (DI / 2, H1 + H2),
+                          (DI / 2, HCB), (DCB / 2, HCB)])
+    s.holes("Holes X", (D / 2, 0, 0), (-1, 0, 0), [(D / 2, 0, ZH)], 3)
+    s.holes("Holes Y", (0, D / 2, 0), (0, -1, 0), [(0, D / 2, ZH)], 3)
+    return v - 2 * radial_hole(3, D / 2, DCB / 2, walls=2)
+
+
+# ----------------------------------------------------------------------------- 1-38
+@part("1-38", "Exhaust stack", "Brass")
+def exhaust_stack(s):
+    """Sheet 04, 1-38 (scale 1:2, vector lines): 100 high: Ø33 x 2 flange, Ø27 x 19, a cone from
+    Ø27 to Ø21 over 75 and a Ø19 x 4 top band; the bore tapers straight from Ø24 at the bottom to
+    Ø17 at the top. Axis = Z from the flange."""
+    DF = s.param("es_flange_d", 33, "flange")
+    TF = s.param("es_flange_t", 2, "flange thickness")
+    D1 = s.param("es_d1", 27, "lower diameter")
+    H1 = s.param("es_h1", 19, "lower cylinder height")
+    D2 = s.param("es_d2", 21, "cone top diameter")
+    H2 = s.param("es_h2", 75, "cone height")
+    DT = s.param("es_top_d", 19, "top band")
+    HT = s.param("es_top_h", 4, "top band height")
+    DB1 = s.param("es_bore_bottom", 24, "bore at the bottom")
+    DB2 = s.param("es_bore_top", 17, "bore at the top")
+    top = TF + H1 + H2 + HT
+    return s.turned("Stack", [(DB1 / 2, 0), (DF / 2, 0), (DF / 2, TF), (D1 / 2, TF), (D1 / 2, TF + H1),
+                              (D2 / 2, TF + H1 + H2), (DT / 2, TF + H1 + H2), (DT / 2, top), (DB2 / 2, top)])
+
+
+# ----------------------------------------------------------------------------- 1-39
+@part("1-39", "Exhaust stack top ring", "Brass")
+def exhaust_top_ring(s):
+    """Sheet 04, 1-39 (scale 1:1.5, vector lines): a Ø26.5 bead, 4 thick with a full R2 round edge,
+    on a Ø22 x 2 spigot; Ø14.5 bore 2 deep from the top, Ø19 below it (over the 1-38 top band).
+    Axis = Z from the bottom of the spigot."""
+    D = s.param("etr_d", 26.5, "bead diameter")
+    T = s.param("etr_t", 4, "bead thickness, full round R2")
+    DS = s.param("etr_spigot_d", 22, "spigot")
+    HS = s.param("etr_spigot_h", 2, "spigot height")
+    DI1 = s.param("etr_bore_top", 14.5, "bore at the top")
+    HI1 = s.param("etr_bore_top_h", 2, "its depth")
+    DI2 = s.param("etr_bore", 19, "bore below (over 1-38)")
+    rb = D / 2 - T / 2                          # bead edge centre radius
+    z0, z1 = HS, HS + T
+    start = (DI2 / 2, 0)
+    segs = [("line", (DS / 2, 0)), ("line", (DS / 2, z0)), ("line", (rb, z0)),
+            ("arc", (rb, z0 + T / 2), (rb, z1), True), ("line", (DI1 / 2, z1)), ("line", (DI1 / 2, z1 - HI1)),
+            ("line", (DI2 / 2, z1 - HI1)), ("line", start)]
+    s.sketch("Ring section", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.revolve", axis="Z", name="Ring", body_name=s.body)
+    # Pappus on the polygon, plus the half-disc of the bead edge (area π/8 T², centroid 2T/3π out)
+    poly = [start, (DS / 2, 0), (DS / 2, z0), (rb, z0), (rb, z1), (DI1 / 2, z1), (DI1 / 2, z1 - HI1), (DI2 / 2, z1 - HI1)]
+    half = math.pi / 8 * T * T
+    return revolved_volume(poly) + 2 * math.pi * (rb + 2 * T / (3 * math.pi)) * half
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]

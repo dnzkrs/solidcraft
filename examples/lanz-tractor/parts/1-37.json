@@ -1,0 +1,253 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ebr_d",
+    "expression": "40",
+    "unit": "mm",
+    "comment": "diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ebr_h1",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "cylindrical height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ebr_h2",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "cone height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ebr_top_d",
+    "expression": "33",
+    "unit": "mm",
+    "comment": "cone top diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ebr_bore",
+    "expression": "27",
+    "unit": "mm",
+    "comment": "bore"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ebr_cbore_d",
+    "expression": "33",
+    "unit": "mm",
+    "comment": "counterbore from below"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ebr_cbore_h",
+    "expression": "7",
+    "unit": "mm",
+    "comment": "counterbore depth"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ebr_hole_z",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "\u00d83 holes from the bottom"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Ring section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      16.5,
+      0
+     ],
+     [
+      20.0,
+      0
+     ],
+     [
+      20.0,
+      10
+     ],
+     [
+      16.5,
+      16
+     ],
+     [
+      13.5,
+      16
+     ],
+     [
+      13.5,
+      7
+     ],
+     [
+      16.5,
+      7
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Ring",
+    "body_name": "1-37 Exhaust base ring"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      20.0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Holes X"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -3.5
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-37 Exhaust base ring"
+    ],
+    "name": "Holes X"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      20.0,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      -0.0,
+      -0.0,
+      -1.0
+     ]
+    },
+    "name": "Holes Y"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -3.5
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-37 Exhaust base ring"
+    ],
+    "name": "Holes Y"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-37 Exhaust base ring"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

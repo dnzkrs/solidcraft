@@ -68,6 +68,10 @@ Units are mm. Each part has its own coordinate system, stated in its docstring i
 | 1-32 | Motor rocking arm cam follower | Steel | 1 | 1,240.5 | 9.7 |
 | 1-33 | Motor rocking arm cam follower axle | Steel | 1 | 376.9 | 3.0 |
 | 1-35 | Exhaust pipe holding bracket | Brass | 1 | 2,540.0 | 21.6 |
+| 1-36 | Exhaust lower circular bracket | Aluminum | 1 | 12,826.8 | 34.6 |
+| 1-37 | Exhaust base ring | Brass | 1 | 7,624.5 | 64.8 |
+| 1-38 | Exhaust stack | Brass | 1 | 14,499.7 | 123.2 |
+| 1-39 | Exhaust stack top ring | Brass | 1 | 1,363.9 | 11.6 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,

@@ -250,5 +250,33 @@
   "bodies": 1,
   "volume_mm3": 2540.0,
   "mass_g": 21.6
+ },
+ "1-36": {
+  "name": "Exhaust lower circular bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 12826.8,
+  "mass_g": 34.6
+ },
+ "1-37": {
+  "name": "Exhaust base ring",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 7624.5,
+  "mass_g": 64.8
+ },
+ "1-38": {
+  "name": "Exhaust stack",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 14499.7,
+  "mass_g": 123.2
+ },
+ "1-39": {
+  "name": "Exhaust stack top ring",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1363.9,
+  "mass_g": 11.6
  }
 }
