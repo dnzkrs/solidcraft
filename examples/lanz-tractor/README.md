@@ -1,7 +1,7 @@
 # Lanz mini tractor: parts modelled in SolidCraft
 
 Single parts of the "Lanz Mini Tractor" model (live-steam style engine and chassis), modelled in
-SolidCraft from the 13-sheet drawing set *LANZ-A3* by J.A.M. de Waal, JDW Draughting Services
+SolidCraft from the drawing set *LANZ-A3* by J.A.M. de Waal, JDW Draughting Services
 (2014), after the original Dutch drawings by C.P. Hendrikx (1996). The drawings are copyrighted by
 their author and are **not** in this repository; this folder holds only the models made from them,
 for private use in this fork. Part numbers and names follow the drawings' parts list (sheet 02).
@@ -287,8 +287,8 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
   1 thick, set 2 in; the Ø10 hole at 45° through the top edge is inferred from the 7 mm openings in
   the top and side views; the tube's R2 corners are read from section F-F.
 - **2-12**: 12 teeth counted on the drawing; straight-flanked teeth. **2-15**: no wick material in
-  SolidCraft's library; the default density is used. **2-11** (tank hanger) is not yet modelled:
-  its length and rod positions are not in its view.
+  SolidCraft's library; the default density is used. **2-11** (tank hanger): not modelled (see
+  below).
 - **2-18**: the top edges are the outer tangents from the R4.5 ends to the R9.5 boss (their virtual
   sharp comes out 10 above the Ø12, as dimensioned); the R20 is a concave round where the bottom
   edges meet. **2-20**: the Ø12 is 10 above the hole line and the R11 is taken as centred on it,
@@ -366,18 +366,18 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
   facets, lip, side panel, end wall, flange), the volume checked by inclusion-exclusion of the
   overlaps. The folded shape (which way each panel turns) is read from the 3D views on sheets 06
   and 10; the lip's R10 ends are not rounded.
-- Not modelled: **3-20** (console top plate): the flat pattern does not show which regions fold
-  which way, and the side view does not settle it; **3-25C** (seat leg) has too few views of
-  its bends; **4-26** (reversing shaft operating ring) cannot be read unambiguously (its hub's
-  size and shape); **2-11** (tank hanger) lacks its length and rod positions.
+- **Left out by the owner's decision** (the drawings do not define them fully, and there is no
+  further sheet): **2-11** (tank hanger: no length or rod positions), **3-20** (console top
+  plate: the flat pattern does not show which regions fold which way), **3-25C** (seat leg: too
+  few views of its bends), **4-26** (reversing shaft operating ring: its hub cannot be read
+  unambiguously). The other 182 parts of the parts list, and 1-53, are modelled.
 
 - **Group 4** (sheet 07): 4-05 and 4-11 are bought-in bearings modelled as their envelopes (their
   labelled bores, Ø8.5 and Ø6.5, as given). 4-06, 4-10 and 4-15 are read from high-resolution
   renders of their sections. The gears have straight flanks: the 30 tooth gears 0.5 wide at the
   tip and 1.5 at the root (assumed), the 10 tooth pinions as 4-13 (0.75 / 1.5), 4-24's 19 teeth as
   3-18 (1 / 2.5). The Ø8 collars and hubs against the pinions are Ø7.9 so they stay inside the
-  pinions' roots. 4-14's two Ø3 holes are placed as 4-25's. Not yet modelled: 4-26 (reversing
-  shaft operating ring).
+  pinions' roots. 4-14's two Ø3 holes are placed as 4-25's. 4-26 is left out (see above).
 - **4-27**: the Ø29 step on the flange's back is not modelled. **4-29**: the shaft is drawn broken;
   its length (68) is assumed. **4-30**: rubber, default density, black. **5-01**: nylon, taken 3
   wide and 0.5 thick; its two loops are separate sweeps meeting at the sharp corner (R2 drawn).
