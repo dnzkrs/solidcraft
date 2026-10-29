@@ -881,6 +881,13 @@
   "volume_mm3": 27807.3,
   "mass_g": 20.9
  },
+ "3-25D": {
+  "name": "Drivers seat back rest",
+  "material": "Oak",
+  "bodies": 1,
+  "volume_mm3": 5231.3,
+  "mass_g": 3.9
+ },
  "3-26A": {
   "name": "Bumper-towbar mounting bracket",
   "material": "Steel",
@@ -902,6 +909,13 @@
   "volume_mm3": 728.7,
   "mass_g": 5.7
  },
+ "3-27B": {
+  "name": "Hand break handle",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1134.5,
+  "mass_g": 8.9
+ },
  "3-27C": {
   "name": "Hand brake pivot",
   "material": "Brass",
@@ -915,6 +929,13 @@
   "bodies": 1,
   "volume_mm3": 705.3,
   "mass_g": 6.0
+ },
+ "3-27E": {
+  "name": "Hand break release handle",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1618.5,
+  "mass_g": 13.8
  },
  "3-27F": {
   "name": "Hand brake release handle spring",

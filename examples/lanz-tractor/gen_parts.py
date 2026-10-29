@@ -4684,6 +4684,98 @@ def nylon_belt(s):
     return v
 
 
+# ----------------------------------------------------------------------------- 3-27B, 3-27E, 3-25D
+@part("3-27B", "Hand break handle", "Steel")
+def hand_brake_handle(s):
+    """Sheet 07, 3-27B (scale 1:1.5): a 2 thick steel lever: an R6 end round a Ø8 hole (3-27C's
+    spigot), tapering to 7 wide 52 along; an M4 (Ø3.3) at 21 and a Ø2 at 32, 2.5 off the centre line;
+    then a tip 4 wide and 20 long with a round end. XY plane, Z = 0..2."""
+    T = 2
+    tr = tangent_from((52, 3.5), (0, 0), 6, left=False)
+    tl = (tr[0], -tr[1])
+    start = (52, -2)
+    segs = [("line", (70, -2)), ("arc", (70, 0), (70, 2), True), ("line", (52, 2)), ("line", (52, 3.5)), ("line", tr),
+            ("arc", (0, 0), tl, True), ("line", (52, -3.5)), ("line", start)]
+    s.sketch("Lever", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    s.cmd("sketch.circle.center", center=[0, 0], diameter=8)
+    s.cmd("sketch.circle.center", center=[21, 0], diameter=3.3)
+    s.cmd("sketch.circle.center", center=[32, -2.5], diameter=2)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, profiles=[{"point": [45, 0]}], name="Lever", body_name=s.body)
+    return (loop_area(start, segs) - math.pi / 4 * (64 + 3.3 ** 2 + 4)) * T
+
+
+@part("3-27E", "Hand break release handle", "Brass")
+def release_handle(s):
+    """Sheet 07, 3-27E (from the side and top views): a brass blade 6.5 wide: in side view the top
+    edge runs straight for 50, then rises 16° for 16 to a tip 1.5 thick; the lower edge falls from the
+    tip to an R4 round about a Ø5 hole 18 along and 6.5 below the top (10.5 deep there), then rises
+    to the top at the left end. A fork slot from the left end: 3 wide for 10.5, then 2 wide to 25
+    (taken right through the blade's height). Side profile in the XZ plane, the top at Z = 0; the
+    6.5 width along Y."""
+    W = 6.5
+    c, r = (18, -6.5), 4
+    a = math.radians(16)
+    tip_top = (50 + 16 * math.cos(a), 16 * math.sin(a))
+    tip_low = (tip_top[0] + 1.5 * math.sin(a), tip_top[1] - 1.5 * math.cos(a))
+    t_right = tangent_from(tip_low, c, r, left=True)           # below the circle, seen from the tip
+    t_left = tangent_from((0, 0), c, r, left=False)
+    start = (0, 0)
+    segs = [("line", t_left), ("arc", c, t_right, True), ("line", tip_low), ("line", tip_top), ("line", (50, 0)),
+            ("line", start)]
+    s.sketch("Side", (0, 0, 0), (1, 0, 0), (0, 0, 1))                     # normal -Y
+    s.loop(start, segs)
+    s.cmd("sketch.circle.center", center=[18, -6.5], diameter=5)
+    s.finish()
+    s.cmd("solid.extrude", distance=W / 2, direction="symmetric", profiles=[{"point": [30, -1]}], name="Blade",
+          body_name=s.body)
+    v = (loop_area(start, segs) - math.pi * 6.25) * W
+    # the fork slot, cut down through the blade (2.25 from one face: centred on Y = -0.5 for the 3 wide part)
+    s.sketch("Fork slot", (0, 0, 2), (1, 0, 0), (0, -1, 0))                # normal -Z
+    s.cmd("sketch.line", points=[[-1, 1], [25, 1], [25, -1], [10.5, -1], [10.5, -2], [-1, -2]],
+          closed=True)
+    s.finish()
+    s.cmd("solid.extrude", distance=15, operation="cut", targets=[s.body], name="Fork slot")
+    # the slot's area across the profile (by sampling the profile's height at each x)
+    def height(x):
+        top = 0.0
+        if x <= t_left[0]:
+            low = (t_left[1] / t_left[0]) * x
+        elif x <= t_right[0]:
+            dy = math.sqrt(max(r * r - (x - c[0]) ** 2, 0))
+            low = c[1] - dy
+        else:
+            low = t_right[1] + (tip_low[1] - t_right[1]) * (x - t_right[0]) / (tip_low[0] - t_right[0])
+        h = top - low
+        if abs(x - 18) < 2.5:
+            h -= 2 * math.sqrt(6.25 - (x - 18) ** 2)
+        return h
+    n, cut = 5000, 0.0
+    for i in range(n):
+        x = (i + 0.5) * 25 / n
+        cut += height(x) * (3 if x < 10.5 else 2) * 25 / n
+    return v - cut
+
+
+@part("3-25D", "Drivers seat back rest", "Oak")
+def seat_back_rest(s):
+    """Sheet 06, 3-25D (scale 1:1.5): a wooden back rest 43.5 x 16, 8 thick, R7 corners in plan; the
+    R7 rounding of its front edges and the 12° bend of its ends are not modelled. Oak density. XY
+    plane."""
+    L, W, R, T = 43.5, 16, 7, 8
+    a, b = L / 2, W / 2
+    start = (-a + R, -b)
+    segs = [("line", (a - R, -b)), ("arc", (a - R, -b + R), (a, -b + R), True), ("line", (a, b - R)),
+            ("arc", (a - R, b - R), (a - R, b), True), ("line", (-a + R, b)), ("arc", (-a + R, b - R), (-a, b - R), True),
+            ("line", (-a, -b + R)), ("arc", (-a + R, -b + R), start, True)]
+    s.sketch("Back rest", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, name="Back rest", body_name=s.body)
+    return loop_area(start, segs) * T
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]

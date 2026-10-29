@@ -160,11 +160,14 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 3-22 | Accelerator control lever handle | Brass | 1 | 647.2 | 5.5 |
 | 3-25A | Drivers seat base | Brass | 1 | 4,811.7 | 40.9 |
 | 3-25B | Drivers seat | Oak | 1 | 27,807.3 | 20.9 |
+| 3-25D | Drivers seat back rest | Oak | 1 | 5,231.3 | 3.9 |
 | 3-26A | Bumper-towbar mounting bracket | Steel | 1 | 1,426.9 | 11.2 |
 | 3-26B | Bumper-towbar | Steel | 1 | 2,814.3 | 22.1 |
 | 3-27A | Hand brake shaft | Steel | 1 | 728.7 | 5.7 |
+| 3-27B | Hand break handle | Steel | 1 | 1,134.5 | 8.9 |
 | 3-27C | Hand brake pivot | Brass | 1 | 620.5 | 5.3 |
 | 3-27D | Hand brake teethed bracket plate | Brass | 1 | 705.3 | 6.0 |
+| 3-27E | Hand break release handle | Brass | 1 | 1,618.5 | 13.8 |
 | 3-27F | Hand brake release handle spring | Steel | 3 | 11.7 | 0.1 |
 | 3-27G | Hand brake release crank | Steel | 1 | 171.0 | 1.3 |
 | 3-27H | Hand brake release crank break band holder | Brass | 1 | 212.9 | 1.8 |
@@ -353,9 +356,14 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
   201 long, where the drawing says "approx 175" stretched. **3-27J**'s R2 bend is sharp.
 - **3-29**: the hub's height (6.5) and the pins' heights are partly measured. **3-32**: the pin's
   position (25.6) is measured. **3-37**: the lens (Ø7.5 x 1, red) is modelled in polycarbonate.
-- Not yet modelled from sheet 06/07: 3-20 (console top plate: a flat pattern with four folds and a
-  throttle quadrant), 3-23/3-24 (mudguards), 3-25C (seat leg), 3-25D (back rest), 3-27E (release
-  handle).
+- **3-27E**: its fork slot (3 wide for 10.5, then 2 wide to 25) is read from the top view and
+  taken right through the blade's height. **3-25D**: oak; the R7 rounding of its front edges and
+  the 12° bend of its ends are not modelled.
+- Not modelled: **3-20** (console top plate) and **3-23/3-24** (mudguards) are 1 mm sheets whose
+  folds cross notches, corners and slanted edges, which `sheet.fold` refuses, and building them
+  from separate plates would need many touching joins; **3-25C** (seat leg) has too few views of
+  its bends; **4-26** (reversing shaft operating ring) cannot be read unambiguously (its hub's
+  size and shape); **2-11** (tank hanger) lacks its length and rod positions.
 
 - **Group 4** (sheet 07): 4-05 and 4-11 are bought-in bearings modelled as their envelopes (their
   labelled bores, Ø8.5 and Ø6.5, as given). 4-06, 4-10 and 4-15 are read from high-resolution
