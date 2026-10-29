@@ -635,5 +635,40 @@
   "bodies": 1,
   "volume_mm3": 1174.0,
   "mass_g": 9.2
+ },
+ "2-38": {
+  "name": "Steering tie rod end",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 444.8,
+  "mass_g": 3.5
+ },
+ "2-39": {
+  "name": "Steering tie rod end plug",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 214.4,
+  "mass_g": 1.7
+ },
+ "2-40": {
+  "name": "Steering tie rod end balljoint",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 257.3,
+  "mass_g": 2.0
+ },
+ "2-43": {
+  "name": "Accelerator link",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 349.1,
+  "mass_g": 2.7
+ },
+ "2-46": {
+  "name": "Pulling hook",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 807.5,
+  "mass_g": 6.3
  }
 }

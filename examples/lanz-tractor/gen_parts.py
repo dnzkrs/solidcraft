@@ -2828,6 +2828,147 @@ def lay_shaft_gear(s):
     return v - cross_hole(9, 1.25, 3) / 2
 
 
+# ----------------------------------------------------------------------------- 2-38, 2-39, 2-40
+@part("2-38", "Steering tie rod end", "Steel")
+def tie_rod_end(s):
+    """Sheet 05, 2-38 (section C-C, scale 1.5:1, read from the vector lines): a 7 AF hex 15 long and
+    a Ø6 x 10 neck; from the hex end a Ø6 bore 7 deep, a Ø5 ball seat on to 12, coned to Ø4 at
+    13.5, then tapped M4 (Ø3.3) through the neck; a slot 4 wide from the underside flat into the
+    bore over the first 13.5 (the ball's neck goes through it). The cone from the hex to the neck
+    is not modelled. Axis = Z, the hex's end on Z = 0, the slot toward -Y."""
+    AF = s.param("tre_af", 7, "hex across the flats")
+    LH = s.param("tre_hex", 15, "hex length")
+    LN = s.param("tre_neck", 10, "Ø6 neck length")
+    WS = s.param("tre_slot_w", 4, "slot width")
+    LS = s.param("tre_slot_l", 13.5, "slot length")
+    RT = 3.3 / 2
+    s.sketch("Hex", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.polyline(hexagon(AF))
+    s.finish()
+    s.cmd("solid.extrude", distance=LH, name="Hex", body_name=s.body)
+    s.turned("Neck", [(0, LH - 1), (3, LH - 1), (3, LH + LN), (0, LH + LN)], operation="join")
+    s.turned("Bore", [(0, -1), (3, -1), (3, 7), (2.5, 7), (2.5, 12), (2, LS), (RT, LS), (RT, LH + LN + 1),
+                      (0, LH + LN + 1)], operation="cut")
+    s.sketch("Slot", (0, 0, -1), (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.rectangle.two_point", p0=[-WS / 2, -AF / 2 - 0.5], p1=[WS / 2, -1.5])
+    s.finish()
+    s.cmd("solid.extrude", distance=LS + 1, operation="cut", targets=[s.body], name="Slot")
+
+    def slot_out(r, n=4000):                 # the slot's area below the bore (the slot's top at -1.5)
+        h, a = WS / n, 0.0
+        for i in range(n):
+            x = -WS / 2 + (i + 0.5) * h
+            top = min(-1.5, -math.sqrt(r * r - x * x)) if abs(x) < r else -1.5
+            a += (top + AF / 2) * h
+        return a
+    hexa = math.sqrt(3) / 2 * AF * AF
+    v = (hexa - math.pi * 9 - slot_out(3)) * 7 + (hexa - math.pi * 6.25 - slot_out(2.5)) * 5
+    m = 60                                                   # the cone: Simpson in z
+    f = lambda z: hexa - math.pi * (2.5 - (z - 12) / 3) ** 2 - slot_out(2.5 - (z - 12) / 3, 800)
+    hz = (LS - 12) / m
+    v += hz / 3 * sum((1 if i in (0, m) else 4 if i % 2 else 2) * f(12 + i * hz) for i in range(m + 1))
+    v += (hexa - math.pi * RT * RT) * (LH - LS) + math.pi * (9 - RT * RT) * LN
+    return v
+
+
+@part("2-39", "Steering tie rod end plug", "Steel")
+def tie_rod_end_plug(s):
+    """Sheet 05, 2-39: an M6 x 6 plug (at the Ø6 major diameter) with a Ø5 nose 3 long, its end
+    chamfered 1.5 x 45°. The R2.5 seat for the ball (about 0.2 deep) and the screwdriver slot are
+    not dimensioned and not modelled. Axis = Z."""
+    return s.turned("Plug", [(0, 0), (3, 0), (3, 6), (2.5, 6), (2.5, 7.5), (1, 9), (0, 9)])
+
+
+@part("2-40", "Steering tie rod end balljoint", "Steel")
+def tie_rod_balljoint(s):
+    """Sheet 05, 2-40: a 7 AF x 2.5 hex with an M4 x 5 stem below (at the Ø4 major diameter) and a
+    Ø3 neck up to an SR2.5 ball whose centre is 8 above the hex's underside. The hex's 10° chamfer is
+    not modelled. Axis = Z, the hex's underside on Z = 0."""
+    AF = s.param("bj_af", 7, "hex across the flats")
+    TH = s.param("bj_hex_t", 2.5, "hex thickness")
+    ZB = s.param("bj_ball_z", 8, "ball centre above the hex's underside")
+    RB = s.param("bj_ball_r", 2.5, "ball radius")
+    # the round part as one revolve, then the (planar) hex joined over it. The ball's arc is split
+    # at its equator: one arc across the equator revolves into an inside-out solid
+    zn = ZB - math.sqrt(RB * RB - 1.5 ** 2)                  # where the Ø3 neck meets the ball
+    s.sketch("Section", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    s.loop((0, -5), [("line", (2, -5)), ("line", (2, 1)), ("line", (1.5, 1)), ("line", (1.5, zn)),
+                     ("arc", (0, ZB), (RB, ZB), True), ("arc", (0, ZB), (0, ZB + RB), True), ("line", (0, -5))])
+    s.finish()
+    s.cmd("solid.revolve", axis="Z", name="Stem, neck and ball", body_name=s.body)
+    h = RB - (ZB - zn)                                        # the ball's cap below the neck's end
+    v = math.pi * 4 * 6 + math.pi * 2.25 * (zn - 1) + 4 / 3 * math.pi * RB ** 3 - math.pi * h * h * (3 * RB - h) / 3
+    s.sketch("Hex", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.polyline(hexagon(AF))
+    s.finish()
+    s.cmd("solid.extrude", distance=TH, operation="join", targets=[s.body], name="Hex")
+    return v + math.sqrt(3) / 2 * AF * AF * TH - math.pi * 4 * 1 - math.pi * 2.25 * (TH - 1)
+
+
+# ----------------------------------------------------------------------------- 2-43
+# a Ø2 wire: its measured volume is good to a few tenths of a per cent
+@part("2-43", "Accelerator link", "Steel", tol=0.01)
+def accelerator_link(s):
+    """Sheet 05, 2-43 (scale 1:2): a Ø2 steel wire, eyes of Ø4.5 (taken as the wire's centre line)
+    at both ends, at right angles to each other. From the lower eye's centre 69 straight, then a
+    20 leg to the upper eye's centre, 5.3 to one side. The kink is drawn sharp; it is bent R3 here.
+    The lower eye in the YZ plane centred on the origin, the rest in the XZ plane."""
+    D = s.param("al_d", 2, "wire")
+    RE = s.param("al_eye", 4.5, "eye diameter, centre line") / 2
+    L1 = s.param("al_l1", 69, "lower eye to the kink")
+    L2 = s.param("al_l2", 20, "kink to the upper eye")
+    DX = s.param("al_dx", 5.3, "upper eye to one side")
+    RB = s.param("al_bend", 3, "kink bend radius (assumed)")
+    th = math.asin(DX / L2)
+    d = (-math.sin(th), 0, math.cos(th))
+    U = (-DX, 0, L1 + L2 * math.cos(th))
+    t = RB * math.tan(th / 2)
+    # the legs stop 0.3 outside the eyes' centre lines: ended on them, a Ø2 leg's sides touch the
+    # Ø2 eye's tube tangentially and the join fails
+    g0 = RE + 0.3
+    e = (U[0] - g0 * d[0], U[2] - g0 * d[2])                  # where the leg meets the upper eye
+    a_end = (-RB + RB * math.cos(th), L1 - t + RB * math.sin(th))
+    s.sketch("Path", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    s.cmd("sketch.line", points=[[0, g0], [0, round(L1 - t, 6)]])                                   # l1
+    s.cmd("sketch.arc.center_point", center=[-RB, round(L1 - t, 6)], start=[0, round(L1 - t, 6)],
+          end=[round(a_end[0], 6), round(a_end[1], 6)])                                            # a1
+    s.cmd("sketch.line", points=[[round(a_end[0], 6), round(a_end[1], 6)], [round(e[0], 6), round(e[1], 6)]])  # l2
+    s.finish()
+    s.cmd("solid.pipe", path_sketch="Path", path=["l1", "a1", "l2"], diameter=D, name="Wire", body_name=s.body)
+    v = math.pi / 4 * D * D * ((L1 - t - g0) + RB * th + (L2 - t - g0))
+    s.sketch("Lower eye", (0, 0, 0), (0, 1, 0), (1, 0, 0))
+    s.cmd("sketch.circle.center", center=[RE, 0], diameter=D)
+    s.finish()
+    s.cmd("solid.revolve", axis="y", operation="join", targets=[s.body], name="Lower eye")
+    s.sketch("Upper eye", U, (1, 0, 0), (0, 1, 0))
+    s.cmd("sketch.circle.center", center=[RE, 0], diameter=D)
+    s.finish()
+    s.cmd("solid.revolve", axis="y", operation="join", targets=[s.body], name="Upper eye")
+    r = D / 2
+    v += 2 * (2 * math.pi ** 2 * RE * r * r)
+    in_lower = lambda x, y, z: (math.hypot(y, z) - RE) ** 2 + x * x <= r * r
+    in_upper = lambda x, y, z: (math.hypot(x - U[0], z - U[2]) - RE) ** 2 + y * y <= r * r
+    v -= removed_by_cylinder(in_lower, (0, 0, g0), (0, 0, 1), D, 1.5)
+    v -= removed_by_cylinder(in_upper, (e[0], 0, e[1]), (-d[0], 0, -d[2]), D, 1.5)
+    return v
+
+
+# ----------------------------------------------------------------------------- 2-46
+@part("2-46", "Pulling hook", "Steel")
+def pulling_hook(s):
+    """Sheet 05, 2-46: an SR5 domed head 5 high (a Ø10 half ball), a Ø5 x 15 shank, a Ø8 x 3 collar
+    and an M4 x 8 end (at the Ø4 major diameter); the small edge rounds are not modelled. Axis = Z,
+    the threaded end on Z = 0."""
+    s.sketch("Section", (0, 0, 0), (1, 0, 0), (0, 0, 1))
+    start = (0, 0)
+    segs = [("line", (2, 0)), ("line", (2, 8)), ("line", (4, 8)), ("line", (4, 11)), ("line", (2.5, 11)),
+            ("line", (2.5, 26)), ("line", (5, 26)), ("arc", (0, 26), (0, 31), True), ("line", start)]
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("solid.revolve", axis="Z", name="Hook", body_name=s.body)
+    return math.pi * (4 * 8 + 16 * 3 + 6.25 * 15) + 2 / 3 * math.pi * 125
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]

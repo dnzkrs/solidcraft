@@ -1,0 +1,493 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "bj_af",
+      "expr": "7",
+      "unit": "mm",
+      "comment": "hex across the flats",
+      "model": false
+    },
+    {
+      "name": "bj_hex_t",
+      "expr": "2.5",
+      "unit": "mm",
+      "comment": "hex thickness",
+      "model": false
+    },
+    {
+      "name": "bj_ball_z",
+      "expr": "8",
+      "unit": "mm",
+      "comment": "ball centre above the hex's underside",
+      "model": false
+    },
+    {
+      "name": "bj_ball_r",
+      "expr": "2.5",
+      "unit": "mm",
+      "comment": "ball radius",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              0.0,
+              -5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              2.0,
+              -5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              2.0,
+              -5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              2.0,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              2.0,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              1.5,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              1.5,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              1.5,
+              6.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              0.0,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              1.5,
+              6.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              2.5,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              0.0,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              2.5,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              0.0,
+              10.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.start",
+            "pos": [
+              0.0,
+              10.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              0.0,
+              -5.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 9,
+            "a": 10,
+            "b": 11,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 12,
+            "a": 13,
+            "b": 14,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 15,
+            "b": 16,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 2,
+            "q": 3
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 4,
+            "q": 5
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 6,
+            "q": 7
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 8,
+            "q": 10
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 9,
+            "q": 12
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 11,
+            "q": 13
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 14,
+            "q": 15
+          },
+          {
+            "id": "k8",
+            "type": "coincident",
+            "p": 1,
+            "q": 16
+          }
+        ],
+        "counters": {
+          "a": 2,
+          "k": 8,
+          "l": 5
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Stem, neck and ball",
+      "suppressed": false,
+      "body_names": [
+        "2-40 Steering tie rod end balljoint"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "revolve",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      },
+      "axis": {
+        "type": "world",
+        "axis": "Z"
+      },
+      "angle": "360 deg",
+      "operation": "new_body",
+      "convention": "sketch_normal"
+    },
+    {
+      "id": 3,
+      "name": "Hex",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              4.041452,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              2.020726,
+              3.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              -2.020726,
+              3.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              -4.041452,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              -2.020726,
+              -3.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              2.020726,
+              -3.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 6
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Hex",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "extrude",
+      "sketch": 3,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "2.5",
+        "direction": "positive"
+      },
+      "operation": "join",
+      "targets": [
+        "2-40 Steering tie rod end balljoint"
+      ]
+    }
+  ],
+  "next_id": 5,
+  "materials": {
+    "2-40 Steering tie rod end balljoint": "Steel"
+  }
+}

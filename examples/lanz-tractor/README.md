@@ -125,6 +125,11 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 2-35 | Steering lay shaft crank | Brass, Steel | 2 | 2,806.7 | 23.4 |
 | 2-36 | Steering lay shaft gear wheel | Brass | 1 | 6,226.8 | 52.9 |
 | 2-37 | Steering tie rod | Steel | 1 | 1,174.0 | 9.2 |
+| 2-38 | Steering tie rod end | Steel | 1 | 444.8 | 3.5 |
+| 2-39 | Steering tie rod end plug | Steel | 1 | 214.4 | 1.7 |
+| 2-40 | Steering tie rod end balljoint | Steel | 1 | 257.3 | 2.0 |
+| 2-43 | Accelerator link | Steel | 1 | 349.1 | 2.7 |
+| 2-46 | Pulling hook | Steel | 1 | 807.5 | 6.3 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,
@@ -218,6 +223,13 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
   pattern turned, which a round part does not notice), off the revolve's seam.
 - **2-35**: the collar's bore is taken as Ø6, the 2-34 lay shaft's size. **2-36**: the tooth width
   (6) is measured; the teeth are straight-sided and their R5 throat for the worm is not modelled.
+- **2-38**: read from section C-C's lines (Ø6 x 7, Ø5 to 12, coned to Ø4 at 13.5, M4 beyond; the
+  slot 4 wide over 13.5); the cone from the hex to the Ø6 neck is not modelled. **2-39**: the R2.5
+  ball seat (about 0.2 deep) and the slot are not modelled. **2-40**: the hex's 10° chamfer is not
+  modelled.
+- **2-43**: the eyes' Ø4.5 is taken as the wire's centre line (the drawn eyes are about 6.5 over
+  the wire); the eyes are closed rings at right angles to each other, and the drawn sharp kink is
+  bent R3. The legs stop 0.3 outside the eyes' centre lines (see below).
 - **1-04**: from the detail: a 20 wide, 0.5 deep valve channel across the face, with 0.5 wide,
   1 deep relief grooves along its edges; the Ø10 port countersunk 90° to Ø15 on the other face.
 - **1-05**: its thickness is not on the drawing ("refer to 1-04"): not modelled yet.
@@ -246,3 +258,8 @@ cross instead of touching.
 Counterbores on 2-31's Ø24 PCD needed a separation retry (and came out 46 mm³ short) when one of
 them sat on the revolved rim's seam, the XZ half plane the profile was sketched in. Turning the
 pattern 45° off the seam fixed it.
+
+Revolving a profile whose arc runs across a ball's equator (2-40's ball, from the neck over the
+equator to the pole) gives an inside-out solid with negative volume, like the pipe above; split
+into two arcs at the equator it is right. A Ø2 wire ended on the centre line of a Ø2-wire eye
+(2-43) touches the eye's tube tangentially and cannot be joined; ended 0.3 short it can.
