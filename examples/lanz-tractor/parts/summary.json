@@ -698,5 +698,26 @@
   "bodies": 1,
   "volume_mm3": 807.5,
   "mass_g": 6.3
+ },
+ "2-47": {
+  "name": "Motor side cover",
+  "material": "Brass",
+  "bodies": 2,
+  "volume_mm3": 12294.1,
+  "mass_g": 104.5
+ },
+ "2-48": {
+  "name": "Motor top cover",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 5042.4,
+  "mass_g": 42.9
+ },
+ "2-49": {
+  "name": "Motor side cover air cover",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 596.4,
+  "mass_g": 4.7
  }
 }

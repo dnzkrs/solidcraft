@@ -1,0 +1,1956 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "msc_t",
+      "expr": "0.5",
+      "unit": "mm",
+      "comment": "thickness",
+      "model": false
+    },
+    {
+      "name": "msc_half",
+      "expr": "151.1",
+      "unit": "mm",
+      "comment": "half the blank's width",
+      "model": false
+    },
+    {
+      "name": "msc_h",
+      "expr": "99",
+      "unit": "mm",
+      "comment": "height",
+      "model": false
+    },
+    {
+      "name": "msc_bends",
+      "expr": "53.1",
+      "unit": "mm",
+      "comment": "between the bend lines",
+      "model": false
+    },
+    {
+      "name": "msc_r",
+      "expr": "11.5",
+      "unit": "mm",
+      "comment": "bend radius, inside",
+      "model": false
+    },
+    {
+      "name": "msc_tab_w",
+      "expr": "59.5",
+      "unit": "mm",
+      "comment": "tab width",
+      "model": false
+    },
+    {
+      "name": "msc_tab_h",
+      "expr": "5",
+      "unit": "mm",
+      "comment": "tab depth",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Flat pattern",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              -147.1,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              -124.6,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              -124.6,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              -124.6,
+              48.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              -120.6,
+              48.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              -116.6,
+              48.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              -124.6,
+              48.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              -116.6,
+              48.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              -116.6,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              -116.6,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              82.25,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.start",
+            "pos": [
+              82.25,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              82.25,
+              27.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              87.75,
+              27.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              93.25,
+              27.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              82.25,
+              27.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.start",
+            "pos": [
+              93.25,
+              27.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              93.25,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.start",
+            "pos": [
+              93.25,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              109.25,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.start",
+            "pos": [
+              109.25,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.end",
+            "pos": [
+              109.25,
+              14.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.center",
+            "pos": [
+              117.25,
+              14.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.start",
+            "pos": [
+              117.25,
+              22.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.end",
+            "pos": [
+              109.25,
+              14.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l9.start",
+            "pos": [
+              117.25,
+              22.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l9.end",
+            "pos": [
+              121.25,
+              22.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.center",
+            "pos": [
+              121.25,
+              14.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.start",
+            "pos": [
+              129.25,
+              14.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.end",
+            "pos": [
+              121.25,
+              22.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l10.start",
+            "pos": [
+              129.25,
+              14.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l10.end",
+            "pos": [
+              129.25,
+              2.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l11.start",
+            "pos": [
+              129.25,
+              2.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l11.end",
+            "pos": [
+              140.25,
+              2.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l12.start",
+            "pos": [
+              140.25,
+              2.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l12.end",
+            "pos": [
+              140.25,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l13.start",
+            "pos": [
+              140.25,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l13.end",
+            "pos": [
+              147.1,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l14.start",
+            "pos": [
+              147.1,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l14.end",
+            "pos": [
+              147.1,
+              28.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.center",
+            "pos": [
+              151.1,
+              31.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.start",
+            "pos": [
+              151.1,
+              36.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.end",
+            "pos": [
+              147.1,
+              28.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l15.start",
+            "pos": [
+              151.1,
+              36.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l15.end",
+            "pos": [
+              151.1,
+              86.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l16.start",
+            "pos": [
+              151.1,
+              86.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l16.end",
+            "pos": [
+              143.594447,
+              99.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l17.start",
+            "pos": [
+              143.594447,
+              99.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l17.end",
+            "pos": [
+              -143.594447,
+              99.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l18.start",
+            "pos": [
+              -143.594447,
+              99.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l18.end",
+            "pos": [
+              -151.1,
+              86.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l19.start",
+            "pos": [
+              -151.1,
+              86.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l19.end",
+            "pos": [
+              -151.1,
+              36.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a6.center",
+            "pos": [
+              -151.1,
+              31.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a6.start",
+            "pos": [
+              -147.1,
+              28.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a6.end",
+            "pos": [
+              -151.1,
+              36.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l20.start",
+            "pos": [
+              -147.1,
+              28.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l20.end",
+            "pos": [
+              -147.1,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 5,
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 10,
+            "b": 11,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 12,
+            "b": 13,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 14,
+            "a": 15,
+            "b": 16,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 17,
+            "b": 18,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 19,
+            "b": 20,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 21,
+            "b": 22,
+            "construction": false
+          },
+          {
+            "id": "a3",
+            "type": "arc",
+            "c": 23,
+            "a": 24,
+            "b": 25,
+            "construction": false
+          },
+          {
+            "id": "l9",
+            "type": "line",
+            "a": 26,
+            "b": 27,
+            "construction": false
+          },
+          {
+            "id": "a4",
+            "type": "arc",
+            "c": 28,
+            "a": 29,
+            "b": 30,
+            "construction": false
+          },
+          {
+            "id": "l10",
+            "type": "line",
+            "a": 31,
+            "b": 32,
+            "construction": false
+          },
+          {
+            "id": "l11",
+            "type": "line",
+            "a": 33,
+            "b": 34,
+            "construction": false
+          },
+          {
+            "id": "l12",
+            "type": "line",
+            "a": 35,
+            "b": 36,
+            "construction": false
+          },
+          {
+            "id": "l13",
+            "type": "line",
+            "a": 37,
+            "b": 38,
+            "construction": false
+          },
+          {
+            "id": "l14",
+            "type": "line",
+            "a": 39,
+            "b": 40,
+            "construction": false
+          },
+          {
+            "id": "a5",
+            "type": "arc",
+            "c": 41,
+            "a": 42,
+            "b": 43,
+            "construction": false
+          },
+          {
+            "id": "l15",
+            "type": "line",
+            "a": 44,
+            "b": 45,
+            "construction": false
+          },
+          {
+            "id": "l16",
+            "type": "line",
+            "a": 46,
+            "b": 47,
+            "construction": false
+          },
+          {
+            "id": "l17",
+            "type": "line",
+            "a": 48,
+            "b": 49,
+            "construction": false
+          },
+          {
+            "id": "l18",
+            "type": "line",
+            "a": 50,
+            "b": 51,
+            "construction": false
+          },
+          {
+            "id": "l19",
+            "type": "line",
+            "a": 52,
+            "b": 53,
+            "construction": false
+          },
+          {
+            "id": "a6",
+            "type": "arc",
+            "c": 54,
+            "a": 55,
+            "b": 56,
+            "construction": false
+          },
+          {
+            "id": "l20",
+            "type": "line",
+            "a": 57,
+            "b": 58,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 2,
+            "q": 3
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 4,
+            "q": 7
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 6,
+            "q": 8
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 9,
+            "q": 10
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 11,
+            "q": 12
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 13,
+            "q": 16
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 15,
+            "q": 17
+          },
+          {
+            "id": "k8",
+            "type": "coincident",
+            "p": 18,
+            "q": 19
+          },
+          {
+            "id": "k9",
+            "type": "coincident",
+            "p": 20,
+            "q": 21
+          },
+          {
+            "id": "k10",
+            "type": "coincident",
+            "p": 22,
+            "q": 25
+          },
+          {
+            "id": "k11",
+            "type": "coincident",
+            "p": 24,
+            "q": 26
+          },
+          {
+            "id": "k12",
+            "type": "coincident",
+            "p": 27,
+            "q": 30
+          },
+          {
+            "id": "k13",
+            "type": "coincident",
+            "p": 29,
+            "q": 31
+          },
+          {
+            "id": "k14",
+            "type": "coincident",
+            "p": 32,
+            "q": 33
+          },
+          {
+            "id": "k15",
+            "type": "coincident",
+            "p": 34,
+            "q": 35
+          },
+          {
+            "id": "k16",
+            "type": "coincident",
+            "p": 36,
+            "q": 37
+          },
+          {
+            "id": "k17",
+            "type": "coincident",
+            "p": 38,
+            "q": 39
+          },
+          {
+            "id": "k18",
+            "type": "coincident",
+            "p": 40,
+            "q": 43
+          },
+          {
+            "id": "k19",
+            "type": "coincident",
+            "p": 42,
+            "q": 44
+          },
+          {
+            "id": "k20",
+            "type": "coincident",
+            "p": 45,
+            "q": 46
+          },
+          {
+            "id": "k21",
+            "type": "coincident",
+            "p": 47,
+            "q": 48
+          },
+          {
+            "id": "k22",
+            "type": "coincident",
+            "p": 49,
+            "q": 50
+          },
+          {
+            "id": "k23",
+            "type": "coincident",
+            "p": 51,
+            "q": 52
+          },
+          {
+            "id": "k24",
+            "type": "coincident",
+            "p": 53,
+            "q": 56
+          },
+          {
+            "id": "k25",
+            "type": "coincident",
+            "p": 55,
+            "q": 57
+          },
+          {
+            "id": "k26",
+            "type": "coincident",
+            "p": 1,
+            "q": 58
+          }
+        ],
+        "counters": {
+          "a": 6,
+          "k": 26,
+          "l": 20
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "BaseFlange1",
+      "suppressed": false,
+      "body_names": [
+        "2-47 cover"
+      ],
+      "type": "sheet_base",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      }
+    },
+    {
+      "id": 3,
+      "name": "Windows",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.5
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              60.55,
+              74.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              60.55,
+              44.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              66.55,
+              44.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              60.55,
+              44.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              66.55,
+              38.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              66.55,
+              38.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              97.415084,
+              37.99999997470292
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              97.41508408126575,
+              44.00000011792126
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              97.415084,
+              37.99999997467762
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              103.02201063154878,
+              41.86402811914268
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              103.02201063191687,
+              41.86402811902366
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              114.45058201486651,
+              71.86402799234763
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.center",
+            "pos": [
+              108.84365595105356,
+              74.00000003373155
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.start",
+            "pos": [
+              114.45058201488138,
+              71.86402799233998
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.end",
+            "pos": [
+              108.843656,
+              79.99999973768047
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              108.843656,
+              79.99999973794253
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              66.55,
+              80.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.center",
+            "pos": [
+              66.55,
+              74.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.start",
+            "pos": [
+              66.55,
+              80.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.end",
+            "pos": [
+              60.55,
+              74.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.start",
+            "pos": [
+              -60.55,
+              74.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              -60.55,
+              44.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.center",
+            "pos": [
+              -66.55,
+              44.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.start",
+            "pos": [
+              -66.55,
+              38.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.end",
+            "pos": [
+              -60.55,
+              44.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.start",
+            "pos": [
+              -66.55,
+              38.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              -97.415084,
+              37.99999960514781
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a6.center",
+            "pos": [
+              -97.4150840605113,
+              44.000000087805375
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a6.start",
+            "pos": [
+              -103.02201096545359,
+              41.86402806674807
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a6.end",
+            "pos": [
+              -97.415084,
+              37.99999960514315
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.start",
+            "pos": [
+              -103.02201096548809,
+              41.864028066681385
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              -114.4505822403455,
+              71.86402792259591
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a7.center",
+            "pos": [
+              -108.84365595185777,
+              74.00000003317734
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a7.start",
+            "pos": [
+              -108.843656,
+              79.99999997166066
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a7.end",
+            "pos": [
+              -114.45058224034727,
+              71.86402792259504
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.start",
+            "pos": [
+              -108.843656,
+              79.99999997168898
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.end",
+            "pos": [
+              -66.55,
+              80.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a8.center",
+            "pos": [
+              -66.55,
+              74.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a8.start",
+            "pos": [
+              -60.55,
+              74.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a8.end",
+            "pos": [
+              -66.55,
+              80.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 3,
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 8,
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 11,
+            "b": 12,
+            "construction": false
+          },
+          {
+            "id": "a3",
+            "type": "arc",
+            "c": 13,
+            "a": 14,
+            "b": 15,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 16,
+            "b": 17,
+            "construction": false
+          },
+          {
+            "id": "a4",
+            "type": "arc",
+            "c": 18,
+            "a": 19,
+            "b": 20,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 21,
+            "b": 22,
+            "construction": false
+          },
+          {
+            "id": "a5",
+            "type": "arc",
+            "c": 23,
+            "a": 24,
+            "b": 25,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 26,
+            "b": 27,
+            "construction": false
+          },
+          {
+            "id": "a6",
+            "type": "arc",
+            "c": 28,
+            "a": 29,
+            "b": 30,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 31,
+            "b": 32,
+            "construction": false
+          },
+          {
+            "id": "a7",
+            "type": "arc",
+            "c": 33,
+            "a": 34,
+            "b": 35,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 36,
+            "b": 37,
+            "construction": false
+          },
+          {
+            "id": "a8",
+            "type": "arc",
+            "c": 38,
+            "a": 39,
+            "b": 40,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 2,
+            "q": 4
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 5,
+            "q": 6
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 7,
+            "q": 9
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 10,
+            "q": 11
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 12,
+            "q": 14
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 15,
+            "q": 16
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 17,
+            "q": 19
+          },
+          {
+            "id": "k8",
+            "type": "coincident",
+            "p": 1,
+            "q": 20
+          },
+          {
+            "id": "k9",
+            "type": "coincident",
+            "p": 22,
+            "q": 25
+          },
+          {
+            "id": "k10",
+            "type": "coincident",
+            "p": 24,
+            "q": 26
+          },
+          {
+            "id": "k11",
+            "type": "coincident",
+            "p": 27,
+            "q": 30
+          },
+          {
+            "id": "k12",
+            "type": "coincident",
+            "p": 29,
+            "q": 31
+          },
+          {
+            "id": "k13",
+            "type": "coincident",
+            "p": 32,
+            "q": 35
+          },
+          {
+            "id": "k14",
+            "type": "coincident",
+            "p": 34,
+            "q": 36
+          },
+          {
+            "id": "k15",
+            "type": "coincident",
+            "p": 21,
+            "q": 39
+          },
+          {
+            "id": "k16",
+            "type": "coincident",
+            "p": 37,
+            "q": 40
+          }
+        ],
+        "counters": {
+          "a": 8,
+          "k": 16,
+          "l": 8
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Windows",
+      "suppressed": false,
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 3,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "negative",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "2-47 cover"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Fold1",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "sheet_fold",
+      "a": [
+        26.55,
+        -2.0,
+        0.5
+      ],
+      "b": [
+        26.55,
+        101.0,
+        0.5
+      ],
+      "angle": "90",
+      "position": "centerline",
+      "flip": true,
+      "fixed": [
+        0.0,
+        49.5,
+        0.5
+      ],
+      "body": "2-47 cover"
+    },
+    {
+      "id": 6,
+      "name": "Fold2",
+      "suppressed": false,
+      "param_names": [
+        "d3"
+      ],
+      "type": "sheet_fold",
+      "a": [
+        -26.55,
+        -2.0,
+        0.5
+      ],
+      "b": [
+        -26.55,
+        101.0,
+        0.5
+      ],
+      "angle": "90",
+      "position": "centerline",
+      "flip": true,
+      "fixed": [
+        0.0,
+        49.5,
+        0.5
+      ],
+      "body": "2-47 cover"
+    },
+    {
+      "id": 7,
+      "name": "Tab",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            -5.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              -17.321572,
+              0.49999998103028465
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              17.321572,
+              0.49999966873372065
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              17.321571927076498,
+              -11.499999915838169
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              27.77654402589302,
+              -5.609876959140112
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              17.321572,
+              0.4999996687579482
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              27.776544025915975,
+              -5.609876959124189
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              27.34092006253436,
+              -5.855298956619052
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              17.321571926941665,
+              -11.499999915759357
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              27.340920062609207,
+              -5.855298956567128
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              17.321572,
+              -5.249825842758908e-7
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.start",
+            "pos": [
+              17.321572,
+              -5.244581261486932e-7
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              -17.321572,
+              -5.944964950011224e-8
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.center",
+            "pos": [
+              -17.321571909173112,
+              -11.499999874694348
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.start",
+            "pos": [
+              -17.321572,
+              -5.947592619899866e-8
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.end",
+            "pos": [
+              -27.34092044941283,
+              -5.855298768576579
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.start",
+            "pos": [
+              -27.34092044938769,
+              -5.8552987685939515
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              -27.77654428452232,
+              -5.609876857091702
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.center",
+            "pos": [
+              -17.321571909283076,
+              -11.499999874822981
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.start",
+            "pos": [
+              -17.321572,
+              0.49999998101131493
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.end",
+            "pos": [
+              -27.776544284806842,
+              -5.609876856948794
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 3,
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 8,
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 11,
+            "b": 12,
+            "construction": false
+          },
+          {
+            "id": "a3",
+            "type": "arc",
+            "c": 13,
+            "a": 14,
+            "b": 15,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 16,
+            "b": 17,
+            "construction": false
+          },
+          {
+            "id": "a4",
+            "type": "arc",
+            "c": 18,
+            "a": 19,
+            "b": 20,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 2,
+            "q": 5
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 4,
+            "q": 6
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 3,
+            "q": 8
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 7,
+            "q": 9
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 10,
+            "q": 11
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 12,
+            "q": 14
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 15,
+            "q": 16
+          },
+          {
+            "id": "k8",
+            "type": "coincident",
+            "p": 13,
+            "q": 18
+          },
+          {
+            "id": "k9",
+            "type": "coincident",
+            "p": 1,
+            "q": 19
+          },
+          {
+            "id": "k10",
+            "type": "coincident",
+            "p": 17,
+            "q": 20
+          }
+        ],
+        "counters": {
+          "a": 4,
+          "k": 10,
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 8,
+      "name": "Tab",
+      "suppressed": false,
+      "body_names": [
+        "2-47 tab"
+      ],
+      "param_names": [
+        "d4"
+      ],
+      "type": "extrude",
+      "sketch": 7,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "5",
+        "direction": "negative"
+      },
+      "operation": "new_body"
+    }
+  ],
+  "next_id": 9,
+  "sheet": {
+    "rules": [
+      {
+        "name": "Lanz 0.5",
+        "thickness": "0.5 mm",
+        "k_factor": "0.5",
+        "bend_radius": "11.5 mm",
+        "relief_width": "Thickness",
+        "relief_depth": "Thickness * 0.5",
+        "corner_relief": "Thickness * 4.0",
+        "hem_gap": "0.01 mm",
+        "gap": "Thickness"
+      }
+    ],
+    "active": "Lanz 0.5"
+  },
+  "materials": {
+    "2-47 cover": "Brass",
+    "2-47 tab": "Brass"
+  }
+}

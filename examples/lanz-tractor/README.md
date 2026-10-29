@@ -134,6 +134,9 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 2-44 | Front lighting main beam | Brass | 1 | 863.7 | 7.3 |
 | 2-45 | Front lighting lampstand | Brass, Stainless Steel | 4 | 1,539.9 | 13.0 |
 | 2-46 | Pulling hook | Steel | 1 | 807.5 | 6.3 |
+| 2-47 | Motor side cover | Brass | 2 | 12,294.1 | 104.5 |
+| 2-48 | Motor top cover | Brass | 1 | 5,042.4 | 42.9 |
+| 2-49 | Motor side cover air cover | Steel | 1 | 596.4 | 4.7 |
 <!-- /parts -->
 
 The table is written by `gen_parts.py --build`. Masses use SolidCraft's library densities (Al 2.70,
@@ -239,6 +242,14 @@ Tapped holes are modelled at the tap drill (M4 → Ø3.3, M6 → Ø5.0); threads
   measured. **2-42**: the rim is square-edged. **2-44**: the Ø8 hole is modelled Ø7.98 (see below).
 - **2-45**: the housing's cone wall and the stainless reflector are read off the 1:1 half section;
   the stem's position (4 from the back) and length (30) are measured and dimensioned.
+- **2-47** is real sheet metal (`sheet.flange` from the flat blank with every edge feature, the
+  windows cut flat, two `sheet.fold`s; K-factor 0.5, so its inside comes to 57.6 where the end view
+  says 58). The 59.5 x 5 tab under the middle cannot be folded (its corners fall inside the bend
+  zones) and is a second solid of the same brass. **2-48**: a line 4 short of the open end in the
+  plan (119.5 of 123.5) is not explained by the views; the skirts run the full length.
+- **2-49**: the gauze (0.5 wire, 2.0 openings at 2.5, measured) is a 0.5 sheet with square holes;
+  the openings the edge cuts through are left closed, and the drawn bulge of the 3D view is not
+  modelled.
 - **1-04**: from the detail: a 20 wide, 0.5 deep valve channel across the face, with 0.5 wide,
   1 deep relief grooves along its edges; the Ø10 port countersunk 90° to Ø15 on the other face.
 - **1-05**: its thickness is not on the drawing ("refer to 1-04"): not modelled yet.
@@ -277,3 +288,9 @@ A hole exactly tangent to the inside of a tube's walls (2-44's Ø8 in a tube 8 w
 be cut; Ø7.98 can. Joining a square-section coil of more than about 2 turns to a cylinder stops
 with "lumps: contact work exceeds the limit"; 2-41's 3-turn worm thread is joined as two
 1.5-turn coils end to end, onto an unbored core that is bored afterwards.
+
+On the large 0.5 mm brass covers (2-47, 2-48) cuts go wrong without a warning: a pocket cut leaving
+a 0.5 top took the top away, and cuts across the bottom edge of the bent-up 2-47 went 1 to 1.75 too
+deep (on a 0.5 sheet the boolean's tolerance, about 0.35 mm, and its 1 mm nudge are as large as
+the wall). Interior cut-outs are right. 2-48 is therefore hollowed with `solid.shell` and 2-47
+built with the sheet-metal commands, which give the exact volumes.

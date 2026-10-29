@@ -3127,6 +3127,188 @@ def lampstand(s):
     return v + math.pi / 4 * (16 - 9) * 30 + math.pi / 4 * (49 - 16) * 1
 
 
+# ----------------------------------------------------------------------------- rounded polygons
+def fillet_polygon(pts, r):
+    """A convex counter-clockwise polygon with every corner rounded to radius r, as Script.loop()
+    arguments, plus the corner data [(corner, touch1, centre, touch2)]."""
+    corners = []
+    for i, p in enumerate(pts):
+        a, b = pts[i - 1], pts[(i + 1) % len(pts)]
+        u1 = _unit((a[0] - p[0], a[1] - p[1], 0))
+        u2 = _unit((b[0] - p[0], b[1] - p[1], 0))
+        half = math.acos(max(-1.0, min(1.0, u1[0] * u2[0] + u1[1] * u2[1]))) / 2
+        t, d = r / math.tan(half), r / math.sin(half)
+        bis = _unit((u1[0] + u2[0], u1[1] + u2[1], 0))
+        corners.append((p, (p[0] + u1[0] * t, p[1] + u1[1] * t), (p[0] + bis[0] * d, p[1] + bis[1] * d),
+                        (p[0] + u2[0] * t, p[1] + u2[1] * t)))
+    segs = []
+    for p, t1, c, t2 in corners:
+        segs += [("line", t1), ("arc", c, t2, True)]
+    return corners[-1][3], segs, corners
+
+
+def in_fillet_polygon(corners, pts, x, y):
+    """Is (x, y) inside the rounded polygon (fillet_polygon's corners of the polygon pts)?"""
+    for i, a in enumerate(pts):
+        b = pts[(i + 1) % len(pts)]
+        if (b[0] - a[0]) * (y - a[1]) - (b[1] - a[1]) * (x - a[0]) < 0:
+            return False
+    for p, t1, c, t2 in corners:
+        quad = [p, t2, c, t1]                                   # the corner's cut-off zone
+        inside = all((q[0] - o[0]) * (y - o[1]) - (q[1] - o[1]) * (x - o[0]) >= 0
+                     for o, q in zip(quad, quad[1:] + quad[:1]))
+        if inside and math.hypot(x - c[0], y - c[1]) > math.dist(c, t1):
+            return False
+    return True
+
+
+# ----------------------------------------------------------------------------- 2-47
+@part("2-47", "Motor side cover", {"cover": "Brass", "tab": "Brass"})
+def motor_side_cover(s):
+    """Sheet 05, 2-47 (flat pattern, scale 1:2; end view 1:3): 0.5 brass, a 302.2 x 99 blank with a
+    59.5 x 5 tab under the middle, bent down 90° on R11.5 (inside) at the two bend lines 53.1 apart
+    into a U. Each side: a top corner cut 30° from 13 down, an R5 notch at the edge 31 up over a
+    4 wide step to the bottom, a trapezoid window (57 top, 41 bottom, 42 high, 19 below the top,
+    34 from the bend line, R6 corners). Left side: an 8 wide slot 48 up to its R4 centre, 22.5 + 4
+    from the end; right side: an 11 wide slot 27 up to its R5.5 centre, an arch 20 wide and 22 high
+    (R8 corners) and an 11 x 2.5 notch. Unfolded with a K-factor of 0.5 (inside 57.6; the end view
+    says 58). The tab (one piece with the cover) is a second solid: neither trimming it out of the
+    sheet nor joining it on gives a correct result in SolidCraft (see the README). Flat X across, Y up
+    from the bottom edge; the middle panel's top face on Z = 0.5, the sides bent down (-Z)."""
+    n = s.body.split()[0]
+    T = s.param("msc_t", 0.5, "thickness")
+    W = s.param("msc_half", 151.1, "half the blank's width")
+    H = s.param("msc_h", 99, "height")
+    BL = s.param("msc_bends", 53.1, "between the bend lines")
+    RB = s.param("msc_r", 11.5, "bend radius, inside")
+    TW, TH = s.param("msc_tab_w", 59.5, "tab width"), s.param("msc_tab_h", 5, "tab depth")
+    ba = math.pi / 2 * (RB + T / 2)
+    fc, fs = BL / 2 - ba / 2, BL / 2 + ba / 2                   # middle panel's half width; sides start
+    side = W - fs
+    ri, ro = RB, RB + T
+    x0 = fc + ri                                                # inside face of the sides
+    zb = -RB - side
+    m = lambda p: (-p[0], p[1])
+    # sheet metal: the flat blank (every edge feature in its outline), the windows cut in the flat,
+    # then the two folds. Cutting the edge features out of a bent-up solid U goes wrong in
+    # SolidCraft (the cuts come out up to 1.75 too deep on the 0.5 sheet, see the README).
+    s.cmd("sheet.manage_rules", name="Lanz 0.5", thickness=f"{T} mm", k_factor="0.5", bend_radius=f"{RB} mm",
+          active=True)
+    t30 = math.tan(math.radians(30))
+    k = 13 * t30
+    start = (-(W - 4), 0)
+    segs = [("line", (-124.6, 0)), ("line", (-124.6, 48)), ("arc", (-120.6, 48), (-116.6, 48), False),
+            ("line", (-116.6, 0)), ("line", (82.25, 0)), ("line", (82.25, 27)), ("arc", (87.75, 27), (93.25, 27), False),
+            ("line", (93.25, 0)), ("line", (109.25, 0)), ("line", (109.25, 14)),
+            ("arc", (117.25, 14), (117.25, 22), False), ("line", (121.25, 22)), ("arc", (121.25, 14), (129.25, 14), False),
+            ("line", (129.25, 2.5)), ("line", (140.25, 2.5)), ("line", (140.25, 0)), ("line", (W - 4, 0)),
+            ("line", (W - 4, 31 - 3)), ("arc", (W, 31), (W, 36), False), ("line", (W, H - 13)), ("line", (W - k, H)),
+            ("line", (-(W - k), H)), ("line", (-W, H - 13)), ("line", (-W, 36)), ("arc", (-W, 31), (-(W - 4), 28), False),
+            ("line", start)]
+    s.sketch("Flat pattern", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(start, segs)
+    s.finish()
+    s.cmd("sheet.flange", base="Flat pattern", body_name=f"{n} cover")
+    win = [(60.55, 38), (101.55, 38), (117.55, 80), (60.55, 80)]
+    wstart, wsegs, _ = fillet_polygon(win, 6)
+    s.sketch("Windows", (0, 0, T), (1, 0, 0), (0, 1, 0))
+    for mm in (1, -1):
+        s.loop((mm * wstart[0], wstart[1]), [(sg_[0], (mm * sg_[1][0], sg_[1][1])) if sg_[0] == "line" else
+                                             (sg_[0], (mm * sg_[1][0], sg_[1][1]), (mm * sg_[2][0], sg_[2][1]),
+                                              sg_[3] if mm > 0 else not sg_[3]) for sg_ in wsegs])
+    s.finish()
+    s.cmd("solid.extrude", through_all=True, direction="negative", operation="cut", targets=[f"{n} cover"],
+          name="Windows")
+    for x in (BL / 2, -BL / 2):
+        s.cmd("sheet.fold", points=[[x, -2, T], [x, H + 2, T]], angle=90, position="centerline", flip=True,
+              fixed=[0, H / 2, T], body=f"{n} cover")
+    s.cmd("browser.visibility", visible=False, items=["Flat pattern", "Windows"])
+    # the tab: the middle panel and the bends' first phi below the bottom edge
+    phi = (TW / 2 - fc) / (RB + T / 2)
+    c = (fc, -RB)
+    po = (c[0] + ro * math.sin(phi), c[1] + ro * math.cos(phi))
+    pi_ = (c[0] + ri * math.sin(phi), c[1] + ri * math.cos(phi))
+    s.sketch("Tab", (0, -TH, 0), (1, 0, 0), (0, 0, 1))
+    tst = (-fc, T)
+    tsg = [("line", (fc, T)), ("arc", c, po, False), ("line", pi_), ("arc", c, (fc, 0), True), ("line", (-fc, 0)),
+           ("arc", m(c), m(pi_), True), ("line", m(po)), ("arc", m(c), tst, False)]
+    s.loop(tst, tsg)
+    s.finish()
+    s.cmd("solid.extrude", distance=TH, direction="negative", name="Tab", body_name=f"{n} tab")
+    s.cmd("browser.visibility", visible=False, items=["Tab"])
+    return (loop_area(start, segs) - 2 * loop_area(wstart, wsegs)) * T + loop_area(tst, tsg) * TH
+
+
+# ----------------------------------------------------------------------------- 2-48
+@part("2-48", "Motor top cover", "Brass")
+def motor_top_cover(s):
+    """Sheet 05, 2-48 (scale 1:2): a 0.5 brass tray, 123.5 x 59 with R12.5 corners at one end and a
+    skirt 14 deep (from the top) round both sides and that end; a Ø34 hole 23 from the round end
+    and a 4.5 x 45 slot across, 53 from it. The other end is open. (A line 4 short of the open end
+    in the plan, 119.5, is not explained by the views; the skirts are taken to the full length.)
+    X along from the round end, Z = 0 the top."""
+    L = s.param("mtc_l", 123.5, "length")
+    W = s.param("mtc_w", 59, "width (29.5 + 29.5)")
+    R = s.param("mtc_r", 12.5, "end corners")
+    D = s.param("mtc_skirt", 14, "skirt depth")
+    T = s.param("mtc_t", 0.5, "thickness")
+    h = W / 2
+
+    def outline(x0, x1, hh, r):
+        return (x1, -hh), [("line", (x1, hh)), ("line", (x0 + r, hh)), ("arc", (x0 + r, hh - r), (x0, hh - r), True),
+                           ("line", (x0, -hh + r)), ("arc", (x0 + r, -hh + r), (x0 + r, -hh), True), ("line", (x1, -hh))]
+    s.sketch("Outline", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    st, sg = outline(0, L, h, R)
+    s.loop(st, sg)
+    s.finish()
+    s.cmd("solid.extrude", distance=D, direction="negative", name="Tray", body_name=s.body)
+    v = loop_area(st, sg) * D
+    # hollowed with a shell (open underneath and at the square end): cutting the inside out with
+    # an extrude took the 0.5 top away as well
+    s.cmd("solid.shell", faces=[[L / 2, 0, -D], [L, 0, -D / 2]], thickness=T, direction="inside", name="Shell")
+    st2, sg2 = outline(T, L + 1, h - T, R - T)
+    v -= (loop_area(st2, sg2) - (h - T) * 2 * 1) * (D - T)
+    s.sketch("Holes", (0, 0, 1), (1, 0, 0), (0, -1, 0))                  # normal -Z
+    s.cmd("sketch.circle.center", center=[23, 0], diameter=34)
+    s.cmd("sketch.rectangle.two_point", p0=[53, -22.5], p1=[57.5, 22.5])
+    s.finish()
+    s.cmd("solid.extrude", distance=2, operation="cut", targets=[s.body], name="Holes")
+    return v - (math.pi * 17 ** 2 + 4.5 * 45) * T
+
+
+# ----------------------------------------------------------------------------- 2-49
+@part("2-49", "Motor side cover air cover", "Steel")
+def air_cover(s):
+    """Sheet 05, 2-49 (scale 1:2): a steel gauze, 0.5 thick, 69.5 wide at the top, 49.5 at the
+    bottom, 52 high, one side square and the other slanted, R11 corners. The gauze (0.5 wire, 2.0
+    openings at 2.5, measured) is modelled as a 0.5 sheet with 2 x 2 square holes at a 2.5 pitch;
+    the openings cut by the edge are left closed. X across from the square side, Y up."""
+    T = s.param("ac_t", 0.5, "thickness")
+    WT = s.param("ac_top", 69.5, "top width")
+    WB = s.param("ac_bottom", 49.5, "bottom width")
+    H = s.param("ac_h", 52, "height")
+    P, O = 2.5, 2.0
+    pts = [(0, 0), (WB, 0), (WT, H), (0, H)]
+    st, sg, corners = fillet_polygon(pts, 11)
+    s.sketch("Gauze", (0, 0, 0), (1, 0, 0), (0, 1, 0))
+    s.loop(st, sg)
+    s.finish()
+    s.cmd("solid.extrude", distance=T, name="Gauze", body_name=s.body)
+    holes = []
+    for i in range(int(WT / P) + 1):
+        for j in range(int(H / P) + 1):
+            x0, y1 = 0.5 + i * P, H - 0.5 - j * P
+            sq = [(x0, y1 - O), (x0 + O, y1 - O), (x0 + O, y1), (x0, y1)]
+            if all(in_fillet_polygon(corners, pts, x, y) for x, y in sq):
+                holes.append(sq)
+    s.sketch("Openings", (0, 0, -1), (1, 0, 0), (0, 1, 0))
+    for sq in holes:
+        s.polyline(sq)
+    s.finish()
+    s.cmd("solid.extrude", distance=T + 2, operation="cut", targets=[s.body], name="Openings")
+    return (loop_area(st, sg) - len(holes) * O * O) * T
+
+
 # ----------------------------------------------------------------------------- driver
 def write(number):
     name, material, fn = PARTS[number]
