@@ -182,6 +182,21 @@ def front_axle_yoke(a):
     a.place("2-22", frame((-1, 0, 0), (0, 0, -1), (0, -1, 0)), (-57.5, 4, 0), "on 2-20's front face, holes at X -64.5 / -78.5")
 
 
+# ----------------------------------------------------------------------------- SA-1-110
+@assembly("SA-1-110", "Exhaust stack")
+def exhaust_stack(a):
+    """The exhaust stack (sheet 08's SA-1-110) on its axis Z, the bracket's base on Z 0:
+    - the base ring 1-37's Ø33 x 7 counterbore goes over the bracket 1-36's Ø33 x 7 band (Z 31 to
+      38), its Ø3 holes 3.5 up on the bracket's M3 holes 3.5 below the band's top;
+    - the stack 1-38's Ø33 flange sits on the ring's Ø33 cone top (Z 47), its Ø24 bore continuing
+      the bracket's Ø24 bore;
+    - the top ring 1-39's 4 deep Ø19 bore goes over the stack's Ø19 x 4 top band (Z 143)."""
+    a.place("1-36", note="base on Z 0")
+    a.place("1-37", I3, (0, 0, 31), "counterbore over the bracket's band")
+    a.place("1-38", I3, (0, 0, 47), "flange on the ring's cone top")
+    a.place("1-39", I3, (0, 0, 143), "over the stack's top band")
+
+
 # ----------------------------------------------------------------------------- driver
 def write(name):
     title, fn = ASSEMBLIES[name]
