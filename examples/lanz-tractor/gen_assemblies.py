@@ -157,6 +157,31 @@ def front_wheel(a):
     a.place("2-32", I3, (0, 0, 11.8), "on the Ø62 floor")
 
 
+# ----------------------------------------------------------------------------- SA-2-202
+@assembly("SA-2-202", "Front axle yoke")
+def front_axle_yoke(a):
+    """The front axle yoke (sheet 09's SA-2-202): X across the tractor, Y forward, Z up. The arms
+    stand upright, 2-20 in front with its rear face on Y = 0, 2-18 behind with its front face on
+    Y = -118.5 (the tie rods' Ø5 length). The fits that place them:
+    - the tie rods 2-19 run through both arms' Ø3 holes at X ±47 (2-20's hole line on Z = 0,
+      2-18's 10 below its Ø12), their M3 ends 7 long through the 4 thick arms;
+    - both arms' Ø12 holes are then on one axis (Z 10), and the bearings 2-21 sit in them, the
+      bushes' 4.1 spigots in the 4 thick arms, flanges and pin heads outside;
+    - the hinge brackets 2-22 lie on 2-20's front face, their M4 and M3 holes (14 apart) on its Ø4
+      at 64.5 and Ø3 at 78.5, the eyes vertical beyond the arm's ends (that they are on the front
+      face, not the back, is read from sheet 09's 3D view, which does not show it clearly)."""
+    up_front = frame((1, 0, 0), (0, 0, 1), (0, -1, 0))  # part X across, part Y up, part Z backward
+    a.place("2-20", up_front, (0, 4, 0), "front arm: rear face on Y = 0, hole line on Z = 0")
+    a.place("2-18", up_front, (0, -118.5, 10), "rear arm: front face on Y = -118.5, its holes on Z = 0")
+    rod = frame((1, 0, 0), (0, 0, 1), (0, -1, 0))
+    for x in (-47, 47):
+        a.place("2-19", rod, (x, 7, 0), "Ø5 between the arms, M3 ends through them")
+    a.place("2-21", up_front, (0, 11, 10), "bush in 2-20's Ø12, flange on its front face")
+    a.place("2-21", frame((1, 0, 0), (0, 0, -1), (0, 1, 0)), (0, -129.5, 10), "bush in 2-18's Ø12, flange behind")
+    a.place("2-22", frame((1, 0, 0), (0, 0, 1), (0, -1, 0)), (57.5, 4, 0), "on 2-20's front face, holes at X 64.5 / 78.5")
+    a.place("2-22", frame((-1, 0, 0), (0, 0, -1), (0, -1, 0)), (-57.5, 4, 0), "on 2-20's front face, holes at X -64.5 / -78.5")
+
+
 # ----------------------------------------------------------------------------- driver
 def write(name):
     title, fn = ASSEMBLIES[name]
