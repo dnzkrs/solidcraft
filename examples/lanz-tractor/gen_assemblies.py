@@ -141,6 +141,22 @@ def rear_axle(a):
     a.place("3-17", FLIP_X, (0, 0, 133.5), "spigot in 3-14's Ø8 bore")
 
 
+# ----------------------------------------------------------------------------- SA-2-206
+@assembly("SA-2-206", "Front wheel")
+def front_wheel(a):
+    """The front wheel (sheet 09's SA-2-206) with its bearing and axle. The rim's hub face is Z 0, the
+    web toward +Z. The hub cap 2-33's Ø16 spigot (1 high) fills the top of the rim's 9 deep Ø16
+    counterbore, which leaves 8 for the bearing 2-29 (8 wide) against the Ø14 step at Z 9; the
+    wheel axle 2-28's Ø6 x 8 fills the bearing, its Ø8 head in the cap's Ø14 recess and its Ø5
+    and M4 end out through the web. The cap's Ø3 holes are on the rim's M3 holes (Ø24 PCD); the
+    tyre sits on the rim's Ø62 floor."""
+    a.place("2-31", note="base: hub face at Z 0")
+    a.place("2-33", matmul(rot_z(45), FLIP_X), (0, 0, 1), "spigot in the Ø16 counterbore, flange on the hub face")
+    a.place("2-29", I3, (0, 0, 1), "in the counterbore under the cap's spigot, against the Ø14 step")
+    a.place("2-28", I3, (0, 0, -1), "Ø6 x 8 in the bearing, head in the cap's recess")
+    a.place("2-32", I3, (0, 0, 11.8), "on the Ø62 floor")
+
+
 # ----------------------------------------------------------------------------- driver
 def write(name):
     title, fn = ASSEMBLIES[name]
