@@ -241,6 +241,40 @@ def engine_block(a):
     a.place("SA-1-102", I3, (-4.5, 0, 92), "stud in the cylinder's oiler hole, collar on the flange", sub=True)
 
 
+# ----------------------------------------------------------------------------- SA-1-103, SA-1-104, SA-1-105
+@assembly("SA-1-103", "Flywheel with drive pulley")
+def flywheel_pulley(a):
+    """A flywheel on its hub (sheet 08's SA-1-103), in the hub's axes (Z 0 its threaded end): the
+    flywheel 1-21's 6 thick web (Ø16 bore) on the hub 1-20's Ø16 thread against its collar (Z 13.5
+    to 19.5), and the drive pulley 1-15 screwed on against the web, boss first."""
+    a.place("1-20", note="base: threaded end on Z 0, collar from Z 19.5")
+    a.place("1-21", I3, (0, 0, 7), "web on the thread against the collar")
+    a.place("1-15", FLIP_X, (0, 0, 13.5), "screwed on against the web, boss first")
+
+
+@assembly("SA-1-104", "Flywheel with cam plate")
+def flywheel_cam(a):
+    """A flywheel on its hub with the cam plate (sheet 08's SA-1-104), in the hub's axes: the
+    flywheel as on SA-1-103, the cam plate 1-17 screwed on against its web, and the lock nut 1-18
+    whose Ø19 collar enters the cam's Ø19 counterbore (2.5 deep) and stops on its floor."""
+    a.place("1-20", note="base: threaded end on Z 0, collar from Z 19.5")
+    a.place("1-21", I3, (0, 0, 7), "web on the thread against the collar")
+    a.place("1-17", FLIP_X, (0, 0, 13.5), "against the web, its counterbore outward")
+    a.place("1-18", I3, (0, 0, 3), "collar in the cam's counterbore, on its floor (Z 11)")
+
+
+@assembly("SA-1-105", "Crankshaft and flywheels")
+def crankshaft(a):
+    """The crankshaft with both flywheels, in the engine block's axes (SA-1-101): the crank axis is Y
+    at X 68, Z 70, the crankpin toward the cylinder (top dead centre). Each hub's collar is 2 clear
+    of the cheek (Y ±30), which puts the hub's M6 grub screw exactly on the left shaft's Ø4 cross
+    hole (Y -38) on the -Y side. Which side carries the cam plate and which the drive pulley is
+    not clear on the drawings: the cam plate is taken on +Y."""
+    a.place("1-14", frame((-1, 0, 0), (0, 0, 1), (0, 1, 0)), (68, 0, 70), "journals in the 1-06 bearings")
+    a.place("SA-1-104", frame((1, 0, 0), (0, 0, 1), (0, -1, 0)), (68, 64.5, 70), "hub collar at Y 30", sub=True)
+    a.place("SA-1-103", frame((1, 0, 0), (0, 0, -1), (0, 1, 0)), (68, -64.5, 70), "hub collar at Y -30, grub on the cross hole", sub=True)
+
+
 # ----------------------------------------------------------------------------- driver
 def write(name):
     title, fn = ASSEMBLIES[name]
