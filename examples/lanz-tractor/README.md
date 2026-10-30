@@ -140,7 +140,7 @@ How the parts were made, step by step, with the problems met on the way: [activi
 | 3-01 | Chassis rear end | Aluminum | 1 | 85,739.4 | 231.5 |
 | 3-02 | Rear axle support bracket | Aluminum | 1 | 18,343.9 | 49.5 |
 | 3-03 | Differential housing part-1 | Steel | 1 | 10,134.7 | 79.6 |
-| 3-04 | Differential housing part-2 | Steel | 1 | 20,630.1 | 161.9 |
+| 3-04 | Differential housing part-2 | Steel | 1 | 20,573.4 | 161.5 |
 | 3-05 | Rear axle main bearing housing part-1 | Aluminum | 1 | 7,312.4 | 19.7 |
 | 3-06 | Rear axle main bearing housing part-2 | Aluminum | 1 | 12,653.9 | 34.2 |
 | 3-07 | Rear axle main housing ball bearing-1 | Steel | 1 | 6,715.0 | 52.7 |
