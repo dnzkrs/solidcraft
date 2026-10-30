@@ -1,0 +1,429 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "acb_t",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "acb_w",
+    "expression": "12",
+    "unit": "mm",
+    "comment": "plate along X (6 + 6)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "acb_d",
+    "expression": "13",
+    "unit": "mm",
+    "comment": "plate across (6.5 + 6.5)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "acb_neck",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "neck and tab width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "acb_twist_end",
+    "expression": "22",
+    "unit": "mm",
+    "comment": "twist ends (measured)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "acb_hole_x",
+    "expression": "27",
+    "unit": "mm",
+    "comment": "M3 from the \u00d85"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -1.0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Plate"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -6.0,
+     -6.5
+    ],
+    "p1": [
+     6.0,
+     6.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "name": "Plate",
+    "body_name": "2-24 Wheel pivot axle connector bracket"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      5.0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0,
+      1,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Neck start"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -4.1875,
+     -0.8125
+    ],
+    "p1": [
+     4.1875,
+     0.8125
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      22,
+      0,
+      0
+     ],
+     "x_dir": [
+      0,
+      1,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Neck end"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -1.0,
+     -4.0
+    ],
+    "p1": [
+     1.0,
+     4.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.loft",
+   "params": {
+    "sections": [
+     {
+      "sketch": "Neck start"
+     },
+     {
+      "sketch": "Neck end"
+     }
+    ],
+    "operation": "join",
+    "targets": [
+     "2-24 Wheel pivot axle connector bracket"
+    ],
+    "name": "Twist"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      1.0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Tab"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     22,
+     -4.0
+    ],
+    "p1": [
+     31.0,
+     4.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "operation": "join",
+    "targets": [
+     "2-24 Wheel pivot axle connector bracket"
+    ],
+    "name": "Tab"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      2,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Tab end"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     27,
+     -5.0
+    ],
+    "p1": [
+     32.0,
+     5.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     27,
+     0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 4,
+    "operation": "cut",
+    "targets": [
+     "2-24 Wheel pivot axle connector bracket"
+    ],
+    "profiles": [
+     {
+      "point": [
+       31.5,
+       0
+      ]
+     }
+    ],
+    "name": "Tab end round"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      1.0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "\u00d85"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-24 Wheel pivot axle connector bracket"
+    ],
+    "name": "\u00d85"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      1.0,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      -0.0,
+      -0.0,
+      -1.0
+     ]
+    },
+    "name": "M3 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -27.0,
+     0.0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-24 Wheel pivot axle connector bracket"
+    ],
+    "name": "M3 tapped"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-24 Wheel pivot axle connector bracket"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

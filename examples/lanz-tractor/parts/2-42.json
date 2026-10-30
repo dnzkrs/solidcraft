@@ -1,0 +1,325 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sw_rim_od",
+    "expression": "64",
+    "unit": "mm",
+    "comment": "rim"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sw_rim_id",
+    "expression": "54",
+    "unit": "mm",
+    "comment": "rim inside"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sw_rim_t",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "rim thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sw_hub_d",
+    "expression": "13.5",
+    "unit": "mm",
+    "comment": "hub"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sw_hub_l",
+    "expression": "15",
+    "unit": "mm",
+    "comment": "hub length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sw_spoke_d",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "spokes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Hub section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2,
+      0
+     ],
+     [
+      6.75,
+      0
+     ],
+     [
+      6.75,
+      15
+     ],
+     [
+      2,
+      15
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Hub",
+    "body_name": "2-42 Steering wheel"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 3,
+    "height": 22.0,
+    "base": [
+     6.0,
+     0.0,
+     3.0
+    ],
+    "axis": [
+     1.0,
+     0.0,
+     0
+    ],
+    "operation": "join",
+    "targets": [
+     "2-42 Steering wheel"
+    ],
+    "name": "Spoke"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 3,
+    "height": 22.0,
+    "base": [
+     0.0,
+     6.0,
+     3.0
+    ],
+    "axis": [
+     0.0,
+     1.0,
+     0
+    ],
+    "operation": "join",
+    "targets": [
+     "2-42 Steering wheel"
+    ],
+    "name": "Spoke"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 3,
+    "height": 22.0,
+    "base": [
+     -6.0,
+     0.0,
+     3.0
+    ],
+    "axis": [
+     -1.0,
+     0.0,
+     0
+    ],
+    "operation": "join",
+    "targets": [
+     "2-42 Steering wheel"
+    ],
+    "name": "Spoke"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 3,
+    "height": 22.0,
+    "base": [
+     -0.0,
+     -6.0,
+     3.0
+    ],
+    "axis": [
+     -0.0,
+     -1.0,
+     0
+    ],
+    "operation": "join",
+    "targets": [
+     "2-42 Steering wheel"
+    ],
+    "name": "Spoke"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Rim section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      27.0,
+      0
+     ],
+     [
+      32.0,
+      0
+     ],
+     [
+      32.0,
+      6
+     ],
+     [
+      27.0,
+      6
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "join",
+    "name": "Rim",
+    "targets": [
+     "2-42 Steering wheel"
+    ]
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -10,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "\u00d82 cross hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -10.0
+    ],
+    "diameter": 2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-42 Steering wheel"
+    ],
+    "name": "\u00d82 cross hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-42 Steering wheel"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

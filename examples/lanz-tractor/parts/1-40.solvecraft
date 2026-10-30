@@ -1,0 +1,1465 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "fp_t",
+      "expr": "1.5",
+      "unit": "mm",
+      "comment": "thickness",
+      "model": false
+    },
+    {
+      "name": "fp_fold_x",
+      "expr": "9.8",
+      "unit": "mm",
+      "comment": "fold line",
+      "model": false
+    },
+    {
+      "name": "fp_angle",
+      "expr": "78",
+      "unit": "deg",
+      "comment": "angle between the legs",
+      "model": false
+    },
+    {
+      "name": "fp_r",
+      "expr": "28",
+      "unit": "mm",
+      "comment": "end radius (about the R22 hole circle's centre)",
+      "model": false
+    },
+    {
+      "name": "fp_perf_d",
+      "expr": "3.5",
+      "unit": "mm",
+      "comment": "perforations",
+      "model": false
+    },
+    {
+      "name": "fp_pitch",
+      "expr": "6",
+      "unit": "mm",
+      "comment": "perforation pitch",
+      "model": false
+    },
+    {
+      "name": "fp_hole_d",
+      "expr": "4",
+      "unit": "mm",
+      "comment": "holes on R22 at 45 deg",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Bent section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            24.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              -20.3,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              11.652346,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              7.483229,
+              19.614154
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              6.016007,
+              19.302286
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              9.8,
+              1.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              -20.3,
+              1.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 6
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Bent strip",
+      "suppressed": false,
+      "body_names": [
+        "1-40 LH-flame protector"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "50",
+        "direction": "positive"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 3,
+      "name": "Perforations",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            1.5
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              16.3,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              10.3,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c3.center",
+            "pos": [
+              4.3,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c4.center",
+            "pos": [
+              -1.7,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c5.center",
+            "pos": [
+              -7.7,
+              7.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c6.center",
+            "pos": [
+              16.3,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c7.center",
+            "pos": [
+              10.3,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c8.center",
+            "pos": [
+              4.3,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c9.center",
+            "pos": [
+              -1.7,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c10.center",
+            "pos": [
+              -7.7,
+              1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c11.center",
+            "pos": [
+              16.3,
+              -5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c12.center",
+            "pos": [
+              10.3,
+              -5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c13.center",
+            "pos": [
+              4.3,
+              -5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c14.center",
+            "pos": [
+              -1.7,
+              -5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c15.center",
+            "pos": [
+              -7.7,
+              -5.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c16.center",
+            "pos": [
+              16.3,
+              -11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c17.center",
+            "pos": [
+              10.3,
+              -11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c18.center",
+            "pos": [
+              4.3,
+              -11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c19.center",
+            "pos": [
+              -1.7,
+              -11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c20.center",
+            "pos": [
+              -7.7,
+              -11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c21.center",
+            "pos": [
+              10.3,
+              -17.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c22.center",
+            "pos": [
+              4.3,
+              -17.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c23.center",
+            "pos": [
+              -1.7,
+              -17.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c24.center",
+            "pos": [
+              -7.7,
+              -17.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c25.center",
+            "pos": [
+              -1.7,
+              -23.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c26.center",
+            "pos": [
+              -7.7,
+              -23.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c3",
+            "type": "circle",
+            "c": 3,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c4",
+            "type": "circle",
+            "c": 4,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c5",
+            "type": "circle",
+            "c": 5,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c6",
+            "type": "circle",
+            "c": 6,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c7",
+            "type": "circle",
+            "c": 7,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c8",
+            "type": "circle",
+            "c": 8,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c9",
+            "type": "circle",
+            "c": 9,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c10",
+            "type": "circle",
+            "c": 10,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c11",
+            "type": "circle",
+            "c": 11,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c12",
+            "type": "circle",
+            "c": 12,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c13",
+            "type": "circle",
+            "c": 13,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c14",
+            "type": "circle",
+            "c": 14,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c15",
+            "type": "circle",
+            "c": 15,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c16",
+            "type": "circle",
+            "c": 16,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c17",
+            "type": "circle",
+            "c": 17,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c18",
+            "type": "circle",
+            "c": 18,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c19",
+            "type": "circle",
+            "c": 19,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c20",
+            "type": "circle",
+            "c": 20,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c21",
+            "type": "circle",
+            "c": 21,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c22",
+            "type": "circle",
+            "c": 22,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c23",
+            "type": "circle",
+            "c": 23,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c24",
+            "type": "circle",
+            "c": 24,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c25",
+            "type": "circle",
+            "c": 25,
+            "r": 1.75,
+            "construction": false
+          },
+          {
+            "id": "c26",
+            "type": "circle",
+            "c": 26,
+            "r": 1.75,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 26
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Perforations",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "extrude",
+      "sketch": 3,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "1-40 LH-flame protector"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Trim top left",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            1.5
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              21.0,
+              8.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              20.3,
+              8.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              6.8,
+              11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              6.8,
+              25.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              21.0,
+              25.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 5
+        }
+      }
+    },
+    {
+      "id": 6,
+      "name": "Trim top left",
+      "suppressed": false,
+      "param_names": [
+        "d3"
+      ],
+      "type": "extrude",
+      "sketch": 5,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "1.5",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-40 LH-flame protector"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Trim notch",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            1.5
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              -3.2,
+              11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              -9.8,
+              11.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              -9.8,
+              25.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              -3.2,
+              25.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 8,
+      "name": "Trim notch",
+      "suppressed": false,
+      "param_names": [
+        "d4"
+      ],
+      "type": "extrude",
+      "sketch": 7,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "1.5",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-40 LH-flame protector"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Trim bottom left",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            1.5
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              21.0,
+              -15.4
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              20.3,
+              -15.4
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              -3.7,
+              -26.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              -3.7,
+              -27.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              21.0,
+              -27.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 5
+        }
+      }
+    },
+    {
+      "id": 10,
+      "name": "Trim bottom left",
+      "suppressed": false,
+      "param_names": [
+        "d5"
+      ],
+      "type": "extrude",
+      "sketch": 9,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "1.5",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-40 LH-flame protector"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Trim beside the tab",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            25.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              9.8,
+              1.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              11.267221,
+              1.811868
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              11.890956,
+              -1.122575
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              8.8,
+              -1.122575
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              8.8,
+              1.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 5
+        }
+      }
+    },
+    {
+      "id": 12,
+      "name": "Trim beside the tab",
+      "suppressed": false,
+      "param_names": [
+        "d6"
+      ],
+      "type": "extrude",
+      "sketch": 11,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "14",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-40 LH-flame protector"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Trim R28",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            9.8,
+            0.0,
+            1.5
+          ],
+          "x_dir": [
+            -0.20791169081775934,
+            0.0,
+            0.9781476007338057
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              0.3,
+              -30.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              19.2,
+              -30.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              19.2,
+              30.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              0.3,
+              30.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              -9.8,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          },
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 5,
+            "r": 28.0,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1,
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 14,
+      "name": "Trim R28",
+      "suppressed": false,
+      "param_names": [
+        "d7"
+      ],
+      "type": "extrude",
+      "sketch": 13,
+      "profiles": {
+        "type": "curves",
+        "loops": [
+          [
+            "l1",
+            "l2",
+            "l3",
+            "l4",
+            "c1",
+            "l4"
+          ]
+        ]
+      },
+      "extent": {
+        "distance": "2.5",
+        "direction": "negative"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-40 LH-flame protector"
+      ]
+    },
+    {
+      "id": 15,
+      "name": "Holes",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            9.8,
+            0.0,
+            1.5
+          ],
+          "x_dir": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "y_dir": [
+            0.20791169081775934,
+            0.0,
+            -0.9781476007338057
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              -15.556349,
+              -5.756349
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              15.556349,
+              -5.756349
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 2.0,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 2,
+            "r": 2.0,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 2
+        }
+      }
+    },
+    {
+      "id": 16,
+      "name": "Holes",
+      "suppressed": false,
+      "param_names": [
+        "d8"
+      ],
+      "type": "extrude",
+      "sketch": 15,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "1-40 LH-flame protector"
+      ]
+    }
+  ],
+  "next_id": 17,
+  "materials": {
+    "1-40 LH-flame protector": "Brass"
+  }
+}

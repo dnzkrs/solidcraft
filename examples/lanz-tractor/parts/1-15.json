@@ -1,0 +1,226 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pul_boss_d",
+    "expression": "24",
+    "unit": "mm",
+    "comment": "boss"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pul_boss_l",
+    "expression": "6.5",
+    "unit": "mm",
+    "comment": "boss length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pul_d",
+    "expression": "26",
+    "unit": "mm",
+    "comment": "flange diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pul_flange_t",
+    "expression": "1",
+    "unit": "mm",
+    "comment": "flange thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pul_groove_top",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "groove width between the flanges"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pul_groove_bottom",
+    "expression": "2.5",
+    "unit": "mm",
+    "comment": "groove bottom width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pul_groove_d",
+    "expression": "20",
+    "unit": "mm",
+    "comment": "groove bottom diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pul_tap_d",
+    "expression": "14",
+    "unit": "mm",
+    "comment": "M16 (tap drill \u00d814)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pul_grub_z",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "M4 grub screw position"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Pulley section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      7.0,
+      0
+     ],
+     [
+      12.0,
+      0
+     ],
+     [
+      12.0,
+      6.5
+     ],
+     [
+      13.0,
+      6.5
+     ],
+     [
+      13.0,
+      7.5
+     ],
+     [
+      10.0,
+      8.25
+     ],
+     [
+      10.0,
+      10.75
+     ],
+     [
+      13.0,
+      11.5
+     ],
+     [
+      13.0,
+      12.5
+     ],
+     [
+      7.0,
+      12.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Pulley",
+    "body_name": "1-15 Motor crank shaft drive pulley"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      12.0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "M4 grub tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -4.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 6.0,
+    "operation": "cut",
+    "targets": [
+     "1-15 Motor crank shaft drive pulley"
+    ],
+    "name": "M4 grub tapped"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-15 Motor crank shaft drive pulley"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

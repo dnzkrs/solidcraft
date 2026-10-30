@@ -1,0 +1,141 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Link"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      1.65,
+      -5.768665
+     ],
+     [
+      10.89375,
+      -3.124694
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     10,
+     0
+    ],
+    "start": [
+     10.89375,
+     -3.124694
+    ],
+    "end": [
+     10.89375,
+     3.124694
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.89375,
+      3.124694
+     ],
+     [
+      1.65,
+      5.768665
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     1.65,
+     5.768665
+    ],
+    "end": [
+     1.65,
+     -5.768665
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     10,
+     0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1.5,
+    "profiles": [
+     {
+      "point": [
+       5.0,
+       0
+      ]
+     }
+    ],
+    "operation": "new",
+    "name": "Link",
+    "body_name": "3-27G Hand brake release crank"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-27G Hand brake release crank"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

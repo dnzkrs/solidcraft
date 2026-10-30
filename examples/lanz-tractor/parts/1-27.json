@@ -1,0 +1,173 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rs_d",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "shaft"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rs_l",
+    "expression": "60",
+    "unit": "mm",
+    "comment": "\u00d86 length (30 + 30)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rs_end_d",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "M4 ends, at the major diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rs_end_l",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "end length"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Shaft section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      2.0,
+      0
+     ],
+     [
+      2.0,
+      10
+     ],
+     [
+      3.0,
+      10
+     ],
+     [
+      3.0,
+      70
+     ],
+     [
+      2.0,
+      70
+     ],
+     [
+      2.0,
+      80
+     ],
+     [
+      0,
+      80
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Shaft",
+    "body_name": "1-27 Motor valve rocking shaft"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      3.0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "M4 tapped cross hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -40.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-27 Motor valve rocking shaft"
+    ],
+    "name": "M4 tapped cross hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-27 Motor valve rocking shaft"
+    ],
+    "material": "Stainless Steel"
+   }
+  }
+ ]
+}

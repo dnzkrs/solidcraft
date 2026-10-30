@@ -1,0 +1,494 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gab_t",
+    "expression": "1",
+    "unit": "mm",
+    "comment": "sheet thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gab_l",
+    "expression": "42",
+    "unit": "mm",
+    "comment": "length outside"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gab_w",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gab_wall",
+    "expression": "18",
+    "unit": "mm",
+    "comment": "wall height above the base"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gab_ear_r",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "ear radius (\u00d84 holes at its centre)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "U section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      42,
+      0
+     ],
+     [
+      42,
+      19
+     ],
+     [
+      41,
+      19
+     ],
+     [
+      41,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      19
+     ],
+     [
+      0,
+      19
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 5.0,
+    "direction": "symmetric",
+    "name": "U",
+    "body_name": "2-10 Fuel tank gear wheel axle bracket"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -1,
+      0,
+      0
+     ],
+     "x_dir": [
+      0,
+      1,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Ear rounding"
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     14
+    ],
+    "start": [
+     5,
+     14
+    ],
+    "end": [
+     0,
+     19
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      19
+     ],
+     [
+      0,
+      20
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      20
+     ],
+     [
+      6,
+      20
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      6,
+      20
+     ],
+     [
+      6,
+      14
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      6,
+      14
+     ],
+     [
+      5,
+      14
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     14
+    ],
+    "start": [
+     0,
+     19
+    ],
+    "end": [
+     -5,
+     14
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      19
+     ],
+     [
+      0,
+      20
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      20
+     ],
+     [
+      -6,
+      20
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -6,
+      20
+     ],
+     [
+      -6,
+      14
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -6,
+      14
+     ],
+     [
+      -5,
+      14
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-10 Fuel tank gear wheel axle bracket"
+    ],
+    "name": "Ear rounding"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -1,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Ear holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -14.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-10 Fuel tank gear wheel axle bracket"
+    ],
+    "name": "Ear holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -7
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Block"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5,
+      -5.0
+     ],
+     [
+      39,
+      -5.0
+     ],
+     [
+      39,
+      5.0
+     ],
+     [
+      5,
+      5.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 7.5,
+    "operation": "join",
+    "targets": [
+     "2-10 Fuel tank gear wheel axle bracket"
+    ],
+    "name": "Block"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -7
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Screw holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     10.0,
+     0.0
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     30.0,
+     0.0
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 8.5,
+    "operation": "cut",
+    "targets": [
+     "2-10 Fuel tank gear wheel axle bracket"
+    ],
+    "name": "Screw holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-10 Fuel tank gear wheel axle bracket"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

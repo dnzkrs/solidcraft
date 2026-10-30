@@ -1,0 +1,269 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "mtc_l",
+    "expression": "123.5",
+    "unit": "mm",
+    "comment": "length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "mtc_w",
+    "expression": "59",
+    "unit": "mm",
+    "comment": "width (29.5 + 29.5)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "mtc_r",
+    "expression": "12.5",
+    "unit": "mm",
+    "comment": "end corners"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "mtc_skirt",
+    "expression": "14",
+    "unit": "mm",
+    "comment": "skirt depth"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "mtc_t",
+    "expression": "0.5",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Outline"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      123.5,
+      -29.5
+     ],
+     [
+      123.5,
+      29.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      123.5,
+      29.5
+     ],
+     [
+      12.5,
+      29.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     12.5,
+     17.0
+    ],
+    "start": [
+     12.5,
+     29.5
+    ],
+    "end": [
+     0,
+     17.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      17.0
+     ],
+     [
+      0,
+      -17.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     12.5,
+     -17.0
+    ],
+    "start": [
+     0,
+     -17.0
+    ],
+    "end": [
+     12.5,
+     -29.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12.5,
+      -29.5
+     ],
+     [
+      123.5,
+      -29.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 14,
+    "direction": "negative",
+    "name": "Tray",
+    "body_name": "2-48 Motor top cover"
+   }
+  },
+  {
+   "command": "solid.shell",
+   "params": {
+    "faces": [
+     [
+      61.75,
+      0,
+      -14
+     ],
+     [
+      123.5,
+      0,
+      -7.0
+     ]
+    ],
+    "thickness": 0.5,
+    "direction": "inside",
+    "name": "Shell"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      1
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      -1,
+      0
+     ]
+    },
+    "name": "Holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     23,
+     0
+    ],
+    "diameter": 34
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     53,
+     -22.5
+    ],
+    "p1": [
+     57.5,
+     22.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "operation": "cut",
+    "targets": [
+     "2-48 Motor top cover"
+    ],
+    "name": "Holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-48 Motor top cover"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

@@ -1,0 +1,117 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "vb_flange_d",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "flange"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "vb_flange_t",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "flange thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "vb_d",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "spigot"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "vb_l",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "spigot length"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Bush section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      1.65,
+      0
+     ],
+     [
+      5.0,
+      0
+     ],
+     [
+      5.0,
+      3
+     ],
+     [
+      2.5,
+      3
+     ],
+     [
+      2.5,
+      9
+     ],
+     [
+      1.65,
+      9
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Bush",
+    "body_name": "1-30 Motor valve rod valve holder"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-30 Motor valve rod valve holder"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

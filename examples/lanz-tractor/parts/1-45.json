@@ -1,0 +1,323 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gp_t",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gp_r_top",
+    "expression": "22",
+    "unit": "mm",
+    "comment": "top arc radius"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gp_r_bottom",
+    "expression": "7",
+    "unit": "mm",
+    "comment": "bottom round radius"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gp_bottom_y",
+    "expression": "4.5",
+    "unit": "mm",
+    "comment": "bottom round centre below the pivot"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gp_r_corner",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "corner radius"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gp_flank",
+    "expression": "30",
+    "unit": "deg",
+    "comment": "flank angle to the centre line"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gp_slot_r",
+    "expression": "18",
+    "unit": "mm",
+    "comment": "slot centre radius"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gp_slot_w",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "slot width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gp_slot_a",
+    "expression": "30",
+    "unit": "deg",
+    "comment": "slot half angle"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Plate"
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     -4.5
+    ],
+    "start": [
+     -6.062178,
+     -8.0
+    ],
+    "end": [
+     6.062178,
+     -8.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      6.062178,
+      -8.0
+     ],
+     [
+      16.982043,
+      10.913762
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     14.383967,
+     12.413762
+    ],
+    "start": [
+     16.982043,
+     10.913762
+    ],
+    "end": [
+     16.65512,
+     14.37383
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     16.65512,
+     14.37383
+    ],
+    "end": [
+     -16.65512,
+     14.37383
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -14.383967,
+     12.413762
+    ],
+    "start": [
+     -16.65512,
+     14.37383
+    ],
+    "end": [
+     -16.982043,
+     10.913762
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -16.982043,
+      10.913762
+     ],
+     [
+      -6.062178,
+      -8.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     8.0,
+     13.856406
+    ],
+    "end": [
+     -8.0,
+     13.856406
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     9.0,
+     15.588457
+    ],
+    "start": [
+     8.0,
+     13.856406
+    ],
+    "end": [
+     10.0,
+     17.320508
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     10.0,
+     17.320508
+    ],
+    "end": [
+     -10.0,
+     17.320508
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -9.0,
+     15.588457
+    ],
+    "start": [
+     -10.0,
+     17.320508
+    ],
+    "end": [
+     -8.0,
+     13.856406
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     -4.5
+    ],
+    "diameter": 2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "profiles": [
+     {
+      "point": [
+       0,
+       10
+      ]
+     }
+    ],
+    "name": "Plate",
+    "body_name": "1-45 Accelerator lever-1 guide plate"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-45 Accelerator lever-1 guide plate"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

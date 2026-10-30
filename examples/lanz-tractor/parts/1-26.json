@@ -1,0 +1,126 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rb_flange_d",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "flange"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rb_flange_t",
+    "expression": "1.5",
+    "unit": "mm",
+    "comment": "flange thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rb_d",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "body"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rb_l",
+    "expression": "12",
+    "unit": "mm",
+    "comment": "body length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rb_bore",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "bore (1-27 shaft)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Bush section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      0
+     ],
+     [
+      5.0,
+      0
+     ],
+     [
+      5.0,
+      1.5
+     ],
+     [
+      4.0,
+      1.5
+     ],
+     [
+      4.0,
+      13.5
+     ],
+     [
+      3.0,
+      13.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Bush",
+    "body_name": "1-26 Motor valve rocking shaft bearing"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-26 Motor valve rocking shaft bearing"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

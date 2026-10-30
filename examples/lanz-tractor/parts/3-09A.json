@@ -1,0 +1,108 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ra_l",
+    "expression": "67",
+    "unit": "mm",
+    "comment": "\u00d88 length"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Axle section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      4.0,
+      0
+     ],
+     [
+      4.0,
+      67
+     ],
+     [
+      3.0,
+      67
+     ],
+     [
+      3.0,
+      80
+     ],
+     [
+      0,
+      80
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Axle",
+    "body_name": "3-09A Rear axle-1"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 4.5,
+    "height": 21,
+    "base": [
+     -10.5,
+     0,
+     12.5
+    ],
+    "axis": "X",
+    "operation": "join",
+    "targets": [
+     "3-09A Rear axle-1"
+    ],
+    "name": "Cross pin"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-09A Rear axle-1"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

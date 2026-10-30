@@ -1,0 +1,140 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Link"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.464102,
+      2
+     ],
+     [
+      108.535898,
+      2
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     112,
+     0
+    ],
+    "start": [
+     108.535898,
+     -2
+    ],
+    "end": [
+     108.535898,
+     2
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      108.535898,
+      -2
+     ],
+     [
+      3.464102,
+      -2
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     3.464102,
+     2
+    ],
+    "end": [
+     3.464102,
+     -2
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     112,
+     0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1.5,
+    "profiles": [
+     {
+      "point": [
+       56.0,
+       0
+      ]
+     }
+    ],
+    "name": "Link",
+    "body_name": "3-36 Accelerator connector lever"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-36 Accelerator connector lever"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

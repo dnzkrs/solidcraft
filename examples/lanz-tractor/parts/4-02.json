@@ -1,0 +1,519 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Flange"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      90,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      90,
+      0
+     ],
+     [
+      90,
+      8
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     85,
+     8
+    ],
+    "start": [
+     90,
+     8
+    ],
+    "end": [
+     85,
+     13
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      85,
+      13
+     ],
+     [
+      5,
+      13
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     5,
+     8
+    ],
+    "start": [
+     5,
+     13
+    ],
+    "end": [
+     0,
+     8
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      8
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      7.0
+     ],
+     [
+      11.0,
+      7.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     11,
+     9
+    ],
+    "start": [
+     11.0,
+     7.0
+    ],
+    "end": [
+     11.0,
+     11.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      11.0,
+      11.0
+     ],
+     [
+      5.5,
+      11.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     5.5,
+     9
+    ],
+    "start": [
+     5.5,
+     11.0
+    ],
+    "end": [
+     5.5,
+     7.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      59.5,
+      7.0
+     ],
+     [
+      65.0,
+      7.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     65,
+     9
+    ],
+    "start": [
+     65.0,
+     7.0
+    ],
+    "end": [
+     65.0,
+     11.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      65.0,
+      11.0
+     ],
+     [
+      59.5,
+      11.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     59.5,
+     9
+    ],
+    "start": [
+     59.5,
+     11.0
+    ],
+    "end": [
+     59.5,
+     7.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "direction": "negative",
+    "profiles": [
+     {
+      "point": [
+       1,
+       1
+      ]
+     }
+    ],
+    "name": "Flange",
+    "body_name": "4-02 GB LH-side plate"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Plate"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13,
+      1
+     ],
+     [
+      90,
+      1
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      90,
+      1
+     ],
+     [
+      90,
+      46
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     85,
+     46
+    ],
+    "start": [
+     90,
+     46
+    ],
+    "end": [
+     85,
+     51
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      85,
+      51
+     ],
+     [
+      18,
+      51
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     18,
+     46
+    ],
+    "start": [
+     18,
+     51
+    ],
+    "end": [
+     13,
+     46
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13,
+      46
+     ],
+     [
+      13,
+      1
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     17.5,
+     6
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     17.5,
+     44
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     86,
+     6
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     86,
+     44
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     36.5,
+     6
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     36.5,
+     44
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     36.5,
+     25.5
+    ],
+    "diameter": 20
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     53.820508,
+     15.5
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     53.820508,
+     35.5
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     71.141016,
+     25.5
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "operation": "join",
+    "targets": [
+     "4-02 GB LH-side plate"
+    ],
+    "profiles": [
+     {
+      "point": [
+       14,
+       48
+      ]
+     }
+    ],
+    "name": "Plate"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-02 GB LH-side plate"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

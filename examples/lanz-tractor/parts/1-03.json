@@ -1,0 +1,125 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gasket_od",
+    "expression": "36",
+    "unit": "mm",
+    "comment": "outside diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gasket_id",
+    "expression": "30",
+    "unit": "mm",
+    "comment": "inside diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gasket_spigot_d",
+    "expression": "32",
+    "unit": "mm",
+    "comment": "spigot diameter, fits the \u00d832 bore of 1-02"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gasket_t",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "overall thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gasket_spigot_t",
+    "expression": "1",
+    "unit": "mm",
+    "comment": "spigot length"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Half section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.0,
+      0
+     ],
+     [
+      18.0,
+      0
+     ],
+     [
+      18.0,
+      2
+     ],
+     [
+      16.0,
+      2
+     ],
+     [
+      16.0,
+      3
+     ],
+     [
+      15.0,
+      3
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "name": "Ring",
+    "body_name": "1-03 Motor cylinder gasket ring"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-03 Motor cylinder gasket ring"
+    ],
+    "material": "Copper"
+   }
+  }
+ ]
+}

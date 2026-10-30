@@ -1,0 +1,18 @@
+<svg width="760" height="230" viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" font-size="13"><style>svg{--ink:#16212B;--muted:#5A6B76;--line:#D4DDDA;--accent:#1D6A86;background:#FAFBFB;font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}@media (prefers-color-scheme:dark){svg{--ink:#DCE6E9;--muted:#8FA2AA;--line:#28383F;--accent:#5BB4D3;background:#101A1E}}</style>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--muted)"/></marker></defs>
+<g fill="none" stroke="var(--line)" stroke-width="1.5">
+<rect x="10" y="30" width="150" height="70" rx="6"/><rect x="200" y="30" width="150" height="70" rx="6"/>
+<rect x="390" y="30" width="170" height="70" rx="6"/><rect x="600" y="15" width="150" height="100" rx="6"/>
+<rect x="390" y="140" width="170" height="70" rx="6"/><rect x="600" y="140" width="150" height="70" rx="6"/></g>
+<g stroke="var(--muted)" stroke-width="1.5" marker-end="url(#a)"><line x1="160" y1="65" x2="198" y2="65"/><line x1="350" y1="65" x2="388" y2="65"/>
+<line x1="560" y1="65" x2="598" y2="65"/><line x1="475" y1="100" x2="475" y2="138"/><line x1="560" y1="175" x2="598" y2="175"/>
+<path d="M85,100 V175 H388" fill="none"/></g>
+<g fill="var(--accent)" font-weight="bold"><text x="22" y="55">gen_parts.py</text><text x="212" y="55">parts/&lt;n&gt;.json</text>
+<text x="402" y="55">solvecraft-cli run</text><text x="612" y="38">Outputs</text><text x="402" y="165">eval + STL volume</text><text x="612" y="165">Check</text></g>
+<g fill="var(--ink)"><text x="22" y="75">parameters, sketches,</text><text x="22" y="92">hand volume</text>
+<text x="212" y="75">command script</text><text x="402" y="75">--save --out .step</text><text x="402" y="92">--out .stl</text>
+<text x="612" y="58">.solvecraft</text><text x="612" y="76">.step, .png</text><text x="612" y="94">summary.json</text>
+<text x="402" y="185">measured volume,</text><text x="402" y="202">warnings, bodies</text>
+<text x="612" y="185">within 0.1 % of</text><text x="612" y="202">the hand volume?</text></g>
+<text x="95" y="160" fill="var(--muted)">hand volume</text>
+</svg>

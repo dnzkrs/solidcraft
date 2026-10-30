@@ -1,0 +1,100 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "wk_d",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "wk_l",
+    "expression": "85",
+    "unit": "mm",
+    "comment": "length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "wk_tip",
+    "expression": "6.7",
+    "unit": "mm",
+    "comment": "pointed end (measured)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Wick section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      4.0,
+      0
+     ],
+     [
+      4.0,
+      78.3
+     ],
+     [
+      0,
+      85
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Wick",
+    "body_name": "2-15 Fuel tank wick"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-15 Fuel tank wick"
+    ],
+    "material": "Default"
+   }
+  }
+ ]
+}

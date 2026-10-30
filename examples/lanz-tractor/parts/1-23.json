@@ -1,0 +1,294 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ch_d",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ch_l",
+    "expression": "18",
+    "unit": "mm",
+    "comment": "length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ch_tap_depth",
+    "expression": "9",
+    "unit": "mm",
+    "comment": "M5 tapped depth (meets the slot)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ch_slot_w",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "fork slot width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ch_slot_depth",
+    "expression": "9",
+    "unit": "mm",
+    "comment": "fork slot depth"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ch_pin_z",
+    "expression": "13.5",
+    "unit": "mm",
+    "comment": "pin hole position"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ch_pin_d",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "pin hole"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Body section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      5.0,
+      0
+     ],
+     [
+      5.0,
+      18
+     ],
+     [
+      0,
+      18
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Body",
+    "body_name": "1-23 Motor piston cross head"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M5 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 4.2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 9,
+    "operation": "cut",
+    "targets": [
+     "1-23 Motor piston cross head"
+    ],
+    "name": "M5 tapped"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -6.0,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Fork slot"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -2.5,
+      -9.0
+     ],
+     [
+      2.5,
+      -9.0
+     ],
+     [
+      2.5,
+      -19.0
+     ],
+     [
+      -2.5,
+      -19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-23 Motor piston cross head"
+    ],
+    "name": "Fork slot"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      5.0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Pin hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -13.5
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-23 Motor piston cross head"
+    ],
+    "name": "Pin hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-23 Motor piston cross head"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

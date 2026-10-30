@@ -1,0 +1,408 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "tg_teeth",
+    "expression": "12",
+    "unit": "",
+    "comment": "teeth (counted)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "tg_tip_d",
+    "expression": "13",
+    "unit": "mm",
+    "comment": "tip diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "tg_root_d",
+    "expression": "11",
+    "unit": "mm",
+    "comment": "root diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "tg_tip_w",
+    "expression": "1.5",
+    "unit": "mm",
+    "comment": "tooth width at the tip"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "tg_root_w",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "tooth width at the root"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "tg_w",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "gear width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "tg_shaft_d",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "shaft"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "tg_shaft_l",
+    "expression": "77",
+    "unit": "mm",
+    "comment": "shaft length"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Gear"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.408327,
+      -1.0
+     ],
+     [
+      6.456586,
+      -0.75
+     ],
+     [
+      6.456586,
+      0.75
+     ],
+     [
+      5.408327,
+      1.0
+     ],
+     [
+      5.183748,
+      1.838138
+     ],
+     [
+      5.966567,
+      2.578774
+     ],
+     [
+      5.216567,
+      3.877812
+     ],
+     [
+      4.183748,
+      3.570189
+     ],
+     [
+      3.570189,
+      4.183748
+     ],
+     [
+      3.877812,
+      5.216567
+     ],
+     [
+      2.578774,
+      5.966567
+     ],
+     [
+      1.838138,
+      5.183748
+     ],
+     [
+      1.0,
+      5.408327
+     ],
+     [
+      0.75,
+      6.456586
+     ],
+     [
+      -0.75,
+      6.456586
+     ],
+     [
+      -1.0,
+      5.408327
+     ],
+     [
+      -1.838138,
+      5.183748
+     ],
+     [
+      -2.578774,
+      5.966567
+     ],
+     [
+      -3.877812,
+      5.216567
+     ],
+     [
+      -3.570189,
+      4.183748
+     ],
+     [
+      -4.183748,
+      3.570189
+     ],
+     [
+      -5.216567,
+      3.877812
+     ],
+     [
+      -5.966567,
+      2.578774
+     ],
+     [
+      -5.183748,
+      1.838138
+     ],
+     [
+      -5.408327,
+      1.0
+     ],
+     [
+      -6.456586,
+      0.75
+     ],
+     [
+      -6.456586,
+      -0.75
+     ],
+     [
+      -5.408327,
+      -1.0
+     ],
+     [
+      -5.183748,
+      -1.838138
+     ],
+     [
+      -5.966567,
+      -2.578774
+     ],
+     [
+      -5.216567,
+      -3.877812
+     ],
+     [
+      -4.183748,
+      -3.570189
+     ],
+     [
+      -3.570189,
+      -4.183748
+     ],
+     [
+      -3.877812,
+      -5.216567
+     ],
+     [
+      -2.578774,
+      -5.966567
+     ],
+     [
+      -1.838138,
+      -5.183748
+     ],
+     [
+      -1.0,
+      -5.408327
+     ],
+     [
+      -0.75,
+      -6.456586
+     ],
+     [
+      0.75,
+      -6.456586
+     ],
+     [
+      1.0,
+      -5.408327
+     ],
+     [
+      1.838138,
+      -5.183748
+     ],
+     [
+      2.578774,
+      -5.966567
+     ],
+     [
+      3.877812,
+      -5.216567
+     ],
+     [
+      3.570189,
+      -4.183748
+     ],
+     [
+      4.183748,
+      -3.570189
+     ],
+     [
+      5.216567,
+      -3.877812
+     ],
+     [
+      5.966567,
+      -2.578774
+     ],
+     [
+      5.183748,
+      -1.838138
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 8,
+    "profiles": [
+     {
+      "point": [
+       4.5,
+       0
+      ]
+     }
+    ],
+    "operation": "new",
+    "name": "Gear",
+    "body_name": "2-12 gear"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Shaft section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      2.0,
+      0
+     ],
+     [
+      2.0,
+      77
+     ],
+     [
+      0,
+      77
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Shaft",
+    "body_name": "2-12 shaft"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-12 gear"
+    ],
+    "material": "Brass"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-12 shaft"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

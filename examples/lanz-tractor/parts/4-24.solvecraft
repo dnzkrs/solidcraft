@@ -1,0 +1,1929 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [],
+  "features": [
+    {
+      "id": 1,
+      "name": "Gear",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              11.431863,
+              -1.25
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              14.241225,
+              -0.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              14.241225,
+              0.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              11.431863,
+              1.25
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              11.218328,
+              2.529648
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              13.631946,
+              4.15121
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              13.307247,
+              5.097027
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              10.406579,
+              4.894192
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.end",
+            "pos": [
+              9.789112,
+              6.03517
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l9.end",
+            "pos": [
+              11.545434,
+              8.352571
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l10.end",
+            "pos": [
+              10.931221,
+              9.141712
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l11.end",
+            "pos": [
+              8.253581,
+              8.008021
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l12.end",
+            "pos": [
+              7.299095,
+              8.886688
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l13.end",
+            "pos": [
+              8.207795,
+              11.648802
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l14.end",
+            "pos": [
+              7.370629,
+              12.195751
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l15.end",
+            "pos": [
+              5.206179,
+              10.254058
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l16.end",
+            "pos": [
+              4.018107,
+              10.775195
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l17.end",
+            "pos": [
+              3.980714,
+              13.682705
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l18.end",
+            "pos": [
+              3.011314,
+              13.92819
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l19.end",
+            "pos": [
+              1.594606,
+              11.388908
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l20.end",
+            "pos": [
+              0.301695,
+              11.496042
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l21.end",
+            "pos": [
+              -0.677739,
+              14.233874
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l22.end",
+            "pos": [
+              -1.674323,
+              14.151295
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l23.end",
+            "pos": [
+              -2.189766,
+              11.289594
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l24.end",
+            "pos": [
+              -3.447411,
+              10.971115
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l25.end",
+            "pos": [
+              -5.262748,
+              13.242582
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l26.end",
+            "pos": [
+              -6.178522,
+              12.840887
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l27.end",
+            "pos": [
+              -5.736844,
+              9.966876
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l28.end",
+            "pos": [
+              -6.822935,
+              9.257297
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l29.end",
+            "pos": [
+              -9.277458,
+              10.816251
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l30.end",
+            "pos": [
+              -10.013181,
+              10.138969
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l31.end",
+            "pos": [
+              -8.662245,
+              7.564093
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l32.end",
+            "pos": [
+              -9.45909,
+              6.540308
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l33.end",
+            "pos": [
+              -12.28681,
+              7.217811
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l34.end",
+            "pos": [
+              -12.762758,
+              6.338337
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l35.end",
+            "pos": [
+              -10.648958,
+              4.341623
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l36.end",
+            "pos": [
+              -11.070204,
+              3.114574
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l37.end",
+            "pos": [
+              -13.964696,
+              2.837209
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l38.end",
+            "pos": [
+              -14.129291,
+              1.850848
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l39.end",
+            "pos": [
+              -11.481691,
+              0.648671
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l40.end",
+            "pos": [
+              -11.481691,
+              -0.648671
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l41.end",
+            "pos": [
+              -14.129291,
+              -1.850848
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l42.end",
+            "pos": [
+              -13.964696,
+              -2.837209
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l43.end",
+            "pos": [
+              -11.070204,
+              -3.114574
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l44.end",
+            "pos": [
+              -10.648958,
+              -4.341623
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l45.end",
+            "pos": [
+              -12.762758,
+              -6.338337
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l46.end",
+            "pos": [
+              -12.28681,
+              -7.217811
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l47.end",
+            "pos": [
+              -9.45909,
+              -6.540308
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l48.end",
+            "pos": [
+              -8.662245,
+              -7.564093
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l49.end",
+            "pos": [
+              -10.013181,
+              -10.138969
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l50.end",
+            "pos": [
+              -9.277458,
+              -10.816251
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l51.end",
+            "pos": [
+              -6.822935,
+              -9.257297
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l52.end",
+            "pos": [
+              -5.736844,
+              -9.966876
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l53.end",
+            "pos": [
+              -6.178522,
+              -12.840887
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l54.end",
+            "pos": [
+              -5.262748,
+              -13.242582
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l55.end",
+            "pos": [
+              -3.447411,
+              -10.971115
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l56.end",
+            "pos": [
+              -2.189766,
+              -11.289594
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l57.end",
+            "pos": [
+              -1.674323,
+              -14.151295
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l58.end",
+            "pos": [
+              -0.677739,
+              -14.233874
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l59.end",
+            "pos": [
+              0.301695,
+              -11.496042
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l60.end",
+            "pos": [
+              1.594606,
+              -11.388908
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l61.end",
+            "pos": [
+              3.011314,
+              -13.92819
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l62.end",
+            "pos": [
+              3.980714,
+              -13.682705
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l63.end",
+            "pos": [
+              4.018107,
+              -10.775195
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l64.end",
+            "pos": [
+              5.206179,
+              -10.254058
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l65.end",
+            "pos": [
+              7.370629,
+              -12.195751
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l66.end",
+            "pos": [
+              8.207795,
+              -11.648802
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l67.end",
+            "pos": [
+              7.299095,
+              -8.886688
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l68.end",
+            "pos": [
+              8.253581,
+              -8.008021
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l69.end",
+            "pos": [
+              10.931221,
+              -9.141712
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l70.end",
+            "pos": [
+              11.545434,
+              -8.352571
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l71.end",
+            "pos": [
+              9.789112,
+              -6.03517
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l72.end",
+            "pos": [
+              10.406579,
+              -4.894192
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l73.end",
+            "pos": [
+              13.307247,
+              -5.097027
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l74.end",
+            "pos": [
+              13.631946,
+              -4.15121
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l75.end",
+            "pos": [
+              11.218328,
+              -2.529648
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "l9",
+            "type": "line",
+            "a": 9,
+            "b": 10,
+            "construction": false
+          },
+          {
+            "id": "l10",
+            "type": "line",
+            "a": 10,
+            "b": 11,
+            "construction": false
+          },
+          {
+            "id": "l11",
+            "type": "line",
+            "a": 11,
+            "b": 12,
+            "construction": false
+          },
+          {
+            "id": "l12",
+            "type": "line",
+            "a": 12,
+            "b": 13,
+            "construction": false
+          },
+          {
+            "id": "l13",
+            "type": "line",
+            "a": 13,
+            "b": 14,
+            "construction": false
+          },
+          {
+            "id": "l14",
+            "type": "line",
+            "a": 14,
+            "b": 15,
+            "construction": false
+          },
+          {
+            "id": "l15",
+            "type": "line",
+            "a": 15,
+            "b": 16,
+            "construction": false
+          },
+          {
+            "id": "l16",
+            "type": "line",
+            "a": 16,
+            "b": 17,
+            "construction": false
+          },
+          {
+            "id": "l17",
+            "type": "line",
+            "a": 17,
+            "b": 18,
+            "construction": false
+          },
+          {
+            "id": "l18",
+            "type": "line",
+            "a": 18,
+            "b": 19,
+            "construction": false
+          },
+          {
+            "id": "l19",
+            "type": "line",
+            "a": 19,
+            "b": 20,
+            "construction": false
+          },
+          {
+            "id": "l20",
+            "type": "line",
+            "a": 20,
+            "b": 21,
+            "construction": false
+          },
+          {
+            "id": "l21",
+            "type": "line",
+            "a": 21,
+            "b": 22,
+            "construction": false
+          },
+          {
+            "id": "l22",
+            "type": "line",
+            "a": 22,
+            "b": 23,
+            "construction": false
+          },
+          {
+            "id": "l23",
+            "type": "line",
+            "a": 23,
+            "b": 24,
+            "construction": false
+          },
+          {
+            "id": "l24",
+            "type": "line",
+            "a": 24,
+            "b": 25,
+            "construction": false
+          },
+          {
+            "id": "l25",
+            "type": "line",
+            "a": 25,
+            "b": 26,
+            "construction": false
+          },
+          {
+            "id": "l26",
+            "type": "line",
+            "a": 26,
+            "b": 27,
+            "construction": false
+          },
+          {
+            "id": "l27",
+            "type": "line",
+            "a": 27,
+            "b": 28,
+            "construction": false
+          },
+          {
+            "id": "l28",
+            "type": "line",
+            "a": 28,
+            "b": 29,
+            "construction": false
+          },
+          {
+            "id": "l29",
+            "type": "line",
+            "a": 29,
+            "b": 30,
+            "construction": false
+          },
+          {
+            "id": "l30",
+            "type": "line",
+            "a": 30,
+            "b": 31,
+            "construction": false
+          },
+          {
+            "id": "l31",
+            "type": "line",
+            "a": 31,
+            "b": 32,
+            "construction": false
+          },
+          {
+            "id": "l32",
+            "type": "line",
+            "a": 32,
+            "b": 33,
+            "construction": false
+          },
+          {
+            "id": "l33",
+            "type": "line",
+            "a": 33,
+            "b": 34,
+            "construction": false
+          },
+          {
+            "id": "l34",
+            "type": "line",
+            "a": 34,
+            "b": 35,
+            "construction": false
+          },
+          {
+            "id": "l35",
+            "type": "line",
+            "a": 35,
+            "b": 36,
+            "construction": false
+          },
+          {
+            "id": "l36",
+            "type": "line",
+            "a": 36,
+            "b": 37,
+            "construction": false
+          },
+          {
+            "id": "l37",
+            "type": "line",
+            "a": 37,
+            "b": 38,
+            "construction": false
+          },
+          {
+            "id": "l38",
+            "type": "line",
+            "a": 38,
+            "b": 39,
+            "construction": false
+          },
+          {
+            "id": "l39",
+            "type": "line",
+            "a": 39,
+            "b": 40,
+            "construction": false
+          },
+          {
+            "id": "l40",
+            "type": "line",
+            "a": 40,
+            "b": 41,
+            "construction": false
+          },
+          {
+            "id": "l41",
+            "type": "line",
+            "a": 41,
+            "b": 42,
+            "construction": false
+          },
+          {
+            "id": "l42",
+            "type": "line",
+            "a": 42,
+            "b": 43,
+            "construction": false
+          },
+          {
+            "id": "l43",
+            "type": "line",
+            "a": 43,
+            "b": 44,
+            "construction": false
+          },
+          {
+            "id": "l44",
+            "type": "line",
+            "a": 44,
+            "b": 45,
+            "construction": false
+          },
+          {
+            "id": "l45",
+            "type": "line",
+            "a": 45,
+            "b": 46,
+            "construction": false
+          },
+          {
+            "id": "l46",
+            "type": "line",
+            "a": 46,
+            "b": 47,
+            "construction": false
+          },
+          {
+            "id": "l47",
+            "type": "line",
+            "a": 47,
+            "b": 48,
+            "construction": false
+          },
+          {
+            "id": "l48",
+            "type": "line",
+            "a": 48,
+            "b": 49,
+            "construction": false
+          },
+          {
+            "id": "l49",
+            "type": "line",
+            "a": 49,
+            "b": 50,
+            "construction": false
+          },
+          {
+            "id": "l50",
+            "type": "line",
+            "a": 50,
+            "b": 51,
+            "construction": false
+          },
+          {
+            "id": "l51",
+            "type": "line",
+            "a": 51,
+            "b": 52,
+            "construction": false
+          },
+          {
+            "id": "l52",
+            "type": "line",
+            "a": 52,
+            "b": 53,
+            "construction": false
+          },
+          {
+            "id": "l53",
+            "type": "line",
+            "a": 53,
+            "b": 54,
+            "construction": false
+          },
+          {
+            "id": "l54",
+            "type": "line",
+            "a": 54,
+            "b": 55,
+            "construction": false
+          },
+          {
+            "id": "l55",
+            "type": "line",
+            "a": 55,
+            "b": 56,
+            "construction": false
+          },
+          {
+            "id": "l56",
+            "type": "line",
+            "a": 56,
+            "b": 57,
+            "construction": false
+          },
+          {
+            "id": "l57",
+            "type": "line",
+            "a": 57,
+            "b": 58,
+            "construction": false
+          },
+          {
+            "id": "l58",
+            "type": "line",
+            "a": 58,
+            "b": 59,
+            "construction": false
+          },
+          {
+            "id": "l59",
+            "type": "line",
+            "a": 59,
+            "b": 60,
+            "construction": false
+          },
+          {
+            "id": "l60",
+            "type": "line",
+            "a": 60,
+            "b": 61,
+            "construction": false
+          },
+          {
+            "id": "l61",
+            "type": "line",
+            "a": 61,
+            "b": 62,
+            "construction": false
+          },
+          {
+            "id": "l62",
+            "type": "line",
+            "a": 62,
+            "b": 63,
+            "construction": false
+          },
+          {
+            "id": "l63",
+            "type": "line",
+            "a": 63,
+            "b": 64,
+            "construction": false
+          },
+          {
+            "id": "l64",
+            "type": "line",
+            "a": 64,
+            "b": 65,
+            "construction": false
+          },
+          {
+            "id": "l65",
+            "type": "line",
+            "a": 65,
+            "b": 66,
+            "construction": false
+          },
+          {
+            "id": "l66",
+            "type": "line",
+            "a": 66,
+            "b": 67,
+            "construction": false
+          },
+          {
+            "id": "l67",
+            "type": "line",
+            "a": 67,
+            "b": 68,
+            "construction": false
+          },
+          {
+            "id": "l68",
+            "type": "line",
+            "a": 68,
+            "b": 69,
+            "construction": false
+          },
+          {
+            "id": "l69",
+            "type": "line",
+            "a": 69,
+            "b": 70,
+            "construction": false
+          },
+          {
+            "id": "l70",
+            "type": "line",
+            "a": 70,
+            "b": 71,
+            "construction": false
+          },
+          {
+            "id": "l71",
+            "type": "line",
+            "a": 71,
+            "b": 72,
+            "construction": false
+          },
+          {
+            "id": "l72",
+            "type": "line",
+            "a": 72,
+            "b": 73,
+            "construction": false
+          },
+          {
+            "id": "l73",
+            "type": "line",
+            "a": 73,
+            "b": 74,
+            "construction": false
+          },
+          {
+            "id": "l74",
+            "type": "line",
+            "a": 74,
+            "b": 75,
+            "construction": false
+          },
+          {
+            "id": "l75",
+            "type": "line",
+            "a": 75,
+            "b": 76,
+            "construction": false
+          },
+          {
+            "id": "l76",
+            "type": "line",
+            "a": 76,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 76
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Gear",
+      "suppressed": false,
+      "body_names": [
+        "4-24 gear"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 1,
+      "profiles": {
+        "type": "curves",
+        "loops": [
+          [
+            "l1",
+            "l2",
+            "l3",
+            "l4",
+            "l5",
+            "l6",
+            "l7",
+            "l8",
+            "l9",
+            "l10",
+            "l11",
+            "l12",
+            "l13",
+            "l14",
+            "l15",
+            "l16",
+            "l17",
+            "l18",
+            "l19",
+            "l20",
+            "l21",
+            "l22",
+            "l23",
+            "l24",
+            "l25",
+            "l26",
+            "l27",
+            "l28",
+            "l29",
+            "l30",
+            "l31",
+            "l32",
+            "l33",
+            "l34",
+            "l35",
+            "l36",
+            "l37",
+            "l38",
+            "l39",
+            "l40",
+            "l41",
+            "l42",
+            "l43",
+            "l44",
+            "l45",
+            "l46",
+            "l47",
+            "l48",
+            "l49",
+            "l50",
+            "l51",
+            "l52",
+            "l53",
+            "l54",
+            "l55",
+            "l56",
+            "l57",
+            "l58",
+            "l59",
+            "l60",
+            "l61",
+            "l62",
+            "l63",
+            "l64",
+            "l65",
+            "l66",
+            "l67",
+            "l68",
+            "l69",
+            "l70",
+            "l71",
+            "l72",
+            "l73",
+            "l74",
+            "l75",
+            "l76"
+          ]
+        ]
+      },
+      "extent": {
+        "distance": "12",
+        "direction": "positive"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 3,
+      "name": "Hub section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              0.0,
+              11.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              9.5,
+              11.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              9.5,
+              17.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              0.0,
+              17.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Hub",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "revolve",
+      "sketch": 3,
+      "profiles": {
+        "type": "all"
+      },
+      "axis": {
+        "type": "world",
+        "axis": "Z"
+      },
+      "angle": "360 deg",
+      "operation": "join",
+      "targets": [
+        "4-24 gear"
+      ],
+      "convention": "sketch_normal"
+    },
+    {
+      "id": 5,
+      "name": "Groove section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              6.0,
+              -1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              9.0,
+              -1.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              9.0,
+              8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              6.0,
+              8.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 6,
+      "name": "Groove",
+      "suppressed": false,
+      "param_names": [
+        "d3"
+      ],
+      "type": "revolve",
+      "sketch": 5,
+      "profiles": {
+        "type": "all"
+      },
+      "axis": {
+        "type": "world",
+        "axis": "Z"
+      },
+      "angle": "360 deg",
+      "operation": "cut",
+      "targets": [
+        "4-24 gear"
+      ],
+      "convention": "sketch_normal"
+    },
+    {
+      "id": 7,
+      "name": "Bore",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 5.0,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 1
+          }
+        ],
+        "counters": {
+          "c": 1,
+          "k": 1
+        }
+      }
+    },
+    {
+      "id": 8,
+      "name": "Bore",
+      "suppressed": false,
+      "param_names": [
+        "d4"
+      ],
+      "type": "extrude",
+      "sketch": 7,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "20",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "4-24 gear"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Bush section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              3.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              5.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              5.0,
+              17.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              3.0,
+              17.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 4
+        }
+      }
+    },
+    {
+      "id": 10,
+      "name": "Bush",
+      "suppressed": false,
+      "body_names": [
+        "4-24 bush"
+      ],
+      "param_names": [
+        "d5"
+      ],
+      "type": "revolve",
+      "sketch": 9,
+      "profiles": {
+        "type": "all"
+      },
+      "axis": {
+        "type": "world",
+        "axis": "Z"
+      },
+      "angle": "360 deg",
+      "operation": "new_body",
+      "convention": "sketch_normal"
+    },
+    {
+      "id": 11,
+      "name": "Ø3 cross hole (gear)",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            -7.778174593052023,
+            -7.778174593052022,
+            0.0
+          ],
+          "x_dir": [
+            0.7071067811865475,
+            -0.7071067811865476,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              -14.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 1.5,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 12,
+      "name": "Ø3 cross hole (gear)",
+      "suppressed": false,
+      "param_names": [
+        "d6"
+      ],
+      "type": "extrude",
+      "sketch": 11,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "4-24 gear"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Ø3 cross hole (bush)",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            -7.778174593052023,
+            -7.778174593052022,
+            0.0
+          ],
+          "x_dir": [
+            0.7071067811865475,
+            -0.7071067811865476,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            0.0,
+            -1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              -14.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 1.5,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "c": 1
+        }
+      }
+    },
+    {
+      "id": 14,
+      "name": "Ø3 cross hole (bush)",
+      "suppressed": false,
+      "param_names": [
+        "d7"
+      ],
+      "type": "extrude",
+      "sketch": 13,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "0",
+        "direction": "positive",
+        "through_all": true
+      },
+      "operation": "cut",
+      "targets": [
+        "4-24 bush"
+      ]
+    }
+  ],
+  "next_id": 15,
+  "materials": {
+    "4-24 bush": "Brass",
+    "4-24 gear": "Steel"
+  }
+}

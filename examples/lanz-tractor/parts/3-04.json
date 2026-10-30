@@ -1,0 +1,287 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Housing section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      4.5,
+      0
+     ],
+     [
+      6.5,
+      0
+     ],
+     [
+      6.5,
+      12
+     ],
+     [
+      10,
+      12
+     ],
+     [
+      10,
+      20
+     ],
+     [
+      23,
+      20
+     ],
+     [
+      23,
+      48
+     ],
+     [
+      30,
+      48
+     ],
+     [
+      30,
+      52
+     ],
+     [
+      21,
+      52
+     ],
+     [
+      21,
+      24
+     ],
+     [
+      7,
+      24
+     ],
+     [
+      7,
+      16
+     ],
+     [
+      4,
+      16
+     ],
+     [
+      4,
+      12
+     ],
+     [
+      4.5,
+      12
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Housing",
+    "body_name": "3-04 Differential housing part-2"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      47
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     24.020868,
+     9.949769
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     9.949769,
+     24.020868
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -9.949769,
+     24.020868
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -24.020868,
+     9.949769
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -24.020868,
+     -9.949769
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -9.949769,
+     -24.020868
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     9.949769,
+     -24.020868
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     24.020868,
+     -9.949769
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 6,
+    "operation": "cut",
+    "targets": [
+     "3-04 Differential housing part-2"
+    ],
+    "name": "M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      17.67766952966369,
+      17.677669529663685,
+      0
+     ],
+     "x_dir": [
+      -0.7071067811865475,
+      0.7071067811865476,
+      0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "\u00d86 cross hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -37.0
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 50,
+    "operation": "cut",
+    "targets": [
+     "3-04 Differential housing part-2"
+    ],
+    "name": "\u00d86 cross hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-04 Differential housing part-2"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

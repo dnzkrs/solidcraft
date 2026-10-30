@@ -1,0 +1,69 @@
+{
+ "commands": [
+  {
+   "command": "component.insert_design",
+   "params": {
+    "path": "../parts/1-20.solvecraft",
+    "name": "1-20"
+   }
+  },
+  {
+   "command": "component.insert_design",
+   "params": {
+    "path": "../parts/1-21.solvecraft",
+    "name": "1-21"
+   }
+  },
+  {
+   "command": "occurrence.move",
+   "params": {
+    "occurrence": "1-21:1",
+    "space": "world",
+    "matrix": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0,
+     0,
+     1,
+     7
+    ],
+    "move_grounded": true
+   }
+  },
+  {
+   "command": "component.insert_design",
+   "params": {
+    "path": "../parts/1-15.solvecraft",
+    "name": "1-15"
+   }
+  },
+  {
+   "command": "occurrence.move",
+   "params": {
+    "occurrence": "1-15:1",
+    "space": "world",
+    "matrix": [
+     1,
+     0,
+     0,
+     0,
+     0,
+     -1,
+     0,
+     0,
+     0,
+     0,
+     -1,
+     13.5
+    ],
+    "move_grounded": true
+   }
+  }
+ ]
+}

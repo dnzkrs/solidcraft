@@ -1,0 +1,199 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Cap section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      1
+     ],
+     [
+      7,
+      1
+     ],
+     [
+      7,
+      0
+     ],
+     [
+      10,
+      0
+     ],
+     [
+      10,
+      2
+     ],
+     [
+      3.5,
+      2
+     ],
+     [
+      3.5,
+      5
+     ],
+     [
+      3.95,
+      5
+     ],
+     [
+      3.5,
+      7
+     ],
+     [
+      2.75,
+      7
+     ],
+     [
+      2.75,
+      2
+     ],
+     [
+      0,
+      2
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Cap",
+    "body_name": "3-17 Rear wheel hub cap"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      7.5
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      -1,
+      0
+     ]
+    },
+    "name": "Cross slot"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.707107,
+      0.0
+     ],
+     [
+      3.889087,
+      -3.181981
+     ],
+     [
+      3.181981,
+      -3.889087
+     ],
+     [
+      0.0,
+      -0.707107
+     ],
+     [
+      -3.181981,
+      -3.889087
+     ],
+     [
+      -3.889087,
+      -3.181981
+     ],
+     [
+      -0.707107,
+      -0.0
+     ],
+     [
+      -3.889087,
+      3.181981
+     ],
+     [
+      -3.181981,
+      3.889087
+     ],
+     [
+      -0.0,
+      0.707107
+     ],
+     [
+      3.181981,
+      3.889087
+     ],
+     [
+      3.889087,
+      3.181981
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 5.5,
+    "operation": "cut",
+    "targets": [
+     "3-17 Rear wheel hub cap"
+    ],
+    "name": "Cross slot"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-17 Rear wheel hub cap"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

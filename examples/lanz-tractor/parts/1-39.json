@@ -1,0 +1,233 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "etr_d",
+    "expression": "26.5",
+    "unit": "mm",
+    "comment": "bead diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "etr_t",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "bead thickness, full round R2"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "etr_spigot_d",
+    "expression": "22",
+    "unit": "mm",
+    "comment": "spigot"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "etr_spigot_h",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "spigot height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "etr_bore_top",
+    "expression": "14.5",
+    "unit": "mm",
+    "comment": "bore at the top"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "etr_bore_top_h",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "its depth"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "etr_bore",
+    "expression": "19",
+    "unit": "mm",
+    "comment": "bore below (over 1-38)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Ring section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      9.5,
+      0
+     ],
+     [
+      11.0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      11.0,
+      0
+     ],
+     [
+      11.0,
+      2
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      11.0,
+      2
+     ],
+     [
+      11.25,
+      2
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     11.25,
+     4.0
+    ],
+    "start": [
+     11.25,
+     2
+    ],
+    "end": [
+     11.25,
+     6
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      11.25,
+      6
+     ],
+     [
+      7.25,
+      6
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      7.25,
+      6
+     ],
+     [
+      7.25,
+      4
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      7.25,
+      4
+     ],
+     [
+      9.5,
+      4
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      9.5,
+      4
+     ],
+     [
+      9.5,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "name": "Ring",
+    "body_name": "1-39 Exhaust stack top ring"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-39 Exhaust stack top ring"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

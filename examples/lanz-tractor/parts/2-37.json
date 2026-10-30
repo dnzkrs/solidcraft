@@ -1,0 +1,89 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Rod section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      10
+     ],
+     [
+      2.5,
+      10
+     ],
+     [
+      2.5,
+      57
+     ],
+     [
+      2,
+      57
+     ],
+     [
+      2,
+      67
+     ],
+     [
+      0,
+      67
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Rod",
+    "body_name": "2-37 Steering tie rod"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-37 Steering tie rod"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

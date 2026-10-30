@@ -1,0 +1,313 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pr_d1",
+    "expression": "4.9",
+    "unit": "mm",
+    "comment": "end through the piston"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pr_l1",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "its length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pr_d2",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "rod"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pr_l2",
+    "expression": "79",
+    "unit": "mm",
+    "comment": "rod length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pr_pin_d",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "cross pin, 3.5PF"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pr_pin_l",
+    "expression": "27",
+    "unit": "mm",
+    "comment": "cross pin length (from the drawing's vector lines)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pr_pin_z",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "cross pin position"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pr_hole_d",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "cross hole at the other end"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "pr_hole_z",
+    "expression": "84",
+    "unit": "mm",
+    "comment": "5 from the end"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Rod section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      2.45,
+      0
+     ],
+     [
+      2.45,
+      10
+     ],
+     [
+      3.0,
+      10
+     ],
+     [
+      3.0,
+      89
+     ],
+     [
+      0,
+      89
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Rod",
+    "body_name": "1-24A rod"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      2.45,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      -0.0,
+      -0.0,
+      -1.0
+     ]
+    },
+    "name": "Pin hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -4.0
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-24A rod"
+    ],
+    "name": "Pin hole"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      3.0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Cross hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -84.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-24A rod"
+    ],
+    "name": "Cross hole"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -13.5,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      -1
+     ]
+    },
+    "name": "Cross pin"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     -4
+    ],
+    "diameter": 3.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 27,
+    "operation": "new",
+    "name": "Cross pin",
+    "body_name": "1-24A pin"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-24A rod"
+    ],
+    "material": "Steel"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-24A pin"
+    ],
+    "material": "Stainless Steel"
+   }
+  }
+ ]
+}

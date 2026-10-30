@@ -1,0 +1,654 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Outline"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -21.0,
+      0.0
+     ],
+     [
+      21.0,
+      0.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     21.0,
+     10.0
+    ],
+    "start": [
+     21.0,
+     0.0
+    ],
+    "end": [
+     31.0,
+     10.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      31.0,
+      10.0
+     ],
+     [
+      31.0,
+      32.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     12.0,
+     32.0
+    ],
+    "start": [
+     31.0,
+     32.0
+    ],
+    "end": [
+     12.0,
+     51.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12.0,
+      51.0
+     ],
+     [
+      -12.0,
+      51.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -12.0,
+     32.0
+    ],
+    "start": [
+     -12.0,
+     51.0
+    ],
+    "end": [
+     -31.0,
+     32.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -31.0,
+      32.0
+     ],
+     [
+      -31.0,
+      10.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -21.0,
+     10.0
+    ],
+    "start": [
+     -31.0,
+     10.0
+    ],
+    "end": [
+     -21.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 6,
+    "name": "Tray",
+    "body_name": "3-25A Drivers seat base"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      52,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      -0.0,
+      -0.0,
+      -1.0
+     ]
+    },
+    "name": "Back wall holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     4.0,
+     -2.5
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -4.0,
+     -2.5
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2.5,
+    "operation": "cut",
+    "targets": [
+     "3-25A Drivers seat base"
+    ],
+    "name": "Back wall holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      7
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      -1,
+      0
+     ]
+    },
+    "name": "Inside the angle"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -21.0,
+      -6
+     ],
+     [
+      21.0,
+      -6
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     21.0,
+     -10
+    ],
+    "start": [
+     25.0,
+     -10
+    ],
+    "end": [
+     21.0,
+     -6
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.0,
+      -10
+     ],
+     [
+      25.0,
+      -32
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     12.0,
+     -32
+    ],
+    "start": [
+     12.0,
+     -45
+    ],
+    "end": [
+     25.0,
+     -32
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12.0,
+      -45
+     ],
+     [
+      -12.0,
+      -45
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -12.0,
+     -32
+    ],
+    "start": [
+     -25.0,
+     -32
+    ],
+    "end": [
+     -12.0,
+     -45
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -25.0,
+      -32
+     ],
+     [
+      -25.0,
+      -10
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -21.0,
+     -10
+    ],
+    "start": [
+     -21.0,
+     -6
+    ],
+    "end": [
+     -25.0,
+     -10
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 6,
+    "operation": "cut",
+    "targets": [
+     "3-25A Drivers seat base"
+    ],
+    "name": "Inside the angle"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      7
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      -1,
+      0
+     ]
+    },
+    "name": "Inside the wall"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -21.0,
+      -1
+     ],
+     [
+      21.0,
+      -1
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     21.0,
+     -10
+    ],
+    "start": [
+     30.0,
+     -10
+    ],
+    "end": [
+     21.0,
+     -1
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.0,
+      -10
+     ],
+     [
+      30.0,
+      -32
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     12.0,
+     -32
+    ],
+    "start": [
+     12.0,
+     -50
+    ],
+    "end": [
+     30.0,
+     -32
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12.0,
+      -50
+     ],
+     [
+      -12.0,
+      -50
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -12.0,
+     -32
+    ],
+    "start": [
+     -30.0,
+     -32
+    ],
+    "end": [
+     -12.0,
+     -50
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -30.0,
+      -32
+     ],
+     [
+      -30.0,
+      -10
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -21.0,
+     -10
+    ],
+    "start": [
+     -21.0,
+     -1
+    ],
+    "end": [
+     -30.0,
+     -10
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 5,
+    "operation": "cut",
+    "targets": [
+     "3-25A Drivers seat base"
+    ],
+    "name": "Inside the wall"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -1
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Plate holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -18.5,
+     32
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -4,
+     32
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     4,
+     32
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     18.5,
+     32
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     12.3
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2.5,
+    "operation": "cut",
+    "targets": [
+     "3-25A Drivers seat base"
+    ],
+    "name": "Plate holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-25A Drivers seat base"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

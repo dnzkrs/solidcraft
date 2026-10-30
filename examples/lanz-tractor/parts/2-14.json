@@ -1,0 +1,243 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "wh_h",
+    "expression": "36",
+    "unit": "mm",
+    "comment": "height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "wh_d",
+    "expression": "14.5",
+    "unit": "mm",
+    "comment": "body"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "wh_top_d",
+    "expression": "12.5",
+    "unit": "mm",
+    "comment": "top of the cone"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "wh_cone_from",
+    "expression": "26",
+    "unit": "mm",
+    "comment": "cone starts (= the \u00d812 bore's depth)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "wh_fin_d",
+    "expression": "18",
+    "unit": "mm",
+    "comment": "fins"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "wh_pitch",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "fin pitch (6 x 3.5 = 21)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Holder section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      6,
+      0
+     ],
+     [
+      9.0,
+      0
+     ],
+     [
+      9.0,
+      1
+     ],
+     [
+      7.25,
+      1
+     ],
+     [
+      7.25,
+      3.5
+     ],
+     [
+      9.0,
+      3.5
+     ],
+     [
+      9.0,
+      4.5
+     ],
+     [
+      7.25,
+      4.5
+     ],
+     [
+      7.25,
+      7.0
+     ],
+     [
+      9.0,
+      7.0
+     ],
+     [
+      9.0,
+      8.0
+     ],
+     [
+      7.25,
+      8.0
+     ],
+     [
+      7.25,
+      10.5
+     ],
+     [
+      9.0,
+      10.5
+     ],
+     [
+      9.0,
+      11.5
+     ],
+     [
+      7.25,
+      11.5
+     ],
+     [
+      7.25,
+      14.0
+     ],
+     [
+      9.0,
+      14.0
+     ],
+     [
+      9.0,
+      15.0
+     ],
+     [
+      7.25,
+      15.0
+     ],
+     [
+      7.25,
+      17.5
+     ],
+     [
+      9.0,
+      17.5
+     ],
+     [
+      9.0,
+      18.5
+     ],
+     [
+      7.25,
+      18.5
+     ],
+     [
+      7.25,
+      21.0
+     ],
+     [
+      9.0,
+      21.0
+     ],
+     [
+      9.0,
+      22.0
+     ],
+     [
+      7.25,
+      22.0
+     ],
+     [
+      7.25,
+      26
+     ],
+     [
+      6.25,
+      36
+     ],
+     [
+      4,
+      36
+     ],
+     [
+      4,
+      26
+     ],
+     [
+      6,
+      26
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Holder",
+    "body_name": "2-14 Fuel tank wick holder"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-14 Fuel tank wick holder"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

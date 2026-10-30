@@ -1,0 +1,73 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Ring section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2.5,
+      0
+     ],
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      2
+     ],
+     [
+      2.5,
+      2
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Ring",
+    "body_name": "2-27B Wheel pivot spacer ring-2"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-27B Wheel pivot spacer ring-2"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

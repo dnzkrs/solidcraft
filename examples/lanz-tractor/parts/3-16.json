@@ -1,0 +1,85 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rt_section",
+    "expression": "33.8",
+    "unit": "mm",
+    "comment": "section"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "rt_inside",
+    "expression": "132",
+    "unit": "mm",
+    "comment": "inside diameter"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Section"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     82.9,
+     0
+    ],
+    "diameter": 33.8
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "name": "Tyre",
+    "body_name": "3-16 Rear wheel tyre"
+   }
+  },
+  {
+   "command": "appearance.assign",
+   "params": {
+    "bodies": [
+     "3-16 Rear wheel tyre"
+    ],
+    "appearance": "Rubber - Black"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-16 Rear wheel tyre"
+    ],
+    "material": "Default"
+   }
+  }
+ ]
+}

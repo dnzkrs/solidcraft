@@ -1,0 +1,85 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ft_d",
+    "expression": "110.3",
+    "unit": "mm",
+    "comment": "outside diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ft_section",
+    "expression": "24",
+    "unit": "mm",
+    "comment": "section"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Section"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     43.15,
+     0
+    ],
+    "diameter": 24
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "name": "Tyre",
+    "body_name": "2-32 Front wheel tyre"
+   }
+  },
+  {
+   "command": "appearance.assign",
+   "params": {
+    "bodies": [
+     "2-32 Front wheel tyre"
+    ],
+    "appearance": "Rubber - Black"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-32 Front wheel tyre"
+    ],
+    "material": "Default"
+   }
+  }
+ ]
+}

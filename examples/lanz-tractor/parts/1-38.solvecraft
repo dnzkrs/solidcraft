@@ -1,0 +1,285 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "es_flange_d",
+      "expr": "33",
+      "unit": "mm",
+      "comment": "flange",
+      "model": false
+    },
+    {
+      "name": "es_flange_t",
+      "expr": "2",
+      "unit": "mm",
+      "comment": "flange thickness",
+      "model": false
+    },
+    {
+      "name": "es_d1",
+      "expr": "27",
+      "unit": "mm",
+      "comment": "lower diameter",
+      "model": false
+    },
+    {
+      "name": "es_h1",
+      "expr": "19",
+      "unit": "mm",
+      "comment": "lower cylinder height",
+      "model": false
+    },
+    {
+      "name": "es_d2",
+      "expr": "21",
+      "unit": "mm",
+      "comment": "cone top diameter",
+      "model": false
+    },
+    {
+      "name": "es_h2",
+      "expr": "75",
+      "unit": "mm",
+      "comment": "cone height",
+      "model": false
+    },
+    {
+      "name": "es_top_d",
+      "expr": "19",
+      "unit": "mm",
+      "comment": "top band",
+      "model": false
+    },
+    {
+      "name": "es_top_h",
+      "expr": "4",
+      "unit": "mm",
+      "comment": "top band height",
+      "model": false
+    },
+    {
+      "name": "es_bore_bottom",
+      "expr": "24",
+      "unit": "mm",
+      "comment": "bore at the bottom",
+      "model": false
+    },
+    {
+      "name": "es_bore_top",
+      "expr": "17",
+      "unit": "mm",
+      "comment": "bore at the top",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Stack section",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            -0.0,
+            0.0,
+            1.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              12.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              16.5,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              16.5,
+              2.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l3.end",
+            "pos": [
+              13.5,
+              2.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l4.end",
+            "pos": [
+              13.5,
+              21.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l5.end",
+            "pos": [
+              10.5,
+              96.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l6.end",
+            "pos": [
+              9.5,
+              96.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l7.end",
+            "pos": [
+              9.5,
+              100.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l8.end",
+            "pos": [
+              8.5,
+              100.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 1,
+            "b": 2,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l3",
+            "type": "line",
+            "a": 3,
+            "b": 4,
+            "construction": false
+          },
+          {
+            "id": "l4",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "l5",
+            "type": "line",
+            "a": 5,
+            "b": 6,
+            "construction": false
+          },
+          {
+            "id": "l6",
+            "type": "line",
+            "a": 6,
+            "b": 7,
+            "construction": false
+          },
+          {
+            "id": "l7",
+            "type": "line",
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "l8",
+            "type": "line",
+            "a": 8,
+            "b": 9,
+            "construction": false
+          },
+          {
+            "id": "l9",
+            "type": "line",
+            "a": 9,
+            "b": 1,
+            "construction": false
+          }
+        ],
+        "constraints": [],
+        "counters": {
+          "l": 9
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Stack",
+      "suppressed": false,
+      "body_names": [
+        "1-38 Exhaust stack"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "revolve",
+      "sketch": 1,
+      "profiles": {
+        "type": "all"
+      },
+      "axis": {
+        "type": "world",
+        "axis": "Z"
+      },
+      "angle": "360 deg",
+      "operation": "new_body",
+      "convention": "sketch_normal"
+    }
+  ],
+  "next_id": 3,
+  "materials": {
+    "1-38 Exhaust stack": "Brass"
+  }
+}

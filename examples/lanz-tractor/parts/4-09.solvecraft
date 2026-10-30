@@ -1,0 +1,43 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [],
+  "features": [
+    {
+      "id": 1,
+      "name": "Spring",
+      "suppressed": false,
+      "body_names": [
+        "4-09 Coupling spring"
+      ],
+      "param_names": [
+        "d1",
+        "d2",
+        "d3",
+        "d4"
+      ],
+      "type": "coil",
+      "base": [
+        0.0,
+        0.0,
+        0.25
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "diameter": "5",
+      "pitch": "1.384615",
+      "turns": "13",
+      "section_size": "0.5",
+      "section": "circular",
+      "operation": "new_body"
+    }
+  ],
+  "next_id": 2,
+  "materials": {
+    "4-09 Coupling spring": "Steel"
+  }
+}

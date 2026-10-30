@@ -1,0 +1,97 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Retainer section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3,
+      0
+     ],
+     [
+      3.75,
+      0
+     ],
+     [
+      3.75,
+      7
+     ],
+     [
+      7.5,
+      7
+     ],
+     [
+      7.5,
+      14
+     ],
+     [
+      6.25,
+      14
+     ],
+     [
+      6.25,
+      9
+     ],
+     [
+      2.25,
+      9
+     ],
+     [
+      2.25,
+      5
+     ],
+     [
+      3,
+      5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Retainer",
+    "body_name": "4-10 Coupling spring retainer"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-10 Coupling spring retainer"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

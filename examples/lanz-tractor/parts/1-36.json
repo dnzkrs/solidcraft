@@ -1,0 +1,275 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "elb_base_d",
+    "expression": "31",
+    "unit": "mm",
+    "comment": "base diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "elb_base_h",
+    "expression": "14",
+    "unit": "mm",
+    "comment": "base height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "elb_cone_d",
+    "expression": "38.5",
+    "unit": "mm",
+    "comment": "cone top diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "elb_cone_h",
+    "expression": "17",
+    "unit": "mm",
+    "comment": "cone height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "elb_band_d",
+    "expression": "33",
+    "unit": "mm",
+    "comment": "top band diameter (1-37 sits on it)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "elb_band_h",
+    "expression": "7",
+    "unit": "mm",
+    "comment": "band height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "elb_bore_bottom",
+    "expression": "27",
+    "unit": "mm",
+    "comment": "bore at the bottom"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "elb_bore_step",
+    "expression": "6.5",
+    "unit": "mm",
+    "comment": "\u00d827 bore height, then the taper"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "elb_bore_top",
+    "expression": "24",
+    "unit": "mm",
+    "comment": "bore at the top"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "elb_screw_z",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "M3 holes below the top"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Bracket section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.5,
+      0
+     ],
+     [
+      15.5,
+      0
+     ],
+     [
+      15.5,
+      14
+     ],
+     [
+      19.25,
+      31
+     ],
+     [
+      16.5,
+      31
+     ],
+     [
+      16.5,
+      38
+     ],
+     [
+      12.0,
+      38
+     ],
+     [
+      13.5,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Bracket",
+    "body_name": "1-36 Exhaust lower circular bracket"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      16.5,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "M3 tapped X"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -34.5
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-36 Exhaust lower circular bracket"
+    ],
+    "name": "M3 tapped X"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      16.5,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      -0.0,
+      -0.0,
+      -1.0
+     ]
+    },
+    "name": "M3 tapped Y"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -34.5
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-36 Exhaust lower circular bracket"
+    ],
+    "name": "M3 tapped Y"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-36 Exhaust lower circular bracket"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

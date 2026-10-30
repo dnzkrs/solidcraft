@@ -1,0 +1,251 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "al_d",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "wire"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "al_eye",
+    "expression": "4.5",
+    "unit": "mm",
+    "comment": "eye diameter, centre line"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "al_l1",
+    "expression": "69",
+    "unit": "mm",
+    "comment": "lower eye to the kink"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "al_l2",
+    "expression": "20",
+    "unit": "mm",
+    "comment": "kink to the upper eye"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "al_dx",
+    "expression": "5.3",
+    "unit": "mm",
+    "comment": "upper eye to one side"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "al_bend",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "kink bend radius (assumed)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Path"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      2.55
+     ],
+     [
+      0,
+      68.595265
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -3,
+     68.595265
+    ],
+    "start": [
+     0,
+     68.595265
+    ],
+    "end": [
+     -0.107255,
+     69.390265
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -0.107255,
+      69.390265
+     ],
+     [
+      -4.62425,
+      85.826135
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.pipe",
+   "params": {
+    "path_sketch": "Path",
+    "path": [
+     "l1",
+     "a1",
+     "l2"
+    ],
+    "diameter": 2,
+    "name": "Wire",
+    "body_name": "2-43 Accelerator link"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0,
+      1,
+      0
+     ],
+     "y_dir": [
+      1,
+      0,
+      0
+     ]
+    },
+    "name": "Lower eye"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     2.25,
+     0
+    ],
+    "diameter": 2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "y",
+    "operation": "join",
+    "targets": [
+     "2-43 Accelerator link"
+    ],
+    "name": "Lower eye"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -5.3,
+      0,
+      88.28496823953827
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Upper eye"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     2.25,
+     0
+    ],
+    "diameter": 2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "y",
+    "operation": "join",
+    "targets": [
+     "2-43 Accelerator link"
+    ],
+    "name": "Upper eye"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-43 Accelerator link"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

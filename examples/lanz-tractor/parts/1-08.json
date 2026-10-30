@@ -1,0 +1,299 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gb_nozzle_l",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "nozzle length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gb_thread_l",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "M6 length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gb_flange_d",
+    "expression": "17",
+    "unit": "mm",
+    "comment": "flange"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gb_flange_t",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "flange thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gb_recess_d",
+    "expression": "15",
+    "unit": "mm",
+    "comment": "recess for the glass (\u00d815)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gb_recess_h",
+    "expression": "1",
+    "unit": "mm",
+    "comment": "recess depth"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gb_boss_d",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "boss"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gb_boss_h",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "boss height above the flange"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gb_bore_top",
+    "expression": "9.88",
+    "unit": "mm",
+    "comment": "top of the \u00d83 bore (measured)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gb_m3_depth",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "M3 tapped depth (measured 3.1)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Body section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      1.5,
+      0
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      3,
+      9
+     ],
+     [
+      8.5,
+      9
+     ],
+     [
+      8.5,
+      11
+     ],
+     [
+      7.5,
+      11
+     ],
+     [
+      7.5,
+      10
+     ],
+     [
+      2.5,
+      10
+     ],
+     [
+      2.5,
+      15
+     ],
+     [
+      0,
+      15
+     ],
+     [
+      0,
+      9.88
+     ],
+     [
+      1.5,
+      9.88
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Body",
+    "body_name": "1-08 Motor cylinder oiler glass base"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      15
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M3 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3,
+    "operation": "cut",
+    "targets": [
+     "1-08 Motor cylinder oiler glass base"
+    ],
+    "name": "M3 tapped"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -1,
+      0,
+      10.262050807568876
+     ],
+     "x_dir": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "y_dir": [
+      0.25881904510252074,
+      0.0,
+      -0.9659258262890683
+     ]
+    },
+    "name": "Drain hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 6,
+    "operation": "cut",
+    "targets": [
+     "1-08 Motor cylinder oiler glass base"
+    ],
+    "name": "Drain hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-08 Motor cylinder oiler glass base"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

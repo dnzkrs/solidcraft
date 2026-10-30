@@ -1,0 +1,13 @@
+<svg width="700" height="250" viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" font-size="13"><style>svg{--ink:#16212B;--muted:#5A6B76;--line:#D4DDDA;--accent:#1D6A86;background:#FAFBFB;font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}@media (prefers-color-scheme:dark){svg{--ink:#DCE6E9;--muted:#8FA2AA;--line:#28383F;--accent:#5BB4D3;background:#101A1E}}</style>
+<text x="20" y="25" fill="var(--ink)" font-weight="bold" font-size="15">Ø8 round on 8 mm hex (1-07): the round is tangent to the flats</text>
+<g transform="translate(120,135)"><polygon points="46,0 23,40 -23,40 -46,0 -23,-40 23,-40" fill="none" stroke="var(--ink)" stroke-width="2"/>
+<circle r="40" fill="none" stroke="var(--accent)" stroke-width="2"/><circle cx="0" cy="-40" r="4" fill="var(--accent)"/><circle cx="35" cy="20" r="4" fill="var(--accent)"/></g>
+<text x="40" y="215" fill="var(--muted)">6 lines where the faces only touch</text>
+<g fill="var(--ink)"><text x="260" y="70" font-weight="bold">Failed</text>
+<text x="260" y="92">• revolve the collar, then join the hex onto its face</text>
+<text x="260" y="112">  → "not supported yet: … faces that touch"</text>
+<text x="260" y="132">• Ø10 socket butted on the 10 × 10 block (1-24B)</text><text x="260" y="152">  → two separate bodies</text>
+<text x="260" y="182" font-weight="bold" fill="var(--accent)">Worked</text>
+<text x="260" y="204">• hex bar first, turn the collar down (revolve cut), or</text>
+<text x="260" y="224">• overlap the round 0.5 mm into the block before joining</text></g>
+</svg>

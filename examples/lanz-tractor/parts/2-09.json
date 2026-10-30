@@ -1,0 +1,81 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Pipe section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      4.5,
+      0
+     ],
+     [
+      5.5,
+      0
+     ],
+     [
+      5.5,
+      4
+     ],
+     [
+      6,
+      4
+     ],
+     [
+      6,
+      30
+     ],
+     [
+      4.5,
+      30
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Pipe",
+    "body_name": "2-09 Fuel tank inner wick holding pipe"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-09 Fuel tank inner wick holding pipe"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

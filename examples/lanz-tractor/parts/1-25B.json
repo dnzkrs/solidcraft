@@ -1,0 +1,293 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv2_w",
+    "expression": "19.8",
+    "unit": "mm",
+    "comment": "width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv2_l",
+    "expression": "50",
+    "unit": "mm",
+    "comment": "length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv2_t",
+    "expression": "0.1",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv2_flat1",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "flat end with the hole"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv2_flat2",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "flat end at the other side"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv2_bow_r",
+    "expression": "162",
+    "unit": "mm",
+    "comment": "bow radius"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv2_hole_d",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "hole"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sv2_hole_z",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "hole position"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Side profile"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      0.1,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.1,
+      0
+     ],
+     [
+      0.1,
+      9.997214
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -160.946894,
+     28.0
+    ],
+    "start": [
+     0.1,
+     9.997214
+    ],
+    "end": [
+     0.1,
+     46.002786
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.1,
+      46.002786
+     ],
+     [
+      0.1,
+      50
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.1,
+      50
+     ],
+     [
+      0,
+      50
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      50
+     ],
+     [
+      0,
+      45.997213
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -160.946894,
+     28.0
+    ],
+    "start": [
+     0,
+     10.002787
+    ],
+    "end": [
+     0,
+     45.997213
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      10.002787
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 9.9,
+    "direction": "symmetric",
+    "name": "Sheet",
+    "body_name": "1-25B Motor cylinder slide valve-2"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -1,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -6.0
+    ],
+    "diameter": 5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-25B Motor cylinder slide valve-2"
+    ],
+    "name": "Hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-25B Motor cylinder slide valve-2"
+    ],
+    "material": "Stainless Steel"
+   }
+  }
+ ]
+}

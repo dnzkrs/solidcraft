@@ -1,0 +1,322 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sfb_t",
+    "expression": "1.5",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sfb_end_r",
+    "expression": "7.5",
+    "unit": "mm",
+    "comment": "end radius (15 wide)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sfb_hole2",
+    "expression": "22",
+    "unit": "mm",
+    "comment": "second hole"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sfb_end",
+    "expression": "27",
+    "unit": "mm",
+    "comment": "square end (22 + 5)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sfb_fold1",
+    "expression": "15.5",
+    "unit": "mm",
+    "comment": "first fold, 11.5 from the square end"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sfb_fold2",
+    "expression": "9",
+    "unit": "mm",
+    "comment": "second fold, 6.5 further"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sfb_angle2",
+    "expression": "45",
+    "unit": "deg",
+    "comment": "second bend (drawn, not dimensioned)"
+   }
+  },
+  {
+   "command": "sheet.manage_rules",
+   "params": {
+    "name": "Lanz 1.5",
+    "thickness": "1.5 mm",
+    "k_factor": "0.5",
+    "bend_radius": "0.2 mm",
+    "active": true
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Flat pattern"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -7.5
+     ],
+     [
+      26,
+      -7.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     26,
+     -6.5
+    ],
+    "start": [
+     26,
+     -7.5
+    ],
+    "end": [
+     27,
+     -6.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      27,
+      -6.5
+     ],
+     [
+      27,
+      6.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     26,
+     6.5
+    ],
+    "start": [
+     27,
+     6.5
+    ],
+    "end": [
+     26,
+     7.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      26,
+      7.5
+     ],
+     [
+      0,
+      7.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     0,
+     7.5
+    ],
+    "end": [
+     0,
+     -7.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "sheet.flange",
+   "params": {
+    "base": "Flat pattern",
+    "body_name": "2-05 Steering floor bracket"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      1.5
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -22.0,
+     0.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-05 Steering floor bracket"
+    ],
+    "name": "Holes"
+   }
+  },
+  {
+   "command": "sheet.fold",
+   "params": {
+    "points": [
+     [
+      9.0,
+      -9.5,
+      1.5
+     ],
+     [
+      9.0,
+      9.5,
+      1.5
+     ]
+    ],
+    "angle": 45,
+    "position": "centerline"
+   }
+  },
+  {
+   "command": "sheet.fold",
+   "params": {
+    "points": [
+     [
+      15.5,
+      -9.5,
+      1.5
+     ],
+     [
+      15.5,
+      9.5,
+      1.5
+     ]
+    ],
+    "angle": 90,
+    "position": "centerline",
+    "flip": true
+   }
+  },
+  {
+   "command": "browser.visibility",
+   "params": {
+    "visible": false,
+    "items": [
+     "Flat pattern"
+    ]
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-05 Steering floor bracket"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

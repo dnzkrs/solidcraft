@@ -1,0 +1,204 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Bar"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3,
+      -5
+     ],
+     [
+      141,
+      -5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     141,
+     -2
+    ],
+    "start": [
+     141,
+     -5
+    ],
+    "end": [
+     144,
+     -2
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      144,
+      -2
+     ],
+     [
+      144,
+      2
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     141,
+     2
+    ],
+    "start": [
+     144,
+     2
+    ],
+    "end": [
+     141,
+     5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      141,
+      5
+     ],
+     [
+      3,
+      5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     3,
+     2
+    ],
+    "start": [
+     3,
+     5
+    ],
+    "end": [
+     0,
+     2
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      2
+     ],
+     [
+      0,
+      -2
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     3,
+     -2
+    ],
+    "start": [
+     0,
+     -2
+    ],
+    "end": [
+     3,
+     -5
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     18,
+     0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     126,
+     0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "profiles": [
+     {
+      "point": [
+       10,
+       0
+      ]
+     }
+    ],
+    "name": "Bar",
+    "body_name": "3-26B Bumper-towbar"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-26B Bumper-towbar"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

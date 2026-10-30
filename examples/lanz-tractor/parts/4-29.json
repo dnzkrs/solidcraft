@@ -1,0 +1,415 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      5
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Pinion"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.418699,
+      -0.75
+     ],
+     [
+      5.477226,
+      -0.5
+     ],
+     [
+      5.477226,
+      0.5
+     ],
+     [
+      3.418699,
+      0.75
+     ],
+     [
+      3.100966,
+      1.622964
+     ],
+     [
+      4.517192,
+      3.137671
+     ],
+     [
+      3.874404,
+      3.903715
+     ],
+     [
+      2.136784,
+      2.77203
+     ],
+     [
+      1.332257,
+      3.236525
+     ],
+     [
+      1.443514,
+      5.30719
+     ],
+     [
+      0.458706,
+      5.480838
+     ],
+     [
+      -0.144955,
+      3.496997
+     ],
+     [
+      -1.05983,
+      3.33568
+     ],
+     [
+      -2.3056,
+      4.993416
+     ],
+     [
+      -3.171625,
+      4.493416
+     ],
+     [
+      -2.358868,
+      2.58568
+     ],
+     [
+      -2.956011,
+      1.874033
+     ],
+     [
+      -4.975898,
+      2.343168
+     ],
+     [
+      -5.317919,
+      1.403475
+     ],
+     [
+      -3.469041,
+      0.464494
+     ],
+     [
+      -3.469041,
+      -0.464494
+     ],
+     [
+      -5.317919,
+      -1.403475
+     ],
+     [
+      -4.975898,
+      -2.343168
+     ],
+     [
+      -2.956011,
+      -1.874033
+     ],
+     [
+      -2.358868,
+      -2.58568
+     ],
+     [
+      -3.171625,
+      -4.493416
+     ],
+     [
+      -2.3056,
+      -4.993416
+     ],
+     [
+      -1.05983,
+      -3.33568
+     ],
+     [
+      -0.144955,
+      -3.496997
+     ],
+     [
+      0.458706,
+      -5.480838
+     ],
+     [
+      1.443514,
+      -5.30719
+     ],
+     [
+      1.332257,
+      -3.236525
+     ],
+     [
+      2.136784,
+      -2.77203
+     ],
+     [
+      3.874404,
+      -3.903715
+     ],
+     [
+      4.517192,
+      -3.137671
+     ],
+     [
+      3.100966,
+      -1.622964
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 6,
+    "operation": "new",
+    "profiles": [
+     {
+      "point": [
+       2.75,
+       0
+      ]
+     }
+    ],
+    "name": "Pinion",
+    "body_name": "4-29 pinion"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Shaft section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      68
+     ],
+     [
+      0,
+      68
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Shaft",
+    "body_name": "4-29 shaft"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Sleeve section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2,
+      48
+     ],
+     [
+      2.75,
+      48
+     ],
+     [
+      2.75,
+      68
+     ],
+     [
+      2,
+      68
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Sleeve",
+    "body_name": "4-29 sleeve"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -4,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Sleeve cross holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -52.0
+    ],
+    "diameter": 2
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -64.0
+    ],
+    "diameter": 2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "4-29 sleeve"
+    ],
+    "name": "Sleeve cross holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-29 pinion"
+    ],
+    "material": "Brass"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-29 shaft"
+    ],
+    "material": "Steel"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "4-29 sleeve"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

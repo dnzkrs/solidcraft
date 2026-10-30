@@ -1,0 +1,213 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ysb_t",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ysb_w",
+    "expression": "16",
+    "unit": "mm",
+    "comment": "width (8 + 8)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ysb_d",
+    "expression": "17",
+    "unit": "mm",
+    "comment": "flange depth (9 + 8)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ysb_h",
+    "expression": "31",
+    "unit": "mm",
+    "comment": "leg height"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0,
+      1,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      17,
+      0
+     ],
+     [
+      17,
+      -3.5
+     ],
+     [
+      3.5,
+      -3.5
+     ],
+     [
+      3.5,
+      -31
+     ],
+     [
+      0,
+      -31
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 8.0,
+    "direction": "symmetric",
+    "name": "Angle",
+    "body_name": "2-17 Front axle yoke support bracket"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     9.0
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-17 Front axle yoke support bracket"
+    ],
+    "name": "M4 tapped"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "M6 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     23.0
+    ],
+    "diameter": 5.0
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-17 Front axle yoke support bracket"
+    ],
+    "name": "M6 tapped"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-17 Front axle yoke support bracket"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

@@ -1,0 +1,134 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fa_thread_l",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "M4 length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fa_d",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "axle"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fa_l",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "axle length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fa_head_d",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "head"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fa_head_t",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "head thickness"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Axle section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      2,
+      0
+     ],
+     [
+      2,
+      4
+     ],
+     [
+      3.0,
+      4
+     ],
+     [
+      3.0,
+      10
+     ],
+     [
+      5.0,
+      10
+     ],
+     [
+      5.0,
+      12
+     ],
+     [
+      0,
+      12
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Axle",
+    "body_name": "1-33 Motor rocking arm cam follower axle"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-33 Motor rocking arm cam follower axle"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

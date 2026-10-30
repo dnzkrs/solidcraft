@@ -1,0 +1,285 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Rim section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8,
+      0
+     ],
+     [
+      16,
+      0
+     ],
+     [
+      16,
+      1
+     ],
+     [
+      25,
+      5.3
+     ],
+     [
+      29,
+      5.3
+     ],
+     [
+      33.25,
+      1
+     ],
+     [
+      36,
+      1
+     ],
+     [
+      36,
+      1.8
+     ],
+     [
+      31,
+      6.8
+     ],
+     [
+      31,
+      16.8
+     ],
+     [
+      36,
+      21.8
+     ],
+     [
+      36,
+      22.6
+     ],
+     [
+      33.25,
+      22.6
+     ],
+     [
+      29,
+      18.3
+     ],
+     [
+      29,
+      10
+     ],
+     [
+      7,
+      10
+     ],
+     [
+      7,
+      9
+     ],
+     [
+      8,
+      9
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Rim",
+    "body_name": "2-31 Front wheel rim"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      11
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "\u00d86 counterbores"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -8.485281,
+     8.485281
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     8.485281,
+     8.485281
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     8.485281,
+     -8.485281
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -8.485281,
+     -8.485281
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 5,
+    "operation": "cut",
+    "targets": [
+     "2-31 Front wheel rim"
+    ],
+    "name": "\u00d86 counterbores"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -1
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "M3 tapped"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     8.485281,
+     8.485281
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -8.485281,
+     8.485281
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -8.485281,
+     -8.485281
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     8.485281,
+     -8.485281
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 8,
+    "operation": "cut",
+    "targets": [
+     "2-31 Front wheel rim"
+    ],
+    "name": "M3 tapped"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-31 Front wheel rim"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

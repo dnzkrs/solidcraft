@@ -1,0 +1,67 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sp_od",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "outside diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sp_wire",
+    "expression": "0.5",
+    "unit": "mm",
+    "comment": "wire diameter ((5 - 4) / 2)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sp_free_l",
+    "expression": "7",
+    "unit": "mm",
+    "comment": "free length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "sp_turns",
+    "expression": "5",
+    "unit": "",
+    "comment": "turns"
+   }
+  },
+  {
+   "command": "solid.coil",
+   "params": {
+    "diameter": 4.5,
+    "turns": 5,
+    "height": 6.5,
+    "section_size": 0.5,
+    "section": "circular",
+    "section_position": "center",
+    "base": [
+     0,
+     0,
+     0.25
+    ],
+    "name": "Spring",
+    "body_name": "1-51 Accelerator lever-1 spring"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-51 Accelerator lever-1 spring"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

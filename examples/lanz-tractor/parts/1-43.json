@@ -1,0 +1,295 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ssb_t",
+    "expression": "1.5",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ssb_end_r",
+    "expression": "7.5",
+    "unit": "mm",
+    "comment": "end radius (15 wide)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ssb_fold_x",
+    "expression": "15.2",
+    "unit": "mm",
+    "comment": "fold line (drawn)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ssb_tab_w",
+    "expression": "11.4",
+    "unit": "mm",
+    "comment": "tab width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ssb_tab_top",
+    "expression": "13",
+    "unit": "mm",
+    "comment": "tab top (8.5 + 4.5)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ssb_corner_x",
+    "expression": "17.5",
+    "unit": "mm",
+    "comment": "45 deg corner starts"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ssb_hole2",
+    "expression": "21.6",
+    "unit": "mm",
+    "comment": "second hole, along"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ssb_hole2_y",
+    "expression": "8.5",
+    "unit": "mm",
+    "comment": "second hole, up"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ssb_hole_d",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "holes"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ssb_fold_angle",
+    "expression": "46",
+    "unit": "deg",
+    "comment": "fold angle (180 - 134)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ssb_bend_r",
+    "expression": "0.2",
+    "unit": "mm",
+    "comment": "bend radius (sharp on the drawing)"
+   }
+  },
+  {
+   "command": "sheet.manage_rules",
+   "params": {
+    "name": "Lanz 1.5",
+    "thickness": "1.5 mm",
+    "k_factor": "0.5",
+    "bend_radius": "0.2 mm",
+    "active": true
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Flat pattern"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -7.5
+     ],
+     [
+      17.5,
+      -7.5
+     ],
+     [
+      26.6,
+      1.6000000000000014
+     ],
+     [
+      26.6,
+      13
+     ],
+     [
+      15.2,
+      13
+     ],
+     [
+      15.2,
+      7.5
+     ],
+     [
+      0,
+      7.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     0,
+     7.5
+    ],
+    "end": [
+     0,
+     -7.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "sheet.flange",
+   "params": {
+    "base": "Flat pattern",
+    "body_name": "1-43 Top steering shaft bracket"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      1.5
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -21.6,
+     8.5
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-43 Top steering shaft bracket"
+    ],
+    "name": "Holes"
+   }
+  },
+  {
+   "command": "sheet.fold",
+   "params": {
+    "points": [
+     [
+      15.631354441560761,
+      -9.5,
+      1.5
+     ],
+     [
+      15.631354441560761,
+      15,
+      1.5
+     ]
+    ],
+    "angle": 46,
+    "position": "centerline",
+    "flip": true
+   }
+  },
+  {
+   "command": "browser.visibility",
+   "params": {
+    "visible": false,
+    "items": [
+     "Flat pattern"
+    ]
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-43 Top steering shaft bracket"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

@@ -1,0 +1,231 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Housing section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      4.5,
+      0
+     ],
+     [
+      6.5,
+      0
+     ],
+     [
+      6.5,
+      12
+     ],
+     [
+      10,
+      12
+     ],
+     [
+      10,
+      20
+     ],
+     [
+      30,
+      20
+     ],
+     [
+      30,
+      22
+     ],
+     [
+      21,
+      22
+     ],
+     [
+      21,
+      24
+     ],
+     [
+      7,
+      24
+     ],
+     [
+      7,
+      16
+     ],
+     [
+      4,
+      16
+     ],
+     [
+      4,
+      12
+     ],
+     [
+      4.5,
+      12
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Housing",
+    "body_name": "3-03 Differential housing part-1"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      19
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "\u00d84 holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     24.020868,
+     9.949769
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     9.949769,
+     24.020868
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -9.949769,
+     24.020868
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -24.020868,
+     9.949769
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -24.020868,
+     -9.949769
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -9.949769,
+     -24.020868
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     9.949769,
+     -24.020868
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     24.020868,
+     -9.949769
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 4,
+    "operation": "cut",
+    "targets": [
+     "3-03 Differential housing part-1"
+    ],
+    "name": "\u00d84 holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-03 Differential housing part-1"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

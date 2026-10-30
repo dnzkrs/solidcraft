@@ -1,0 +1,455 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Lever"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2,
+      50
+     ],
+     [
+      -2,
+      50
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -2,
+      50
+     ],
+     [
+      -2,
+      36
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -2,
+      36
+     ],
+     [
+      -3,
+      36
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -3,
+      36
+     ],
+     [
+      -5.978984,
+      0.501751
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     -5.978984,
+     0.501751
+    ],
+    "end": [
+     5.978984,
+     0.501751
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.978984,
+      0.501751
+     ],
+     [
+      3,
+      36
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3,
+      36
+     ],
+     [
+      2,
+      36
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2,
+      36
+     ],
+     [
+      2,
+      50
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1,
+    "direction": "symmetric",
+    "profiles": [
+     {
+      "point": [
+       0,
+       30
+      ]
+     }
+    ],
+    "name": "Lever",
+    "body_name": "3-31 lever"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Knob section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      36
+     ],
+     [
+      3,
+      36
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3,
+      36
+     ],
+     [
+      4.5,
+      50
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     50
+    ],
+    "start": [
+     4.5,
+     50
+    ],
+    "end": [
+     0,
+     54.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      54.5
+     ],
+     [
+      0,
+      36
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Knob",
+    "body_name": "3-31 knob"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      35
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Knob slot"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -2,
+     -1
+    ],
+    "p1": [
+     2,
+     1
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 15,
+    "operation": "cut",
+    "targets": [
+     "3-31 knob"
+    ],
+    "name": "Knob slot"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 8,
+    "height": 2.5,
+    "base": [
+     0,
+     -1,
+     0
+    ],
+    "axis": "Y",
+    "name": "Collar spigot",
+    "body_name": "3-31 collar"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 12,
+    "height": 6,
+    "base": [
+     0,
+     1,
+     0
+    ],
+    "axis": "Y",
+    "operation": "join",
+    "targets": [
+     "3-31 collar"
+    ],
+    "name": "Collar"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 4,
+    "height": 10,
+    "base": [
+     0,
+     -2,
+     0
+    ],
+    "axis": "Y",
+    "operation": "cut",
+    "targets": [
+     "3-31 collar"
+    ],
+    "name": "Collar bore"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -5.656854249492381,
+      4,
+      -5.65685424949238
+     ],
+     "x_dir": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "y_dir": [
+      0.7071067811865475,
+      0.0,
+      -0.7071067811865476
+     ]
+    },
+    "name": "\u00d82.5 cross hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     0.0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "3-31 collar"
+    ],
+    "name": "\u00d82.5 cross hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-31 lever"
+    ],
+    "material": "Steel"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-31 collar"
+    ],
+    "material": "Brass"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-31 knob"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

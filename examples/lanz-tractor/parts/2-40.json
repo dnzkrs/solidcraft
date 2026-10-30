@@ -1,0 +1,263 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "bj_af",
+    "expression": "7",
+    "unit": "mm",
+    "comment": "hex across the flats"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "bj_hex_t",
+    "expression": "2.5",
+    "unit": "mm",
+    "comment": "hex thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "bj_ball_z",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "ball centre above the hex's underside"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "bj_ball_r",
+    "expression": "2.5",
+    "unit": "mm",
+    "comment": "ball radius"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -5
+     ],
+     [
+      2,
+      -5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2,
+      -5
+     ],
+     [
+      2,
+      1
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2,
+      1
+     ],
+     [
+      1.5,
+      1
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      1.5,
+      1
+     ],
+     [
+      1.5,
+      6.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     8
+    ],
+    "start": [
+     1.5,
+     6.0
+    ],
+    "end": [
+     2.5,
+     8
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     8
+    ],
+    "start": [
+     2.5,
+     8
+    ],
+    "end": [
+     0,
+     10.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      10.5
+     ],
+     [
+      0,
+      -5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "name": "Stem, neck and ball",
+    "body_name": "2-40 Steering tie rod end balljoint"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Hex"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      4.041452,
+      0.0
+     ],
+     [
+      2.020726,
+      3.5
+     ],
+     [
+      -2.020726,
+      3.5
+     ],
+     [
+      -4.041452,
+      0.0
+     ],
+     [
+      -2.020726,
+      -3.5
+     ],
+     [
+      2.020726,
+      -3.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2.5,
+    "operation": "join",
+    "targets": [
+     "2-40 Steering tie rod end balljoint"
+    ],
+    "name": "Hex"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-40 Steering tie rod end balljoint"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

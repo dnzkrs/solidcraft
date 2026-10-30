@@ -1,0 +1,229 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Side"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      15.885081,
+      -9.895161
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     18,
+     -6.5
+    ],
+    "start": [
+     15.885081,
+     -9.895161
+    ],
+    "end": [
+     19.096831,
+     -10.346682
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      19.096831,
+      -10.346682
+     ],
+     [
+      65.793643,
+      2.968305
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      65.793643,
+      2.968305
+     ],
+     [
+      65.380187,
+      4.410198
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      65.380187,
+      4.410198
+     ],
+     [
+      50,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50,
+      0
+     ],
+     [
+      0,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     18,
+     -6.5
+    ],
+    "diameter": 5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3.25,
+    "direction": "symmetric",
+    "profiles": [
+     {
+      "point": [
+       30,
+       -1
+      ]
+     }
+    ],
+    "name": "Blade",
+    "body_name": "3-27E Hand break release handle"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      2
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      -1,
+      0
+     ]
+    },
+    "name": "Fork slot"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -1,
+      1
+     ],
+     [
+      25,
+      1
+     ],
+     [
+      25,
+      -1
+     ],
+     [
+      10.5,
+      -1
+     ],
+     [
+      10.5,
+      -2
+     ],
+     [
+      -1,
+      -2
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 15,
+    "operation": "cut",
+    "targets": [
+     "3-27E Hand break release handle"
+    ],
+    "name": "Fork slot"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-27E Hand break release handle"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

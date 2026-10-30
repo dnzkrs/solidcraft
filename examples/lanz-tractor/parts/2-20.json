@@ -1,0 +1,373 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fya_t",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fya_l",
+    "expression": "165",
+    "unit": "mm",
+    "comment": "length (82.5 + 82.5)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fya_end_h",
+    "expression": "16",
+    "unit": "mm",
+    "comment": "end height (8 + 8)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fya_straight",
+    "expression": "56.5",
+    "unit": "mm",
+    "comment": "straight end portions start"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fya_hole_y",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "\u00d812 above the hole line"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fya_top_r",
+    "expression": "11",
+    "unit": "mm",
+    "comment": "round over the \u00d812"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fya_valley_r",
+    "expression": "50",
+    "unit": "mm",
+    "comment": "round at the bottom centre"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Arm"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -82.5,
+      -8.0
+     ],
+     [
+      -56.5,
+      -8.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -56.5,
+      -8.0
+     ],
+     [
+      -7.009727,
+      -0.992528
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     -50.498727
+    ],
+    "start": [
+     7.009727,
+     -0.992528
+    ],
+    "end": [
+     -7.009727,
+     -0.992528
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      7.009727,
+      -0.992528
+     ],
+     [
+      56.5,
+      -8.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      56.5,
+      -8.0
+     ],
+     [
+      82.5,
+      -8.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      82.5,
+      -8.0
+     ],
+     [
+      82.5,
+      8.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      82.5,
+      8.0
+     ],
+     [
+      56.5,
+      8.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      56.5,
+      8.0
+     ],
+     [
+      2.520613,
+      20.707311
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     10
+    ],
+    "start": [
+     2.520613,
+     20.707311
+    ],
+    "end": [
+     -2.520613,
+     20.707311
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -2.520613,
+      20.707311
+     ],
+     [
+      -56.5,
+      8.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -56.5,
+      8.0
+     ],
+     [
+      -82.5,
+      8.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -82.5,
+      8.0
+     ],
+     [
+      -82.5,
+      -8.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     10
+    ],
+    "diameter": 12
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -78.5,
+     0
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -47,
+     0
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     47,
+     0
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     78.5,
+     0
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -64.5,
+     0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     64.5,
+     0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 4,
+    "profiles": [
+     {
+      "point": [
+       -81.5,
+       -7.0
+      ]
+     }
+    ],
+    "name": "Arm",
+    "body_name": "2-20 Front axle yoke arm"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-20 Front axle yoke arm"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

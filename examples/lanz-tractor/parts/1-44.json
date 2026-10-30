@@ -1,0 +1,689 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "abb_t",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "abb_half_w",
+    "expression": "28",
+    "unit": "mm",
+    "comment": "centre to the ears' inside"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "abb_strip_d",
+    "expression": "14",
+    "unit": "mm",
+    "comment": "strip depth (12 + 2)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "abb_ear_w",
+    "expression": "12",
+    "unit": "mm",
+    "comment": "ear width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "abb_ear_h",
+    "expression": "12.5",
+    "unit": "mm",
+    "comment": "ear height above the strip"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "abb_arc_z",
+    "expression": "32.2",
+    "unit": "mm",
+    "comment": "R17.5 / R22 centre below the strip top (measured)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "abb_arc_r",
+    "expression": "17.5",
+    "unit": "mm",
+    "comment": "concave arc"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "abb_pcr",
+    "expression": "22",
+    "unit": "mm",
+    "comment": "holes on R22 at 45 deg"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "abb_lobe_r",
+    "expression": "4.5",
+    "unit": "mm",
+    "comment": "lobe radius"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "abb_hole_d",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "holes"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "abb_m2_z",
+    "expression": "1.93",
+    "unit": "mm",
+    "comment": "M2 hole above the strip top (measured)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -2
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Strip"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -30,
+      -2
+     ],
+     [
+      30,
+      -2
+     ],
+     [
+      30,
+      12
+     ],
+     [
+      -30,
+      12
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "name": "Strip",
+    "body_name": "1-44 Accelerator bridge bracket"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      28,
+      0,
+      0
+     ],
+     "x_dir": [
+      0,
+      1,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Ear R"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -1
+     ],
+     [
+      12,
+      -1
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12,
+      -1
+     ],
+     [
+      12,
+      6.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     6.0,
+     6.5
+    ],
+    "start": [
+     12,
+     6.5
+    ],
+    "end": [
+     0,
+     6.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      6.5
+     ],
+     [
+      0,
+      -1
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "operation": "join",
+    "targets": [
+     "1-44 Accelerator bridge bracket"
+    ],
+    "name": "Ear R"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -30,
+      0,
+      0
+     ],
+     "x_dir": [
+      0,
+      1,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Ear L"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -1
+     ],
+     [
+      12,
+      -1
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12,
+      -1
+     ],
+     [
+      12,
+      6.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     6.0,
+     6.5
+    ],
+    "start": [
+     12,
+     6.5
+    ],
+    "end": [
+     0,
+     6.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      6.5
+     ],
+     [
+      0,
+      -1
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "operation": "join",
+    "targets": [
+     "1-44 Accelerator bridge bracket"
+    ],
+    "name": "Ear L"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Plate"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -28,
+      -1.0
+     ],
+     [
+      -28,
+      -2
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -28,
+      -2
+     ],
+     [
+      -19.572493,
+      -18.673574
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -15.556349,
+     -16.643651
+    ],
+    "start": [
+     -19.572493,
+     -18.673574
+    ],
+    "end": [
+     -12.374369,
+     -19.825631
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     -32.2
+    ],
+    "start": [
+     12.374369,
+     -19.825631
+    ],
+    "end": [
+     -12.374369,
+     -19.825631
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     15.556349,
+     -16.643651
+    ],
+    "start": [
+     12.374369,
+     -19.825631
+    ],
+    "end": [
+     19.572493,
+     -18.673574
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      19.572493,
+      -18.673574
+     ],
+     [
+      28,
+      -2
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28,
+      -2
+     ],
+     [
+      28,
+      -1.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28,
+      -1.0
+     ],
+     [
+      -28,
+      -1.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "operation": "join",
+    "targets": [
+     "1-44 Accelerator bridge bracket"
+    ],
+    "name": "Plate"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      30,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Ear holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     6.0,
+     -6.5
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-44 Accelerator bridge bracket"
+    ],
+    "name": "Ear holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      30,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      1.0,
+      -0.0
+     ],
+     "y_dir": [
+      -0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Ear M2 holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     6.0,
+     -1.93
+    ],
+    "diameter": 1.6
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-44 Accelerator bridge bracket"
+    ],
+    "name": "Ear M2 holes"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      1,
+      0
+     ],
+     "x_dir": [
+      -1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      -0.0,
+      -0.0,
+      -1.0
+     ]
+    },
+    "name": "Plate holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.556349,
+     16.643651
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.556349,
+     16.643651
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-44 Accelerator bridge bracket"
+    ],
+    "name": "Plate holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-44 Accelerator bridge bracket"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

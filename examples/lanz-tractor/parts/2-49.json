@@ -1,0 +1,10930 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ac_t",
+    "expression": "0.5",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ac_top",
+    "expression": "69.5",
+    "unit": "mm",
+    "comment": "top width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ac_bottom",
+    "expression": "49.5",
+    "unit": "mm",
+    "comment": "bottom width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ac_h",
+    "expression": "52",
+    "unit": "mm",
+    "comment": "height"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Gauze"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.0,
+      41.0
+     ],
+     [
+      0.0,
+      11.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     11.0,
+     11.0
+    ],
+    "start": [
+     0.0,
+     11.0
+    ],
+    "end": [
+     11.0,
+     0.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      11.0,
+      0.0
+     ],
+     [
+      41.94521,
+      0.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     41.94521,
+     11.0
+    ],
+    "start": [
+     41.94521,
+     0.0
+    ],
+    "end": [
+     52.212012,
+     7.05123
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      52.212012,
+      7.05123
+     ],
+     [
+      63.750473,
+      37.05123
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     53.483671,
+     41.0
+    ],
+    "start": [
+     63.750473,
+     37.05123
+    ],
+    "end": [
+     53.483671,
+     52.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.483671,
+      52.0
+     ],
+     [
+      11.0,
+      52.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     11.0,
+     41.0
+    ],
+    "start": [
+     11.0,
+     52.0
+    ],
+    "end": [
+     0.0,
+     41.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 0.5,
+    "name": "Gauze",
+    "body_name": "2-49 Motor side cover air cover"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -1
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Openings"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      42.0
+     ],
+     [
+      2.5,
+      42.0
+     ],
+     [
+      2.5,
+      44.0
+     ],
+     [
+      0.5,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      39.5
+     ],
+     [
+      2.5,
+      39.5
+     ],
+     [
+      2.5,
+      41.5
+     ],
+     [
+      0.5,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      37.0
+     ],
+     [
+      2.5,
+      37.0
+     ],
+     [
+      2.5,
+      39.0
+     ],
+     [
+      0.5,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      34.5
+     ],
+     [
+      2.5,
+      34.5
+     ],
+     [
+      2.5,
+      36.5
+     ],
+     [
+      0.5,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      32.0
+     ],
+     [
+      2.5,
+      32.0
+     ],
+     [
+      2.5,
+      34.0
+     ],
+     [
+      0.5,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      29.5
+     ],
+     [
+      2.5,
+      29.5
+     ],
+     [
+      2.5,
+      31.5
+     ],
+     [
+      0.5,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      27.0
+     ],
+     [
+      2.5,
+      27.0
+     ],
+     [
+      2.5,
+      29.0
+     ],
+     [
+      0.5,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      24.5
+     ],
+     [
+      2.5,
+      24.5
+     ],
+     [
+      2.5,
+      26.5
+     ],
+     [
+      0.5,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      22.0
+     ],
+     [
+      2.5,
+      22.0
+     ],
+     [
+      2.5,
+      24.0
+     ],
+     [
+      0.5,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      19.5
+     ],
+     [
+      2.5,
+      19.5
+     ],
+     [
+      2.5,
+      21.5
+     ],
+     [
+      0.5,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      17.0
+     ],
+     [
+      2.5,
+      17.0
+     ],
+     [
+      2.5,
+      19.0
+     ],
+     [
+      0.5,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      14.5
+     ],
+     [
+      2.5,
+      14.5
+     ],
+     [
+      2.5,
+      16.5
+     ],
+     [
+      0.5,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      12.0
+     ],
+     [
+      2.5,
+      12.0
+     ],
+     [
+      2.5,
+      14.0
+     ],
+     [
+      0.5,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.5,
+      9.5
+     ],
+     [
+      2.5,
+      9.5
+     ],
+     [
+      2.5,
+      11.5
+     ],
+     [
+      0.5,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      44.5
+     ],
+     [
+      5.0,
+      44.5
+     ],
+     [
+      5.0,
+      46.5
+     ],
+     [
+      3.0,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      42.0
+     ],
+     [
+      5.0,
+      42.0
+     ],
+     [
+      5.0,
+      44.0
+     ],
+     [
+      3.0,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      39.5
+     ],
+     [
+      5.0,
+      39.5
+     ],
+     [
+      5.0,
+      41.5
+     ],
+     [
+      3.0,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      37.0
+     ],
+     [
+      5.0,
+      37.0
+     ],
+     [
+      5.0,
+      39.0
+     ],
+     [
+      3.0,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      34.5
+     ],
+     [
+      5.0,
+      34.5
+     ],
+     [
+      5.0,
+      36.5
+     ],
+     [
+      3.0,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      32.0
+     ],
+     [
+      5.0,
+      32.0
+     ],
+     [
+      5.0,
+      34.0
+     ],
+     [
+      3.0,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      29.5
+     ],
+     [
+      5.0,
+      29.5
+     ],
+     [
+      5.0,
+      31.5
+     ],
+     [
+      3.0,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      27.0
+     ],
+     [
+      5.0,
+      27.0
+     ],
+     [
+      5.0,
+      29.0
+     ],
+     [
+      3.0,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      24.5
+     ],
+     [
+      5.0,
+      24.5
+     ],
+     [
+      5.0,
+      26.5
+     ],
+     [
+      3.0,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      22.0
+     ],
+     [
+      5.0,
+      22.0
+     ],
+     [
+      5.0,
+      24.0
+     ],
+     [
+      3.0,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      19.5
+     ],
+     [
+      5.0,
+      19.5
+     ],
+     [
+      5.0,
+      21.5
+     ],
+     [
+      3.0,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      17.0
+     ],
+     [
+      5.0,
+      17.0
+     ],
+     [
+      5.0,
+      19.0
+     ],
+     [
+      3.0,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      14.5
+     ],
+     [
+      5.0,
+      14.5
+     ],
+     [
+      5.0,
+      16.5
+     ],
+     [
+      3.0,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      12.0
+     ],
+     [
+      5.0,
+      12.0
+     ],
+     [
+      5.0,
+      14.0
+     ],
+     [
+      3.0,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      9.5
+     ],
+     [
+      5.0,
+      9.5
+     ],
+     [
+      5.0,
+      11.5
+     ],
+     [
+      3.0,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      7.0
+     ],
+     [
+      5.0,
+      7.0
+     ],
+     [
+      5.0,
+      9.0
+     ],
+     [
+      3.0,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.0,
+      4.5
+     ],
+     [
+      5.0,
+      4.5
+     ],
+     [
+      5.0,
+      6.5
+     ],
+     [
+      3.0,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      47.0
+     ],
+     [
+      7.5,
+      47.0
+     ],
+     [
+      7.5,
+      49.0
+     ],
+     [
+      5.5,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      44.5
+     ],
+     [
+      7.5,
+      44.5
+     ],
+     [
+      7.5,
+      46.5
+     ],
+     [
+      5.5,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      42.0
+     ],
+     [
+      7.5,
+      42.0
+     ],
+     [
+      7.5,
+      44.0
+     ],
+     [
+      5.5,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      39.5
+     ],
+     [
+      7.5,
+      39.5
+     ],
+     [
+      7.5,
+      41.5
+     ],
+     [
+      5.5,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      37.0
+     ],
+     [
+      7.5,
+      37.0
+     ],
+     [
+      7.5,
+      39.0
+     ],
+     [
+      5.5,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      34.5
+     ],
+     [
+      7.5,
+      34.5
+     ],
+     [
+      7.5,
+      36.5
+     ],
+     [
+      5.5,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      32.0
+     ],
+     [
+      7.5,
+      32.0
+     ],
+     [
+      7.5,
+      34.0
+     ],
+     [
+      5.5,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      29.5
+     ],
+     [
+      7.5,
+      29.5
+     ],
+     [
+      7.5,
+      31.5
+     ],
+     [
+      5.5,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      27.0
+     ],
+     [
+      7.5,
+      27.0
+     ],
+     [
+      7.5,
+      29.0
+     ],
+     [
+      5.5,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      24.5
+     ],
+     [
+      7.5,
+      24.5
+     ],
+     [
+      7.5,
+      26.5
+     ],
+     [
+      5.5,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      22.0
+     ],
+     [
+      7.5,
+      22.0
+     ],
+     [
+      7.5,
+      24.0
+     ],
+     [
+      5.5,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      19.5
+     ],
+     [
+      7.5,
+      19.5
+     ],
+     [
+      7.5,
+      21.5
+     ],
+     [
+      5.5,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      17.0
+     ],
+     [
+      7.5,
+      17.0
+     ],
+     [
+      7.5,
+      19.0
+     ],
+     [
+      5.5,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      14.5
+     ],
+     [
+      7.5,
+      14.5
+     ],
+     [
+      7.5,
+      16.5
+     ],
+     [
+      5.5,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      12.0
+     ],
+     [
+      7.5,
+      12.0
+     ],
+     [
+      7.5,
+      14.0
+     ],
+     [
+      5.5,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      9.5
+     ],
+     [
+      7.5,
+      9.5
+     ],
+     [
+      7.5,
+      11.5
+     ],
+     [
+      5.5,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      7.0
+     ],
+     [
+      7.5,
+      7.0
+     ],
+     [
+      7.5,
+      9.0
+     ],
+     [
+      5.5,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      4.5
+     ],
+     [
+      7.5,
+      4.5
+     ],
+     [
+      7.5,
+      6.5
+     ],
+     [
+      5.5,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.5,
+      2.0
+     ],
+     [
+      7.5,
+      2.0
+     ],
+     [
+      7.5,
+      4.0
+     ],
+     [
+      5.5,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      49.5
+     ],
+     [
+      10.0,
+      49.5
+     ],
+     [
+      10.0,
+      51.5
+     ],
+     [
+      8.0,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      47.0
+     ],
+     [
+      10.0,
+      47.0
+     ],
+     [
+      10.0,
+      49.0
+     ],
+     [
+      8.0,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      44.5
+     ],
+     [
+      10.0,
+      44.5
+     ],
+     [
+      10.0,
+      46.5
+     ],
+     [
+      8.0,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      42.0
+     ],
+     [
+      10.0,
+      42.0
+     ],
+     [
+      10.0,
+      44.0
+     ],
+     [
+      8.0,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      39.5
+     ],
+     [
+      10.0,
+      39.5
+     ],
+     [
+      10.0,
+      41.5
+     ],
+     [
+      8.0,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      37.0
+     ],
+     [
+      10.0,
+      37.0
+     ],
+     [
+      10.0,
+      39.0
+     ],
+     [
+      8.0,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      34.5
+     ],
+     [
+      10.0,
+      34.5
+     ],
+     [
+      10.0,
+      36.5
+     ],
+     [
+      8.0,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      32.0
+     ],
+     [
+      10.0,
+      32.0
+     ],
+     [
+      10.0,
+      34.0
+     ],
+     [
+      8.0,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      29.5
+     ],
+     [
+      10.0,
+      29.5
+     ],
+     [
+      10.0,
+      31.5
+     ],
+     [
+      8.0,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      27.0
+     ],
+     [
+      10.0,
+      27.0
+     ],
+     [
+      10.0,
+      29.0
+     ],
+     [
+      8.0,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      24.5
+     ],
+     [
+      10.0,
+      24.5
+     ],
+     [
+      10.0,
+      26.5
+     ],
+     [
+      8.0,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      22.0
+     ],
+     [
+      10.0,
+      22.0
+     ],
+     [
+      10.0,
+      24.0
+     ],
+     [
+      8.0,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      19.5
+     ],
+     [
+      10.0,
+      19.5
+     ],
+     [
+      10.0,
+      21.5
+     ],
+     [
+      8.0,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      17.0
+     ],
+     [
+      10.0,
+      17.0
+     ],
+     [
+      10.0,
+      19.0
+     ],
+     [
+      8.0,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      14.5
+     ],
+     [
+      10.0,
+      14.5
+     ],
+     [
+      10.0,
+      16.5
+     ],
+     [
+      8.0,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      12.0
+     ],
+     [
+      10.0,
+      12.0
+     ],
+     [
+      10.0,
+      14.0
+     ],
+     [
+      8.0,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      9.5
+     ],
+     [
+      10.0,
+      9.5
+     ],
+     [
+      10.0,
+      11.5
+     ],
+     [
+      8.0,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      7.0
+     ],
+     [
+      10.0,
+      7.0
+     ],
+     [
+      10.0,
+      9.0
+     ],
+     [
+      8.0,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      4.5
+     ],
+     [
+      10.0,
+      4.5
+     ],
+     [
+      10.0,
+      6.5
+     ],
+     [
+      8.0,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      2.0
+     ],
+     [
+      10.0,
+      2.0
+     ],
+     [
+      10.0,
+      4.0
+     ],
+     [
+      8.0,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      49.5
+     ],
+     [
+      12.5,
+      49.5
+     ],
+     [
+      12.5,
+      51.5
+     ],
+     [
+      10.5,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      47.0
+     ],
+     [
+      12.5,
+      47.0
+     ],
+     [
+      12.5,
+      49.0
+     ],
+     [
+      10.5,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      44.5
+     ],
+     [
+      12.5,
+      44.5
+     ],
+     [
+      12.5,
+      46.5
+     ],
+     [
+      10.5,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      42.0
+     ],
+     [
+      12.5,
+      42.0
+     ],
+     [
+      12.5,
+      44.0
+     ],
+     [
+      10.5,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      39.5
+     ],
+     [
+      12.5,
+      39.5
+     ],
+     [
+      12.5,
+      41.5
+     ],
+     [
+      10.5,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      37.0
+     ],
+     [
+      12.5,
+      37.0
+     ],
+     [
+      12.5,
+      39.0
+     ],
+     [
+      10.5,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      34.5
+     ],
+     [
+      12.5,
+      34.5
+     ],
+     [
+      12.5,
+      36.5
+     ],
+     [
+      10.5,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      32.0
+     ],
+     [
+      12.5,
+      32.0
+     ],
+     [
+      12.5,
+      34.0
+     ],
+     [
+      10.5,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      29.5
+     ],
+     [
+      12.5,
+      29.5
+     ],
+     [
+      12.5,
+      31.5
+     ],
+     [
+      10.5,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      27.0
+     ],
+     [
+      12.5,
+      27.0
+     ],
+     [
+      12.5,
+      29.0
+     ],
+     [
+      10.5,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      24.5
+     ],
+     [
+      12.5,
+      24.5
+     ],
+     [
+      12.5,
+      26.5
+     ],
+     [
+      10.5,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      22.0
+     ],
+     [
+      12.5,
+      22.0
+     ],
+     [
+      12.5,
+      24.0
+     ],
+     [
+      10.5,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      19.5
+     ],
+     [
+      12.5,
+      19.5
+     ],
+     [
+      12.5,
+      21.5
+     ],
+     [
+      10.5,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      17.0
+     ],
+     [
+      12.5,
+      17.0
+     ],
+     [
+      12.5,
+      19.0
+     ],
+     [
+      10.5,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      14.5
+     ],
+     [
+      12.5,
+      14.5
+     ],
+     [
+      12.5,
+      16.5
+     ],
+     [
+      10.5,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      12.0
+     ],
+     [
+      12.5,
+      12.0
+     ],
+     [
+      12.5,
+      14.0
+     ],
+     [
+      10.5,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      9.5
+     ],
+     [
+      12.5,
+      9.5
+     ],
+     [
+      12.5,
+      11.5
+     ],
+     [
+      10.5,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      7.0
+     ],
+     [
+      12.5,
+      7.0
+     ],
+     [
+      12.5,
+      9.0
+     ],
+     [
+      10.5,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      4.5
+     ],
+     [
+      12.5,
+      4.5
+     ],
+     [
+      12.5,
+      6.5
+     ],
+     [
+      10.5,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.5,
+      2.0
+     ],
+     [
+      12.5,
+      2.0
+     ],
+     [
+      12.5,
+      4.0
+     ],
+     [
+      10.5,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      49.5
+     ],
+     [
+      15.0,
+      49.5
+     ],
+     [
+      15.0,
+      51.5
+     ],
+     [
+      13.0,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      47.0
+     ],
+     [
+      15.0,
+      47.0
+     ],
+     [
+      15.0,
+      49.0
+     ],
+     [
+      13.0,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      44.5
+     ],
+     [
+      15.0,
+      44.5
+     ],
+     [
+      15.0,
+      46.5
+     ],
+     [
+      13.0,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      42.0
+     ],
+     [
+      15.0,
+      42.0
+     ],
+     [
+      15.0,
+      44.0
+     ],
+     [
+      13.0,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      39.5
+     ],
+     [
+      15.0,
+      39.5
+     ],
+     [
+      15.0,
+      41.5
+     ],
+     [
+      13.0,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      37.0
+     ],
+     [
+      15.0,
+      37.0
+     ],
+     [
+      15.0,
+      39.0
+     ],
+     [
+      13.0,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      34.5
+     ],
+     [
+      15.0,
+      34.5
+     ],
+     [
+      15.0,
+      36.5
+     ],
+     [
+      13.0,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      32.0
+     ],
+     [
+      15.0,
+      32.0
+     ],
+     [
+      15.0,
+      34.0
+     ],
+     [
+      13.0,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      29.5
+     ],
+     [
+      15.0,
+      29.5
+     ],
+     [
+      15.0,
+      31.5
+     ],
+     [
+      13.0,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      27.0
+     ],
+     [
+      15.0,
+      27.0
+     ],
+     [
+      15.0,
+      29.0
+     ],
+     [
+      13.0,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      24.5
+     ],
+     [
+      15.0,
+      24.5
+     ],
+     [
+      15.0,
+      26.5
+     ],
+     [
+      13.0,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      22.0
+     ],
+     [
+      15.0,
+      22.0
+     ],
+     [
+      15.0,
+      24.0
+     ],
+     [
+      13.0,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      19.5
+     ],
+     [
+      15.0,
+      19.5
+     ],
+     [
+      15.0,
+      21.5
+     ],
+     [
+      13.0,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      17.0
+     ],
+     [
+      15.0,
+      17.0
+     ],
+     [
+      15.0,
+      19.0
+     ],
+     [
+      13.0,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      14.5
+     ],
+     [
+      15.0,
+      14.5
+     ],
+     [
+      15.0,
+      16.5
+     ],
+     [
+      13.0,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      12.0
+     ],
+     [
+      15.0,
+      12.0
+     ],
+     [
+      15.0,
+      14.0
+     ],
+     [
+      13.0,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      9.5
+     ],
+     [
+      15.0,
+      9.5
+     ],
+     [
+      15.0,
+      11.5
+     ],
+     [
+      13.0,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      7.0
+     ],
+     [
+      15.0,
+      7.0
+     ],
+     [
+      15.0,
+      9.0
+     ],
+     [
+      13.0,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      4.5
+     ],
+     [
+      15.0,
+      4.5
+     ],
+     [
+      15.0,
+      6.5
+     ],
+     [
+      13.0,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.0,
+      2.0
+     ],
+     [
+      15.0,
+      2.0
+     ],
+     [
+      15.0,
+      4.0
+     ],
+     [
+      13.0,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      49.5
+     ],
+     [
+      17.5,
+      49.5
+     ],
+     [
+      17.5,
+      51.5
+     ],
+     [
+      15.5,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      47.0
+     ],
+     [
+      17.5,
+      47.0
+     ],
+     [
+      17.5,
+      49.0
+     ],
+     [
+      15.5,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      44.5
+     ],
+     [
+      17.5,
+      44.5
+     ],
+     [
+      17.5,
+      46.5
+     ],
+     [
+      15.5,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      42.0
+     ],
+     [
+      17.5,
+      42.0
+     ],
+     [
+      17.5,
+      44.0
+     ],
+     [
+      15.5,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      39.5
+     ],
+     [
+      17.5,
+      39.5
+     ],
+     [
+      17.5,
+      41.5
+     ],
+     [
+      15.5,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      37.0
+     ],
+     [
+      17.5,
+      37.0
+     ],
+     [
+      17.5,
+      39.0
+     ],
+     [
+      15.5,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      34.5
+     ],
+     [
+      17.5,
+      34.5
+     ],
+     [
+      17.5,
+      36.5
+     ],
+     [
+      15.5,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      32.0
+     ],
+     [
+      17.5,
+      32.0
+     ],
+     [
+      17.5,
+      34.0
+     ],
+     [
+      15.5,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      29.5
+     ],
+     [
+      17.5,
+      29.5
+     ],
+     [
+      17.5,
+      31.5
+     ],
+     [
+      15.5,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      27.0
+     ],
+     [
+      17.5,
+      27.0
+     ],
+     [
+      17.5,
+      29.0
+     ],
+     [
+      15.5,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      24.5
+     ],
+     [
+      17.5,
+      24.5
+     ],
+     [
+      17.5,
+      26.5
+     ],
+     [
+      15.5,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      22.0
+     ],
+     [
+      17.5,
+      22.0
+     ],
+     [
+      17.5,
+      24.0
+     ],
+     [
+      15.5,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      19.5
+     ],
+     [
+      17.5,
+      19.5
+     ],
+     [
+      17.5,
+      21.5
+     ],
+     [
+      15.5,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      17.0
+     ],
+     [
+      17.5,
+      17.0
+     ],
+     [
+      17.5,
+      19.0
+     ],
+     [
+      15.5,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      14.5
+     ],
+     [
+      17.5,
+      14.5
+     ],
+     [
+      17.5,
+      16.5
+     ],
+     [
+      15.5,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      12.0
+     ],
+     [
+      17.5,
+      12.0
+     ],
+     [
+      17.5,
+      14.0
+     ],
+     [
+      15.5,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      9.5
+     ],
+     [
+      17.5,
+      9.5
+     ],
+     [
+      17.5,
+      11.5
+     ],
+     [
+      15.5,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      7.0
+     ],
+     [
+      17.5,
+      7.0
+     ],
+     [
+      17.5,
+      9.0
+     ],
+     [
+      15.5,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      4.5
+     ],
+     [
+      17.5,
+      4.5
+     ],
+     [
+      17.5,
+      6.5
+     ],
+     [
+      15.5,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15.5,
+      2.0
+     ],
+     [
+      17.5,
+      2.0
+     ],
+     [
+      17.5,
+      4.0
+     ],
+     [
+      15.5,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      49.5
+     ],
+     [
+      20.0,
+      49.5
+     ],
+     [
+      20.0,
+      51.5
+     ],
+     [
+      18.0,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      47.0
+     ],
+     [
+      20.0,
+      47.0
+     ],
+     [
+      20.0,
+      49.0
+     ],
+     [
+      18.0,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      44.5
+     ],
+     [
+      20.0,
+      44.5
+     ],
+     [
+      20.0,
+      46.5
+     ],
+     [
+      18.0,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      42.0
+     ],
+     [
+      20.0,
+      42.0
+     ],
+     [
+      20.0,
+      44.0
+     ],
+     [
+      18.0,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      39.5
+     ],
+     [
+      20.0,
+      39.5
+     ],
+     [
+      20.0,
+      41.5
+     ],
+     [
+      18.0,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      37.0
+     ],
+     [
+      20.0,
+      37.0
+     ],
+     [
+      20.0,
+      39.0
+     ],
+     [
+      18.0,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      34.5
+     ],
+     [
+      20.0,
+      34.5
+     ],
+     [
+      20.0,
+      36.5
+     ],
+     [
+      18.0,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      32.0
+     ],
+     [
+      20.0,
+      32.0
+     ],
+     [
+      20.0,
+      34.0
+     ],
+     [
+      18.0,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      29.5
+     ],
+     [
+      20.0,
+      29.5
+     ],
+     [
+      20.0,
+      31.5
+     ],
+     [
+      18.0,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      27.0
+     ],
+     [
+      20.0,
+      27.0
+     ],
+     [
+      20.0,
+      29.0
+     ],
+     [
+      18.0,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      24.5
+     ],
+     [
+      20.0,
+      24.5
+     ],
+     [
+      20.0,
+      26.5
+     ],
+     [
+      18.0,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      22.0
+     ],
+     [
+      20.0,
+      22.0
+     ],
+     [
+      20.0,
+      24.0
+     ],
+     [
+      18.0,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      19.5
+     ],
+     [
+      20.0,
+      19.5
+     ],
+     [
+      20.0,
+      21.5
+     ],
+     [
+      18.0,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      17.0
+     ],
+     [
+      20.0,
+      17.0
+     ],
+     [
+      20.0,
+      19.0
+     ],
+     [
+      18.0,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      14.5
+     ],
+     [
+      20.0,
+      14.5
+     ],
+     [
+      20.0,
+      16.5
+     ],
+     [
+      18.0,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      12.0
+     ],
+     [
+      20.0,
+      12.0
+     ],
+     [
+      20.0,
+      14.0
+     ],
+     [
+      18.0,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      9.5
+     ],
+     [
+      20.0,
+      9.5
+     ],
+     [
+      20.0,
+      11.5
+     ],
+     [
+      18.0,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      7.0
+     ],
+     [
+      20.0,
+      7.0
+     ],
+     [
+      20.0,
+      9.0
+     ],
+     [
+      18.0,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      4.5
+     ],
+     [
+      20.0,
+      4.5
+     ],
+     [
+      20.0,
+      6.5
+     ],
+     [
+      18.0,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18.0,
+      2.0
+     ],
+     [
+      20.0,
+      2.0
+     ],
+     [
+      20.0,
+      4.0
+     ],
+     [
+      18.0,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      49.5
+     ],
+     [
+      22.5,
+      49.5
+     ],
+     [
+      22.5,
+      51.5
+     ],
+     [
+      20.5,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      47.0
+     ],
+     [
+      22.5,
+      47.0
+     ],
+     [
+      22.5,
+      49.0
+     ],
+     [
+      20.5,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      44.5
+     ],
+     [
+      22.5,
+      44.5
+     ],
+     [
+      22.5,
+      46.5
+     ],
+     [
+      20.5,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      42.0
+     ],
+     [
+      22.5,
+      42.0
+     ],
+     [
+      22.5,
+      44.0
+     ],
+     [
+      20.5,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      39.5
+     ],
+     [
+      22.5,
+      39.5
+     ],
+     [
+      22.5,
+      41.5
+     ],
+     [
+      20.5,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      37.0
+     ],
+     [
+      22.5,
+      37.0
+     ],
+     [
+      22.5,
+      39.0
+     ],
+     [
+      20.5,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      34.5
+     ],
+     [
+      22.5,
+      34.5
+     ],
+     [
+      22.5,
+      36.5
+     ],
+     [
+      20.5,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      32.0
+     ],
+     [
+      22.5,
+      32.0
+     ],
+     [
+      22.5,
+      34.0
+     ],
+     [
+      20.5,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      29.5
+     ],
+     [
+      22.5,
+      29.5
+     ],
+     [
+      22.5,
+      31.5
+     ],
+     [
+      20.5,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      27.0
+     ],
+     [
+      22.5,
+      27.0
+     ],
+     [
+      22.5,
+      29.0
+     ],
+     [
+      20.5,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      24.5
+     ],
+     [
+      22.5,
+      24.5
+     ],
+     [
+      22.5,
+      26.5
+     ],
+     [
+      20.5,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      22.0
+     ],
+     [
+      22.5,
+      22.0
+     ],
+     [
+      22.5,
+      24.0
+     ],
+     [
+      20.5,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      19.5
+     ],
+     [
+      22.5,
+      19.5
+     ],
+     [
+      22.5,
+      21.5
+     ],
+     [
+      20.5,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      17.0
+     ],
+     [
+      22.5,
+      17.0
+     ],
+     [
+      22.5,
+      19.0
+     ],
+     [
+      20.5,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      14.5
+     ],
+     [
+      22.5,
+      14.5
+     ],
+     [
+      22.5,
+      16.5
+     ],
+     [
+      20.5,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      12.0
+     ],
+     [
+      22.5,
+      12.0
+     ],
+     [
+      22.5,
+      14.0
+     ],
+     [
+      20.5,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      9.5
+     ],
+     [
+      22.5,
+      9.5
+     ],
+     [
+      22.5,
+      11.5
+     ],
+     [
+      20.5,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      7.0
+     ],
+     [
+      22.5,
+      7.0
+     ],
+     [
+      22.5,
+      9.0
+     ],
+     [
+      20.5,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      4.5
+     ],
+     [
+      22.5,
+      4.5
+     ],
+     [
+      22.5,
+      6.5
+     ],
+     [
+      20.5,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      20.5,
+      2.0
+     ],
+     [
+      22.5,
+      2.0
+     ],
+     [
+      22.5,
+      4.0
+     ],
+     [
+      20.5,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      49.5
+     ],
+     [
+      25.0,
+      49.5
+     ],
+     [
+      25.0,
+      51.5
+     ],
+     [
+      23.0,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      47.0
+     ],
+     [
+      25.0,
+      47.0
+     ],
+     [
+      25.0,
+      49.0
+     ],
+     [
+      23.0,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      44.5
+     ],
+     [
+      25.0,
+      44.5
+     ],
+     [
+      25.0,
+      46.5
+     ],
+     [
+      23.0,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      42.0
+     ],
+     [
+      25.0,
+      42.0
+     ],
+     [
+      25.0,
+      44.0
+     ],
+     [
+      23.0,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      39.5
+     ],
+     [
+      25.0,
+      39.5
+     ],
+     [
+      25.0,
+      41.5
+     ],
+     [
+      23.0,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      37.0
+     ],
+     [
+      25.0,
+      37.0
+     ],
+     [
+      25.0,
+      39.0
+     ],
+     [
+      23.0,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      34.5
+     ],
+     [
+      25.0,
+      34.5
+     ],
+     [
+      25.0,
+      36.5
+     ],
+     [
+      23.0,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      32.0
+     ],
+     [
+      25.0,
+      32.0
+     ],
+     [
+      25.0,
+      34.0
+     ],
+     [
+      23.0,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      29.5
+     ],
+     [
+      25.0,
+      29.5
+     ],
+     [
+      25.0,
+      31.5
+     ],
+     [
+      23.0,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      27.0
+     ],
+     [
+      25.0,
+      27.0
+     ],
+     [
+      25.0,
+      29.0
+     ],
+     [
+      23.0,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      24.5
+     ],
+     [
+      25.0,
+      24.5
+     ],
+     [
+      25.0,
+      26.5
+     ],
+     [
+      23.0,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      22.0
+     ],
+     [
+      25.0,
+      22.0
+     ],
+     [
+      25.0,
+      24.0
+     ],
+     [
+      23.0,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      19.5
+     ],
+     [
+      25.0,
+      19.5
+     ],
+     [
+      25.0,
+      21.5
+     ],
+     [
+      23.0,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      17.0
+     ],
+     [
+      25.0,
+      17.0
+     ],
+     [
+      25.0,
+      19.0
+     ],
+     [
+      23.0,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      14.5
+     ],
+     [
+      25.0,
+      14.5
+     ],
+     [
+      25.0,
+      16.5
+     ],
+     [
+      23.0,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      12.0
+     ],
+     [
+      25.0,
+      12.0
+     ],
+     [
+      25.0,
+      14.0
+     ],
+     [
+      23.0,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      9.5
+     ],
+     [
+      25.0,
+      9.5
+     ],
+     [
+      25.0,
+      11.5
+     ],
+     [
+      23.0,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      7.0
+     ],
+     [
+      25.0,
+      7.0
+     ],
+     [
+      25.0,
+      9.0
+     ],
+     [
+      23.0,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      4.5
+     ],
+     [
+      25.0,
+      4.5
+     ],
+     [
+      25.0,
+      6.5
+     ],
+     [
+      23.0,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      23.0,
+      2.0
+     ],
+     [
+      25.0,
+      2.0
+     ],
+     [
+      25.0,
+      4.0
+     ],
+     [
+      23.0,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      49.5
+     ],
+     [
+      27.5,
+      49.5
+     ],
+     [
+      27.5,
+      51.5
+     ],
+     [
+      25.5,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      47.0
+     ],
+     [
+      27.5,
+      47.0
+     ],
+     [
+      27.5,
+      49.0
+     ],
+     [
+      25.5,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      44.5
+     ],
+     [
+      27.5,
+      44.5
+     ],
+     [
+      27.5,
+      46.5
+     ],
+     [
+      25.5,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      42.0
+     ],
+     [
+      27.5,
+      42.0
+     ],
+     [
+      27.5,
+      44.0
+     ],
+     [
+      25.5,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      39.5
+     ],
+     [
+      27.5,
+      39.5
+     ],
+     [
+      27.5,
+      41.5
+     ],
+     [
+      25.5,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      37.0
+     ],
+     [
+      27.5,
+      37.0
+     ],
+     [
+      27.5,
+      39.0
+     ],
+     [
+      25.5,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      34.5
+     ],
+     [
+      27.5,
+      34.5
+     ],
+     [
+      27.5,
+      36.5
+     ],
+     [
+      25.5,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      32.0
+     ],
+     [
+      27.5,
+      32.0
+     ],
+     [
+      27.5,
+      34.0
+     ],
+     [
+      25.5,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      29.5
+     ],
+     [
+      27.5,
+      29.5
+     ],
+     [
+      27.5,
+      31.5
+     ],
+     [
+      25.5,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      27.0
+     ],
+     [
+      27.5,
+      27.0
+     ],
+     [
+      27.5,
+      29.0
+     ],
+     [
+      25.5,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      24.5
+     ],
+     [
+      27.5,
+      24.5
+     ],
+     [
+      27.5,
+      26.5
+     ],
+     [
+      25.5,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      22.0
+     ],
+     [
+      27.5,
+      22.0
+     ],
+     [
+      27.5,
+      24.0
+     ],
+     [
+      25.5,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      19.5
+     ],
+     [
+      27.5,
+      19.5
+     ],
+     [
+      27.5,
+      21.5
+     ],
+     [
+      25.5,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      17.0
+     ],
+     [
+      27.5,
+      17.0
+     ],
+     [
+      27.5,
+      19.0
+     ],
+     [
+      25.5,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      14.5
+     ],
+     [
+      27.5,
+      14.5
+     ],
+     [
+      27.5,
+      16.5
+     ],
+     [
+      25.5,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      12.0
+     ],
+     [
+      27.5,
+      12.0
+     ],
+     [
+      27.5,
+      14.0
+     ],
+     [
+      25.5,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      9.5
+     ],
+     [
+      27.5,
+      9.5
+     ],
+     [
+      27.5,
+      11.5
+     ],
+     [
+      25.5,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      7.0
+     ],
+     [
+      27.5,
+      7.0
+     ],
+     [
+      27.5,
+      9.0
+     ],
+     [
+      25.5,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      4.5
+     ],
+     [
+      27.5,
+      4.5
+     ],
+     [
+      27.5,
+      6.5
+     ],
+     [
+      25.5,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      25.5,
+      2.0
+     ],
+     [
+      27.5,
+      2.0
+     ],
+     [
+      27.5,
+      4.0
+     ],
+     [
+      25.5,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      49.5
+     ],
+     [
+      30.0,
+      49.5
+     ],
+     [
+      30.0,
+      51.5
+     ],
+     [
+      28.0,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      47.0
+     ],
+     [
+      30.0,
+      47.0
+     ],
+     [
+      30.0,
+      49.0
+     ],
+     [
+      28.0,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      44.5
+     ],
+     [
+      30.0,
+      44.5
+     ],
+     [
+      30.0,
+      46.5
+     ],
+     [
+      28.0,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      42.0
+     ],
+     [
+      30.0,
+      42.0
+     ],
+     [
+      30.0,
+      44.0
+     ],
+     [
+      28.0,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      39.5
+     ],
+     [
+      30.0,
+      39.5
+     ],
+     [
+      30.0,
+      41.5
+     ],
+     [
+      28.0,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      37.0
+     ],
+     [
+      30.0,
+      37.0
+     ],
+     [
+      30.0,
+      39.0
+     ],
+     [
+      28.0,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      34.5
+     ],
+     [
+      30.0,
+      34.5
+     ],
+     [
+      30.0,
+      36.5
+     ],
+     [
+      28.0,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      32.0
+     ],
+     [
+      30.0,
+      32.0
+     ],
+     [
+      30.0,
+      34.0
+     ],
+     [
+      28.0,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      29.5
+     ],
+     [
+      30.0,
+      29.5
+     ],
+     [
+      30.0,
+      31.5
+     ],
+     [
+      28.0,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      27.0
+     ],
+     [
+      30.0,
+      27.0
+     ],
+     [
+      30.0,
+      29.0
+     ],
+     [
+      28.0,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      24.5
+     ],
+     [
+      30.0,
+      24.5
+     ],
+     [
+      30.0,
+      26.5
+     ],
+     [
+      28.0,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      22.0
+     ],
+     [
+      30.0,
+      22.0
+     ],
+     [
+      30.0,
+      24.0
+     ],
+     [
+      28.0,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      19.5
+     ],
+     [
+      30.0,
+      19.5
+     ],
+     [
+      30.0,
+      21.5
+     ],
+     [
+      28.0,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      17.0
+     ],
+     [
+      30.0,
+      17.0
+     ],
+     [
+      30.0,
+      19.0
+     ],
+     [
+      28.0,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      14.5
+     ],
+     [
+      30.0,
+      14.5
+     ],
+     [
+      30.0,
+      16.5
+     ],
+     [
+      28.0,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      12.0
+     ],
+     [
+      30.0,
+      12.0
+     ],
+     [
+      30.0,
+      14.0
+     ],
+     [
+      28.0,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      9.5
+     ],
+     [
+      30.0,
+      9.5
+     ],
+     [
+      30.0,
+      11.5
+     ],
+     [
+      28.0,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      7.0
+     ],
+     [
+      30.0,
+      7.0
+     ],
+     [
+      30.0,
+      9.0
+     ],
+     [
+      28.0,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      4.5
+     ],
+     [
+      30.0,
+      4.5
+     ],
+     [
+      30.0,
+      6.5
+     ],
+     [
+      28.0,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28.0,
+      2.0
+     ],
+     [
+      30.0,
+      2.0
+     ],
+     [
+      30.0,
+      4.0
+     ],
+     [
+      28.0,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      49.5
+     ],
+     [
+      32.5,
+      49.5
+     ],
+     [
+      32.5,
+      51.5
+     ],
+     [
+      30.5,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      47.0
+     ],
+     [
+      32.5,
+      47.0
+     ],
+     [
+      32.5,
+      49.0
+     ],
+     [
+      30.5,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      44.5
+     ],
+     [
+      32.5,
+      44.5
+     ],
+     [
+      32.5,
+      46.5
+     ],
+     [
+      30.5,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      42.0
+     ],
+     [
+      32.5,
+      42.0
+     ],
+     [
+      32.5,
+      44.0
+     ],
+     [
+      30.5,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      39.5
+     ],
+     [
+      32.5,
+      39.5
+     ],
+     [
+      32.5,
+      41.5
+     ],
+     [
+      30.5,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      37.0
+     ],
+     [
+      32.5,
+      37.0
+     ],
+     [
+      32.5,
+      39.0
+     ],
+     [
+      30.5,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      34.5
+     ],
+     [
+      32.5,
+      34.5
+     ],
+     [
+      32.5,
+      36.5
+     ],
+     [
+      30.5,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      32.0
+     ],
+     [
+      32.5,
+      32.0
+     ],
+     [
+      32.5,
+      34.0
+     ],
+     [
+      30.5,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      29.5
+     ],
+     [
+      32.5,
+      29.5
+     ],
+     [
+      32.5,
+      31.5
+     ],
+     [
+      30.5,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      27.0
+     ],
+     [
+      32.5,
+      27.0
+     ],
+     [
+      32.5,
+      29.0
+     ],
+     [
+      30.5,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      24.5
+     ],
+     [
+      32.5,
+      24.5
+     ],
+     [
+      32.5,
+      26.5
+     ],
+     [
+      30.5,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      22.0
+     ],
+     [
+      32.5,
+      22.0
+     ],
+     [
+      32.5,
+      24.0
+     ],
+     [
+      30.5,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      19.5
+     ],
+     [
+      32.5,
+      19.5
+     ],
+     [
+      32.5,
+      21.5
+     ],
+     [
+      30.5,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      17.0
+     ],
+     [
+      32.5,
+      17.0
+     ],
+     [
+      32.5,
+      19.0
+     ],
+     [
+      30.5,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      14.5
+     ],
+     [
+      32.5,
+      14.5
+     ],
+     [
+      32.5,
+      16.5
+     ],
+     [
+      30.5,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      12.0
+     ],
+     [
+      32.5,
+      12.0
+     ],
+     [
+      32.5,
+      14.0
+     ],
+     [
+      30.5,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      9.5
+     ],
+     [
+      32.5,
+      9.5
+     ],
+     [
+      32.5,
+      11.5
+     ],
+     [
+      30.5,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      7.0
+     ],
+     [
+      32.5,
+      7.0
+     ],
+     [
+      32.5,
+      9.0
+     ],
+     [
+      30.5,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      4.5
+     ],
+     [
+      32.5,
+      4.5
+     ],
+     [
+      32.5,
+      6.5
+     ],
+     [
+      30.5,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      30.5,
+      2.0
+     ],
+     [
+      32.5,
+      2.0
+     ],
+     [
+      32.5,
+      4.0
+     ],
+     [
+      30.5,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      49.5
+     ],
+     [
+      35.0,
+      49.5
+     ],
+     [
+      35.0,
+      51.5
+     ],
+     [
+      33.0,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      47.0
+     ],
+     [
+      35.0,
+      47.0
+     ],
+     [
+      35.0,
+      49.0
+     ],
+     [
+      33.0,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      44.5
+     ],
+     [
+      35.0,
+      44.5
+     ],
+     [
+      35.0,
+      46.5
+     ],
+     [
+      33.0,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      42.0
+     ],
+     [
+      35.0,
+      42.0
+     ],
+     [
+      35.0,
+      44.0
+     ],
+     [
+      33.0,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      39.5
+     ],
+     [
+      35.0,
+      39.5
+     ],
+     [
+      35.0,
+      41.5
+     ],
+     [
+      33.0,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      37.0
+     ],
+     [
+      35.0,
+      37.0
+     ],
+     [
+      35.0,
+      39.0
+     ],
+     [
+      33.0,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      34.5
+     ],
+     [
+      35.0,
+      34.5
+     ],
+     [
+      35.0,
+      36.5
+     ],
+     [
+      33.0,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      32.0
+     ],
+     [
+      35.0,
+      32.0
+     ],
+     [
+      35.0,
+      34.0
+     ],
+     [
+      33.0,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      29.5
+     ],
+     [
+      35.0,
+      29.5
+     ],
+     [
+      35.0,
+      31.5
+     ],
+     [
+      33.0,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      27.0
+     ],
+     [
+      35.0,
+      27.0
+     ],
+     [
+      35.0,
+      29.0
+     ],
+     [
+      33.0,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      24.5
+     ],
+     [
+      35.0,
+      24.5
+     ],
+     [
+      35.0,
+      26.5
+     ],
+     [
+      33.0,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      22.0
+     ],
+     [
+      35.0,
+      22.0
+     ],
+     [
+      35.0,
+      24.0
+     ],
+     [
+      33.0,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      19.5
+     ],
+     [
+      35.0,
+      19.5
+     ],
+     [
+      35.0,
+      21.5
+     ],
+     [
+      33.0,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      17.0
+     ],
+     [
+      35.0,
+      17.0
+     ],
+     [
+      35.0,
+      19.0
+     ],
+     [
+      33.0,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      14.5
+     ],
+     [
+      35.0,
+      14.5
+     ],
+     [
+      35.0,
+      16.5
+     ],
+     [
+      33.0,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      12.0
+     ],
+     [
+      35.0,
+      12.0
+     ],
+     [
+      35.0,
+      14.0
+     ],
+     [
+      33.0,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      9.5
+     ],
+     [
+      35.0,
+      9.5
+     ],
+     [
+      35.0,
+      11.5
+     ],
+     [
+      33.0,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      7.0
+     ],
+     [
+      35.0,
+      7.0
+     ],
+     [
+      35.0,
+      9.0
+     ],
+     [
+      33.0,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      4.5
+     ],
+     [
+      35.0,
+      4.5
+     ],
+     [
+      35.0,
+      6.5
+     ],
+     [
+      33.0,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      33.0,
+      2.0
+     ],
+     [
+      35.0,
+      2.0
+     ],
+     [
+      35.0,
+      4.0
+     ],
+     [
+      33.0,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      49.5
+     ],
+     [
+      37.5,
+      49.5
+     ],
+     [
+      37.5,
+      51.5
+     ],
+     [
+      35.5,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      47.0
+     ],
+     [
+      37.5,
+      47.0
+     ],
+     [
+      37.5,
+      49.0
+     ],
+     [
+      35.5,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      44.5
+     ],
+     [
+      37.5,
+      44.5
+     ],
+     [
+      37.5,
+      46.5
+     ],
+     [
+      35.5,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      42.0
+     ],
+     [
+      37.5,
+      42.0
+     ],
+     [
+      37.5,
+      44.0
+     ],
+     [
+      35.5,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      39.5
+     ],
+     [
+      37.5,
+      39.5
+     ],
+     [
+      37.5,
+      41.5
+     ],
+     [
+      35.5,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      37.0
+     ],
+     [
+      37.5,
+      37.0
+     ],
+     [
+      37.5,
+      39.0
+     ],
+     [
+      35.5,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      34.5
+     ],
+     [
+      37.5,
+      34.5
+     ],
+     [
+      37.5,
+      36.5
+     ],
+     [
+      35.5,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      32.0
+     ],
+     [
+      37.5,
+      32.0
+     ],
+     [
+      37.5,
+      34.0
+     ],
+     [
+      35.5,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      29.5
+     ],
+     [
+      37.5,
+      29.5
+     ],
+     [
+      37.5,
+      31.5
+     ],
+     [
+      35.5,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      27.0
+     ],
+     [
+      37.5,
+      27.0
+     ],
+     [
+      37.5,
+      29.0
+     ],
+     [
+      35.5,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      24.5
+     ],
+     [
+      37.5,
+      24.5
+     ],
+     [
+      37.5,
+      26.5
+     ],
+     [
+      35.5,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      22.0
+     ],
+     [
+      37.5,
+      22.0
+     ],
+     [
+      37.5,
+      24.0
+     ],
+     [
+      35.5,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      19.5
+     ],
+     [
+      37.5,
+      19.5
+     ],
+     [
+      37.5,
+      21.5
+     ],
+     [
+      35.5,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      17.0
+     ],
+     [
+      37.5,
+      17.0
+     ],
+     [
+      37.5,
+      19.0
+     ],
+     [
+      35.5,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      14.5
+     ],
+     [
+      37.5,
+      14.5
+     ],
+     [
+      37.5,
+      16.5
+     ],
+     [
+      35.5,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      12.0
+     ],
+     [
+      37.5,
+      12.0
+     ],
+     [
+      37.5,
+      14.0
+     ],
+     [
+      35.5,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      9.5
+     ],
+     [
+      37.5,
+      9.5
+     ],
+     [
+      37.5,
+      11.5
+     ],
+     [
+      35.5,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      7.0
+     ],
+     [
+      37.5,
+      7.0
+     ],
+     [
+      37.5,
+      9.0
+     ],
+     [
+      35.5,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      4.5
+     ],
+     [
+      37.5,
+      4.5
+     ],
+     [
+      37.5,
+      6.5
+     ],
+     [
+      35.5,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      35.5,
+      2.0
+     ],
+     [
+      37.5,
+      2.0
+     ],
+     [
+      37.5,
+      4.0
+     ],
+     [
+      35.5,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      49.5
+     ],
+     [
+      40.0,
+      49.5
+     ],
+     [
+      40.0,
+      51.5
+     ],
+     [
+      38.0,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      47.0
+     ],
+     [
+      40.0,
+      47.0
+     ],
+     [
+      40.0,
+      49.0
+     ],
+     [
+      38.0,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      44.5
+     ],
+     [
+      40.0,
+      44.5
+     ],
+     [
+      40.0,
+      46.5
+     ],
+     [
+      38.0,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      42.0
+     ],
+     [
+      40.0,
+      42.0
+     ],
+     [
+      40.0,
+      44.0
+     ],
+     [
+      38.0,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      39.5
+     ],
+     [
+      40.0,
+      39.5
+     ],
+     [
+      40.0,
+      41.5
+     ],
+     [
+      38.0,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      37.0
+     ],
+     [
+      40.0,
+      37.0
+     ],
+     [
+      40.0,
+      39.0
+     ],
+     [
+      38.0,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      34.5
+     ],
+     [
+      40.0,
+      34.5
+     ],
+     [
+      40.0,
+      36.5
+     ],
+     [
+      38.0,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      32.0
+     ],
+     [
+      40.0,
+      32.0
+     ],
+     [
+      40.0,
+      34.0
+     ],
+     [
+      38.0,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      29.5
+     ],
+     [
+      40.0,
+      29.5
+     ],
+     [
+      40.0,
+      31.5
+     ],
+     [
+      38.0,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      27.0
+     ],
+     [
+      40.0,
+      27.0
+     ],
+     [
+      40.0,
+      29.0
+     ],
+     [
+      38.0,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      24.5
+     ],
+     [
+      40.0,
+      24.5
+     ],
+     [
+      40.0,
+      26.5
+     ],
+     [
+      38.0,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      22.0
+     ],
+     [
+      40.0,
+      22.0
+     ],
+     [
+      40.0,
+      24.0
+     ],
+     [
+      38.0,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      19.5
+     ],
+     [
+      40.0,
+      19.5
+     ],
+     [
+      40.0,
+      21.5
+     ],
+     [
+      38.0,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      17.0
+     ],
+     [
+      40.0,
+      17.0
+     ],
+     [
+      40.0,
+      19.0
+     ],
+     [
+      38.0,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      14.5
+     ],
+     [
+      40.0,
+      14.5
+     ],
+     [
+      40.0,
+      16.5
+     ],
+     [
+      38.0,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      12.0
+     ],
+     [
+      40.0,
+      12.0
+     ],
+     [
+      40.0,
+      14.0
+     ],
+     [
+      38.0,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      9.5
+     ],
+     [
+      40.0,
+      9.5
+     ],
+     [
+      40.0,
+      11.5
+     ],
+     [
+      38.0,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      7.0
+     ],
+     [
+      40.0,
+      7.0
+     ],
+     [
+      40.0,
+      9.0
+     ],
+     [
+      38.0,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      4.5
+     ],
+     [
+      40.0,
+      4.5
+     ],
+     [
+      40.0,
+      6.5
+     ],
+     [
+      38.0,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      38.0,
+      2.0
+     ],
+     [
+      40.0,
+      2.0
+     ],
+     [
+      40.0,
+      4.0
+     ],
+     [
+      38.0,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      49.5
+     ],
+     [
+      42.5,
+      49.5
+     ],
+     [
+      42.5,
+      51.5
+     ],
+     [
+      40.5,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      47.0
+     ],
+     [
+      42.5,
+      47.0
+     ],
+     [
+      42.5,
+      49.0
+     ],
+     [
+      40.5,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      44.5
+     ],
+     [
+      42.5,
+      44.5
+     ],
+     [
+      42.5,
+      46.5
+     ],
+     [
+      40.5,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      42.0
+     ],
+     [
+      42.5,
+      42.0
+     ],
+     [
+      42.5,
+      44.0
+     ],
+     [
+      40.5,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      39.5
+     ],
+     [
+      42.5,
+      39.5
+     ],
+     [
+      42.5,
+      41.5
+     ],
+     [
+      40.5,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      37.0
+     ],
+     [
+      42.5,
+      37.0
+     ],
+     [
+      42.5,
+      39.0
+     ],
+     [
+      40.5,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      34.5
+     ],
+     [
+      42.5,
+      34.5
+     ],
+     [
+      42.5,
+      36.5
+     ],
+     [
+      40.5,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      32.0
+     ],
+     [
+      42.5,
+      32.0
+     ],
+     [
+      42.5,
+      34.0
+     ],
+     [
+      40.5,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      29.5
+     ],
+     [
+      42.5,
+      29.5
+     ],
+     [
+      42.5,
+      31.5
+     ],
+     [
+      40.5,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      27.0
+     ],
+     [
+      42.5,
+      27.0
+     ],
+     [
+      42.5,
+      29.0
+     ],
+     [
+      40.5,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      24.5
+     ],
+     [
+      42.5,
+      24.5
+     ],
+     [
+      42.5,
+      26.5
+     ],
+     [
+      40.5,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      22.0
+     ],
+     [
+      42.5,
+      22.0
+     ],
+     [
+      42.5,
+      24.0
+     ],
+     [
+      40.5,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      19.5
+     ],
+     [
+      42.5,
+      19.5
+     ],
+     [
+      42.5,
+      21.5
+     ],
+     [
+      40.5,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      17.0
+     ],
+     [
+      42.5,
+      17.0
+     ],
+     [
+      42.5,
+      19.0
+     ],
+     [
+      40.5,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      14.5
+     ],
+     [
+      42.5,
+      14.5
+     ],
+     [
+      42.5,
+      16.5
+     ],
+     [
+      40.5,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      12.0
+     ],
+     [
+      42.5,
+      12.0
+     ],
+     [
+      42.5,
+      14.0
+     ],
+     [
+      40.5,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      9.5
+     ],
+     [
+      42.5,
+      9.5
+     ],
+     [
+      42.5,
+      11.5
+     ],
+     [
+      40.5,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      7.0
+     ],
+     [
+      42.5,
+      7.0
+     ],
+     [
+      42.5,
+      9.0
+     ],
+     [
+      40.5,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      4.5
+     ],
+     [
+      42.5,
+      4.5
+     ],
+     [
+      42.5,
+      6.5
+     ],
+     [
+      40.5,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.5,
+      2.0
+     ],
+     [
+      42.5,
+      2.0
+     ],
+     [
+      42.5,
+      4.0
+     ],
+     [
+      40.5,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      49.5
+     ],
+     [
+      45.0,
+      49.5
+     ],
+     [
+      45.0,
+      51.5
+     ],
+     [
+      43.0,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      47.0
+     ],
+     [
+      45.0,
+      47.0
+     ],
+     [
+      45.0,
+      49.0
+     ],
+     [
+      43.0,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      44.5
+     ],
+     [
+      45.0,
+      44.5
+     ],
+     [
+      45.0,
+      46.5
+     ],
+     [
+      43.0,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      42.0
+     ],
+     [
+      45.0,
+      42.0
+     ],
+     [
+      45.0,
+      44.0
+     ],
+     [
+      43.0,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      39.5
+     ],
+     [
+      45.0,
+      39.5
+     ],
+     [
+      45.0,
+      41.5
+     ],
+     [
+      43.0,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      37.0
+     ],
+     [
+      45.0,
+      37.0
+     ],
+     [
+      45.0,
+      39.0
+     ],
+     [
+      43.0,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      34.5
+     ],
+     [
+      45.0,
+      34.5
+     ],
+     [
+      45.0,
+      36.5
+     ],
+     [
+      43.0,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      32.0
+     ],
+     [
+      45.0,
+      32.0
+     ],
+     [
+      45.0,
+      34.0
+     ],
+     [
+      43.0,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      29.5
+     ],
+     [
+      45.0,
+      29.5
+     ],
+     [
+      45.0,
+      31.5
+     ],
+     [
+      43.0,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      27.0
+     ],
+     [
+      45.0,
+      27.0
+     ],
+     [
+      45.0,
+      29.0
+     ],
+     [
+      43.0,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      24.5
+     ],
+     [
+      45.0,
+      24.5
+     ],
+     [
+      45.0,
+      26.5
+     ],
+     [
+      43.0,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      22.0
+     ],
+     [
+      45.0,
+      22.0
+     ],
+     [
+      45.0,
+      24.0
+     ],
+     [
+      43.0,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      19.5
+     ],
+     [
+      45.0,
+      19.5
+     ],
+     [
+      45.0,
+      21.5
+     ],
+     [
+      43.0,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      17.0
+     ],
+     [
+      45.0,
+      17.0
+     ],
+     [
+      45.0,
+      19.0
+     ],
+     [
+      43.0,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      14.5
+     ],
+     [
+      45.0,
+      14.5
+     ],
+     [
+      45.0,
+      16.5
+     ],
+     [
+      43.0,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      12.0
+     ],
+     [
+      45.0,
+      12.0
+     ],
+     [
+      45.0,
+      14.0
+     ],
+     [
+      43.0,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      9.5
+     ],
+     [
+      45.0,
+      9.5
+     ],
+     [
+      45.0,
+      11.5
+     ],
+     [
+      43.0,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      7.0
+     ],
+     [
+      45.0,
+      7.0
+     ],
+     [
+      45.0,
+      9.0
+     ],
+     [
+      43.0,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      4.5
+     ],
+     [
+      45.0,
+      4.5
+     ],
+     [
+      45.0,
+      6.5
+     ],
+     [
+      43.0,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      43.0,
+      2.0
+     ],
+     [
+      45.0,
+      2.0
+     ],
+     [
+      45.0,
+      4.0
+     ],
+     [
+      43.0,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      49.5
+     ],
+     [
+      47.5,
+      49.5
+     ],
+     [
+      47.5,
+      51.5
+     ],
+     [
+      45.5,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      47.0
+     ],
+     [
+      47.5,
+      47.0
+     ],
+     [
+      47.5,
+      49.0
+     ],
+     [
+      45.5,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      44.5
+     ],
+     [
+      47.5,
+      44.5
+     ],
+     [
+      47.5,
+      46.5
+     ],
+     [
+      45.5,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      42.0
+     ],
+     [
+      47.5,
+      42.0
+     ],
+     [
+      47.5,
+      44.0
+     ],
+     [
+      45.5,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      39.5
+     ],
+     [
+      47.5,
+      39.5
+     ],
+     [
+      47.5,
+      41.5
+     ],
+     [
+      45.5,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      37.0
+     ],
+     [
+      47.5,
+      37.0
+     ],
+     [
+      47.5,
+      39.0
+     ],
+     [
+      45.5,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      34.5
+     ],
+     [
+      47.5,
+      34.5
+     ],
+     [
+      47.5,
+      36.5
+     ],
+     [
+      45.5,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      32.0
+     ],
+     [
+      47.5,
+      32.0
+     ],
+     [
+      47.5,
+      34.0
+     ],
+     [
+      45.5,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      29.5
+     ],
+     [
+      47.5,
+      29.5
+     ],
+     [
+      47.5,
+      31.5
+     ],
+     [
+      45.5,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      27.0
+     ],
+     [
+      47.5,
+      27.0
+     ],
+     [
+      47.5,
+      29.0
+     ],
+     [
+      45.5,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      24.5
+     ],
+     [
+      47.5,
+      24.5
+     ],
+     [
+      47.5,
+      26.5
+     ],
+     [
+      45.5,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      22.0
+     ],
+     [
+      47.5,
+      22.0
+     ],
+     [
+      47.5,
+      24.0
+     ],
+     [
+      45.5,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      19.5
+     ],
+     [
+      47.5,
+      19.5
+     ],
+     [
+      47.5,
+      21.5
+     ],
+     [
+      45.5,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      17.0
+     ],
+     [
+      47.5,
+      17.0
+     ],
+     [
+      47.5,
+      19.0
+     ],
+     [
+      45.5,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      14.5
+     ],
+     [
+      47.5,
+      14.5
+     ],
+     [
+      47.5,
+      16.5
+     ],
+     [
+      45.5,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      12.0
+     ],
+     [
+      47.5,
+      12.0
+     ],
+     [
+      47.5,
+      14.0
+     ],
+     [
+      45.5,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      9.5
+     ],
+     [
+      47.5,
+      9.5
+     ],
+     [
+      47.5,
+      11.5
+     ],
+     [
+      45.5,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      7.0
+     ],
+     [
+      47.5,
+      7.0
+     ],
+     [
+      47.5,
+      9.0
+     ],
+     [
+      45.5,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      4.5
+     ],
+     [
+      47.5,
+      4.5
+     ],
+     [
+      47.5,
+      6.5
+     ],
+     [
+      45.5,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      45.5,
+      2.0
+     ],
+     [
+      47.5,
+      2.0
+     ],
+     [
+      47.5,
+      4.0
+     ],
+     [
+      45.5,
+      4.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      49.5
+     ],
+     [
+      50.0,
+      49.5
+     ],
+     [
+      50.0,
+      51.5
+     ],
+     [
+      48.0,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      47.0
+     ],
+     [
+      50.0,
+      47.0
+     ],
+     [
+      50.0,
+      49.0
+     ],
+     [
+      48.0,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      44.5
+     ],
+     [
+      50.0,
+      44.5
+     ],
+     [
+      50.0,
+      46.5
+     ],
+     [
+      48.0,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      42.0
+     ],
+     [
+      50.0,
+      42.0
+     ],
+     [
+      50.0,
+      44.0
+     ],
+     [
+      48.0,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      39.5
+     ],
+     [
+      50.0,
+      39.5
+     ],
+     [
+      50.0,
+      41.5
+     ],
+     [
+      48.0,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      37.0
+     ],
+     [
+      50.0,
+      37.0
+     ],
+     [
+      50.0,
+      39.0
+     ],
+     [
+      48.0,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      34.5
+     ],
+     [
+      50.0,
+      34.5
+     ],
+     [
+      50.0,
+      36.5
+     ],
+     [
+      48.0,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      32.0
+     ],
+     [
+      50.0,
+      32.0
+     ],
+     [
+      50.0,
+      34.0
+     ],
+     [
+      48.0,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      29.5
+     ],
+     [
+      50.0,
+      29.5
+     ],
+     [
+      50.0,
+      31.5
+     ],
+     [
+      48.0,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      27.0
+     ],
+     [
+      50.0,
+      27.0
+     ],
+     [
+      50.0,
+      29.0
+     ],
+     [
+      48.0,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      24.5
+     ],
+     [
+      50.0,
+      24.5
+     ],
+     [
+      50.0,
+      26.5
+     ],
+     [
+      48.0,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      22.0
+     ],
+     [
+      50.0,
+      22.0
+     ],
+     [
+      50.0,
+      24.0
+     ],
+     [
+      48.0,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      19.5
+     ],
+     [
+      50.0,
+      19.5
+     ],
+     [
+      50.0,
+      21.5
+     ],
+     [
+      48.0,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      17.0
+     ],
+     [
+      50.0,
+      17.0
+     ],
+     [
+      50.0,
+      19.0
+     ],
+     [
+      48.0,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      14.5
+     ],
+     [
+      50.0,
+      14.5
+     ],
+     [
+      50.0,
+      16.5
+     ],
+     [
+      48.0,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      12.0
+     ],
+     [
+      50.0,
+      12.0
+     ],
+     [
+      50.0,
+      14.0
+     ],
+     [
+      48.0,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      9.5
+     ],
+     [
+      50.0,
+      9.5
+     ],
+     [
+      50.0,
+      11.5
+     ],
+     [
+      48.0,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      7.0
+     ],
+     [
+      50.0,
+      7.0
+     ],
+     [
+      50.0,
+      9.0
+     ],
+     [
+      48.0,
+      9.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      48.0,
+      4.5
+     ],
+     [
+      50.0,
+      4.5
+     ],
+     [
+      50.0,
+      6.5
+     ],
+     [
+      48.0,
+      6.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      49.5
+     ],
+     [
+      52.5,
+      49.5
+     ],
+     [
+      52.5,
+      51.5
+     ],
+     [
+      50.5,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      47.0
+     ],
+     [
+      52.5,
+      47.0
+     ],
+     [
+      52.5,
+      49.0
+     ],
+     [
+      50.5,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      44.5
+     ],
+     [
+      52.5,
+      44.5
+     ],
+     [
+      52.5,
+      46.5
+     ],
+     [
+      50.5,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      42.0
+     ],
+     [
+      52.5,
+      42.0
+     ],
+     [
+      52.5,
+      44.0
+     ],
+     [
+      50.5,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      39.5
+     ],
+     [
+      52.5,
+      39.5
+     ],
+     [
+      52.5,
+      41.5
+     ],
+     [
+      50.5,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      37.0
+     ],
+     [
+      52.5,
+      37.0
+     ],
+     [
+      52.5,
+      39.0
+     ],
+     [
+      50.5,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      34.5
+     ],
+     [
+      52.5,
+      34.5
+     ],
+     [
+      52.5,
+      36.5
+     ],
+     [
+      50.5,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      32.0
+     ],
+     [
+      52.5,
+      32.0
+     ],
+     [
+      52.5,
+      34.0
+     ],
+     [
+      50.5,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      29.5
+     ],
+     [
+      52.5,
+      29.5
+     ],
+     [
+      52.5,
+      31.5
+     ],
+     [
+      50.5,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      27.0
+     ],
+     [
+      52.5,
+      27.0
+     ],
+     [
+      52.5,
+      29.0
+     ],
+     [
+      50.5,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      24.5
+     ],
+     [
+      52.5,
+      24.5
+     ],
+     [
+      52.5,
+      26.5
+     ],
+     [
+      50.5,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      22.0
+     ],
+     [
+      52.5,
+      22.0
+     ],
+     [
+      52.5,
+      24.0
+     ],
+     [
+      50.5,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      19.5
+     ],
+     [
+      52.5,
+      19.5
+     ],
+     [
+      52.5,
+      21.5
+     ],
+     [
+      50.5,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      17.0
+     ],
+     [
+      52.5,
+      17.0
+     ],
+     [
+      52.5,
+      19.0
+     ],
+     [
+      50.5,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      14.5
+     ],
+     [
+      52.5,
+      14.5
+     ],
+     [
+      52.5,
+      16.5
+     ],
+     [
+      50.5,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      12.0
+     ],
+     [
+      52.5,
+      12.0
+     ],
+     [
+      52.5,
+      14.0
+     ],
+     [
+      50.5,
+      14.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.5,
+      9.5
+     ],
+     [
+      52.5,
+      9.5
+     ],
+     [
+      52.5,
+      11.5
+     ],
+     [
+      50.5,
+      11.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      49.5
+     ],
+     [
+      55.0,
+      49.5
+     ],
+     [
+      55.0,
+      51.5
+     ],
+     [
+      53.0,
+      51.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      47.0
+     ],
+     [
+      55.0,
+      47.0
+     ],
+     [
+      55.0,
+      49.0
+     ],
+     [
+      53.0,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      44.5
+     ],
+     [
+      55.0,
+      44.5
+     ],
+     [
+      55.0,
+      46.5
+     ],
+     [
+      53.0,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      42.0
+     ],
+     [
+      55.0,
+      42.0
+     ],
+     [
+      55.0,
+      44.0
+     ],
+     [
+      53.0,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      39.5
+     ],
+     [
+      55.0,
+      39.5
+     ],
+     [
+      55.0,
+      41.5
+     ],
+     [
+      53.0,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      37.0
+     ],
+     [
+      55.0,
+      37.0
+     ],
+     [
+      55.0,
+      39.0
+     ],
+     [
+      53.0,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      34.5
+     ],
+     [
+      55.0,
+      34.5
+     ],
+     [
+      55.0,
+      36.5
+     ],
+     [
+      53.0,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      32.0
+     ],
+     [
+      55.0,
+      32.0
+     ],
+     [
+      55.0,
+      34.0
+     ],
+     [
+      53.0,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      29.5
+     ],
+     [
+      55.0,
+      29.5
+     ],
+     [
+      55.0,
+      31.5
+     ],
+     [
+      53.0,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      27.0
+     ],
+     [
+      55.0,
+      27.0
+     ],
+     [
+      55.0,
+      29.0
+     ],
+     [
+      53.0,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      24.5
+     ],
+     [
+      55.0,
+      24.5
+     ],
+     [
+      55.0,
+      26.5
+     ],
+     [
+      53.0,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      22.0
+     ],
+     [
+      55.0,
+      22.0
+     ],
+     [
+      55.0,
+      24.0
+     ],
+     [
+      53.0,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      19.5
+     ],
+     [
+      55.0,
+      19.5
+     ],
+     [
+      55.0,
+      21.5
+     ],
+     [
+      53.0,
+      21.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      17.0
+     ],
+     [
+      55.0,
+      17.0
+     ],
+     [
+      55.0,
+      19.0
+     ],
+     [
+      53.0,
+      19.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      53.0,
+      14.5
+     ],
+     [
+      55.0,
+      14.5
+     ],
+     [
+      55.0,
+      16.5
+     ],
+     [
+      53.0,
+      16.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      55.5,
+      47.0
+     ],
+     [
+      57.5,
+      47.0
+     ],
+     [
+      57.5,
+      49.0
+     ],
+     [
+      55.5,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      55.5,
+      44.5
+     ],
+     [
+      57.5,
+      44.5
+     ],
+     [
+      57.5,
+      46.5
+     ],
+     [
+      55.5,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      55.5,
+      42.0
+     ],
+     [
+      57.5,
+      42.0
+     ],
+     [
+      57.5,
+      44.0
+     ],
+     [
+      55.5,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      55.5,
+      39.5
+     ],
+     [
+      57.5,
+      39.5
+     ],
+     [
+      57.5,
+      41.5
+     ],
+     [
+      55.5,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      55.5,
+      37.0
+     ],
+     [
+      57.5,
+      37.0
+     ],
+     [
+      57.5,
+      39.0
+     ],
+     [
+      55.5,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      55.5,
+      34.5
+     ],
+     [
+      57.5,
+      34.5
+     ],
+     [
+      57.5,
+      36.5
+     ],
+     [
+      55.5,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      55.5,
+      32.0
+     ],
+     [
+      57.5,
+      32.0
+     ],
+     [
+      57.5,
+      34.0
+     ],
+     [
+      55.5,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      55.5,
+      29.5
+     ],
+     [
+      57.5,
+      29.5
+     ],
+     [
+      57.5,
+      31.5
+     ],
+     [
+      55.5,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      55.5,
+      27.0
+     ],
+     [
+      57.5,
+      27.0
+     ],
+     [
+      57.5,
+      29.0
+     ],
+     [
+      55.5,
+      29.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      55.5,
+      24.5
+     ],
+     [
+      57.5,
+      24.5
+     ],
+     [
+      57.5,
+      26.5
+     ],
+     [
+      55.5,
+      26.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      55.5,
+      22.0
+     ],
+     [
+      57.5,
+      22.0
+     ],
+     [
+      57.5,
+      24.0
+     ],
+     [
+      55.5,
+      24.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      58.0,
+      47.0
+     ],
+     [
+      60.0,
+      47.0
+     ],
+     [
+      60.0,
+      49.0
+     ],
+     [
+      58.0,
+      49.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      58.0,
+      44.5
+     ],
+     [
+      60.0,
+      44.5
+     ],
+     [
+      60.0,
+      46.5
+     ],
+     [
+      58.0,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      58.0,
+      42.0
+     ],
+     [
+      60.0,
+      42.0
+     ],
+     [
+      60.0,
+      44.0
+     ],
+     [
+      58.0,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      58.0,
+      39.5
+     ],
+     [
+      60.0,
+      39.5
+     ],
+     [
+      60.0,
+      41.5
+     ],
+     [
+      58.0,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      58.0,
+      37.0
+     ],
+     [
+      60.0,
+      37.0
+     ],
+     [
+      60.0,
+      39.0
+     ],
+     [
+      58.0,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      58.0,
+      34.5
+     ],
+     [
+      60.0,
+      34.5
+     ],
+     [
+      60.0,
+      36.5
+     ],
+     [
+      58.0,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      58.0,
+      32.0
+     ],
+     [
+      60.0,
+      32.0
+     ],
+     [
+      60.0,
+      34.0
+     ],
+     [
+      58.0,
+      34.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      58.0,
+      29.5
+     ],
+     [
+      60.0,
+      29.5
+     ],
+     [
+      60.0,
+      31.5
+     ],
+     [
+      58.0,
+      31.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      60.5,
+      44.5
+     ],
+     [
+      62.5,
+      44.5
+     ],
+     [
+      62.5,
+      46.5
+     ],
+     [
+      60.5,
+      46.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      60.5,
+      42.0
+     ],
+     [
+      62.5,
+      42.0
+     ],
+     [
+      62.5,
+      44.0
+     ],
+     [
+      60.5,
+      44.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      60.5,
+      39.5
+     ],
+     [
+      62.5,
+      39.5
+     ],
+     [
+      62.5,
+      41.5
+     ],
+     [
+      60.5,
+      41.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      60.5,
+      37.0
+     ],
+     [
+      62.5,
+      37.0
+     ],
+     [
+      62.5,
+      39.0
+     ],
+     [
+      60.5,
+      39.0
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      60.5,
+      34.5
+     ],
+     [
+      62.5,
+      34.5
+     ],
+     [
+      62.5,
+      36.5
+     ],
+     [
+      60.5,
+      36.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2.5,
+    "operation": "cut",
+    "targets": [
+     "2-49 Motor side cover air cover"
+    ],
+    "name": "Openings"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-49 Motor side cover air cover"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

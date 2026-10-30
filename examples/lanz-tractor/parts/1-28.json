@@ -1,0 +1,91 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "vr_d",
+    "expression": "4",
+    "unit": "mm",
+    "comment": "rod, M4 ends"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "vr_l",
+    "expression": "94",
+    "unit": "mm",
+    "comment": "length"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Rod section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      2.0,
+      0
+     ],
+     [
+      2.0,
+      94
+     ],
+     [
+      0,
+      94
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Rod",
+    "body_name": "1-28 Motor valve rod"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-28 Motor valve rod"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

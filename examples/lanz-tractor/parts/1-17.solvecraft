@@ -1,0 +1,479 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "cam_t",
+      "expr": "5",
+      "unit": "mm",
+      "comment": "thickness",
+      "model": false
+    },
+    {
+      "name": "cam_r_lobe",
+      "expr": "25",
+      "unit": "mm",
+      "comment": "lobe radius about the bore",
+      "model": false
+    },
+    {
+      "name": "cam_r_base",
+      "expr": "16",
+      "unit": "mm",
+      "comment": "base radius about the bore",
+      "model": false
+    },
+    {
+      "name": "cam_r_corner",
+      "expr": "4",
+      "unit": "mm",
+      "comment": "corner radius between flank and lobe",
+      "model": false
+    },
+    {
+      "name": "cam_flank_angle",
+      "expr": "37.5",
+      "unit": "deg",
+      "comment": "flank angle to the centre line",
+      "model": false
+    },
+    {
+      "name": "cam_cbore_d",
+      "expr": "19",
+      "unit": "mm",
+      "comment": "counterbore",
+      "model": false
+    },
+    {
+      "name": "cam_cbore_depth",
+      "expr": "2.5",
+      "unit": "mm",
+      "comment": "counterbore depth",
+      "model": false
+    },
+    {
+      "name": "cam_tap_d",
+      "expr": "14",
+      "unit": "mm",
+      "comment": "M16 tapped (tap drill Ø14)",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Outline",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              -12.693653,
+              -9.740183
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              12.693653,
+              -9.740183
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              12.693653,
+              -9.740183
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              23.18485793762377,
+              3.932221053088552
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              20.01144370447551,
+              6.367266773313202
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              23.18485793762528,
+              3.9322210530872685
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              23.823148294287275,
+              7.580079073216329
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.center",
+            "pos": [
+              -8.877171423698418e-11,
+              -7.163667794887985e-21
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.start",
+            "pos": [
+              23.823148294312627,
+              7.580079073224426
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.end",
+            "pos": [
+              -23.823148198442237,
+              7.580079375250369
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.center",
+            "pos": [
+              -20.011444816304092,
+              6.367266967857464
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.start",
+            "pos": [
+              -23.823148198513206,
+              7.580079375272856
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.end",
+            "pos": [
+              -23.184857633244892,
+              3.932221238592534
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              -23.18485763361128,
+              3.9322212383541792
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              -12.693653,
+              -9.740183
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 1,
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 6,
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "a3",
+            "type": "arc",
+            "c": 9,
+            "a": 10,
+            "b": 11,
+            "construction": false
+          },
+          {
+            "id": "a4",
+            "type": "arc",
+            "c": 12,
+            "a": 13,
+            "b": 14,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 15,
+            "b": 16,
+            "construction": false
+          },
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 17,
+            "r": 7.0,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 1
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 3,
+            "q": 4
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 5,
+            "q": 7
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 0,
+            "q": 9
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 8,
+            "q": 10
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 11,
+            "q": 13
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 14,
+            "q": 15
+          },
+          {
+            "id": "k8",
+            "type": "coincident",
+            "p": 2,
+            "q": 16
+          },
+          {
+            "id": "k9",
+            "type": "coincident",
+            "p": 0,
+            "q": 17
+          }
+        ],
+        "counters": {
+          "a": 4,
+          "c": 1,
+          "k": 9,
+          "l": 2
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Plate",
+      "suppressed": false,
+      "body_names": [
+        "1-17 Motor crank shaft cam plate"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 1,
+      "profiles": {
+        "type": "curves",
+        "loops": [
+          [
+            "a1",
+            "l1",
+            "a2",
+            "a3",
+            "a4",
+            "l2"
+          ]
+        ]
+      },
+      "extent": {
+        "distance": "5",
+        "direction": "positive"
+      },
+      "operation": "new_body"
+    },
+    {
+      "id": 3,
+      "name": "Counterbore",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            5.0
+          ],
+          "x_dir": [
+            -1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 1,
+            "r": 9.5,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 0,
+            "q": 1
+          }
+        ],
+        "counters": {
+          "c": 1,
+          "k": 1
+        }
+      }
+    },
+    {
+      "id": 4,
+      "name": "Counterbore",
+      "suppressed": false,
+      "param_names": [
+        "d2"
+      ],
+      "type": "extrude",
+      "sketch": 3,
+      "profiles": {
+        "type": "all"
+      },
+      "extent": {
+        "distance": "2.5",
+        "direction": "positive"
+      },
+      "operation": "cut",
+      "targets": [
+        "1-17 Motor crank shaft cam plate"
+      ]
+    }
+  ],
+  "next_id": 5,
+  "materials": {
+    "1-17 Motor crank shaft cam plate": "Steel"
+  }
+}

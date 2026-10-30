@@ -1,0 +1,301 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "hc_d",
+    "expression": "11.5",
+    "unit": "mm",
+    "comment": "collar"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "hc_l",
+    "expression": "14",
+    "unit": "mm",
+    "comment": "collar length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "hc_centres",
+    "expression": "19",
+    "unit": "mm",
+    "comment": "lever hole centres"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Lever"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.263158,
+      -4.99307
+     ],
+     [
+      19.210526,
+      -3.994456
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     19,
+     0
+    ],
+    "start": [
+     19.210526,
+     -3.994456
+    ],
+    "end": [
+     19.210526,
+     3.994456
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      19.210526,
+      3.994456
+     ],
+     [
+      0.263158,
+      4.99307
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     0.263158,
+     4.99307
+    ],
+    "end": [
+     0.263158,
+     -4.99307
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     19,
+     0
+    ],
+    "diameter": 2.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 2,
+    "profiles": [
+     {
+      "point": [
+       9.5,
+       0
+      ]
+     }
+    ],
+    "operation": "new",
+    "name": "Lever",
+    "body_name": "2-13 lever"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Collar section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2,
+      -18
+     ],
+     [
+      4,
+      -18
+     ],
+     [
+      4,
+      -14
+     ],
+     [
+      5.75,
+      -14
+     ],
+     [
+      5.75,
+      0
+     ],
+     [
+      3,
+      0
+     ],
+     [
+      3,
+      4
+     ],
+     [
+      2,
+      4
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Collar",
+    "body_name": "2-13 collar"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -11.5,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "\u00d84 cross hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     9.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "2-13 collar"
+    ],
+    "name": "\u00d84 cross hole"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-13 collar"
+    ],
+    "material": "Brass"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-13 lever"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

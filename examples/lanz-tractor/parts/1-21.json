@@ -1,0 +1,519 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fly_d",
+    "expression": "110",
+    "unit": "mm",
+    "comment": "outside diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fly_rim_id",
+    "expression": "90",
+    "unit": "mm",
+    "comment": "rim inside diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fly_w",
+    "expression": "19",
+    "unit": "mm",
+    "comment": "rim width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fly_web_t",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "web thickness (19 - 2 x 6.5), in the middle"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fly_window_d",
+    "expression": "86",
+    "unit": "mm",
+    "comment": "spoke windows: outer diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fly_spoke_w",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "spoke width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fly_window_r",
+    "expression": "6.5",
+    "unit": "mm",
+    "comment": "spoke window inner radius (centres on PCD 39)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "fly_bore",
+    "expression": "16",
+    "unit": "mm",
+    "comment": "bore"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Wheel section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.0,
+      6.5
+     ],
+     [
+      45.0,
+      6.5
+     ],
+     [
+      45.0,
+      0
+     ],
+     [
+      55.0,
+      0
+     ],
+     [
+      55.0,
+      19
+     ],
+     [
+      45.0,
+      19
+     ],
+     [
+      45.0,
+      12.5
+     ],
+     [
+      8.0,
+      12.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Wheel",
+    "body_name": "1-21 Motor flywheel"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Spoke windows"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -5.0,
+      15.828392
+     ],
+     [
+      -5.0,
+      42.708313
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     -5.0,
+     42.708313
+    ],
+    "end": [
+     -39.072934,
+     17.952877
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -39.072934,
+      17.952877
+     ],
+     [
+      -13.50861,
+      9.646525
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -11.5,
+     15.828392
+    ],
+    "start": [
+     -13.50861,
+     9.646525
+    ],
+    "end": [
+     -5.0,
+     15.828392
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -16.59878,
+      0.13596
+     ],
+     [
+      -42.163104,
+      8.442312
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     -42.163104,
+     8.442312
+    ],
+    "end": [
+     -29.148402,
+     -31.612825
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -29.148402,
+      -31.612825
+     ],
+     [
+      -13.34878,
+      -9.866512
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -18.607391,
+     -6.045908
+    ],
+    "start": [
+     -13.34878,
+     -9.866512
+    ],
+    "end": [
+     -16.59878,
+     0.13596
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -5.25861,
+      -15.744364
+     ],
+     [
+      -21.058232,
+      -37.490677
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     -21.058232,
+     -37.490677
+    ],
+    "end": [
+     21.058232,
+     -37.490677
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      21.058232,
+      -37.490677
+     ],
+     [
+      5.25861,
+      -15.744364
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -0.0,
+     -19.564969
+    ],
+    "start": [
+     5.25861,
+     -15.744364
+    ],
+    "end": [
+     -5.25861,
+     -15.744364
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.34878,
+      -9.866512
+     ],
+     [
+      29.148402,
+      -31.612825
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     29.148402,
+     -31.612825
+    ],
+    "end": [
+     42.163104,
+     8.442312
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      42.163104,
+      8.442312
+     ],
+     [
+      16.59878,
+      0.13596
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     18.607391,
+     -6.045908
+    ],
+    "start": [
+     16.59878,
+     0.13596
+    ],
+    "end": [
+     13.34878,
+     -9.866512
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.50861,
+      9.646525
+     ],
+     [
+      39.072934,
+      17.952877
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     39.072934,
+     17.952877
+    ],
+    "end": [
+     5.0,
+     42.708313
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.0,
+      42.708313
+     ],
+     [
+      5.0,
+      15.828392
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     11.5,
+     15.828392
+    ],
+    "start": [
+     5.0,
+     15.828392
+    ],
+    "end": [
+     13.50861,
+     9.646525
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-21 Motor flywheel"
+    ],
+    "name": "Spoke windows"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-21 Motor flywheel"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

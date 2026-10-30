@@ -1,0 +1,536 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "epb_t",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "epb_w",
+    "expression": "10",
+    "unit": "mm",
+    "comment": "strip width (5 + 5)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "epb_tab",
+    "expression": "8.5",
+    "unit": "mm",
+    "comment": "tab height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "epb_joggle_h",
+    "expression": "14.5",
+    "unit": "mm",
+    "comment": "joggle height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "epb_fork_h",
+    "expression": "31.5",
+    "unit": "mm",
+    "comment": "fork part height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "epb_offset",
+    "expression": "10.5",
+    "unit": "mm",
+    "comment": "joggle offset"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "epb_r_out",
+    "expression": "26",
+    "unit": "mm",
+    "comment": "fork outside radius"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "epb_r_in",
+    "expression": "18",
+    "unit": "mm",
+    "comment": "fork inside radius (the pipe)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "epb_legs",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "fork feet below the centre"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "epb_pcd_r",
+    "expression": "22",
+    "unit": "mm",
+    "comment": "holes on R22 at 45 deg"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "epb_hole_d",
+    "expression": "4.5",
+    "unit": "mm",
+    "comment": "fork holes"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "epb_tab_hole",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "tab hole"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "epb_tab_hole_z",
+    "expression": "4.5",
+    "unit": "mm",
+    "comment": "tab hole from the top"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      0,
+      1,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Side profile"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      54.5
+     ],
+     [
+      0,
+      46.0
+     ],
+     [
+      10.5,
+      31.5
+     ],
+     [
+      10.5,
+      24.5
+     ],
+     [
+      13.5,
+      24.5
+     ],
+     [
+      13.5,
+      32.472147
+     ],
+     [
+      3.0,
+      46.972147
+     ],
+     [
+      3.0,
+      54.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 5.0,
+    "direction": "symmetric",
+    "name": "Tab and joggle",
+    "body_name": "1-35 Exhaust pipe holding bracket"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      13.5,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Fork"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -5.0,
+      31.5
+     ],
+     [
+      -5.0,
+      27.514702
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     2
+    ],
+    "start": [
+     -5.0,
+     27.514702
+    ],
+    "end": [
+     -26,
+     2
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -26,
+      2
+     ],
+     [
+      -26,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -26,
+      0
+     ],
+     [
+      -18,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -18,
+      0
+     ],
+     [
+      -18,
+      2
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     2
+    ],
+    "start": [
+     18,
+     2
+    ],
+    "end": [
+     -18,
+     2
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18,
+      2
+     ],
+     [
+      18,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      18,
+      0
+     ],
+     [
+      26,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      26,
+      0
+     ],
+     [
+      26,
+      2
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     2
+    ],
+    "start": [
+     26,
+     2
+    ],
+    "end": [
+     5.0,
+     27.514702
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.0,
+      27.514702
+     ],
+     [
+      5.0,
+      31.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.0,
+      31.5
+     ],
+     [
+      -5.0,
+      31.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 3,
+    "operation": "join",
+    "targets": [
+     "1-35 Exhaust pipe holding bracket"
+    ],
+    "name": "Fork"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -1,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Tab hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -50.0
+    ],
+    "diameter": 3
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-35 Exhaust pipe holding bracket"
+    ],
+    "name": "Tab hole"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      -1,
+      0
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Fork holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -15.556349,
+     -17.556349
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     15.556349,
+     -17.556349
+    ],
+    "diameter": 4.5
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "through_all": true,
+    "operation": "cut",
+    "targets": [
+     "1-35 Exhaust pipe holding bracket"
+    ],
+    "name": "Fork holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-35 Exhaust pipe holding bracket"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

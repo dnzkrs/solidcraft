@@ -1,0 +1,116 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ytr_d",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "rod"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ytr_l",
+    "expression": "118.5",
+    "unit": "mm",
+    "comment": "rod length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ytr_thread",
+    "expression": "7",
+    "unit": "mm",
+    "comment": "M3 ends"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Rod section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      1.5,
+      0
+     ],
+     [
+      1.5,
+      7
+     ],
+     [
+      2.5,
+      7
+     ],
+     [
+      2.5,
+      125.5
+     ],
+     [
+      1.5,
+      125.5
+     ],
+     [
+      1.5,
+      132.5
+     ],
+     [
+      0,
+      132.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Rod",
+    "body_name": "2-19 Front axle yoke tie rod"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-19 Front axle yoke tie rod"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

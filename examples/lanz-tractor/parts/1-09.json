@@ -1,0 +1,103 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "glass_od",
+    "expression": "15",
+    "unit": "mm",
+    "comment": "outside diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "glass_id",
+    "expression": "13",
+    "unit": "mm",
+    "comment": "inside diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "glass_length",
+    "expression": "19",
+    "unit": "mm",
+    "comment": "length"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Section"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 15
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "diameter": 13
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 19,
+    "profiles": [
+     {
+      "point": [
+       7.0,
+       0
+      ]
+     }
+    ],
+    "name": "Tube",
+    "body_name": "1-09 Motor cylinder oiler glass"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-09 Motor cylinder oiler glass"
+    ],
+    "material": "Polycarbonate"
+   }
+  }
+ ]
+}

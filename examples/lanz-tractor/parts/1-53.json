@@ -1,0 +1,229 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ac_d",
+    "expression": "5",
+    "unit": "mm",
+    "comment": "rod"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ac_top",
+    "expression": "27.5",
+    "unit": "mm",
+    "comment": "end to the drop's centre line"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ac_drop",
+    "expression": "30",
+    "unit": "mm",
+    "comment": "drop between centre lines (35 - 5)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ac_r1",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "top bend, centre line (R3.5 inside)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ac_r2",
+    "expression": "3.5",
+    "unit": "mm",
+    "comment": "bottom bend, centre line (to the collar)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ac_collar_d",
+    "expression": "12",
+    "unit": "mm",
+    "comment": "collar"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ac_collar_t",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "collar thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "ac_stub",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "stub length"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Path"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -27.5,
+      0
+     ],
+     [
+      -6,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     -6,
+     -6
+    ],
+    "start": [
+     0,
+     -6
+    ],
+    "end": [
+     -6,
+     0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -6
+     ],
+     [
+      0,
+      -26.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     3.5,
+     -26.5
+    ],
+    "start": [
+     0,
+     -26.5
+    ],
+    "end": [
+     3.5,
+     -30
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.5,
+      -30
+     ],
+     [
+      12.5,
+      -30
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.pipe",
+   "params": {
+    "path_sketch": "Path",
+    "path": [
+     "l1",
+     "a1",
+     "l2",
+     "a2",
+     "l3"
+    ],
+    "diameter": 5,
+    "name": "Rod",
+    "body_name": "1-53 Accelerator crank"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 12,
+    "height": 3,
+    "base": [
+     3.5,
+     0,
+     -30
+    ],
+    "axis": [
+     1,
+     0,
+     0
+    ],
+    "operation": "join",
+    "targets": [
+     "1-53 Accelerator crank"
+    ],
+    "name": "Collar"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-53 Accelerator crank"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

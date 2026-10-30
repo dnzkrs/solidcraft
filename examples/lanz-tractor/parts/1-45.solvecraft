@@ -1,0 +1,577 @@
+{
+  "format": "solvecraft/14",
+  "name": "Untitled",
+  "units": "mm",
+  "params": [
+    {
+      "name": "gp_t",
+      "expr": "2",
+      "unit": "mm",
+      "comment": "thickness",
+      "model": false
+    },
+    {
+      "name": "gp_r_top",
+      "expr": "22",
+      "unit": "mm",
+      "comment": "top arc radius",
+      "model": false
+    },
+    {
+      "name": "gp_r_bottom",
+      "expr": "7",
+      "unit": "mm",
+      "comment": "bottom round radius",
+      "model": false
+    },
+    {
+      "name": "gp_bottom_y",
+      "expr": "4.5",
+      "unit": "mm",
+      "comment": "bottom round centre below the pivot",
+      "model": false
+    },
+    {
+      "name": "gp_r_corner",
+      "expr": "3",
+      "unit": "mm",
+      "comment": "corner radius",
+      "model": false
+    },
+    {
+      "name": "gp_flank",
+      "expr": "30",
+      "unit": "deg",
+      "comment": "flank angle to the centre line",
+      "model": false
+    },
+    {
+      "name": "gp_slot_r",
+      "expr": "18",
+      "unit": "mm",
+      "comment": "slot centre radius",
+      "model": false
+    },
+    {
+      "name": "gp_slot_w",
+      "expr": "4",
+      "unit": "mm",
+      "comment": "slot width",
+      "model": false
+    },
+    {
+      "name": "gp_slot_a",
+      "expr": "30",
+      "unit": "deg",
+      "comment": "slot half angle",
+      "model": false
+    }
+  ],
+  "features": [
+    {
+      "id": 1,
+      "name": "Plate",
+      "suppressed": false,
+      "type": "sketch",
+      "plane": {
+        "type": "custom",
+        "plane": {
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "x_dir": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "y_dir": [
+            0.0,
+            1.0,
+            0.0
+          ]
+        }
+      },
+      "sketch": {
+        "points": [
+          {
+            "id": "origin",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": true
+          },
+          {
+            "id": "a1.center",
+            "pos": [
+              0.0,
+              -4.5
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.start",
+            "pos": [
+              -6.062178,
+              -8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a1.end",
+            "pos": [
+              6.062178,
+              -8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.start",
+            "pos": [
+              6.062178,
+              -8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l1.end",
+            "pos": [
+              16.982043049319664,
+              10.913761965197642
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.center",
+            "pos": [
+              14.383965562891781,
+              12.413762135784747
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.start",
+            "pos": [
+              16.982043049318264,
+              10.91376196519863
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a2.end",
+            "pos": [
+              16.65511982455345,
+              14.373829853223045
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.center",
+            "pos": [
+              5.445165768804617e-11,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.start",
+            "pos": [
+              16.655119824537874,
+              14.373829853209592
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a3.end",
+            "pos": [
+              -16.655119843543936,
+              14.37382983100431
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.center",
+            "pos": [
+              -14.383966823981979,
+              12.413762016631035
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.start",
+            "pos": [
+              -16.655119843502444,
+              14.373829830968498
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a4.end",
+            "pos": [
+              -16.982043315210586,
+              10.913761876576476
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.start",
+            "pos": [
+              -16.98204331489569,
+              10.913761876699777
+            ],
+            "fixed": false
+          },
+          {
+            "id": "l2.end",
+            "pos": [
+              -6.062178,
+              -8.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.start",
+            "pos": [
+              8.0,
+              13.856406
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a5.end",
+            "pos": [
+              -7.999999999999999,
+              13.856406
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a6.center",
+            "pos": [
+              9.0,
+              15.588457
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a6.start",
+            "pos": [
+              8.0,
+              13.856406
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a6.end",
+            "pos": [
+              10.0,
+              17.320508
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a7.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a7.start",
+            "pos": [
+              10.0,
+              17.320508
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a7.end",
+            "pos": [
+              -10.0,
+              17.320508
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a8.center",
+            "pos": [
+              -9.0,
+              15.588457
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a8.start",
+            "pos": [
+              -10.0,
+              17.320508
+            ],
+            "fixed": false
+          },
+          {
+            "id": "a8.end",
+            "pos": [
+              -8.0,
+              13.856406
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c1.center",
+            "pos": [
+              0.0,
+              0.0
+            ],
+            "fixed": false
+          },
+          {
+            "id": "c2.center",
+            "pos": [
+              0.0,
+              -4.5
+            ],
+            "fixed": false
+          }
+        ],
+        "curves": [
+          {
+            "id": "a1",
+            "type": "arc",
+            "c": 1,
+            "a": 2,
+            "b": 3,
+            "construction": false
+          },
+          {
+            "id": "l1",
+            "type": "line",
+            "a": 4,
+            "b": 5,
+            "construction": false
+          },
+          {
+            "id": "a2",
+            "type": "arc",
+            "c": 6,
+            "a": 7,
+            "b": 8,
+            "construction": false
+          },
+          {
+            "id": "a3",
+            "type": "arc",
+            "c": 9,
+            "a": 10,
+            "b": 11,
+            "construction": false
+          },
+          {
+            "id": "a4",
+            "type": "arc",
+            "c": 12,
+            "a": 13,
+            "b": 14,
+            "construction": false
+          },
+          {
+            "id": "l2",
+            "type": "line",
+            "a": 15,
+            "b": 16,
+            "construction": false
+          },
+          {
+            "id": "a5",
+            "type": "arc",
+            "c": 17,
+            "a": 18,
+            "b": 19,
+            "construction": false
+          },
+          {
+            "id": "a6",
+            "type": "arc",
+            "c": 20,
+            "a": 21,
+            "b": 22,
+            "construction": false
+          },
+          {
+            "id": "a7",
+            "type": "arc",
+            "c": 23,
+            "a": 24,
+            "b": 25,
+            "construction": false
+          },
+          {
+            "id": "a8",
+            "type": "arc",
+            "c": 26,
+            "a": 27,
+            "b": 28,
+            "construction": false
+          },
+          {
+            "id": "c1",
+            "type": "circle",
+            "c": 29,
+            "r": 2.0,
+            "construction": false
+          },
+          {
+            "id": "c2",
+            "type": "circle",
+            "c": 30,
+            "r": 1.0,
+            "construction": false
+          }
+        ],
+        "constraints": [
+          {
+            "id": "k1",
+            "type": "coincident",
+            "p": 3,
+            "q": 4
+          },
+          {
+            "id": "k2",
+            "type": "coincident",
+            "p": 5,
+            "q": 7
+          },
+          {
+            "id": "k3",
+            "type": "coincident",
+            "p": 0,
+            "q": 9
+          },
+          {
+            "id": "k4",
+            "type": "coincident",
+            "p": 8,
+            "q": 10
+          },
+          {
+            "id": "k5",
+            "type": "coincident",
+            "p": 11,
+            "q": 13
+          },
+          {
+            "id": "k6",
+            "type": "coincident",
+            "p": 14,
+            "q": 15
+          },
+          {
+            "id": "k7",
+            "type": "coincident",
+            "p": 2,
+            "q": 16
+          },
+          {
+            "id": "k8",
+            "type": "coincident",
+            "p": 0,
+            "q": 17
+          },
+          {
+            "id": "k9",
+            "type": "coincident",
+            "p": 18,
+            "q": 21
+          },
+          {
+            "id": "k10",
+            "type": "coincident",
+            "p": 0,
+            "q": 23
+          },
+          {
+            "id": "k11",
+            "type": "coincident",
+            "p": 22,
+            "q": 24
+          },
+          {
+            "id": "k12",
+            "type": "coincident",
+            "p": 25,
+            "q": 27
+          },
+          {
+            "id": "k13",
+            "type": "coincident",
+            "p": 19,
+            "q": 28
+          },
+          {
+            "id": "k14",
+            "type": "coincident",
+            "p": 0,
+            "q": 29
+          },
+          {
+            "id": "k15",
+            "type": "coincident",
+            "p": 1,
+            "q": 30
+          }
+        ],
+        "counters": {
+          "a": 8,
+          "c": 2,
+          "k": 15,
+          "l": 2
+        }
+      }
+    },
+    {
+      "id": 2,
+      "name": "Plate",
+      "suppressed": false,
+      "body_names": [
+        "1-45 Accelerator lever-1 guide plate"
+      ],
+      "param_names": [
+        "d1"
+      ],
+      "type": "extrude",
+      "sketch": 1,
+      "profiles": {
+        "type": "curves",
+        "loops": [
+          [
+            "a1",
+            "l1",
+            "a2",
+            "a3",
+            "a4",
+            "l2"
+          ]
+        ]
+      },
+      "extent": {
+        "distance": "2",
+        "direction": "positive"
+      },
+      "operation": "new_body"
+    }
+  ],
+  "next_id": 3,
+  "materials": {
+    "1-45 Accelerator lever-1 guide plate": "Steel"
+  }
+}

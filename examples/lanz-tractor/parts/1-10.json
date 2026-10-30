@@ -1,0 +1,236 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gt_d",
+    "expression": "17",
+    "unit": "mm",
+    "comment": "base and rim diameter"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gt_recess_d",
+    "expression": "15",
+    "unit": "mm",
+    "comment": "recess underneath"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gt_recess_h",
+    "expression": "1",
+    "unit": "mm",
+    "comment": "recess depth"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gt_base_t",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "base thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gt_h",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "height"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gt_angle",
+    "expression": "60",
+    "unit": "deg",
+    "comment": "wall angle to the base"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gt_wall",
+    "expression": "1",
+    "unit": "mm",
+    "comment": "wall thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gt_hole_d",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "central hole"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "gt_feed_x",
+    "expression": "3",
+    "unit": "mm",
+    "comment": "feed holes, \u00d82"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Funnel section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      1.5,
+      1
+     ],
+     [
+      7.5,
+      1
+     ],
+     [
+      7.5,
+      0
+     ],
+     [
+      8.5,
+      0
+     ],
+     [
+      8.5,
+      2
+     ],
+     [
+      6.190599,
+      2
+     ],
+     [
+      8.5,
+      6
+     ],
+     [
+      7.345299,
+      6
+     ],
+     [
+      5.035898,
+      2
+     ],
+     [
+      1.5,
+      2
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Funnel",
+    "body_name": "1-10 Motor cylinder oiler glass top"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -1
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "Feed holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -3.0,
+     0.0
+    ],
+    "diameter": 2
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     3.0,
+     0.0
+    ],
+    "diameter": 2
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 4,
+    "operation": "cut",
+    "targets": [
+     "1-10 Motor cylinder oiler glass top"
+    ],
+    "name": "Feed holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "1-10 Motor cylinder oiler glass top"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

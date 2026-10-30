@@ -1,0 +1,1283 @@
+{
+ "1-01": {
+  "name": "Motor frame",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 223383.9,
+  "mass_g": 603.1
+ },
+ "1-02": {
+  "name": "Motor cylinder",
+  "material": "Cast Iron",
+  "bodies": 1,
+  "volume_mm3": 60778.4,
+  "mass_g": 437.6
+ },
+ "1-03": {
+  "name": "Motor cylinder gasket ring",
+  "material": "Copper",
+  "bodies": 1,
+  "volume_mm3": 719.5,
+  "mass_g": 6.4
+ },
+ "1-04": {
+  "name": "Motor inner cylinder head",
+  "material": "Cast Iron",
+  "bodies": 1,
+  "volume_mm3": 7447.7,
+  "mass_g": 53.6
+ },
+ "1-05": {
+  "name": "Motor outer cylinder head",
+  "material": "Cast Iron",
+  "bodies": 1,
+  "volume_mm3": 8008.4,
+  "mass_g": 57.7
+ },
+ "1-06": {
+  "name": "Motor crank shaft ball bearing",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1835.5,
+  "mass_g": 14.4
+ },
+ "1-07": {
+  "name": "Motor cylinder oiler base",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 395.5,
+  "mass_g": 3.4
+ },
+ "1-08": {
+  "name": "Motor cylinder oiler glass base",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 472.0,
+  "mass_g": 4.0
+ },
+ "1-09": {
+  "name": "Motor cylinder oiler glass",
+  "material": "Polycarbonate",
+  "bodies": 1,
+  "volume_mm3": 835.6,
+  "mass_g": 1.0
+ },
+ "1-10": {
+  "name": "Motor cylinder oiler glass top",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 460.3,
+  "mass_g": 3.9
+ },
+ "1-11": {
+  "name": "Motor block oil channel",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1928.5,
+  "mass_g": 15.1
+ },
+ "1-12": {
+  "name": "Motor block oil valve part-1",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1169.1,
+  "mass_g": 9.9
+ },
+ "1-13": {
+  "name": "Motor block oil valve part-2",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 411.7,
+  "mass_g": 3.5
+ },
+ "1-14": {
+  "name": "Motor crank shaft",
+  "material": "Stainless Steel, Steel",
+  "bodies": 5,
+  "volume_mm3": 28817.5,
+  "mass_g": 227.8
+ },
+ "1-15": {
+  "name": "Motor crank shaft drive pulley",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 3447.3,
+  "mass_g": 29.3
+ },
+ "1-17": {
+  "name": "Motor crank shaft cam plate",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 5825.6,
+  "mass_g": 45.7
+ },
+ "1-18": {
+  "name": "Motor crank shaft cam follower lock nut",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1351.2,
+  "mass_g": 11.5
+ },
+ "1-19": {
+  "name": "Motor crank shaft cam follower spacer",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 537.3,
+  "mass_g": 4.6
+ },
+ "1-20": {
+  "name": "Motor flywheel hub",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 7713.5,
+  "mass_g": 65.6
+ },
+ "1-21": {
+  "name": "Motor flywheel",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 74187.7,
+  "mass_g": 630.6
+ },
+ "1-22": {
+  "name": "Motor piston",
+  "material": "Cast Iron",
+  "bodies": 1,
+  "volume_mm3": 6846.8,
+  "mass_g": 49.3
+ },
+ "1-23": {
+  "name": "Motor piston cross head",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 811.9,
+  "mass_g": 6.9
+ },
+ "1-24A": {
+  "name": "Motor piston rod",
+  "material": "Stainless Steel, Steel",
+  "bodies": 2,
+  "volume_mm3": 2566.7,
+  "mass_g": 20.2
+ },
+ "1-24B": {
+  "name": "Motor piston rod big end part-1",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1342.5,
+  "mass_g": 11.4
+ },
+ "1-24C": {
+  "name": "Motor piston rod big end part-2",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 3318.1,
+  "mass_g": 28.2
+ },
+ "1-25A": {
+  "name": "Motor cylinder slide valve-1",
+  "material": "Stainless Steel",
+  "bodies": 1,
+  "volume_mm3": 95.7,
+  "mass_g": 0.8
+ },
+ "1-25B": {
+  "name": "Motor cylinder slide valve-2",
+  "material": "Stainless Steel",
+  "bodies": 1,
+  "volume_mm3": 97.2,
+  "mass_g": 0.8
+ },
+ "1-26": {
+  "name": "Motor valve rocking shaft bearing",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 339.2,
+  "mass_g": 2.9
+ },
+ "1-27": {
+  "name": "Motor valve rocking shaft",
+  "material": "Stainless Steel",
+  "bodies": 1,
+  "volume_mm3": 1898.2,
+  "mass_g": 15.2
+ },
+ "1-28": {
+  "name": "Motor valve rod",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1181.0,
+  "mass_g": 9.3
+ },
+ "1-29": {
+  "name": "Motor valve rod lock nut",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 291.4,
+  "mass_g": 2.5
+ },
+ "1-30": {
+  "name": "Motor valve rod valve holder",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 276.4,
+  "mass_g": 2.3
+ },
+ "1-31": {
+  "name": "Motor valve rocking arm",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1754.5,
+  "mass_g": 13.8
+ },
+ "1-32": {
+  "name": "Motor rocking arm cam follower",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1240.5,
+  "mass_g": 9.7
+ },
+ "1-33": {
+  "name": "Motor rocking arm cam follower axle",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 376.9,
+  "mass_g": 3.0
+ },
+ "1-34": {
+  "name": "Motor rocking arm valve spring",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 83.1,
+  "mass_g": 0.7
+ },
+ "1-35": {
+  "name": "Exhaust pipe holding bracket",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 2540.0,
+  "mass_g": 21.6
+ },
+ "1-36": {
+  "name": "Exhaust lower circular bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 12826.8,
+  "mass_g": 34.6
+ },
+ "1-37": {
+  "name": "Exhaust base ring",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 7624.5,
+  "mass_g": 64.8
+ },
+ "1-38": {
+  "name": "Exhaust stack",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 14499.7,
+  "mass_g": 123.2
+ },
+ "1-39": {
+  "name": "Exhaust stack top ring",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1363.9,
+  "mass_g": 11.6
+ },
+ "1-40": {
+  "name": "LH-flame protector",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 2371.6,
+  "mass_g": 20.2
+ },
+ "1-41": {
+  "name": "RH-flame protector",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 2371.6,
+  "mass_g": 20.2
+ },
+ "1-42": {
+  "name": "Front flame guard",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 384.1,
+  "mass_g": 3.2
+ },
+ "1-43": {
+  "name": "Top steering shaft bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 725.3,
+  "mass_g": 2.0
+ },
+ "1-44": {
+  "name": "Accelerator bridge bracket",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 3632.8,
+  "mass_g": 28.5
+ },
+ "1-45": {
+  "name": "Accelerator lever-1 guide plate",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1315.1,
+  "mass_g": 10.3
+ },
+ "1-46": {
+  "name": "Accelerator bridge shaft",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 724.8,
+  "mass_g": 5.7
+ },
+ "1-47": {
+  "name": "Accelerator lever-1",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 476.6,
+  "mass_g": 3.7
+ },
+ "1-48": {
+  "name": "Accelerator lever-2",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 364.6,
+  "mass_g": 2.9
+ },
+ "1-49": {
+  "name": "Accelerator lever-3",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 1073.8,
+  "mass_g": 8.9
+ },
+ "1-50": {
+  "name": "Accelerator lever-1 spring bolt",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 146.1,
+  "mass_g": 1.1
+ },
+ "1-51": {
+  "name": "Accelerator lever-1 spring",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 13.9,
+  "mass_g": 0.1
+ },
+ "1-52": {
+  "name": "Accelerator levers bolt",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 119.4,
+  "mass_g": 0.9
+ },
+ "1-53": {
+  "name": "Accelerator crank",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1574.5,
+  "mass_g": 12.4
+ },
+ "2-01": {
+  "name": "Chassis front end",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 91743.5,
+  "mass_g": 247.7
+ },
+ "2-03": {
+  "name": "LH-steering and fuel tank bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 11360.1,
+  "mass_g": 30.7
+ },
+ "2-04": {
+  "name": "RH-steering and fuel tank bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 11360.1,
+  "mass_g": 30.7
+ },
+ "2-05": {
+  "name": "Steering floor bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 701.7,
+  "mass_g": 1.9
+ },
+ "2-06": {
+  "name": "Fuel tank",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 13925.4,
+  "mass_g": 118.4
+ },
+ "2-07": {
+  "name": "Fuel tank spout",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1462.4,
+  "mass_g": 12.4
+ },
+ "2-08": {
+  "name": "Fuel tank spout cover",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1131.2,
+  "mass_g": 9.6
+ },
+ "2-09": {
+  "name": "Fuel tank inner wick holding pipe",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1411.9,
+  "mass_g": 12.0
+ },
+ "2-10": {
+  "name": "Fuel tank gear wheel axle bracket",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 3000.3,
+  "mass_g": 25.5
+ },
+ "2-12": {
+  "name": "Fuel tank gearwheel and shaft",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 1790.6,
+  "mass_g": 14.6
+ },
+ "2-13": {
+  "name": "Fuel tank gear wheel shaft handle collar",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 1797.1,
+  "mass_g": 15.0
+ },
+ "2-14": {
+  "name": "Fuel tank wick holder",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 2909.3,
+  "mass_g": 24.7
+ },
+ "2-15": {
+  "name": "Fuel tank wick",
+  "material": "Default",
+  "bodies": 1,
+  "volume_mm3": 4047.3,
+  "mass_g": 5.2
+ },
+ "2-16": {
+  "name": "Axle body support bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 7201.2,
+  "mass_g": 19.4
+ },
+ "2-17": {
+  "name": "Front axle yoke support bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 2393.4,
+  "mass_g": 6.5
+ },
+ "2-18": {
+  "name": "Rear axle yoke arm",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 4961.7,
+  "mass_g": 13.4
+ },
+ "2-19": {
+  "name": "Front axle yoke tie rod",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 2425.3,
+  "mass_g": 19.0
+ },
+ "2-20": {
+  "name": "Front axle yoke arm",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 11099.4,
+  "mass_g": 30.0
+ },
+ "2-21": {
+  "name": "Front axle yoke bearing",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 1815.8,
+  "mass_g": 14.8
+ },
+ "2-22": {
+  "name": "Front axle yoke wheel hinge bracket",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 3615.2,
+  "mass_g": 30.7
+ },
+ "2-23": {
+  "name": "Wheel pivot axle",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 3630.3,
+  "mass_g": 28.5
+ },
+ "2-24": {
+  "name": "Wheel pivot axle connector bracket",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 745.2,
+  "mass_g": 5.8
+ },
+ "2-25": {
+  "name": "Wheel pivot axle steering arm",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1046.2,
+  "mass_g": 8.2
+ },
+ "2-26": {
+  "name": "Wheel pivot axle connecting rod",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 2939.3,
+  "mass_g": 23.1
+ },
+ "2-27A": {
+  "name": "Wheel pivot spacer ring-1",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 30.6,
+  "mass_g": 0.2
+ },
+ "2-27B": {
+  "name": "Wheel pivot spacer ring-2",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 186.9,
+  "mass_g": 1.5
+ },
+ "2-28": {
+  "name": "Wheel axle",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 714.5,
+  "mass_g": 5.6
+ },
+ "2-29": {
+  "name": "Wheel axle ball bearing",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1382.3,
+  "mass_g": 10.9
+ },
+ "2-30": {
+  "name": "Connecting rod screw",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 155.2,
+  "mass_g": 1.2
+ },
+ "2-31": {
+  "name": "Front wheel rim",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 27922.1,
+  "mass_g": 75.4
+ },
+ "2-32": {
+  "name": "Front wheel tyre",
+  "material": "Default",
+  "bodies": 1,
+  "volume_mm3": 122633.5,
+  "mass_g": 158.2
+ },
+ "2-33": {
+  "name": "Front wheel hub cap",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 2084.2,
+  "mass_g": 17.7
+ },
+ "2-34": {
+  "name": "Steering lay shaft",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 2476.3,
+  "mass_g": 19.4
+ },
+ "2-35": {
+  "name": "Steering lay shaft crank",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 2806.7,
+  "mass_g": 23.4
+ },
+ "2-36": {
+  "name": "Steering lay shaft gear wheel",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 6226.8,
+  "mass_g": 52.9
+ },
+ "2-37": {
+  "name": "Steering tie rod",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1174.0,
+  "mass_g": 9.2
+ },
+ "2-38": {
+  "name": "Steering tie rod end",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 444.8,
+  "mass_g": 3.5
+ },
+ "2-39": {
+  "name": "Steering tie rod end plug",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 214.4,
+  "mass_g": 1.7
+ },
+ "2-40": {
+  "name": "Steering tie rod end balljoint",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 257.3,
+  "mass_g": 2.0
+ },
+ "2-41": {
+  "name": "Steering column and worm gear",
+  "material": "Brass, Steel",
+  "bodies": 4,
+  "volume_mm3": 5671.9,
+  "mass_g": 46.1
+ },
+ "2-42": {
+  "name": "Steering wheel",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 8062.4,
+  "mass_g": 21.8
+ },
+ "2-43": {
+  "name": "Accelerator link",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 349.1,
+  "mass_g": 2.7
+ },
+ "2-44": {
+  "name": "Front lighting main beam",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 863.7,
+  "mass_g": 7.3
+ },
+ "2-45": {
+  "name": "Front lighting lampstand",
+  "material": "Brass, Stainless Steel",
+  "bodies": 4,
+  "volume_mm3": 1539.9,
+  "mass_g": 13.0
+ },
+ "2-46": {
+  "name": "Pulling hook",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 807.5,
+  "mass_g": 6.3
+ },
+ "2-47": {
+  "name": "Motor side cover",
+  "material": "Brass",
+  "bodies": 2,
+  "volume_mm3": 12294.1,
+  "mass_g": 104.5
+ },
+ "2-48": {
+  "name": "Motor top cover",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 5042.4,
+  "mass_g": 42.9
+ },
+ "2-49": {
+  "name": "Motor side cover air cover",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 596.4,
+  "mass_g": 4.7
+ },
+ "3-01": {
+  "name": "Chassis rear end",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 85739.4,
+  "mass_g": 231.5
+ },
+ "3-02": {
+  "name": "Rear axle support bracket",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 18343.9,
+  "mass_g": 49.5
+ },
+ "3-03": {
+  "name": "Differential housing part-1",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 10134.7,
+  "mass_g": 79.6
+ },
+ "3-04": {
+  "name": "Differential housing part-2",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 20573.4,
+  "mass_g": 161.5
+ },
+ "3-05": {
+  "name": "Rear axle main bearing housing part-1",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 7312.4,
+  "mass_g": 19.7
+ },
+ "3-06": {
+  "name": "Rear axle main bearing housing part-2",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 12653.9,
+  "mass_g": 34.2
+ },
+ "3-07": {
+  "name": "Rear axle main housing ball bearing-1",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 6715.0,
+  "mass_g": 52.7
+ },
+ "3-08": {
+  "name": "Rear axle main housing ball bearing-2",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 2111.1,
+  "mass_g": 16.6
+ },
+ "3-09A": {
+  "name": "Rear axle-1",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 3946.7,
+  "mass_g": 31.0
+ },
+ "3-09B": {
+  "name": "Rear axle-2",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 5303.6,
+  "mass_g": 41.6
+ },
+ "3-10": {
+  "name": "Differential gear wheel",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 2252.8,
+  "mass_g": 19.1
+ },
+ "3-11": {
+  "name": "Differential gear wheel shaft",
+  "material": "Stainless Steel",
+  "bodies": 1,
+  "volume_mm3": 1115.2,
+  "mass_g": 8.9
+ },
+ "3-13": {
+  "name": "Rear wheel spacer",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1945.2,
+  "mass_g": 16.5
+ },
+ "3-14": {
+  "name": "Rear wheel mounting plate",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 11281.7,
+  "mass_g": 88.6
+ },
+ "3-15": {
+  "name": "Rear wheel rim",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 66225.2,
+  "mass_g": 178.8
+ },
+ "3-16": {
+  "name": "Rear wheel tyre",
+  "material": "Default",
+  "bodies": 1,
+  "volume_mm3": 467298.4,
+  "mass_g": 602.8
+ },
+ "3-17": {
+  "name": "Rear wheel hub cap",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 541.4,
+  "mass_g": 4.6
+ },
+ "3-18": {
+  "name": "Rear wheel drive gear wheel",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 10229.7,
+  "mass_g": 87.0
+ },
+ "3-19": {
+  "name": "Drivers console side frame",
+  "material": "Aluminum",
+  "bodies": 1,
+  "volume_mm3": 23636.2,
+  "mass_g": 63.8
+ },
+ "3-21": {
+  "name": "Accelerator control lever",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 1423.4,
+  "mass_g": 11.6
+ },
+ "3-22": {
+  "name": "Accelerator control lever handle",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 647.2,
+  "mass_g": 5.5
+ },
+ "3-23": {
+  "name": "Rear wheel LH-mud guard",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 18882.4,
+  "mass_g": 160.5
+ },
+ "3-24": {
+  "name": "Rear wheel RH-mud guard",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 18882.4,
+  "mass_g": 160.5
+ },
+ "3-25A": {
+  "name": "Drivers seat base",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 4811.7,
+  "mass_g": 40.9
+ },
+ "3-25B": {
+  "name": "Drivers seat",
+  "material": "Oak",
+  "bodies": 1,
+  "volume_mm3": 27807.3,
+  "mass_g": 20.9
+ },
+ "3-25D": {
+  "name": "Drivers seat back rest",
+  "material": "Oak",
+  "bodies": 1,
+  "volume_mm3": 5231.3,
+  "mass_g": 3.9
+ },
+ "3-26A": {
+  "name": "Bumper-towbar mounting bracket",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1426.9,
+  "mass_g": 11.2
+ },
+ "3-26B": {
+  "name": "Bumper-towbar",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 2814.3,
+  "mass_g": 22.1
+ },
+ "3-27A": {
+  "name": "Hand brake shaft",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 728.7,
+  "mass_g": 5.7
+ },
+ "3-27B": {
+  "name": "Hand break handle",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1134.5,
+  "mass_g": 8.9
+ },
+ "3-27C": {
+  "name": "Hand brake pivot",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 620.5,
+  "mass_g": 5.3
+ },
+ "3-27D": {
+  "name": "Hand brake teethed bracket plate",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 705.3,
+  "mass_g": 6.0
+ },
+ "3-27E": {
+  "name": "Hand break release handle",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1618.5,
+  "mass_g": 13.8
+ },
+ "3-27F": {
+  "name": "Hand brake release handle spring",
+  "material": "Steel",
+  "bodies": 3,
+  "volume_mm3": 11.7,
+  "mass_g": 0.1
+ },
+ "3-27G": {
+  "name": "Hand brake release crank",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 171.0,
+  "mass_g": 1.3
+ },
+ "3-27H": {
+  "name": "Hand brake release crank break band holder",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 212.9,
+  "mass_g": 1.8
+ },
+ "3-27I": {
+  "name": "Hand brake band",
+  "material": "Stainless Steel",
+  "bodies": 1,
+  "volume_mm3": 602.6,
+  "mass_g": 4.8
+ },
+ "3-27J": {
+  "name": "Hand brake bandend strap",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 135.7,
+  "mass_g": 1.2
+ },
+ "3-27K": {
+  "name": "Hand brake spring screw",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 204.6,
+  "mass_g": 1.6
+ },
+ "3-28": {
+  "name": "Reversing operating handle",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1166.3,
+  "mass_g": 9.9
+ },
+ "3-29": {
+  "name": "Rev operating handle crank and spindle",
+  "material": "Brass, Steel",
+  "bodies": 3,
+  "volume_mm3": 2652.9,
+  "mass_g": 21.3
+ },
+ "3-30": {
+  "name": "Rev spindle locking collar",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 778.8,
+  "mass_g": 6.6
+ },
+ "3-31": {
+  "name": "Coupling operating handle",
+  "material": "Brass, Steel",
+  "bodies": 3,
+  "volume_mm3": 2118.1,
+  "mass_g": 17.5
+ },
+ "3-32": {
+  "name": "Coupling operating pulley and shaft",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 5882.4,
+  "mass_g": 49.5
+ },
+ "3-33": {
+  "name": "Shaft adjuster",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1088.5,
+  "mass_g": 9.3
+ },
+ "3-34": {
+  "name": "Shaft spacer",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 663.7,
+  "mass_g": 5.6
+ },
+ "3-35": {
+  "name": "Accelerator levers bolt",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 119.4,
+  "mass_g": 0.9
+ },
+ "3-36": {
+  "name": "Accelerator connector lever",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 739.2,
+  "mass_g": 5.8
+ },
+ "3-37": {
+  "name": "Rear stop lights",
+  "material": "Brass, Polycarbonate",
+  "bodies": 2,
+  "volume_mm3": 1135.2,
+  "mass_g": 9.3
+ },
+ "4-01": {
+  "name": "GB RH-side plate",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 9460.0,
+  "mass_g": 80.4
+ },
+ "4-02": {
+  "name": "GB LH-side plate",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 8893.5,
+  "mass_g": 75.6
+ },
+ "4-03": {
+  "name": "GB side plate spacer",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 932.9,
+  "mass_g": 7.3
+ },
+ "4-04": {
+  "name": "Coupling unit outer bearing plate",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 4946.0,
+  "mass_g": 42.0
+ },
+ "4-05": {
+  "name": "Coupling unit outer plate ball bearing",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 1474.1,
+  "mass_g": 11.6
+ },
+ "4-06": {
+  "name": "Coupling drive pulley",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 4159.1,
+  "mass_g": 32.6
+ },
+ "4-07": {
+  "name": "Coupling plate",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 3597.6,
+  "mass_g": 30.6
+ },
+ "4-08": {
+  "name": "Coupling spacer",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 62.8,
+  "mass_g": 0.5
+ },
+ "4-09": {
+  "name": "Coupling spring",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 40.1,
+  "mass_g": 0.3
+ },
+ "4-10": {
+  "name": "Coupling spring retainer",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 727.6,
+  "mass_g": 5.7
+ },
+ "4-11": {
+  "name": "Coupling spring retainer ball bearing",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 447.7,
+  "mass_g": 3.5
+ },
+ "4-12": {
+  "name": "Coupling ball bearing retainer",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 253.8,
+  "mass_g": 2.0
+ },
+ "4-13": {
+  "name": "Coupling shaft and gearwheel-1",
+  "material": "Stainless Steel, Steel",
+  "bodies": 2,
+  "volume_mm3": 1194.7,
+  "mass_g": 9.5
+ },
+ "4-14": {
+  "name": "Coupling RH-pulley plate",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 2684.3,
+  "mass_g": 21.1
+ },
+ "4-15": {
+  "name": "Coupling RH-pulley shaft",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 802.5,
+  "mass_g": 6.3
+ },
+ "4-16": {
+  "name": "Coupling RH-pulley",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 1369.6,
+  "mass_g": 11.6
+ },
+ "4-17": {
+  "name": "GB-gearwheel type-A",
+  "material": "Stainless Steel, Steel",
+  "bodies": 2,
+  "volume_mm3": 3901.3,
+  "mass_g": 30.7
+ },
+ "4-18": {
+  "name": "GB-gearwheel type-B",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 518.4,
+  "mass_g": 4.1
+ },
+ "4-19": {
+  "name": "GB-gearwheel type-C",
+  "material": "Stainless Steel, Steel",
+  "bodies": 2,
+  "volume_mm3": 4417.4,
+  "mass_g": 34.7
+ },
+ "4-20": {
+  "name": "GB-driver shaft spacer",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 31.4,
+  "mass_g": 0.3
+ },
+ "4-21": {
+  "name": "GB-idler shaft-1 spacer",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 78.5,
+  "mass_g": 0.7
+ },
+ "4-22": {
+  "name": "GB-idler shaft-2 spacer",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 235.6,
+  "mass_g": 2.0
+ },
+ "4-23": {
+  "name": "GB-output shaft reversing gearwheel",
+  "material": "Brass, Stainless Steel, Steel",
+  "bodies": 5,
+  "volume_mm3": 5561.2,
+  "mass_g": 44.3
+ },
+ "4-24": {
+  "name": "GB-external output shaft gearwheel",
+  "material": "Brass, Steel",
+  "bodies": 2,
+  "volume_mm3": 5917.9,
+  "mass_g": 47.0
+ },
+ "4-25": {
+  "name": "Reversing shaft bearing plate",
+  "material": "Steel",
+  "bodies": 1,
+  "volume_mm3": 3140.0,
+  "mass_g": 24.6
+ },
+ "4-27": {
+  "name": "Reversing shaft rack",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 4278.7,
+  "mass_g": 36.4
+ },
+ "4-28": {
+  "name": "Reversing shaft rack cover plate",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 638.1,
+  "mass_g": 5.4
+ },
+ "4-29": {
+  "name": "Reversing shaft pinion",
+  "material": "Brass, Steel",
+  "bodies": 3,
+  "volume_mm3": 1357.5,
+  "mass_g": 11.0
+ },
+ "4-30": {
+  "name": "V-belt",
+  "material": "Default",
+  "bodies": 1,
+  "volume_mm3": 2632.9,
+  "mass_g": 3.4
+ },
+ "4-31": {
+  "name": "Coupling guide pillar",
+  "material": "Brass",
+  "bodies": 1,
+  "volume_mm3": 492.4,
+  "mass_g": 4.2
+ },
+ "5-01": {
+  "name": "Belt",
+  "material": "Nylon",
+  "bodies": 2,
+  "volume_mm3": 565.5,
+  "mass_g": 0.6
+ }
+}

@@ -1,0 +1,278 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Path upper loop"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      16.3,
+      -107.5
+     ],
+     [
+      15.999938,
+      0.044642
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     0
+    ],
+    "start": [
+     15.999938,
+     0.044642
+    ],
+    "end": [
+     -15.293996,
+     -4.700392
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -15.293996,
+      -4.700392
+     ],
+     [
+      16.3,
+      -107.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      16.3,
+      -107.5,
+      0
+     ],
+     "x_dir": [
+      -0.999996108,
+      -0.002790107,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Section upper loop"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -0.25,
+     -1.5
+    ],
+    "p1": [
+     0.25,
+     1.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.sweep",
+   "params": {
+    "sketch": "Section upper loop",
+    "path_sketch": "Path upper loop",
+    "path": [
+     "l1",
+     "a1",
+     "l2"
+    ],
+    "name": "Upper loop",
+    "body_name": "5-01 upper loop"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Path lower loop"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      16.3,
+      -107.5
+     ],
+     [
+      56.864636,
+      -122.366415
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     54.8,
+     -128.0
+    ],
+    "start": [
+     51.278334,
+     -132.857764
+    ],
+    "end": [
+     56.864636,
+     -122.366415
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      51.278334,
+      -132.857764
+     ],
+     [
+      16.3,
+      -107.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      16.3,
+      -107.5,
+      0
+     ],
+     "x_dir": [
+      0.344106012,
+      0.938930803,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Section lower loop"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -0.25,
+     -1.5
+    ],
+    "p1": [
+     0.25,
+     1.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.sweep",
+   "params": {
+    "sketch": "Section lower loop",
+    "path_sketch": "Path lower loop",
+    "path": [
+     "l1",
+     "a1",
+     "l2"
+    ],
+    "name": "Lower loop",
+    "body_name": "5-01 lower loop"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "5-01 upper loop"
+    ],
+    "material": "Nylon"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "5-01 lower loop"
+    ],
+    "material": "Nylon"
+   }
+  }
+ ]
+}

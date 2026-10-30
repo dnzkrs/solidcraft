@@ -1,0 +1,637 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cre_t",
+    "expression": "6",
+    "unit": "mm",
+    "comment": "plate thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cre_narrow_l",
+    "expression": "28",
+    "unit": "mm",
+    "comment": "narrow end length"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cre_narrow_w",
+    "expression": "56",
+    "unit": "mm",
+    "comment": "narrow end width"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cre_l",
+    "expression": "118",
+    "unit": "mm",
+    "comment": "length (28 + 90)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cre_w",
+    "expression": "128",
+    "unit": "mm",
+    "comment": "width (64 + 64)"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "cre_flange_d",
+    "expression": "31.5",
+    "unit": "mm",
+    "comment": "flange depth below the plate (measured)"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Plate"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      -28.0
+     ],
+     [
+      32,
+      -28.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     32,
+     -32.0
+    ],
+    "start": [
+     32,
+     -36.0
+    ],
+    "end": [
+     32,
+     -28.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      32,
+      -36.0
+     ],
+     [
+      28,
+      -36.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28,
+      -36.0
+     ],
+     [
+      28,
+      -64.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28,
+      -64.0
+     ],
+     [
+      118,
+      -64.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      118,
+      -64.0
+     ],
+     [
+      118,
+      64.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      118,
+      64.0
+     ],
+     [
+      28,
+      64.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28,
+      64.0
+     ],
+     [
+      28,
+      36.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      28,
+      36.0
+     ],
+     [
+      32,
+      36.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     32,
+     32.0
+    ],
+    "start": [
+     32,
+     28.0
+    ],
+    "end": [
+     32,
+     36.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      32,
+      28.0
+     ],
+     [
+      0,
+      28.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      28.0
+     ],
+     [
+      0,
+      -28.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     12,
+     24
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     12,
+     -24
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     66,
+     24
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     66,
+     -24
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     34,
+     59
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     34,
+     -59
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     62,
+     59
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     62,
+     -59
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     78,
+     54
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     78,
+     -54
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     108,
+     54
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     108,
+     -54
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     79,
+     -5
+    ],
+    "diameter": 3.3
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     108,
+     0
+    ],
+    "diameter": 5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     104,
+     -32
+    ],
+    "diameter": 5
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     70.5,
+     -5
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      40.0,
+      -9.0
+     ],
+     [
+      50.0,
+      -9.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     50,
+     -5
+    ],
+    "start": [
+     50.0,
+     -9.0
+    ],
+    "end": [
+     50.0,
+     -1.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      50.0,
+      -1.0
+     ],
+     [
+      40.0,
+      -1.0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     40,
+     -5
+    ],
+    "start": [
+     40.0,
+     -1.0
+    ],
+    "end": [
+     40.0,
+     -9.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 6,
+    "profiles": [
+     {
+      "point": [
+       1,
+       0
+      ]
+     }
+    ],
+    "name": "Plate",
+    "body_name": "3-01 Chassis rear end"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -31.5
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Flange"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     0,
+     -28.0
+    ],
+    "p1": [
+     6,
+     28.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 32.5,
+    "operation": "join",
+    "targets": [
+     "3-01 Chassis rear end"
+    ],
+    "name": "Flange"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -1,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Flange holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     -16.0,
+     25.5
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     16.0,
+     25.5
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     7.5
+    ],
+    "diameter": 6
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 8,
+    "operation": "cut",
+    "targets": [
+     "3-01 Chassis rear end"
+    ],
+    "name": "Flange holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-01 Chassis rear end"
+    ],
+    "material": "Aluminum"
+   }
+  }
+ ]
+}

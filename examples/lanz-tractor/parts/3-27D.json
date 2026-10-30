@@ -1,0 +1,879 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Plate"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -15,
+      0
+     ],
+     [
+      15,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      15,
+      0
+     ],
+     [
+      15,
+      9.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     9.5
+    ],
+    "start": [
+     15,
+     9.5
+    ],
+    "end": [
+     13.365098,
+     16.309857
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      13.365098,
+      16.309857
+     ],
+     [
+      12.124356,
+      16.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12.124356,
+      16.5
+     ],
+     [
+      12.580059,
+      17.669586
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      12.580059,
+      17.669586
+     ],
+     [
+      11.326238,
+      17.728994
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      11.326238,
+      17.728994
+     ],
+     [
+      11.657189,
+      18.939806
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      11.657189,
+      18.939806
+     ],
+     [
+      10.404028,
+      18.867828
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.404028,
+      18.867828
+     ],
+     [
+      10.606602,
+      20.106602
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      10.606602,
+      20.106602
+     ],
+     [
+      9.367828,
+      19.904028
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      9.367828,
+      19.904028
+     ],
+     [
+      9.439806,
+      21.157189
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      9.439806,
+      21.157189
+     ],
+     [
+      8.228994,
+      20.826238
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.228994,
+      20.826238
+     ],
+     [
+      8.169586,
+      22.080059
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      8.169586,
+      22.080059
+     ],
+     [
+      7.0,
+      21.624356
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      7.0,
+      21.624356
+     ],
+     [
+      6.809857,
+      22.865098
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      6.809857,
+      22.865098
+     ],
+     [
+      5.694313,
+      22.289636
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.694313,
+      22.289636
+     ],
+     [
+      5.375519,
+      23.503706
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      5.375519,
+      23.503706
+     ],
+     [
+      4.326238,
+      22.814791
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      4.326238,
+      22.814791
+     ],
+     [
+      3.882286,
+      23.988887
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3.882286,
+      23.988887
+     ],
+     [
+      2.910764,
+      23.194066
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2.910764,
+      23.194066
+     ],
+     [
+      2.346517,
+      24.315325
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      2.346517,
+      24.315325
+     ],
+     [
+      1.463398,
+      23.423307
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      1.463398,
+      23.423307
+     ],
+     [
+      0.785039,
+      24.479443
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.785039,
+      24.479443
+     ],
+     [
+      0.0,
+      23.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0.0,
+      23.5
+     ],
+     [
+      -0.785039,
+      24.479443
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -0.785039,
+      24.479443
+     ],
+     [
+      -1.463398,
+      23.423307
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -1.463398,
+      23.423307
+     ],
+     [
+      -2.346517,
+      24.315325
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -2.346517,
+      24.315325
+     ],
+     [
+      -2.910764,
+      23.194066
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -2.910764,
+      23.194066
+     ],
+     [
+      -3.882286,
+      23.988887
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -3.882286,
+      23.988887
+     ],
+     [
+      -4.326238,
+      22.814791
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -4.326238,
+      22.814791
+     ],
+     [
+      -5.375519,
+      23.503706
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -5.375519,
+      23.503706
+     ],
+     [
+      -5.694313,
+      22.289636
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -5.694313,
+      22.289636
+     ],
+     [
+      -6.809857,
+      22.865098
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -6.809857,
+      22.865098
+     ],
+     [
+      -7.0,
+      21.624356
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -7.0,
+      21.624356
+     ],
+     [
+      -8.169586,
+      22.080059
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -8.169586,
+      22.080059
+     ],
+     [
+      -8.228994,
+      20.826238
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -8.228994,
+      20.826238
+     ],
+     [
+      -9.439806,
+      21.157189
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -9.439806,
+      21.157189
+     ],
+     [
+      -9.367828,
+      19.904028
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -9.367828,
+      19.904028
+     ],
+     [
+      -10.606602,
+      20.106602
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -10.606602,
+      20.106602
+     ],
+     [
+      -10.404028,
+      18.867828
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -10.404028,
+      18.867828
+     ],
+     [
+      -11.657189,
+      18.939806
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -11.657189,
+      18.939806
+     ],
+     [
+      -11.326238,
+      17.728994
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -11.326238,
+      17.728994
+     ],
+     [
+      -12.580059,
+      17.669586
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -12.580059,
+      17.669586
+     ],
+     [
+      -12.124356,
+      16.5
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -12.124356,
+      16.5
+     ],
+     [
+      -13.365098,
+      16.309857
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.arc.center_point",
+   "params": {
+    "center": [
+     0,
+     9.5
+    ],
+    "start": [
+     -13.365098,
+     16.309857
+    ],
+    "end": [
+     -15,
+     9.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      -15,
+      9.5
+     ],
+     [
+      -15,
+      0
+     ]
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0,
+     9.5
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -8,
+     0
+    ],
+    "p1": [
+     -7,
+     1
+    ]
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     7,
+     0
+    ],
+    "p1": [
+     8,
+     1
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1,
+    "direction": "negative",
+    "profiles": [
+     {
+      "point": [
+       0,
+       3
+      ]
+     }
+    ],
+    "name": "Plate",
+    "body_name": "3-27D Hand brake teethed bracket plate"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "Feet"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -15,
+     0
+    ],
+    "p1": [
+     -8,
+     4.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     8,
+     0
+    ],
+    "p1": [
+     15,
+     4.5
+    ]
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -7,
+     -3.5
+    ],
+    "p1": [
+     7,
+     1
+    ]
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 1,
+    "operation": "join",
+    "targets": [
+     "3-27D Hand brake teethed bracket plate"
+    ],
+    "name": "Feet"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-27D Hand brake teethed bracket plate"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}

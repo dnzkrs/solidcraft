@@ -1,0 +1,273 @@
+{
+ "commands": [
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "tb_t",
+    "expression": "2",
+    "unit": "mm",
+    "comment": "thickness"
+   }
+  },
+  {
+   "command": "parameters.add",
+   "params": {
+    "name": "tb_w",
+    "expression": "8",
+    "unit": "mm",
+    "comment": "width"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Side"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      35
+     ],
+     [
+      41.908098,
+      35
+     ],
+     [
+      64.408098,
+      0
+     ],
+     [
+      76.5,
+      0
+     ],
+     [
+      76.5,
+      2
+     ],
+     [
+      65.5,
+      2
+     ],
+     [
+      43,
+      37
+     ],
+     [
+      0,
+      37
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 4.0,
+    "direction": "symmetric",
+    "name": "Strip",
+    "body_name": "3-26A Bumper-towbar mounting bracket"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -1
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      1,
+      0
+     ]
+    },
+    "name": "End rounds"
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     -1,
+     -5.0
+    ],
+    "p1": [
+     4.0,
+     5.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     4.0,
+     0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.rectangle.two_point",
+   "params": {
+    "p0": [
+     72.5,
+     -5.0
+    ],
+    "p1": [
+     77.5,
+     5.0
+    ]
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     72.5,
+     0
+    ],
+    "diameter": 8
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 39,
+    "operation": "cut",
+    "targets": [
+     "3-26A Bumper-towbar mounting bracket"
+    ],
+    "profiles": [
+     {
+      "point": [
+       -0.5,
+       0
+      ]
+     },
+     {
+      "point": [
+       77.0,
+       0
+      ]
+     }
+    ],
+    "name": "End rounds"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      -1
+     ],
+     "x_dir": [
+      1.0,
+      0.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      1.0,
+      0.0
+     ]
+    },
+    "name": "\u00d84 holes"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     5.0,
+     0.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     35.0,
+     0.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     71.5,
+     0.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 39,
+    "operation": "cut",
+    "targets": [
+     "3-26A Bumper-towbar mounting bracket"
+    ],
+    "name": "\u00d84 holes"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "3-26A Bumper-towbar mounting bracket"
+    ],
+    "material": "Steel"
+   }
+  }
+ ]
+}

@@ -1,0 +1,318 @@
+{
+ "commands": [
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Housing section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      0,
+      0
+     ],
+     [
+      4.5,
+      0
+     ],
+     [
+      4.5,
+      7
+     ],
+     [
+      6.75,
+      7
+     ],
+     [
+      11,
+      12.85
+     ],
+     [
+      11,
+      19
+     ],
+     [
+      10,
+      19
+     ],
+     [
+      10,
+      12.85
+     ],
+     [
+      5.8,
+      8.5
+     ],
+     [
+      3.5,
+      8.5
+     ],
+     [
+      3.5,
+      1.5
+     ],
+     [
+      0,
+      1.5
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Housing",
+    "body_name": "2-45 housing"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      -6,
+      0,
+      0
+     ],
+     "x_dir": [
+      0.0,
+      -1.0,
+      0.0
+     ],
+     "y_dir": [
+      0.0,
+      0.0,
+      -1.0
+     ]
+    },
+    "name": "Stem hole"
+   }
+  },
+  {
+   "command": "sketch.circle.center",
+   "params": {
+    "center": [
+     0.0,
+     -4.0
+    ],
+    "diameter": 4
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.extrude",
+   "params": {
+    "distance": 4,
+    "operation": "cut",
+    "targets": [
+     "2-45 housing"
+    ],
+    "name": "Stem hole"
+   }
+  },
+  {
+   "command": "sketch.create",
+   "params": {
+    "plane": {
+     "origin": [
+      0,
+      0,
+      0
+     ],
+     "x_dir": [
+      1,
+      0,
+      0
+     ],
+     "y_dir": [
+      0,
+      0,
+      1
+     ]
+    },
+    "name": "Reflector section"
+   }
+  },
+  {
+   "command": "sketch.line",
+   "params": {
+    "points": [
+     [
+      3,
+      6.9
+     ],
+     [
+      3.5,
+      6.9
+     ],
+     [
+      3.5,
+      8.4
+     ],
+     [
+      10,
+      12.85
+     ],
+     [
+      10,
+      13.1
+     ],
+     [
+      9.6,
+      13.1
+     ],
+     [
+      3,
+      8.75
+     ]
+    ],
+    "closed": true
+   }
+  },
+  {
+   "command": "sketch.finish",
+   "params": {}
+  },
+  {
+   "command": "solid.revolve",
+   "params": {
+    "axis": "Z",
+    "operation": "new",
+    "name": "Reflector",
+    "body_name": "2-45 reflector"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 4,
+    "height": 30,
+    "base": [
+     -32.5,
+     0,
+     4
+    ],
+    "axis": "X",
+    "name": "Stem",
+    "body_name": "2-45 stem"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 3,
+    "height": 32,
+    "base": [
+     -33.5,
+     0,
+     4
+    ],
+    "axis": "X",
+    "operation": "cut",
+    "targets": [
+     "2-45 stem"
+    ],
+    "name": "Stem bore"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 7,
+    "height": 1,
+    "base": [
+     -30.5,
+     0,
+     4
+    ],
+    "axis": "X",
+    "name": "Washer",
+    "body_name": "2-45 washer"
+   }
+  },
+  {
+   "command": "solid.cylinder",
+   "params": {
+    "diameter": 4,
+    "height": 3,
+    "base": [
+     -31.5,
+     0,
+     4
+    ],
+    "axis": "X",
+    "operation": "cut",
+    "targets": [
+     "2-45 washer"
+    ],
+    "name": "Washer bore"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-45 housing"
+    ],
+    "material": "Brass"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-45 reflector"
+    ],
+    "material": "Stainless Steel"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-45 stem"
+    ],
+    "material": "Brass"
+   }
+  },
+  {
+   "command": "material.assign",
+   "params": {
+    "bodies": [
+     "2-45 washer"
+    ],
+    "material": "Brass"
+   }
+  }
+ ]
+}
