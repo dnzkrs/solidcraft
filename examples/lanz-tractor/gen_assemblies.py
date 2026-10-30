@@ -1,0 +1,201 @@
+#!/usr/bin/env python3
+"""Lanz mini tractor: subassemblies built from the part designs in parts/.
+
+Each subassembly is a SolidCraft command script (assemblies/<name>.json) that links the part
+designs (component.insert_design) and places every occurrence with a rigid move worked out from
+how the parts mate: shafts in bores, shoulders on shoulders, holes on holes. The drawings' assembly
+sheets (08 to 11) show the subassemblies only as 3D views, so every placement below says which
+mating sizes fix it.
+
+  python3 gen_assemblies.py                 # write the scripts
+  python3 gen_assemblies.py --build         # also build, check interference and snapshot them
+
+Outputs per subassembly in assemblies/: <name>.json, <name>.solvecraft, <name>.png.
+"""
+import argparse
+import json
+import math
+import os
+import shutil
+import subprocess
+
+_here = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(_here, "assemblies")
+PARTS = os.path.join("..", "parts")                 # part designs, relative to assemblies/
+
+_ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+_ap.add_argument("names", nargs="*", help="subassemblies to write (default: all)")
+_ap.add_argument("--build", action="store_true", help="build, check interference and snapshot")
+_ap.add_argument("--cli", default=os.environ.get("SOLVECRAFT_CLI") or shutil.which("solvecraft-cli")
+                 or os.path.join(_here, "..", "..", "target", "release", "solvecraft-cli"))
+ARGS = _ap.parse_args()
+
+ASSEMBLIES = {}
+
+
+def assembly(name, title):
+    def reg(fn):
+        ASSEMBLIES[name] = (title, fn)
+        return fn
+    return reg
+
+
+# ----------------------------------------------------------------------------- rotations
+def matmul(a, b):
+    return [[sum(a[i][k] * b[k][j] for k in range(3)) for j in range(3)] for i in range(3)]
+
+
+I3 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
+FLIP_X = [[1, 0, 0], [0, -1, 0], [0, 0, -1]]        # half a turn about X: Z points the other way
+
+
+def rot_z(deg):
+    c, s = math.cos(math.radians(deg)), math.sin(math.radians(deg))
+    return [[c, -s, 0], [s, c, 0], [0, 0, 1]]
+
+
+def frame(x, y, z):
+    """The rotation taking the part's X, Y, Z axes to the given (right-handed) directions."""
+    return [[x[i], y[i], z[i]] for i in range(3)]
+
+
+class Assembly:
+    def __init__(self, name):
+        self.name = name
+        self.cmds = []
+        self.count = {}
+        self.placed = []                                # (occurrence, part, R, t, note)
+        self.first = {}                                 # part: placement of its first occurrence
+
+    def place(self, part, R=I3, t=(0, 0, 0), note=""):
+        """Link the part's design and move its occurrence to x_world = R x_part + t."""
+        n = self.count.get(part, 0) + 1
+        self.count[part] = n
+        params = {"path": os.path.join(PARTS, f"{part}.solvecraft"), "name": part}
+        if n > 1:
+            params["reuse"] = True
+        self.cmds.append({"command": "component.insert_design", "params": params})
+        occ = f"{part}:{n}"
+        # occurrence.move applies its matrix on top of the current placement, and a reused
+        # occurrence starts where the part's first one is: move it by D F^-1
+        if n == 1:
+            self.first[part] = (R, t)
+            Rm, tm = R, t
+        else:
+            RF, tF = self.first[part]
+            Rm = [[sum(R[i][k] * RF[j][k] for k in range(3)) for j in range(3)] for i in range(3)]
+            tm = [t[i] - sum(Rm[i][k] * tF[k] for k in range(3)) for i in range(3)]
+        m = [round(v, 9) for row in ((Rm[i][0], Rm[i][1], Rm[i][2], tm[i]) for i in range(3)) for v in row]
+        if m != [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0]:
+            self.cmds.append({"command": "occurrence.move", "params": {"occurrence": occ, "space": "world",
+                                                                       "matrix": m, "move_grounded": True}})
+        self.placed.append((occ, part, R, tuple(t), note))
+        return occ
+
+
+# ----------------------------------------------------------------------------- SA-3-315
+@assembly("SA-3-315", "Rear axle with differential and wheels")
+def rear_axle(a):
+    """SA-3-301 (differential and housings), SA-3-302/303 (the axles with their mounting plates) and
+    the two wheels SA-3-304, as drawn on sheet 10. The axle runs along Z; Z = 0 is the end of
+    3-04's tube. The stack is fixed by its mating sizes, and it closes exactly:
+    - 3-03's Ø42 spigot enters 3-04's Ø42 cavity, the two flanges face to face (3-03 turned over);
+      the drive gear 3-18 sits over 3-03's Ø20 hub against its flange, holes on 3-03's holes;
+    - the side gears' Ø13 hubs bottom on the Ø14 bores' steps (Z 16 in 3-04, Z 58 in 3-03), which
+      puts their pitch apexes 6.51 from the cross shaft at Z 37 (the Ø6 hole 15 from 3-04's
+      flange face); the planet on the cross shaft then reaches the cavity wall (6.51 + 14.49 = 21);
+    - each axle's shoulder sits on its side gear's hub, its Ø6 end in the gear's bore;
+    - the axle's cross pin sits in 3-14's Ø4.5 cross hole, and 3-14's hub then meets the spacer
+      3-13 exactly, which meets the bearing 3-08 in the housing's Ø20 bore;
+    - the bearings 3-07 sit on the housing tubes against the Ø20 hubs, inside the bearing housings'
+      Ø32 counterbores; the rims 3-15 are bolted to 3-14's flanges over their Ø20 hubs."""
+    c = math.sqrt(0.5)
+    u = (c, c, 0)                                      # the cross shaft's direction (3-04's hole)
+    planet = frame((0, 0, 1), (c, -c, 0), u)
+    a.place("3-04", note="base: Z 0 the tube's end, flange face at Z 52")
+    a.place("3-03", FLIP_X, (0, 0, 74), "turned over, flange face on 3-04's at Z 52")
+    a.place("3-18", rot_z(22.5), (0, 0, 54), "over 3-03's Ø20 hub, on its flange; holes on its holes")
+    a.place("3-07", I3, (0, 0, 2), "on 3-04's tube, against the Ø20 hub at Z 12")
+    a.place("3-07", I3, (0, 0, 62), "on 3-03's tube, against the Ø20 hub at Z 62")
+    a.place("3-06", I3, (0, 0, -40.5), "its Ø32 counterbore over the bearing (Z 2 to 12)")
+    a.place("3-05", FLIP_X, (0, 0, 87.5), "its Ø32 counterbore over the bearing (Z 62 to 72)")
+    a.place("3-08", I3, (0, 0, -41.5), "in 3-06's Ø20 bore against its step (Z -33.5)")
+    a.place("3-08", I3, (0, 0, 80.5), "in 3-05's Ø20 bore against its step (Z 80.5)")
+    a.place("3-13", I3, (0, 0, -60.5), "against the bearing")
+    a.place("3-13", I3, (0, 0, 88.5), "against the bearing")
+    a.place("3-10", FLIP_X, (0, 0, 30.49), "side gear: hub on 3-04's Ø14 bore step (Z 16)")
+    a.place("3-10", I3, (0, 0, 43.51), "side gear: hub on 3-03's Ø14 bore step (Z 58)")
+    a.place("3-10", planet, tuple(6.51 * u[i] + (37 if i == 2 else 0) for i in range(3)),
+            "planet on the cross shaft, its hub on the cavity wall")
+    a.place("3-11", planet, tuple(-22.75 * u[i] + (37 if i == 2 else 0) for i in range(3)),
+            "cross shaft through 3-04, centred")
+    a.place("3-09B", I3, (0, 0, -78), "shoulder on the side gear's hub (Z 16); cross pin at Z -65.5")
+    a.place("3-09A", FLIP_X, (0, 0, 125), "shoulder on the side gear's hub (Z 58); cross pin at Z 112.5")
+    a.place("3-14", rot_z(-45), (0, 0, -84.5), "cross hole on the axle's pin; hub on the spacer (Z -60.5)")
+    a.place("3-14", matmul(rot_z(45), FLIP_X), (0, 0, 131.5), "cross hole on the pin; hub on the spacer (Z 107.5)")
+    a.place("3-15", rot_z(-45), (0, 0, -85.5), "web on 3-14's flange (Z -78.5), over its Ø20 hub")
+    a.place("3-15", matmul(rot_z(45), FLIP_X), (0, 0, 132.5), "web on 3-14's flange (Z 125.5)")
+    a.place("3-16", I3, (0, 0, -72.5), "on the rim's Ø132 floor")
+    a.place("3-16", I3, (0, 0, 119.5), "on the rim's Ø132 floor")
+    a.place("3-17", I3, (0, 0, -86.5), "spigot in 3-14's Ø8 bore, flange on its hub's end")
+    a.place("3-17", FLIP_X, (0, 0, 133.5), "spigot in 3-14's Ø8 bore")
+
+
+# ----------------------------------------------------------------------------- driver
+def write(name):
+    title, fn = ASSEMBLIES[name]
+    a = Assembly(name)
+    fn(a)
+    os.makedirs(OUT, exist_ok=True)
+    path = os.path.join(OUT, f"{name}.json")
+    with open(path, "w") as f:
+        json.dump({"commands": a.cmds}, f, indent=1)
+        f.write("\n")
+    return path, a
+
+
+def build(name, path, a):
+    base = os.path.join(OUT, name)
+    run = subprocess.run([ARGS.cli, "run", os.path.basename(path), "--save", name + ".solvecraft", "--quiet"],
+                         cwd=OUT, capture_output=True, text=True)
+    if run.returncode:
+        print(f"{name}: FAIL {run.stderr.strip()[:400]}")
+        return False
+    check = os.path.join(OUT, f".{name}.check.json")
+    with open(path) as f:
+        cmds = json.load(f)["commands"]
+    cmds.append({"command": "inspect.interference", "params": {"budget_s": 1800}})
+    with open(check, "w") as f:
+        json.dump({"commands": cmds}, f)
+    res = subprocess.run([ARGS.cli, "run", os.path.basename(check), "--results"], cwd=OUT, capture_output=True, text=True)
+    os.remove(check)
+    hits, unchecked = [], []
+    try:
+        out = json.loads(res.stdout[res.stdout.index("["):])
+        hits = out[-1].get("interferences", [])
+        unchecked = out[-1].get("unchecked", [])
+    except (ValueError, IndexError, AttributeError):
+        print(f"{name}: interference check failed: {res.stderr.strip()[:300]}")
+    snap = subprocess.run([ARGS.cli, "snapshot", os.path.basename(path), "--out", name + ".png", "--view", "iso",
+                           "--width", "1200", "--height", "900"], cwd=OUT, capture_output=True, text=True)
+    print(f"{name}: {len(a.placed)} occurrences, {len(hits)} overlapping pairs"
+          + ("" if snap.returncode == 0 else f", snapshot failed: {snap.stderr.strip()[:200]}"))
+    for h in hits:
+        print(f"   {h.get('a')} / {h.get('b')}: {h.get('volume_mm3', 0):.2f} mm³ at {[round(v, 1) for v in h.get('center', [])]}")
+    for u in unchecked:
+        print(f"   not checked: {u.get('a')} / {u.get('b')}: {u.get('reason', '')[:120]}")
+    return True
+
+
+def main():
+    names = ARGS.names or list(ASSEMBLIES)
+    for name in names:
+        path, a = write(name)
+        if ARGS.build:
+            build(name, path, a)
+        else:
+            print(f"{name}: {path}")
+
+
+if __name__ == "__main__":
+    main()

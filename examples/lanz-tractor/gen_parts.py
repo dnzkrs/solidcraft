@@ -3408,15 +3408,16 @@ def diff_housing_1(s):
 def diff_housing_2(s):
     """Sheet 05, 3-04 (scale 1:2, read from the section's lines): a Ø13 x 12 tube and a Ø20 x 8 hub
     like 3-03, then a Ø46 body 28 long with a Ø42 bore 28 deep (4 wall) and a Ø60 x 4 flange with
-    8 x M4 (Ø3.3) on the Ø52 PCD matching 3-03; bored Ø9, Ø8 and Ø14 like 3-03; a Ø6 radial hole 15
-    from the flange face. Axis = Z, the tube's end on Z = 0; the holes turned 22.5° as on 3-03 and the
+    8 x M4 (Ø3.3) on the Ø52 PCD matching 3-03; bored Ø9, Ø8 and Ø14 like 3-03; a Ø6 cross hole 15
+    from the flange face, through both walls (the 3-11 shaft). Axis = Z, the tube's end on Z = 0; the holes turned 22.5° as on 3-03 and the
     radial hole at 45°."""
     v = s.turned("Housing", [(4.5, 0), (6.5, 0), (6.5, 12), (10, 12), (10, 20), (23, 20), (23, 48), (30, 48), (30, 52),
                              (21, 52), (21, 24), (7, 24), (7, 16), (4, 16), (4, 12), (4.5, 12)])
     v -= pcd_holes(s, "M4 tapped", 47, 6, 3.3) * 4             # through the 4 flange
     u = (math.cos(math.radians(45)), math.sin(math.radians(45)), 0)
-    s.holes("Ø6 radial", (25 * u[0], 25 * u[1], 0), (-u[0], -u[1], 0), [(25 * u[0], 25 * u[1], 37)], 6, depth=5)
-    return v - cross_hole(23, 3, 21) / 2
+    # through both walls: the 3-11 cross shaft runs across the cavity
+    s.holes("Ø6 cross hole", (25 * u[0], 25 * u[1], 0), (-u[0], -u[1], 0), [(25 * u[0], 25 * u[1], 37)], 6, depth=50)
+    return v - cross_hole(23, 3, 21)
 
 
 @part("3-05", "Rear axle main bearing housing part-1", "Aluminum")

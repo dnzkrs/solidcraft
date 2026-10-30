@@ -246,7 +246,7 @@
       -1.0
      ]
     },
-    "name": "\u00d86 radial"
+    "name": "\u00d86 cross hole"
    }
   },
   {
@@ -266,12 +266,12 @@
   {
    "command": "solid.extrude",
    "params": {
-    "distance": 5,
+    "distance": 50,
     "operation": "cut",
     "targets": [
      "3-04 Differential housing part-2"
     ],
-    "name": "\u00d86 radial"
+    "name": "\u00d86 cross hole"
    }
   },
   {

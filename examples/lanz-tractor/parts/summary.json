@@ -745,8 +745,8 @@
   "name": "Differential housing part-2",
   "material": "Steel",
   "bodies": 1,
-  "volume_mm3": 20630.1,
-  "mass_g": 161.9
+  "volume_mm3": 20573.4,
+  "mass_g": 161.5
  },
  "3-05": {
   "name": "Rear axle main bearing housing part-1",
