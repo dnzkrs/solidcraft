@@ -197,6 +197,22 @@ def exhaust_stack(a):
     a.place("1-39", I3, (0, 0, 143), "over the stack's top band")
 
 
+# ----------------------------------------------------------------------------- SA-1-102
+@assembly("SA-1-102", "Cylinder oiler")
+def cylinder_oiler(a):
+    """The cylinder oiler (sheet 08's SA-1-102) on its axis Z, the base's stud end on Z 0:
+    - the glass base 1-08's M6 screws into the oiler base 1-07's M6 hole, its flange on the hex's
+      top (Z 15.5); threads are modelled at their major diameter and tapped holes at the tap drill,
+      so the thread shows as an overlap (43 mm³ of the 48.7 checked; the rest is the Ø4 nozzle
+      reaching about 1 below the 8 deep tapped hole, a small conflict in the read sizes);
+    - the glass 1-09 stands in 1-08's Ø15 x 1 recess (Z 16.5), and the top 1-10's Ø15 x 1 recess
+      caps it (the M3 screw that holds them, into 1-08's boss, is not a part of the list)."""
+    a.place("1-07", note="stud end on Z 0")
+    a.place("1-08", I3, (0, 0, 6.5), "M6 in 1-07's tapped hole, flange on the hex (Z 15.5)")
+    a.place("1-09", I3, (0, 0, 16.5), "in 1-08's recess")
+    a.place("1-10", I3, (0, 0, 34.5), "recess over the glass's top (Z 35.5)")
+
+
 # ----------------------------------------------------------------------------- driver
 def write(name):
     title, fn = ASSEMBLIES[name]
