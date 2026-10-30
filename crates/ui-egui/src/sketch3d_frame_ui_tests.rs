@@ -1,7 +1,7 @@
 //! Real 3D drawing and triad input in a rotated second component occurrence.
 
 use serde_json::json;
-use solvecraft_engine::geom::Vec3;
+use solidcraft_engine::geom::Vec3;
 
 #[test]
 fn bridge_line_snaps_to_points_on_two_visible_sketch_planes() {
@@ -13,7 +13,7 @@ fn bridge_line_snaps_to_points_on_two_visible_sketch_planes() {
     }
     let bridge = h.app.run("sketch.create", json!({"plane":"XY","name":"Bridge"})).unwrap()["sketch"].as_u64().unwrap();
     h.app.run("sketch.options", json!({"sketch_3d":true})).unwrap();
-    h.app.ui.show_origin = false;
+    h.app.set_origin_shown(false);
     h.call("ui.view", json!({"view":"home"}));
     h.call("ui.view", json!({"view":"fit"}));
     h.frames(3);
@@ -55,7 +55,7 @@ fn coplanar_foreign_point() -> (crate::scenario::Harness, u64, u64) {
     h.app.run("sketch.point", json!({"point":[10,20]})).unwrap();
     h.app.run("sketch.finish", json!({})).unwrap();
     let active = h.app.run("sketch.create", json!({"plane":"XY","name":"Active"})).unwrap()["sketch"].as_u64().unwrap();
-    h.app.ui.show_origin = false;
+    h.app.set_origin_shown(false);
     h.call("ui.view", json!({"view":"home"}));
     h.call("ui.view", json!({"view":"fit"}));
     h.frames(3);
@@ -82,7 +82,7 @@ fn sketch_tools_never_pick_another_sketchs_point() {
         );
         let (at, id) = crate::viewport::sketch_point_at(&h.app, &proj, pos).unwrap();
         assert!(id.is_none(), "sketch_3d={sketch_3d}: snapped to foreign point id {id:?}");
-        assert!(at.dist(solvecraft_engine::geom::Vec2::new(10.0, 20.0)) < 0.5, "{at:?}");
+        assert!(at.dist(solidcraft_engine::geom::Vec2::new(10.0, 20.0)) < 0.5, "{at:?}");
         if !sketch_3d {
             let before = h.app.session.world_state().sketch(other).unwrap().sketch.clone();
             // A real 2D line click there creates nothing tied to the other sketch's point.
@@ -136,8 +136,9 @@ fn second_occurrence_drawn_wire_fit_picks_and_world_triad_drag_stay_aligned() {
     h.app.run("solid.box", json!({"corner":[17,32,45],"length":2,"width":2,"height":10,"body_name":"SnapVertices"})).unwrap();
     h.app.run("browser.visibility", json!({"paths":[[first]],"visible":false})).unwrap();
     let sketch = h.app.run("sketch.create", json!({"plane":"XY","name":"Wire"})).unwrap()["sketch"].as_u64().unwrap();
-    h.app.ui.show_origin = false;
+    h.app.set_origin_shown(false);
     h.settle();
+    h.step(&json!({"click":{"handle":"sketch_palette:options_fold"}})).unwrap();
     h.step(&json!({"widget":"3D Sketch"})).unwrap();
     assert!(
         crate::sketch3d::active(&h.app),
@@ -151,10 +152,16 @@ fn second_occurrence_drawn_wire_fit_picks_and_world_triad_drag_stay_aligned() {
     h.call("ui.view", json!({"view":"fit"}));
     h.app.start("sketch.line");
     h.frames(2);
+    // The clickable Line instruction toast covers the fitted lower endpoint. This scenario
+    // tests model picks, so dismiss the transient instruction before clicking through that area.
+    h.app.status = None;
+    h.frames(2);
     for world in [Vec3::new(17.0, 32.0, 45.0), Vec3::new(17.0, 32.0, 55.0)] {
         let [x, y] = h.at(&json!({"world":[world.x,world.y,world.z]})).unwrap();
         let proj = crate::viewport::projection(&h.app, h.app.viewport.rect.unwrap());
-        let picked = crate::sketch3d::point_at(&h.app, &proj, egui::pos2(x as f32, y as f32));
+        let screen = egui::pos2(x as f32, y as f32);
+        assert!(!crate::scenario::rect_of("toast").is_some_and(|r| r.contains(screen)), "the drawing click must clear the message action");
+        let picked = crate::sketch3d::point_at(&h.app, &proj, screen);
         assert!(picked.is_some_and(|(p, _)| p.dist(world) < 1e-5), "world={world:?}, picked={picked:?}, status={:?}", h.app.status);
     }
     h.step(&json!({"click":{"world":[17,32,45]}})).unwrap();

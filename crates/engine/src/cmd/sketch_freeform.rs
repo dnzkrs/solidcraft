@@ -3,8 +3,8 @@
 //! stays exact; the pieces replace the original curve.
 
 use serde_json::{Value, json};
-use solvecraft_geom::{Seg2, Vec2};
-use solvecraft_sketch::{ConstraintKind, CurveKind, Sketch};
+use solidcraft_geom::{Seg2, Vec2};
+use solidcraft_sketch::{ConstraintKind, CurveKind, Sketch};
 
 use super::sketch::add_c;
 use crate::Result;
@@ -163,7 +163,7 @@ fn add_pieces(sk: &mut Sketch, segs: &[Seg2], start: Option<usize>, end: Option<
                 CurveKind::Conic { a: prev, b: to, apex: x, rho: w / (1.0 + w) }
             }
             Seg2::Bezier { n, p } => {
-                let k = (n as usize).clamp(1, solvecraft_geom::MAX_BEZIER_DEGREE);
+                let k = (n as usize).clamp(1, solidcraft_geom::MAX_BEZIER_DEGREE);
                 let mut pts = vec![prev];
                 for q in p.iter().take(k).skip(1) {
                     pts.push(sk.add_point(*q, None)?);
@@ -280,8 +280,13 @@ fn modify(sk: &mut Sketch, ci: usize, at: Vec2, remove: bool, points: Option<&[V
         }
     }
     let ids: Vec<String> = made.iter().filter_map(|c| sk.curves.get(*c).map(|c| c.id.clone())).collect();
+    // The removed piece, for previews (`sketch.trim.path`).
+    let removed: Vec<[f64; 2]> = gone
+        .and_then(|k| intervals.get(k))
+        .map(|(a, b, ..)| span(&segs, *a, *b).iter().flat_map(|s| s.polyline(1e-3)).map(|q| [q.x, q.y]).collect())
+        .unwrap_or_default();
     sk.remove_curves(&[ci]);
     let unused: Vec<usize> = cut_pt.iter().map(|x| x.1).filter(|pi| !sk.curves.iter().any(|c| c.kind.uses(*pi))).collect();
     sk.remove_points(&unused);
-    Ok(json!({"curves": ids}))
+    Ok(json!({"curves": ids, "removed": removed}))
 }

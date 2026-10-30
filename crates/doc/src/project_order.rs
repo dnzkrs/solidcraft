@@ -1,23 +1,29 @@
 //! Stable face projection order: outer boundary first, then holes by geometry.
 //! B-rep edge indices depend on face enumeration and must not choose sketch curve IDs.
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
-use solvecraft_geom::{Mesh, Plane, Vec3};
+use solidcraft_geom::{Aabb3, Mesh, Plane, Vec3};
 
 use crate::{DocError, Result};
 
 type Key = (i64, i64, i64);
 
+/// Boundary of the picked face as drawn: a closed surface cut into pieces (a cylinder or a
+/// round's torus in halves) projects as the whole patch, since its seams are hidden.
 pub(super) fn face_edges(mesh: &Mesh, face: u32, plane: &Plane) -> Result<Vec<usize>> {
+    let patch = mesh.surface_patch(face as usize);
+    if patch.len() > 1 {
+        return family_edges(mesh, &patch.into_iter().collect(), plane);
+    }
     let edges = mesh.face_edges(face).into_iter().filter(|e| !mesh.seams.get(*e).copied().unwrap_or(false)).collect();
-    boundary_edges(mesh, edges, plane)
+    boundary_edges(mesh, edges, &[face as usize].into_iter().collect(), plane)
 }
 
 /// Full boundary of an explicitly selected analytic planar piece. Display seams
 /// hide subdivisions for picking, but cannot remove a raw piece's closing edge.
 pub(super) fn raw_face_edges(mesh: &Mesh, face: u32, plane: &Plane) -> Result<Vec<usize>> {
-    boundary_edges(mesh, mesh.face_edges(face), plane)
+    boundary_edges(mesh, mesh.face_edges(face), &[face as usize].into_iter().collect(), plane)
 }
 
 /// Exterior of an exact current face family. Shared topological edges are internal;
@@ -36,10 +42,13 @@ pub(super) fn family_edges(mesh: &Mesh, selected: &std::collections::BTreeSet<us
             edges.push(index);
         }
     }
-    boundary_edges(mesh, edges, plane)
+    boundary_edges(mesh, edges, selected, plane)
 }
 
-fn boundary_edges(mesh: &Mesh, mut edges: Vec<usize>, plane: &Plane) -> Result<Vec<usize>> {
+/// `faces`: the faces the edges bound. Where boundaries touch at a vertex (a pinch: an even number of
+/// boundary edges meet there), the walk stays on the face it came along, or else takes the first
+/// edge in geometric order; either way every loop closes. An odd number is a real branch.
+fn boundary_edges(mesh: &Mesh, mut edges: Vec<usize>, faces: &BTreeSet<usize>, plane: &Plane) -> Result<Vec<usize>> {
     let bounds = mesh.bounds();
     let origin = bounds.min;
     let local_origin = plane.to_local(origin);
@@ -54,14 +63,13 @@ fn boundary_edges(mesh: &Mesh, mut edges: Vec<usize>, plane: &Plane) -> Result<V
     if edges.iter().any(|e| !mesh.edges.get(*e).is_some_and(|p| p.len() >= 2 && p.iter().all(|p| p.is_finite()))) {
         return Err(DocError::Invalid("face projection has an invalid boundary edge".into()));
     }
-    if edges.len() > solvecraft_sketch::MAX_LINK_ENTITIES {
+    if edges.len() > solidcraft_sketch::MAX_LINK_ENTITIES {
         return Err(DocError::Invalid("face projection exceeds the boundary edge limit".into()));
     }
     let geometry_key = |e: usize| {
         let pts = mesh.edges.get(e).map(Vec::as_slice).unwrap_or_default();
-        let lo = pts.iter().copied().fold(Vec3::new(f64::INFINITY, f64::INFINITY, f64::INFINITY), Vec3::min);
-        let hi = pts.iter().copied().fold(Vec3::new(f64::NEG_INFINITY, f64::NEG_INFINITY, f64::NEG_INFINITY), Vec3::max);
-        (key(lo), key(hi))
+        let b: Aabb3 = pts.iter().copied().collect();
+        (key(b.min), key(b.max))
     };
     edges.sort_by_key(|e| geometry_key(*e));
     let mut at: BTreeMap<Key, Vec<usize>> = BTreeMap::new();
@@ -105,26 +113,36 @@ fn boundary_edges(mesh: &Mesh, mut edges: Vec<usize>, plane: &Plane) -> Result<V
             // Neighbouring quantization cells cover points on either side of a rounding
             // boundary. Connectivity is checked in world space, not in the projection.
             let (x, y, z) = key(current);
-            let mut candidates = Vec::new();
+            let mut incident = Vec::new();
             for dx in -1..=1 {
                 for dy in -1..=1 {
                     for dz in -1..=1 {
                         let cell = (x.saturating_add(dx), y.saturating_add(dy), z.saturating_add(dz));
                         if let Some(list) = at.get(&cell) {
-                            candidates.extend(list.iter().copied().filter(|e| {
-                                !used.get(*e).copied().unwrap_or(true)
-                                    && mesh.edges.get(*e).is_some_and(|p| {
-                                        p.first().is_some_and(|a| a.dist(current) <= tol) || p.last().is_some_and(|b| b.dist(current) <= tol)
-                                    })
+                            incident.extend(list.iter().copied().filter(|e| {
+                                mesh.edges.get(*e).is_some_and(|p| {
+                                    p.first().is_some_and(|a| a.dist(current) <= tol) || p.last().is_some_and(|b| b.dist(current) <= tol)
+                                })
                             }));
                         }
                     }
                 }
             }
-            candidates.sort_by_key(|e| geometry_key(*e));
-            candidates.dedup();
+            incident.sort_by_key(|e| geometry_key(*e));
+            incident.dedup();
+            let mut candidates: Vec<usize> = incident.iter().copied().filter(|e| !used.get(*e).copied().unwrap_or(true)).collect();
             if candidates.len() > 1 {
-                return Err(DocError::Invalid("face projection has a branched boundary".into()));
+                if incident.len() % 2 != 0 {
+                    return Err(DocError::Invalid("face projection has a branched boundary".into()));
+                }
+                let face_of = |e: usize| -> Vec<u32> {
+                    mesh.edge_faces.get(e).map(|fs| fs.iter().copied().filter(|f| faces.contains(&(*f as usize))).collect()).unwrap_or_default()
+                };
+                let here = face_of(edge);
+                let same: Vec<usize> = candidates.iter().copied().filter(|c| face_of(*c).iter().any(|f| here.contains(f))).collect();
+                if same.len() == 1 {
+                    candidates = same;
+                }
             }
             let Some(next) = candidates.first() else { break };
             edge = *next;
@@ -178,6 +196,27 @@ mod tests {
     }
 
     #[test]
+    fn boundaries_touching_at_a_vertex_project() {
+        // Two squares of one face family meet only at the corner (1, 1): four boundary edges meet
+        // there (a pinch), and the walk keeps each square's loop on its own face.
+        let mut mesh = Mesh::default();
+        for (face, x, y) in [(0, 0., 0.), (1, 1., 1.)] {
+            let corners = [Vec3::new(x, y, 0.), Vec3::new(x + 1., y, 0.), Vec3::new(x + 1., y + 1., 0.), Vec3::new(x, y + 1., 0.)];
+            mesh.positions.extend(corners);
+            for i in 0..4 {
+                mesh.edges.push(vec![corners[i], corners[(i + 1) % 4]]);
+                mesh.edge_faces.push(vec![face]);
+            }
+        }
+        let edges = family_edges(&mesh, &[0, 1].into_iter().collect(), &Plane::XY).unwrap();
+        assert_eq!(edges.len(), 8);
+        // A third edge ending at the corner leaves an odd number there: a real branch.
+        mesh.edges.push(vec![Vec3::new(1., 1., 0.), Vec3::new(3., 0., 0.)]);
+        mesh.edge_faces.push(vec![1]);
+        assert!(family_edges(&mesh, &[0, 1].into_iter().collect(), &Plane::XY).unwrap_err().to_string().contains("branched"));
+    }
+
+    #[test]
     fn distinct_crossing_boundaries_are_not_geometrically_cancelled() {
         let mut mesh = Mesh::default();
         for (face, x, y) in [(0, 0., 0.), (1, 1., 1.)] {
@@ -191,17 +230,17 @@ mod tests {
         let edges = family_edges(&mesh, &[0, 1].into_iter().collect(), &Plane::XY).unwrap();
         assert_eq!(edges.len(), 8);
         let geom: Vec<_> = edges.iter().flat_map(|edge| super::super::fit_world(&Plane::XY, &mesh.edges[*edge])).collect();
-        let mut sk = solvecraft_sketch::Sketch::new();
+        let mut sk = solidcraft_sketch::Sketch::new();
         let link = sk
-            .add_link(solvecraft_sketch::LinkKind::Project, solvecraft_sketch::LinkSource::Face { body: "ambiguous".into(), at: Vec3::ZERO }, &geom)
+            .add_link(solidcraft_sketch::LinkKind::Project, solidcraft_sketch::LinkSource::Face { body: "ambiguous".into(), at: Vec3::ZERO }, &geom)
             .unwrap();
         assert!(sk.update_link(&link, &geom).is_err());
     }
 
     #[test]
     fn family_line_normalization_preserves_corners_arcs_branches_and_retracing() {
-        use solvecraft_geom::Vec2;
-        use solvecraft_sketch::LinkGeom;
+        use solidcraft_geom::Vec2;
+        use solidcraft_sketch::LinkGeom;
         let line = |a, b| LinkGeom::Line(Vec2::new(a, 0.), Vec2::new(b, 0.));
         assert_eq!(super::super::merge_family_lines(vec![line(0., 1.), line(2., 1.)]).unwrap(), vec![line(0., 2.)]);
         for geometry in [
@@ -265,8 +304,8 @@ mod tests {
                 let normalized: Vec<_> = expected
                     .iter()
                     .map(|g| {
-                        let solvecraft_sketch::LinkGeom::Line(a, b) = g[0] else { panic!("line") };
-                        if a.x > b.x || a.y > b.y { vec![solvecraft_sketch::LinkGeom::Line(b, a)] } else { g.clone() }
+                        let solidcraft_sketch::LinkGeom::Line(a, b) = g[0] else { panic!("line") };
+                        if a.x > b.x || a.y > b.y { vec![solidcraft_sketch::LinkGeom::Line(b, a)] } else { g.clone() }
                     })
                     .collect();
                 assert_eq!(actual, normalized);
@@ -282,8 +321,8 @@ mod tests {
 
     #[test]
     fn rounded_boundary_arc_sweeps_survive_individual_edge_reversal() {
-        use solvecraft_geom::{Seg2, Vec2};
-        use solvecraft_sketch::LinkGeom;
+        use solidcraft_geom::{Seg2, Vec2};
+        use solidcraft_sketch::LinkGeom;
         let mut mesh = Mesh::default();
         for (extent, radius) in [(10.0, 3.0), (8.0, 1.0)] {
             for k in 0..4 {

@@ -9,7 +9,7 @@ use crate::*;
 
 fn bbox(s: &Session, body: &str) -> ([f64; 3], [f64; 3]) {
     let b = s.model.state().body(body).map(|b| b.body.clone()).unwrap();
-    let m = solvecraft_kernel::measure(&b).unwrap();
+    let m = solidcraft_kernel::measure(&b).unwrap();
     ([m.bbox.min.x, m.bbox.min.y, m.bbox.min.z], [m.bbox.max.x, m.bbox.max.y, m.bbox.max.z])
 }
 
@@ -31,7 +31,7 @@ fn cylinder_base_expressions_follow_parameters() {
     // And it survives a save and reopen.
     let text = s.doc.to_json();
     assert!(text.contains("basin_width/2"), "{text}");
-    let s2 = Session::new(solvecraft_doc::Document::from_json(&text).unwrap());
+    let s2 = Session::new(solidcraft_doc::Document::from_json(&text).unwrap());
     let (lo, _) = bbox(&s2, "Pin");
     assert!(near(lo, [25.0, 5.0, -2.0]), "{lo:?}");
 }
@@ -106,7 +106,7 @@ fn point_parameters_rename_and_store() {
 fn point_expressions_in_a_moved_component() {
     let mut s = Session::default();
     run(&mut s, "parameters.change", json!({"name": "x0", "expression": "10 mm"}));
-    let c = run(&mut s, "component.create", json!({"name": "Arm"}));
+    let c = run(&mut s, "component.create", json!({"name": "Arm", "grounded": false}));
     let (cid, occ) = (c["component"].as_u64().unwrap(), c["occurrence"].as_u64().unwrap());
     run(&mut s, "component.activate", json!({"component": 0}));
     run(&mut s, "occurrence.move", json!({"occurrence": occ, "translate": [0, 50, 0]}));

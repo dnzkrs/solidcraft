@@ -11,9 +11,9 @@
 
 use std::sync::{Arc, OnceLock};
 
-use solvecraft_geom::Region2;
-use solvecraft_kernel::Body;
-use solvecraft_kernel::history::{Change, FaceOrigin, FaceProv, History};
+use solidcraft_geom::Region2;
+use solidcraft_kernel::Body;
+use solidcraft_kernel::history::{Change, FaceOrigin, FaceProv, History};
 
 use crate::SolvedSketch;
 
@@ -160,6 +160,27 @@ impl Traced {
         let lineage = lineages.and_then(|l| Lineage::step(&result, &l));
         Traced { body: result, lineage }
     }
+
+    /// `result`, made by one kernel operation from this body alone. Where that operation's
+    /// history can't be composed with this body's (it blends an edge the same feature made: a
+    /// boss's root fillet), this body is a stage of the feature, its faces and edges named as a
+    /// whole first.
+    pub fn then(&self, result: Body) -> Traced {
+        let step = Traced::step(result.clone(), &[self]);
+        if step.lineage.is_some() {
+            return step;
+        }
+        let lineage = self.lineage.as_ref().and_then(|l| {
+            let history = result.history()?.clone();
+            if history.operands != 1 {
+                return None;
+            }
+            let body = crate::ModelBody::new(String::new(), self.body.clone(), 0);
+            let stage = Arc::new(Operand::Stage(Box::new(Stage { body, lineage: l.clone(), names: OnceLock::new() })));
+            Some(Lineage { history, operands: vec![stage] })
+        });
+        Traced { body: result, lineage }
+    }
 }
 
 /// How the bodies a feature builds from a profile name their faces: what each profile segment's
@@ -183,26 +204,33 @@ impl<'a> ProfileRoles<'a> {
         if history.operands != 0 {
             return None;
         }
-        let segments: Vec<&solvecraft_geom::Seg2> =
+        let segments: Vec<&solidcraft_geom::Seg2> =
             self.region.map(|r| std::iter::once(&r.outer).chain(&r.holes).flat_map(|l| &l.segs).collect()).unwrap_or_default();
         let curves = self.sketch.map(crate::config::ExactSketchCurves::new);
-        let curve = |segment: usize| -> Option<String> { curves.as_ref()?.find(segments.get(segment)?).map(|id| format!("side:{id}")) };
+        // Every curve the segment is drawn on (one, or several coincident or collinear ones).
+        let curve = |segment: usize| -> Vec<String> {
+            let (Some(curves), Some(segment)) = (curves.as_ref(), segments.get(segment)) else { return Vec::new() };
+            curves.find_all_along(segment).into_iter().map(|id| format!("side:{id}")).collect()
+        };
         let roles = history
             .faces
             .iter()
             .map(|face| {
                 let mut roles: Vec<String> = Vec::new();
                 for origin in &face.origins {
-                    let role = match *origin {
+                    let found = match *origin {
                         FaceOrigin::Profile { segment } => curve(segment),
-                        FaceOrigin::Cap { end } => self.caps.get(usize::from(end)).cloned().flatten(),
-                        _ => None,
+                        FaceOrigin::Cap { end } => self.caps.get(usize::from(end)).cloned().flatten().into_iter().collect(),
+                        _ => Vec::new(),
                     };
-                    match role {
-                        Some(role) if !roles.contains(&role) => roles.push(role),
-                        Some(_) => {}
-                        // One unknown origin leaves the face unknown: never a partial guess.
-                        None => return Vec::new(),
+                    // One unknown origin leaves the face unknown: never a partial guess.
+                    if found.is_empty() {
+                        return Vec::new();
+                    }
+                    for role in found {
+                        if !roles.contains(&role) {
+                            roles.push(role);
+                        }
                     }
                 }
                 roles
@@ -228,6 +256,110 @@ impl<'a> ProfileRoles<'a> {
     }
 }
 
+/// How a surface built from chains of sketch segments (Surface Extrude, Revolve, Sweep) names
+/// its walls: each `side:<curve>` of the sketch curve its segment lies on exactly, segments
+/// numbered through the chains in order. It has no caps.
+pub(crate) struct ChainRoles<'a> {
+    pub sketch: &'a SolvedSketch,
+    pub chains: &'a [Vec<solidcraft_geom::Seg2>],
+}
+
+impl ChainRoles<'_> {
+    /// The surface `body`, its walls named by their roles where its history gives them.
+    pub fn tool(&self, body: Body) -> Traced {
+        let roles = body.history().filter(|h| h.operands == 0).map(|h| self.of(h));
+        Traced::made(body, roles)
+    }
+
+    fn of(&self, history: &History) -> Vec<Vec<String>> {
+        let segments: Vec<&solidcraft_geom::Seg2> = self.chains.iter().flatten().collect();
+        let curves = crate::config::ExactSketchCurves::new(self.sketch);
+        history
+            .faces
+            .iter()
+            .map(|face| {
+                let mut roles: Vec<String> = Vec::new();
+                for origin in &face.origins {
+                    let role = match *origin {
+                        FaceOrigin::Profile { segment } => segments.get(segment).and_then(|s| curves.find_along(s)).map(|id| format!("side:{id}")),
+                        _ => None,
+                    };
+                    match role {
+                        Some(role) if !roles.contains(&role) => roles.push(role),
+                        Some(_) => {}
+                        // One unknown origin leaves the face unknown: never a partial guess.
+                        None => return Vec::new(),
+                    }
+                }
+                roles
+            })
+            .collect()
+    }
+}
+
+/// How a loft names its faces: each side by the sketch curves of the sections it runs between
+/// (`side:<curve>` for the first section's, `side:s<k>.<curve>` for section `k`'s), named after
+/// the section with the most segments (the one each side spans exactly one segment of) and
+/// answering to the others; its caps `start` and `end`.
+pub(crate) struct SectionRoles<'a> {
+    /// Each section's sketch and loops (outer, then holes), in the order given.
+    pub sections: Vec<(&'a SolvedSketch, Vec<&'a solidcraft_geom::Loop2>)>,
+}
+
+impl SectionRoles<'_> {
+    /// The loft `body`, its faces named by their roles where its history gives them.
+    pub fn tool(&self, body: Body) -> Traced {
+        let roles = body.history().filter(|h| h.operands == 0).map(|h| self.of(h));
+        Traced::made(body, roles)
+    }
+
+    fn of(&self, history: &History) -> Vec<Vec<String>> {
+        // Each profile segment (numbered through the sections in order): its section and role.
+        let mut segments: Vec<(usize, Option<String>)> = Vec::new();
+        for (k, (sketch, loops)) in self.sections.iter().enumerate() {
+            let curves = crate::config::ExactSketchCurves::new(sketch);
+            for seg in loops.iter().flat_map(|lp| &lp.segs) {
+                let role = curves.find_along(seg).map(|id| if k == 0 { format!("side:{id}") } else { format!("side:s{k}.{id}") });
+                segments.push((k, role));
+            }
+        }
+        let lead = self
+            .sections
+            .iter()
+            .enumerate()
+            .max_by_key(|(k, (_, loops))| (loops.iter().map(|lp| lp.segs.len()).sum::<usize>(), std::cmp::Reverse(*k)))
+            .map_or(0, |(k, _)| k);
+        history
+            .faces
+            .iter()
+            .map(|face| {
+                let mut roles: Vec<(bool, usize, String)> = Vec::new();
+                for origin in &face.origins {
+                    let (k, role) = match *origin {
+                        FaceOrigin::Cap { end } => (0, Some(if end { "end" } else { "start" }.to_string())),
+                        FaceOrigin::Profile { segment } => match segments.get(segment) {
+                            Some((k, role)) => (*k, role.clone()),
+                            None => (0, None),
+                        },
+                        _ => (0, None),
+                    };
+                    // One unknown origin leaves the face unknown: never a partial guess.
+                    let Some(role) = role else { return Vec::new() };
+                    roles.push((k != lead, k, role));
+                }
+                roles.sort();
+                let mut out: Vec<String> = Vec::new();
+                for (.., role) in roles {
+                    if !out.contains(&role) {
+                        out.push(role);
+                    }
+                }
+                out
+            })
+            .collect()
+    }
+}
+
 /// A box primitive, its faces named by the side they face (`+x`, `-z`, …), as its construction
 /// records them.
 pub(crate) fn box_tool(body: Body) -> Traced {
@@ -235,7 +367,7 @@ pub(crate) fn box_tool(body: Body) -> Traced {
         sources
             .iter()
             .map(|source| match source {
-                Some(solvecraft_kernel::FaceSource::Box { axis, high, .. }) => {
+                Some(solidcraft_kernel::FaceSource::Box { axis, high, .. }) => {
                     ["x", "y", "z"].get(usize::from(*axis)).map(|a| vec![format!("{}{a}", if *high { "+" } else { "-" })]).unwrap_or_default()
                 }
                 _ => Vec::new(),
@@ -260,11 +392,68 @@ pub(crate) fn cylinder_tool(body: Body) -> Traced {
     Traced::made(body, roles)
 }
 
+/// A tool a feature builds without a sketch (a boss's post, a rib, a lip's band), its faces named
+/// by the part it makes: `<part>:top` (its end cap), `<part>:base` (its start cap) and
+/// `<part>:side:<k>` (swept from segment `k` of its profile), as its construction records them.
+pub(crate) fn part_tool(body: Body, part: &str) -> Traced {
+    let roles = body.history().filter(|h| h.operands == 0).map(|h| {
+        h.faces
+            .iter()
+            .map(|f| match f.origins.as_slice() {
+                [FaceOrigin::Cap { end }] => vec![format!("{part}:{}", if *end { "top" } else { "base" })],
+                [FaceOrigin::Profile { segment }] => vec![format!("{part}:side:{segment}")],
+                _ => Vec::new(),
+            })
+            .collect()
+    });
+    Traced::made(body, roles)
+}
+
 /// Faces named by their place in a body built as a whole (an imported part's faces in the
 /// file's order): `face:<k>`.
 pub(crate) fn numbered_tool(body: Body) -> Traced {
-    let roles = (0..body.face_count()).map(|k| vec![format!("face:{k}")]).collect();
+    linked_tool(body, 0, &[])
+}
+
+/// [`numbered_tool`] for a body of feature `fid` imported from a linked design, whose faces that
+/// design named `carried` (by face, empty where not known): such a face is named after its name
+/// there ([`link_role`]), so a reference to it follows that name, not the face's place in the
+/// file, when the design changes; it still answers to `face:<k>`.
+pub(crate) fn linked_tool(body: Body, fid: u64, carried: &[String]) -> Traced {
+    let roles = (0..body.face_count())
+        .map(|k| {
+            let numbered = format!("face:{k}");
+            match carried.get(k).filter(|n| !n.is_empty()) {
+                Some(name) => vec![link_role(fid, name, 0), numbered],
+                None => vec![numbered],
+            }
+        })
+        .collect();
     Traced::made(body, Some(roles))
+}
+
+/// Nesting of piece qualifiers a carried name is read through (deeper ones are digested whole).
+const MAX_LINK_DEPTH: usize = 32;
+
+/// The role of a face a linked design named `name`: `link:<digest>`, a digest of the name (which
+/// may hold anything: `@`, `|` and feature numbers of that design mean something else here). A
+/// piece keeps its qualifier, with the faces around it named the same way (`F<fid>:link:…`), so
+/// its pieces are told apart and found as they are in that design.
+pub(crate) fn link_role(fid: u64, name: &str, depth: usize) -> String {
+    let Some((stem, around)) = crate::piece_names::piece_parts(name).filter(|_| depth < MAX_LINK_DEPTH) else {
+        // FNV-1a: the same digest on every build and platform.
+        let digest = name.bytes().fold(0xcbf2_9ce4_8422_2325_u64, |h, b| (h ^ u64::from(b)).wrapping_mul(0x0100_0000_01b3));
+        return format!("link:{digest:016x}");
+    };
+    let mut role = link_role(fid, stem, depth + 1);
+    if name.get(stem.len()..).is_some_and(|rest| rest.starts_with("#[")) {
+        let around: Vec<String> = around.iter().map(|a| format!("F{fid}:{}", link_role(fid, a, depth + 1))).collect();
+        role.push_str(&format!("#[{}]", around.join(",")));
+    }
+    if let Some((_, k)) = name.rsplit_once('#').filter(|(_, k)| !k.is_empty() && k.bytes().all(|b| b.is_ascii_digit())) {
+        role.push_str(&format!("#{k}"));
+    }
+    role
 }
 
 /// The role of an extrude's cap at `height` along the sketch normal: on the sketch plane, above

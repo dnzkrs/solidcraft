@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Build an electronics enclosure in a running SolveCraft over MCP, one command at a time.
+"""Build an electronics enclosure in a running SolidCraft over MCP, one command at a time.
 
-    solvecraft --control 7878 &
+    solidcraft --control 7878 &
     python3 examples/demo/enclosure_mcp.py --port 7878
 
-The script is a minimal MCP client: it starts `solvecraft-cli mcp --connect 127.0.0.1:PORT`
+The script is a minimal MCP client: it starts `solidcraft-cli mcp --connect 127.0.0.1:PORT`
 (stdio, JSON-RPC 2.0, one message per line), initializes, then sends one `execute` tool call
 per step of enclosure_steps.json, waiting `pause` seconds after each so the timeline can be
 watched growing. Camera moves (fit, home view, the closing orbit) go over the app's control
@@ -19,12 +19,13 @@ import socket
 import subprocess
 import sys
 import time
+from pathlib import Path
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
 class Mcp:
-    """A stdio MCP client for `solvecraft-cli mcp`."""
+    """A stdio MCP client for `solidcraft-cli mcp`."""
 
     def __init__(self, argv):
         self.p = subprocess.Popen(argv, stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True, bufsize=1)
@@ -63,10 +64,28 @@ class Mcp:
         self.p.wait(timeout=10)
 
 
+def control_token(port):
+    """The app's control token: SOLIDCRAFT_CONTROL_TOKEN, else the token file the app wrote for
+    this port (docs/control-protocol.md)."""
+    if os.environ.get("SOLIDCRAFT_CONTROL_TOKEN"):
+        return os.environ["SOLIDCRAFT_CONTROL_TOKEN"].strip()
+    if os.environ.get("SOLIDCRAFT_CONTROL_DIR"):
+        folder = Path(os.environ["SOLIDCRAFT_CONTROL_DIR"])
+    elif sys.platform == "win32":
+        folder = Path(os.environ["LOCALAPPDATA"]) / "SolidCraft" / "control"
+    elif sys.platform == "darwin":
+        folder = Path.home() / "Library/Application Support/SolidCraft/control"
+    else:
+        data = os.environ.get("XDG_DATA_HOME") or str(Path.home() / ".local/share")
+        folder = Path(data) / "solidcraft" / "control"
+    return (folder / f"{port}.token").read_text().strip()
+
+
 def control(port, method, params=None):
     """One request on the app's control channel (camera moves)."""
     with socket.create_connection(("127.0.0.1", port)) as s:
-        s.sendall((json.dumps({"id": 1, "method": method, "params": params or {}}) + "\n").encode())
+        msg = {"id": 1, "method": method, "params": params or {}, "token": control_token(port)}
+        s.sendall((json.dumps(msg) + "\n").encode())
         buf = b""
         while not buf.endswith(b"\n"):
             chunk = s.recv(1 << 16)
@@ -79,7 +98,7 @@ def control(port, method, params=None):
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--port", type=int, default=7878, help="the app's --control port")
-    ap.add_argument("--cli", default="solvecraft-cli", help="path to solvecraft-cli")
+    ap.add_argument("--cli", default="solidcraft-cli", help="path to solidcraft-cli")
     ap.add_argument("--steps", default=os.path.join(HERE, "enclosure_steps.json"))
     ap.add_argument("--pause", type=float, default=2.5, help="seconds after each step (unless the step says)")
     ap.add_argument("--log", help="write a JSON line per step: {t, caption, command}")

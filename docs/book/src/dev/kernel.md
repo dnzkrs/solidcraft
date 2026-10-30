@@ -9,7 +9,7 @@ SolidCraft types (`Body`, face and edge indices, meshes, measures) and a
 ## `guard`
 
 truck can panic on geometry it doesn't handle. Every call into it goes through
-`solvecraft_kernel::guard`, which catches the panic and turns it into
+`solidcraft_kernel::guard`, which catches the panic and turns it into
 `KernelError::Internal`, leaving the model unchanged:
 
 ```rust
@@ -32,6 +32,12 @@ Patched copies of `truck-shapeops`, `truck-stepio` and `truck-meshalgo` live in 
 wired in with `[patch.crates-io]`. The patches fix robustness bugs found by our tests and the
 STEP corpus. `vendor/` is excluded from our fmt and clippy rules, and each patch should go
 upstream when it can.
+
+Equal cylinders crossing each other (`tangent_cylinders.rs`) touch at two points, which truck's
+mesh-based intersection cannot trace through. When a boolean of such a pair fails, the kernel
+splits both cylinder faces along the line through the touching points and takes the boolean of
+the split bodies; the shapeops patch that picks the corner of a face at a vertex several curves
+end on makes the arms of the crossing connect.
 
 Some truck assertions only run in debug builds and can fail on valid geometry, so tests and CI
 run with `--release`.

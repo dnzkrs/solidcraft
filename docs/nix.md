@@ -14,7 +14,7 @@ nix run github:bherbruck/solidcraft#solidcraft -- --sample
 ```
 
 Inside a checkout, `nix run .` and `nix run .#solidcraft` launch the desktop app.
-`nix run .#cli -- --version` launches the CLI. The legacy `.#solvecraft` app name
+`nix run .#cli -- --version` launches the CLI. The legacy `.#solidcraft` app name
 also works. These commands use the flake's exact wrapped binary, rather than an
 older executable already on your shell's `PATH`.
 
@@ -26,8 +26,8 @@ nix build github:bherbruck/solidcraft#solidcraft
 ./result/bin/solidcraft --sample
 ```
 
-The result contains `solidcraft`, the compatible `solvecraft` binary name, and
-`solvecraft-cli`. **Building does not install a desktop-menu entry.** For a user
+The result contains `solidcraft`, `solidcraft-cli` and the deprecated old-name CLI alias
+(see [compatibility.md](compatibility.md)). **Building does not install a desktop-menu entry.** For a user
 profile installation, run:
 
 ```sh
@@ -37,23 +37,23 @@ solidcraft --sample
 
 On Linux, this installs the SolidCraft desktop entry, MIME definition and generated icon
 sizes alongside the commands. On macOS the package contains the binaries only; for a bundled
-`SolveCraft.app`, use the release `.dmg`. NixOS/Home Manager can instead put the flake's
+`SolidCraft.app`, use the release `.dmg`. NixOS/Home Manager can instead put the flake's
 `packages.${system}.solidcraft` in `environment.systemPackages`/`home.packages`.
 If a non-NixOS desktop does not discover profile-installed launchers, ensure that
 its session includes `~/.nix-profile/share` in `XDG_DATA_DIRS`, then log out and
-back in. The existing `ai.storyteller.solvecraft` desktop/application ID and
-`.solvecraft` design files remain compatible.
+back in. The desktop/application ID is unchanged (see
+[compatibility.md](compatibility.md#package-ids)).
 
 Check which executable a plain terminal command would run:
 
 ```sh
-type -a solidcraft solvecraft
+type -a solidcraft
 readlink -f "$(command -v solidcraft)"
 solidcraft --version
 nix run github:bherbruck/solidcraft#solidcraft -- --version
 ```
 
-An unrelated old `solvecraft` executable on `PATH` is not updated by `nix build`.
+An unrelated old executable on `PATH` is not updated by `nix build`.
 Use the flake app or `./result/bin/solidcraft` to verify the package you just built.
 
 ## Graphics and file dialogs
@@ -85,7 +85,7 @@ OpenGL rendering uses 1x anti-aliasing to avoid the multisampled black-frame fai
 Vulkan and other backends keep the requested sample count; saved preferences are preserved.
 For older builds, including 0.3.0, set Anti-aliasing to 1x and restart when using OpenGL.
 If that window cannot show the settings dialog, edit only the `msaa` field to `1` in
-`~/.local/share/solvecraft/graphics.json`; preserve any other settings.
+`~/.local/share/solidcraft/graphics.json`; preserve any other settings.
 
 ## Wayland, XWayland and niri
 
@@ -97,12 +97,18 @@ under niri's XWayland. The trade-off: **on native Wayland, dropping files onto t
 window does not work**; use File > Open or pass the file on the command line.
 This applies to every build, not only the Nix package.
 
-Override the choice with `SOLVECRAFT_WAYLAND=1` (always native Wayland) or
-`SOLVECRAFT_WAYLAND=0` (XWayland whenever an X display is available).
+Choose it in Preferences › Graphics › **Window system** (Automatic, Wayland or X11; it applies
+at the next start). The pane says which one is running and, on native Wayland, links to
+winit's issue about dropping files there. Native Wayland is the better choice with
+**fractional scaling** (a monitor at 125 % or 140 %): XWayland windows are drawn at 100 % and
+stretched by the compositor, so the interface looks soft and small.
+
+The environment overrides the preference: `SOLIDCRAFT_WAYLAND=1` (always native Wayland) or
+`SOLIDCRAFT_WAYLAND=0` (XWayland whenever an X display is available).
 
 ## Development shells
 
 `nix develop` supplies runtime libraries and uses the Rust/C toolchain already on
 your `PATH`. `nix develop .#rust` supplies the pinned toolchain, C linker and
 `target/nix` build directory. Both retain the GUI and CLI's existing Cargo package
-names (`solvecraft`, `solvecraft-cli`).
+names (`solidcraft`, `solidcraft-cli`).

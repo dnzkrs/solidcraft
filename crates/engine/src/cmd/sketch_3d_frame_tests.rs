@@ -1,7 +1,7 @@
 use crate::Session;
 use serde_json::{Value, json};
-use solvecraft_geom::Vec3;
-use solvecraft_sketch::WireSpace;
+use solidcraft_geom::Vec3;
+use solidcraft_sketch::WireSpace;
 
 fn run(s: &mut Session, cmd: &str, params: Value) -> Value {
     s.execute(cmd, &params).unwrap_or_else(|e| panic!("{cmd}: {e}"))
@@ -57,7 +57,7 @@ fn wire_frame_second_occurrence_world_inputs_move_and_reopen() {
     run(&mut s, "edit.redo", json!({}));
     run(&mut s, "sketch.move3d", json!({"wire":point,"to":[18,33,46]}));
     near(s.doc.sketch(sketch).unwrap().wires.iter().find(|w| w.id == point).unwrap().fit[0], Vec3::new(3.0, 2.0, 6.0));
-    let restored = solvecraft_doc::format::read(&s.doc.to_json()).unwrap();
+    let restored = solidcraft_doc::format::read(&s.doc.to_json()).unwrap();
     assert_eq!(restored.sketch(sketch).unwrap().wires, s.doc.sketch(sketch).unwrap().wires);
     // Same definition at the first placement has the local geometry; selected second is exact.
     run(&mut s, "component.activate", json!({"component":component,"occurrence":first,"path":[first]}));
@@ -123,7 +123,7 @@ fn wire_frame_hostile_inputs_rollback_full_session() {
 fn wire_frame_include_other_component_refresh_break_lost_and_reopen() {
     let mut s = Session::default();
     run(&mut s, "solid.box", json!({"length":10,"width":10,"height":10}));
-    let component = run(&mut s, "component.create", json!({"name":"Receiver"}));
+    let component = run(&mut s, "component.create", json!({"name":"Receiver","grounded":false}));
     let occurrence = component["occurrence"].as_u64().unwrap();
     run(&mut s, "occurrence.move", json!({"occurrence":occurrence,"translate":[20,0,0]}));
     run(&mut s, "sketch.create", json!({"plane":"XY","name":"Include target"}));
@@ -144,18 +144,21 @@ fn wire_frame_include_other_component_refresh_break_lost_and_reopen() {
     run(&mut s, "sketch.break_link", json!({"link":link}));
     assert_eq!(s.doc.sketch(sketch).unwrap().wires[0].space, WireSpace::Component);
     assert!(s.doc.sketch(sketch).unwrap().wires[0].link.is_none());
-    let restored = solvecraft_doc::format::read(&s.doc.to_json()).unwrap();
+    let restored = solidcraft_doc::format::read(&s.doc.to_json()).unwrap();
     assert_eq!(restored.sketch(sketch).unwrap().wires[0], s.doc.sketch(sketch).unwrap().wires[0]);
     run(&mut s, "edit.undo", json!({}));
     assert_eq!(s.doc.to_json(), before);
     // Lost references retain the last coordinates and explicit marker, with no guessing.
     let sk = s.doc_mut().sketch_mut(sketch).unwrap();
-    sk.links.iter_mut().find(|l| l.id == link).unwrap().source = solvecraft_sketch::LinkSource::Edge { body: "Missing".into(), at: Vec3::ZERO };
+    let entry = sk.links.iter_mut().find(|l| l.id == link).unwrap();
+    entry.source = solidcraft_sketch::LinkSource::Edge { body: "Missing".into(), at: Vec3::ZERO };
+    // The link is the edge it names; without the name it is the edge nearest its point.
+    entry.edge_name = None;
     run(&mut s, "sketch.line", json!({"points":[[2,0],[3,0]]}));
     let sk = s.doc.sketch(sketch).unwrap();
     assert!(sk.link(&link).unwrap().lost);
     assert_eq!(sk.wires[0], initial);
-    let restored = solvecraft_doc::format::read(&s.doc.to_json()).unwrap();
+    let restored = solidcraft_doc::format::read(&s.doc.to_json()).unwrap();
     assert_eq!(restored.sketch(sketch).unwrap().wires[0], initial);
 }
 
@@ -180,7 +183,7 @@ fn wire_frame_pipe_component_and_world_paths_have_analytic_volume_and_position()
         let body = world.bodies.last().unwrap();
         // Property measurement uses fine adaptive tessellation; the viewport mesh alone
         // undershoots a small circular profile by about 0.64% at its display chord tolerance.
-        let measure = solvecraft_kernel::measure(&body.body).unwrap();
+        let measure = solidcraft_kernel::measure(&body.body).unwrap();
         assert!((measure.volume - 40.0 * std::f64::consts::PI).abs() < 0.05, "{}", measure.volume);
         let bounds = body.mesh().bounds();
         near((bounds.min + bounds.max) / 2.0, Vec3::new(17.0, 32.0, 50.0));
@@ -212,17 +215,17 @@ fn wire_frame_wide_owner_graph_has_bounded_indexed_traversal() {
     // A legal wide assembly used to force one whole occurrence scan for each leaf.
     let doc = s.doc_mut();
     for i in 0..9998u64 {
-        doc.components.push(solvecraft_doc::Component { id: 10_000 + i, name: format!("Sibling{i}"), parent: 0 });
-        doc.occurrences.push(solvecraft_doc::Occurrence {
+        doc.components.push(solidcraft_doc::Component { id: 10_000 + i, name: format!("Sibling{i}"), parent: 0, ..Default::default() });
+        doc.occurrences.push(solidcraft_doc::Occurrence {
             id: 100_000 + i,
             component: 10_000 + i,
             parent: 0,
             name: format!("Sibling{i}"),
-            transform: solvecraft_doc::IDENTITY,
+            transform: solidcraft_doc::IDENTITY,
             grounded: false,
         });
     }
-    assert_eq!(super::inverse_owner_frame(&s, &json!({"sketch":target}), "sketch.point3d").unwrap(), solvecraft_doc::IDENTITY);
+    assert_eq!(super::inverse_owner_frame(&s, &json!({"sketch":target}), "sketch.point3d").unwrap(), solidcraft_doc::IDENTITY);
 }
 
 #[test]
@@ -232,7 +235,7 @@ fn wire_frame_cross_owner_sweep_follows_world_path_edit_undo_and_reopen() {
     run(&mut s, "sketch.options", json!({"sketch_3d":true}));
     let wire = run(&mut s, "sketch.line3d", json!({"points":[[17,32,45],[17,32,55]]}))["curves"][0].as_str().unwrap().to_string();
     run(&mut s, "sketch.finish", json!({}));
-    let owner = run(&mut s, "component.create", json!({"name":"Sweep owner"}))["occurrence"].as_u64().unwrap();
+    let owner = run(&mut s, "component.create", json!({"name":"Sweep owner","grounded":false}))["occurrence"].as_u64().unwrap();
     run(&mut s, "occurrence.move", json!({"occurrence":owner,"axis":[0,0,1],"angle":"90 deg","translate":[20,30,40]}));
     let profile = run(&mut s, "sketch.create", json!({"plane":"XY","offset":5,"name":"Profile"}))["sketch"].as_u64().unwrap();
     run(&mut s, "sketch.circle.center", json!({"center":[2,3],"radius":2}));
@@ -241,7 +244,7 @@ fn wire_frame_cross_owner_sweep_follows_world_path_edit_undo_and_reopen() {
     let check = |s: &Session, length: f64| {
         let world = s.world_state();
         let body = world.bodies.last().unwrap();
-        let measure = solvecraft_kernel::measure(&body.body).unwrap();
+        let measure = solidcraft_kernel::measure(&body.body).unwrap();
         assert!((measure.volume - 4.0 * std::f64::consts::PI * length).abs() < 0.05, "{}", measure.volume);
         near(measure.centroid, Vec3::new(17.0, 32.0, 45.0 + length / 2.0));
     };
@@ -253,7 +256,7 @@ fn wire_frame_cross_owner_sweep_follows_world_path_edit_undo_and_reopen() {
     run(&mut s, "edit.undo", json!({}));
     assert_eq!(s.doc.to_json(), saved);
     check(&s, 10.0);
-    let mut reopened = Session { doc: solvecraft_doc::format::read(&saved).unwrap().into(), ..Default::default() };
+    let mut reopened = Session { doc: solidcraft_doc::format::read(&saved).unwrap().into(), ..Default::default() };
     reopened.refresh();
     check(&reopened, 10.0);
 }
@@ -261,7 +264,7 @@ fn wire_frame_cross_owner_sweep_follows_world_path_edit_undo_and_reopen() {
 #[test]
 fn wire_frame_three_owner_sweep_profile_move_invalidates_warm_cache() {
     let mut s = Session::default();
-    let profile_owner = run(&mut s, "component.create", json!({"name":"Profile owner","parent":0}));
+    let profile_owner = run(&mut s, "component.create", json!({"name":"Profile owner","parent":0,"grounded":false}));
     let profile_occurrence = profile_owner["occurrence"].as_u64().unwrap();
     run(&mut s, "occurrence.move", json!({"occurrence":profile_occurrence,"translate":[4,7,5]}));
     let profile = run(&mut s, "sketch.create", json!({"plane":"XY","name":"Foreign profile"}))["sketch"].as_u64().unwrap();
@@ -284,7 +287,7 @@ fn wire_frame_three_owner_sweep_profile_move_invalidates_warm_cache() {
         let state = session.world_state();
         let body = state.bodies.last().unwrap();
         assert_eq!(body.component, consumer["component"].as_u64().unwrap());
-        let result = solvecraft_kernel::measure(&body.body).unwrap();
+        let result = solidcraft_kernel::measure(&body.body).unwrap();
         assert!((result.volume - 40.0 * std::f64::consts::PI).abs() < 0.05, "{}", result.volume);
         near(result.centroid, Vec3::new(x, 7.0, 10.0));
         result
@@ -301,7 +304,7 @@ fn wire_frame_three_owner_sweep_profile_move_invalidates_warm_cache() {
     assert_eq!(s.doc.component_transform(path_owner["component"].as_u64().unwrap()), fixed_path);
     assert_eq!(s.doc.component_transform(consumer["component"].as_u64().unwrap()), fixed_consumer);
     let warm = measure(&s, 7.0);
-    let mut cold = Session { doc: solvecraft_doc::format::read(&s.doc.to_json()).unwrap().into(), ..Default::default() };
+    let mut cold = Session { doc: solidcraft_doc::format::read(&s.doc.to_json()).unwrap().into(), ..Default::default() };
     cold.refresh();
     let reopened = measure(&cold, 7.0);
     near(warm.centroid, reopened.centroid);

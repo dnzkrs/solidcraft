@@ -1,10 +1,10 @@
 use crate::scenario::Harness;
 use serde_json::{Value, json};
-use solvecraft_engine::doc::{FaceAttachmentStatus, FeatureKind, PlaneRef};
+use solidcraft_engine::doc::{FaceAttachmentStatus, FeatureKind, PlaneRef};
 
 fn picked_sketch() -> (Harness, u64) {
     let mut h = Harness::new();
-    h.app.ui.show_origin = false;
+    h.app.set_origin_shown(false);
     h.app.session.auto_project = false;
     h.app.run("solid.box", json!({"length":10,"width":10,"height":10,"body_name":"BaseBox","name":"Original"})).unwrap();
     h.app.run("solid.box", json!({"length":10,"width":10,"height":10,"corner":[0,0,20],"body_name":"ControlBox","name":"Control"})).unwrap();
@@ -46,7 +46,7 @@ fn actual_picked_face_and_noop_edit_preserve_exact_anchor_and_dimensions() {
     h.settle();
     h.app.finish_sketch();
     assert_eq!(serde_json::to_value(&h.app.session.doc.feature(sketch).unwrap().kind).unwrap(), before);
-    let path = h.dir.join("picked-face.solvecraft");
+    let path = h.dir.join("picked-face.solidcraft");
     h.app.run("file.save", json!({"path":path})).unwrap();
     h.app.run("doc.open", json!({"path":path})).unwrap();
     assert_eq!(serde_json::to_value(&h.app.session.doc.feature(sketch).unwrap().kind).unwrap(), before);
@@ -63,8 +63,6 @@ fn lost_attachment_ghost_rebind_preview_cancel_apply_and_undo_preserve_sketch() 
     assert!(h.app.session.world_state().sketch(sketch).is_none(), "saved repair guides are not solved sketch geometry");
     let raw = raw_sketch(&h, sketch);
     let before = h.app.session.doc.to_json();
-    let undo = h.app.session.undo.len();
-    let redo = h.app.session.redo.len();
     h.app.edit_sketch(sketch);
     h.frames(4);
     assert_eq!(h.app.tree.redefine, Some(sketch));
@@ -82,9 +80,12 @@ fn lost_attachment_ghost_rebind_preview_cancel_apply_and_undo_preserve_sketch() 
     assert!(h.app.session.selection.is_empty(), "saved lost-plane guides must not be selectable geometry");
     assert!(h.app.session.active_sketch.is_none());
     h.app.run("browser.visibility", json!({"items":["ControlBox"],"visible":true})).unwrap();
+    // After the setup's two hide/show commands: each is an undo step of its own now (#2219).
+    let undo = h.app.session.undo.len();
+    let redo = h.app.session.redo.len();
     h.frames(4);
     h.step(&json!({"click":{"world":[3,4,30]}})).unwrap();
-    assert!(matches!(h.app.session.selection.first(), Some(solvecraft_engine::Sel::Face { body, .. }) if body=="ControlBox"));
+    assert!(matches!(h.app.session.selection.first(), Some(solidcraft_engine::Sel::Face { body, .. }) if body=="ControlBox"));
     h.frames(2);
     h.step(&json!({"widget":"Reattach selected face"})).unwrap();
     let commands = crate::sketch_attachment_ui::commands(&h.app)
@@ -105,7 +106,7 @@ fn lost_attachment_ghost_rebind_preview_cancel_apply_and_undo_preserve_sketch() 
     h.frames(4);
     h.step(&json!({"widget":"Reattach selected face"})).unwrap();
     h.frames(8);
-    h.step(&json!({"widget":"Apply"})).unwrap();
+    h.step(&json!({"widget":"OK"})).unwrap();
     assert!(h.app.tree.redefine.is_none(), "{:?}", h.app.tree.redefine_draft);
     assert_eq!(raw_sketch(&h, sketch), raw, "curves, dimensions and expressions remain exact");
     assert_eq!(h.app.session.undo.len(), undo + 1);
@@ -113,12 +114,18 @@ fn lost_attachment_ghost_rebind_preview_cancel_apply_and_undo_preserve_sketch() 
     let boss = h.app.session.world_state().body("Boss").unwrap().mesh().bounds();
     assert!((boss.min.z - 30.0).abs() < 1e-7 && (boss.max.z - 32.0).abs() < 1e-7);
     let repaired = h.app.session.doc.to_json();
-    let path = h.dir.join("rebound-face.solvecraft");
+    let path = h.dir.join("rebound-face.solidcraft");
     h.app.run("file.save", json!({"path":path})).unwrap();
+    // Saving the untitled design names it after its file; everything else is exact.
+    let named = |doc: &str| {
+        let mut doc = solidcraft_engine::doc::Document::from_json(doc).unwrap();
+        doc.name = "rebound-face".into();
+        doc.to_json()
+    };
     h.app.run("edit.undo", json!({})).unwrap();
-    assert_eq!(h.app.session.doc.to_json(), before);
+    assert_eq!(h.app.session.doc.to_json(), named(&before));
     h.app.run("doc.open", json!({"path":path})).unwrap();
-    assert_eq!(h.app.session.doc.to_json(), repaired);
+    assert_eq!(h.app.session.doc.to_json(), named(&repaired));
     assert_eq!(raw_sketch(&h, sketch), raw);
     assert!(h.app.session.model.result(sketch).unwrap().error.is_none());
 }
@@ -130,7 +137,7 @@ fn attachment_drafts_leave_on_document_replacement_but_survive_failed_open() {
     h.frames(2);
     h.step(&json!({"widget":"Use XZ plane"})).unwrap();
     assert!(crate::sketch_attachment_ui::commands(&h.app).is_some());
-    assert!(h.app.run("doc.open", json!({"path":h.dir.join("missing.solvecraft")})).is_err());
+    assert!(h.app.run("doc.open", json!({"path":h.dir.join("missing.solidcraft")})).is_err());
     assert!(crate::sketch_attachment_ui::commands(&h.app).is_some());
     h.app.run("file.new", json!({})).unwrap();
     assert!(h.app.tree.redefine.is_none());
@@ -140,7 +147,7 @@ fn attachment_drafts_leave_on_document_replacement_but_survive_failed_open() {
 #[test]
 fn unsupported_modified_face_offers_explicit_fixed_plane_without_live_links() {
     let mut h = Harness::new();
-    h.app.ui.show_origin = false;
+    h.app.set_origin_shown(false);
     h.app.run("solid.box", json!({"length":10,"width":10,"height":10,"body_name":"Modified"})).unwrap();
     // An intentional split gives the +z source two distinct planar pieces. A
     // strict attachment cannot claim the original whole-face certificate.
@@ -175,7 +182,7 @@ fn occurrence_click(h: &mut Harness, path: &[u64], control: &str) {
 #[test]
 fn actual_nested_second_placement_face_pick_keeps_target_and_author_paths() {
     let mut h = Harness::new();
-    h.app.ui.show_origin = false;
+    h.app.set_origin_shown(false);
     h.app.session.auto_project = false;
     let parent = h.app.run("component.create", json!({"name":"Parent"})).unwrap();
     let parent_component = parent["component"].as_u64().unwrap();
@@ -223,7 +230,7 @@ fn actual_nested_second_placement_face_pick_keeps_target_and_author_paths() {
     assert_eq!(h.app.session.active_occurrence_path.as_ref(), Some(&path));
     h.app.finish_sketch();
     assert_eq!(h.app.session.doc.feature(sketch).unwrap().kind, kind);
-    let file = h.dir.join("nested-face.solvecraft");
+    let file = h.dir.join("nested-face.solidcraft");
     h.app.run("file.save", json!({"path":file})).unwrap();
     h.app.run("doc.open", json!({"path":file})).unwrap();
     assert_eq!(h.app.session.doc.feature(sketch).unwrap().kind, kind);
@@ -241,9 +248,9 @@ fn actual_nested_second_placement_face_pick_keeps_target_and_author_paths() {
 
 #[test]
 fn nested_anchor_saved_fixed_conversion_preserves_rotated_second_author_plane() {
-    use solvecraft_engine::doc::{EmbossFace, apply_point, apply_vector};
-    use solvecraft_engine::geom::Plane;
-    use solvecraft_engine::geom::Vec3;
+    use solidcraft_engine::doc::{EmbossFace, apply_point, apply_vector};
+    use solidcraft_engine::geom::Plane;
+    use solidcraft_engine::geom::Vec3;
     let mut h = Harness::new();
     h.app.session.auto_project = false;
     let created = h.app.run("component.create", json!({"name":"Author"})).unwrap();
@@ -285,7 +292,7 @@ fn nested_anchor_saved_fixed_conversion_preserves_rotated_second_author_plane() 
         axis_dir: Vec3::X,
         angle: "15 deg".into(),
     };
-    h.app.session = solvecraft_engine::Session::new(document);
+    h.app.session = solidcraft_engine::Session::new(document);
     let raw = h.app.session.doc.sketch(id).unwrap().clone();
     let before = h.app.session.doc.to_json();
     let undo = h.app.session.undo.len();
@@ -314,7 +321,7 @@ fn nested_anchor_saved_fixed_conversion_preserves_rotated_second_author_plane() 
     assert!(shown.x.dist(expected.x) < 1e-7 && shown.y.dist(expected.y) < 1e-7);
     assert_eq!(h.app.session.doc.to_json(), before);
     h.frames(6);
-    h.step(&json!({"widget":"Apply"})).unwrap();
+    h.step(&json!({"widget":"OK"})).unwrap();
     assert!(h.app.tree.redefine.is_none());
     assert_eq!(h.app.session.doc.sketch(id).unwrap(), &raw);
     assert_eq!(h.app.session.undo.len(), undo + 1);
@@ -323,4 +330,73 @@ fn nested_anchor_saved_fixed_conversion_preserves_rotated_second_author_plane() 
     assert!(shown.x.dist(expected.x) < 1e-7 && shown.y.dist(expected.y) < 1e-7);
     h.app.run("edit.undo", json!({})).unwrap();
     assert_eq!(h.app.session.doc.to_json(), before);
+}
+
+/// Issue #489: extrude, sketch a rectangle over the whole top face (its corners snap to the
+/// face's projected boundary), extrude it up as a Join, then pick the new top face for a sketch.
+#[test]
+fn picked_top_face_of_a_stacked_join_extrude_takes_a_sketch() {
+    let mut h = Harness::new();
+    h.app.set_origin_shown(false);
+    h.app.run("sketch.create", json!({"plane":"XY","name":"Base"})).unwrap();
+    h.app.run("sketch.rectangle.two_point", json!({"p0":[0,0],"p1":[40,40]})).unwrap();
+    h.app.run("sketch.finish", json!({})).unwrap();
+    h.app.run("solid.extrude", json!({"distance":10,"name":"First"})).unwrap();
+    h.call("ui.view", json!({"view":"top"}));
+    h.call("ui.view", json!({"view":"fit"}));
+    h.settle();
+    let pick_face = |h: &mut Harness, z: f64| {
+        h.step(&json!({"start":"sketch.create"})).unwrap();
+        h.step(&json!({"click":{"world":[20,20,z]}})).unwrap();
+        h.settle();
+        let error = h.app.dialog.as_ref().and_then(|d| d.error.clone());
+        let sketch = h.app.session.active_sketch.unwrap_or_else(|| panic!("top face at z={z} must take a sketch: {error:?}"));
+        let FeatureKind::Sketch { plane: PlaneRef::Face { anchor: Some(_), .. }, .. } = &h.app.session.doc.feature(sketch).unwrap().kind else {
+            panic!("the top face at z={z} must give a certified attachment");
+        };
+        sketch
+    };
+    pick_face(&mut h, 10.);
+    h.step(&json!({"start":"sketch.rectangle.two_point"})).unwrap();
+    h.step(&json!({"click":{"world":[0,0,10]}})).unwrap();
+    h.step(&json!({"click":{"world":[40,40,10]}})).unwrap();
+    h.step(&json!({"key":"Escape"})).unwrap();
+    h.app.finish_sketch();
+    h.app.run("solid.extrude", json!({"distance":10,"operation":"join","name":"Second"})).unwrap();
+    assert_eq!(h.app.session.model.state().bodies.len(), 1);
+    h.settle();
+    let top = pick_face(&mut h, 20.);
+    let FaceAttachmentStatus::Healthy { plane, .. } = h.app.session.placed_document().sketch_face_attachment(top, &h.app.session.model) else {
+        panic!("attachment must be healthy");
+    };
+    assert!((plane.origin.z - 20.).abs() < 1e-9);
+}
+
+#[test]
+fn plane_redefinition_uses_dense_card_and_keeps_command_preview_cancel_and_ok() {
+    use crate::scenario;
+    let mut h = Harness::new();
+    let sketch = h.app.run("sketch.create", json!({"plane":"XY"})).unwrap()["sketch"].as_u64().unwrap();
+    h.app.run("sketch.rectangle.two_point", json!({"p0":[10,10],"p1":[30,20]})).unwrap();
+    h.app.finish_sketch();
+    let before = h.app.session.doc.to_json();
+    for apply in [false, true] {
+        crate::browser::redefine_sketch(&mut h.app, sketch);
+        h.frames(5);
+        for rect in ["dialog:header", "dialog:hint:tool", "dialog:field:Plane", "dialog:footer"] {
+            assert!(scenario::rect_of(rect).is_some(), "{rect}");
+        }
+        assert_eq!(scenario::count_of("dialog:ok:enabled"), Some(0.0));
+        h.step(&json!({"widget":"Use XZ plane"})).unwrap();
+        h.frames(3);
+        assert_eq!(crate::sketch_attachment_ui::commands(&h.app).unwrap(), vec![("sketch.redefine".into(), json!({"sketch":sketch,"plane":"XZ"}))]);
+        assert_eq!(h.app.session.doc.to_json(), before, "candidate is scratch preview only");
+        h.step(&json!({"click":{"handle":if apply { "dialog:ok" } else { "dialog:cancel" }}})).unwrap();
+        assert!(h.app.tree.redefine.is_none());
+        if apply {
+            assert_ne!(h.app.session.doc.to_json(), before);
+            h.app.run("edit.undo", json!({})).unwrap();
+        }
+        assert_eq!(h.app.session.doc.to_json(), before);
+    }
 }

@@ -4,7 +4,7 @@
 
 use std::collections::BTreeSet;
 
-use solvecraft_geom::{Mesh, Vec3};
+use solidcraft_geom::{Mesh, Vec3};
 
 use crate::body::Body;
 use crate::history::{Change, EdgeOrigin, FaceOrigin, History, Side};
@@ -427,7 +427,7 @@ fn faceted_tool() {
 /// sewn as one face (coalesced), which comes from the operand walls under it in every slab.
 #[test]
 fn coalesced_stepped_walls() {
-    use solvecraft_geom::{Loop2, Plane, Region2, Vec2};
+    use solidcraft_geom::{Loop2, Plane, Region2, Vec2};
     for curved in [true, false] {
         let (outer, inner) = if curved {
             (Loop2::circle(Vec2::ZERO, 10.0), Loop2::circle(Vec2::ZERO, 5.0))
@@ -475,12 +475,12 @@ fn regularized_step_cut() {
 fn bore_union_of_a_bore_in_two_arcs_has_no_history() {
     let hole = crate::cylinder(Vec3::new(50.0, 40.0, -5.0), Vec3::Z, 10.0, 30.0).unwrap();
     let floor = boolean(&boxed(0.0, 0.0, 0.0, 100.0, 80.0, 10.0), &hole, BoolOp::Cut).unwrap().unwrap();
-    let centre = solvecraft_geom::Vec2::new(50.0, 40.0);
-    let annulus = solvecraft_geom::Region2 {
-        outer: solvecraft_geom::Loop2::circle(centre, 20.0),
-        holes: vec![solvecraft_geom::Loop2::circle(centre, 10.0).reversed()],
+    let centre = solidcraft_geom::Vec2::new(50.0, 40.0);
+    let annulus = solidcraft_geom::Region2 {
+        outer: solidcraft_geom::Loop2::circle(centre, 20.0),
+        holes: vec![solidcraft_geom::Loop2::circle(centre, 10.0).reversed()],
     };
-    let ring = crate::extrude(&solvecraft_geom::Plane::XY, &[annulus], -5.0, 2.0).unwrap().remove(0);
+    let ring = crate::extrude(&solidcraft_geom::Plane::XY, &[annulus], -5.0, 2.0).unwrap().remove(0);
     let r = crate::coplanar::bore_union(&floor, &ring, &|_| true).expect("the bores are recut");
     assert!(r.history().is_none());
 }
@@ -500,4 +500,27 @@ fn bodies_apart_joined_keep_their_faces() {
         }
     }
     assert!(faces_of(h).iter().all(|(change, origins)| *change == Change::Kept && origins.len() == 1), "{}", show(h));
+}
+
+/// A plate with a round end and a boss of that radius standing on it (#1209): the boss's wall
+/// and the plate's round end are two pieces of one cylinder, one over the other, meeting along a
+/// circle at the plate's top. That circle crosses the walls at its level only, so a second boss
+/// joined to the plate and a cut through the first, both prism booleans sewn slab by slab, keep
+/// every face of the plate and its boss, with their history.
+#[test]
+fn stacked_pieces_of_one_cylinder_keep_their_walls() {
+    let plate =
+        boolean(&boxed(0.0, -6.0, 0.0, 40.0, 6.0, 5.0), &crate::cylinder(Vec3::ZERO, Vec3::Z, 10.0, 5.0).unwrap(), BoolOp::Union).unwrap().unwrap();
+    let arm = boolean(&plate, &crate::cylinder(Vec3::ZERO, Vec3::Z, 10.0, 8.0).unwrap(), BoolOp::Union).unwrap().unwrap();
+    verified(&arm, &[&plate, &crate::cylinder(Vec3::ZERO, Vec3::Z, 10.0, 8.0).unwrap()], 0.01);
+    // Standing over the plate's far end, as the boss at the arm's other end does.
+    let second = crate::cylinder(Vec3::new(40.0, 0.0, 0.0), Vec3::Z, 4.0, 7.0).unwrap();
+    let bore = boxed(-3.0, -3.0, -1.0, 3.0, 3.0, 10.0);
+    for (tool, op) in [(&second, BoolOp::Union), (&bore, BoolOp::Cut)] {
+        let r = boolean(&arm, tool, op).unwrap().unwrap();
+        let h = verified(&r, &[&arm, tool], 0.01);
+        for f in 0..arm.face_count() {
+            assert!(!from(h, face(0, f)).is_empty(), "{op:?}: face {f} of the plate and boss is lost\n{}", show(h));
+        }
+    }
 }

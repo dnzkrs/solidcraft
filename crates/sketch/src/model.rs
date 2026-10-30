@@ -1,11 +1,31 @@
 use serde::{Deserialize, Serialize};
-use solvecraft_geom::{Seg2, Vec2};
+use solidcraft_geom::{Aabb2, Seg2, Vec2, Vec3};
+
+use crate::union_find::{find, union};
 
 /// Hard caps that keep hostile input from exhausting memory or time.
 pub const MAX_POINTS: usize = 20_000;
 pub const MAX_CONSTRAINTS: usize = 40_000;
 /// Curves need points, so this follows the point cap.
 pub const MAX_CURVES: usize = MAX_POINTS;
+
+/// Largest coordinate or dimension value (mm) a sketch accepts.
+pub const MAX_COORD: f64 = 1e9;
+
+/// A position a sketch accepts: finite and within [`MAX_COORD`].
+pub(crate) fn in_range(p: Vec2) -> bool {
+    p.is_finite() && p.x.abs() < MAX_COORD && p.y.abs() < MAX_COORD
+}
+
+/// [`in_range`] for a 3D position.
+pub(crate) fn in_range3(p: Vec3) -> bool {
+    p.is_finite() && p.x.abs() < MAX_COORD && p.y.abs() < MAX_COORD && p.z.abs() < MAX_COORD
+}
+
+/// A radius a sketch accepts: finite, positive and within [`MAX_COORD`].
+pub(crate) fn radius_in_range(r: f64) -> bool {
+    r.is_finite() && r > 1e-9 && r < MAX_COORD
+}
 
 #[derive(Debug, Clone, PartialEq, thiserror::Error)]
 pub enum SketchError {
@@ -33,6 +53,32 @@ pub struct SPoint {
     /// Projected (linked) reference geometry: the id of the link that owns this point.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub link: Option<String>,
+    /// A point placed by expressions over the design's parameters: it is `fixed` where they
+    /// come to (`Document::apply_point_values` works them out before each solve).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub exprs: Option<Box<PointExprs>>,
+}
+
+/// The expressions of a point placed by parameters, over the design's parameters; a coordinate
+/// without one keeps the number stored in the point (mm).
+#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
+pub struct PointExprs {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub x: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub y: Option<String>,
+}
+
+impl PointExprs {
+    /// The expressions set, each with what it sets.
+    pub fn list(&self) -> Vec<(&'static str, &String)> {
+        [("Point X", &self.x), ("Point Y", &self.y)].into_iter().filter_map(|(what, e)| e.as_ref().map(|e| (what, e))).collect()
+    }
+
+    /// Mutable view of [`PointExprs::list`], for renaming the parameters they refer to.
+    pub fn list_mut(&mut self) -> Vec<&mut String> {
+        [&mut self.x, &mut self.y].into_iter().filter_map(Option::as_mut).collect()
+    }
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
@@ -149,6 +195,11 @@ pub struct Curve {
     /// Fixed (locked): its points and radius are constants for the solver.
     #[serde(default, skip_serializing_if = "std::ops::Not::not")]
     pub fixed: bool,
+    /// Infinite line type (#1359), for lines only: construction geometry drawn across the whole
+    /// view, through its two points, which fix where it lies and which way it runs. Never part of
+    /// a profile (it is construction too).
+    #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+    pub infinite: bool,
 }
 
 /// Geometric constraints and dimensions. Indices refer to `Sketch::points` (`p`, `q`) or
@@ -156,6 +207,23 @@ pub struct Curve {
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 #[serde(tag = "type", rename_all = "snake_case")]
 pub enum ConstraintKind {
+    /// A pattern instance point is a rigid transform of its seed. Angles are radians;
+    /// a circular pattern keeps its centre as a point, rather than a sampled position.
+    PatternPoint {
+        p: usize,
+        q: usize,
+        center: Option<usize>,
+        angle: f64,
+        offset: Vec2,
+        /// Displacements along and perpendicular to live sketch lines (at most two).
+        #[serde(default)]
+        directions: [Option<(usize, Vec2)>; 2],
+    },
+    /// The independent radius of a patterned circle or ellipse follows its seed.
+    PatternRadius {
+        a: usize,
+        b: usize,
+    },
     Coincident {
         p: usize,
         q: usize,
@@ -235,6 +303,17 @@ pub enum ConstraintKind {
         l: usize,
         value: f64,
     },
+    /// Distance from line `l` to the edge of circle or arc `c`, along the line's normal: the
+    /// gap `|distance from the centre to the line| − radius` while the line misses the circle,
+    /// or, `inside`, how far the edge reaches past the line, `radius − |distance|`, while the
+    /// line cuts it. Zero is tangency either way. An arc is measured to its whole circle.
+    LineCircleDistance {
+        l: usize,
+        c: usize,
+        value: f64,
+        #[serde(default, skip_serializing_if = "std::ops::Not::not")]
+        inside: bool,
+    },
     Length {
         l: usize,
         value: f64,
@@ -290,6 +369,15 @@ pub enum ConstraintKind {
         l: usize,
         value: f64,
     },
+    /// Normal distance of an associative offset. Its output id remains stable
+    /// when a curved boundary retires a corner; refresh_offsets drives the geometry.
+    OffsetDistance {
+        output: String,
+        value: f64,
+        /// Keep the chosen side when the positive driving length is edited.
+        #[serde(default)]
+        reverse: bool,
+    },
 }
 
 impl ConstraintKind {
@@ -303,6 +391,7 @@ impl ConstraintKind {
             | DistanceX { value, .. }
             | DistanceY { value, .. }
             | PointLineDistance { value, .. }
+            | LineCircleDistance { value, .. }
             | Length { value, .. }
             | LineAngle { value, .. }
             | ArcSweep { value, .. }
@@ -311,6 +400,7 @@ impl ConstraintKind {
             | Diameter { value, .. }
             | ArcLength { value, .. }
             | LinearDiameter { value, .. }
+            | OffsetDistance { value, .. }
             | Angle { value, .. } => Some(value),
             _ => None,
         }
@@ -322,6 +412,7 @@ impl ConstraintKind {
             | DistanceX { value, .. }
             | DistanceY { value, .. }
             | PointLineDistance { value, .. }
+            | LineCircleDistance { value, .. }
             | Length { value, .. }
             | LineAngle { value, .. }
             | ArcSweep { value, .. }
@@ -330,6 +421,7 @@ impl ConstraintKind {
             | Diameter { value, .. }
             | ArcLength { value, .. }
             | LinearDiameter { value, .. }
+            | OffsetDistance { value, .. }
             | Angle { value, .. } => *value = v,
             _ => {}
         }
@@ -337,10 +429,11 @@ impl ConstraintKind {
     pub fn is_angle(&self) -> bool {
         matches!(self, ConstraintKind::Angle { .. } | ConstraintKind::LineAngle { .. } | ConstraintKind::ArcSweep { .. })
     }
-    /// Short type name (Fusion-like) for listings.
+    /// Short type name for listings.
     pub fn name(&self) -> &'static str {
         use ConstraintKind::*;
         match self {
+            PatternPoint { .. } | PatternRadius { .. } => "Pattern",
             Coincident { .. } | PointOnCurve { .. } => "Coincident",
             Horizontal { .. } | HorizontalPoints { .. } => "Horizontal",
             Vertical { .. } | VerticalPoints { .. } => "Vertical",
@@ -353,7 +446,9 @@ impl ConstraintKind {
             Midpoint { .. } => "MidPoint",
             Symmetric { .. } => "Symmetry",
             Fix { .. } => "Fix",
-            Distance { .. } | DistanceX { .. } | DistanceY { .. } | PointLineDistance { .. } | Length { .. } => "LinearDimension",
+            Distance { .. } | DistanceX { .. } | DistanceY { .. } | PointLineDistance { .. } | LineCircleDistance { .. } | Length { .. } => {
+                "LinearDimension"
+            }
             Radius { .. } => "RadialDimension",
             Diameter { .. } => "DiameterDimension",
             Angle { .. } | LineAngle { .. } | ArcSweep { .. } => "AngularDimension",
@@ -361,15 +456,21 @@ impl ConstraintKind {
             Smooth { .. } => "Smooth",
             ArcLength { .. } => "ArcLengthDimension",
             LinearDiameter { .. } => "LinearDiameterDimension",
+            OffsetDistance { .. } => "OffsetDimension",
         }
     }
     /// Does the constraint refer to point `p` (by index)?
     pub fn refers_to_point(&self, p: usize) -> bool {
         self.indices().0.contains(&p)
     }
-    fn indices(&self) -> (Vec<usize>, Vec<usize>) {
+    /// The points and the curves the constraint refers to.
+    pub fn indices(&self) -> (Vec<usize>, Vec<usize>) {
         use ConstraintKind::*;
         match *self {
+            PatternPoint { p, q, center, directions, .. } => {
+                (vec![p, q].into_iter().chain(center).collect(), directions.into_iter().flatten().map(|(l, _)| l).collect())
+            }
+            PatternRadius { a, b } => (vec![], vec![a, b]),
             Coincident { p, q } | HorizontalPoints { p, q } | VerticalPoints { p, q } => (vec![p, q], vec![]),
             Distance { p, q, .. } | DistanceX { p, q, .. } | DistanceY { p, q, .. } => (vec![p, q], vec![]),
             PointOnCurve { p, c } => (vec![p], vec![c]),
@@ -380,14 +481,18 @@ impl ConstraintKind {
             }
             Angle { a, b, .. } | SlotOverallLength { a, b, .. } => (vec![], vec![a, b]),
             Midpoint { p, l } | PointLineDistance { p, l, .. } => (vec![p], vec![l]),
+            LineCircleDistance { l, c, .. } => (vec![], vec![l, c]),
             Symmetric { p, q, l } => (vec![p, q], vec![l]),
             Fix { p } => (vec![p], vec![]),
             Smooth { a, b } => (vec![], vec![a, b]),
             ArcLength { c, .. } => (vec![], vec![c]),
             LinearDiameter { p, l, .. } => (vec![p], vec![l]),
+            OffsetDistance { .. } => (vec![], vec![]),
         }
     }
-    pub(crate) fn remap(&mut self, pmap: &dyn Fn(usize) -> Option<usize>, cmap: &dyn Fn(usize) -> Option<usize>) -> bool {
+    /// Renumber the points and curves the constraint refers to; false when one has no new
+    /// number (the constraint is then partly renumbered and should be dropped).
+    pub fn remap(&mut self, pmap: &dyn Fn(usize) -> Option<usize>, cmap: &dyn Fn(usize) -> Option<usize>) -> bool {
         use ConstraintKind::*;
         let mut ok = true;
         let mut fp = |i: &mut usize| match pmap(*i) {
@@ -400,6 +505,20 @@ impl ConstraintKind {
             None => ok2 = false,
         };
         match self {
+            PatternPoint { p, q, center, directions, .. } => {
+                fp(p);
+                fp(q);
+                if let Some(c) = center {
+                    fp(c);
+                }
+                for (l, _) in directions.iter_mut().flatten() {
+                    fc(l);
+                }
+            }
+            PatternRadius { a, b } => {
+                fc(a);
+                fc(b);
+            }
             Coincident { p, q } | HorizontalPoints { p, q } | VerticalPoints { p, q } => {
                 fp(p);
                 fp(q);
@@ -426,6 +545,10 @@ impl ConstraintKind {
                 fp(p);
                 fc(l);
             }
+            LineCircleDistance { l, c, .. } => {
+                fc(l);
+                fc(c);
+            }
             Symmetric { p, q, l } => {
                 fp(p);
                 fp(q);
@@ -441,6 +564,7 @@ impl ConstraintKind {
                 fp(p);
                 fc(l);
             }
+            OffsetDistance { .. } => {}
         }
         ok && ok2
     }
@@ -478,6 +602,11 @@ pub struct SketchView {
     pub hide_constraints: bool,
     #[serde(skip_serializing_if = "std::ops::Not::not")]
     pub hide_projected: bool,
+    /// Construction geometry (the `construction` line type) is not drawn and cannot be picked.
+    /// Centerlines are a line type of their own and keep showing; projected construction
+    /// geometry belongs to `hide_projected`, the way its colour already says it does.
+    #[serde(skip_serializing_if = "std::ops::Not::not")]
+    pub hide_construction: bool,
     #[serde(skip_serializing_if = "std::ops::Not::not")]
     pub hide_grid: bool,
     /// Clicks don't snap to the grid.
@@ -497,6 +626,9 @@ pub struct Sketch {
     pub points: Vec<SPoint>,
     pub curves: Vec<Curve>,
     pub constraints: Vec<Constraint>,
+    /// Editable sketch patterns; their relations are ordinary solver constraints.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub patterns: Vec<crate::pattern::SketchPattern>,
     /// Links to geometry outside the sketch (projections, intersections, includes).
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub links: Vec<crate::link::Link>,
@@ -529,9 +661,10 @@ impl Default for Sketch {
 impl Sketch {
     pub fn new() -> Self {
         Sketch {
-            points: vec![SPoint { id: "origin".into(), pos: Vec2::ZERO, fixed: true, link: None }],
+            points: vec![SPoint { id: "origin".into(), pos: Vec2::ZERO, fixed: true, link: None, exprs: None }],
             curves: Vec::new(),
             constraints: Vec::new(),
+            patterns: Vec::new(),
             links: Vec::new(),
             offsets: Vec::new(),
             freeform_offsets: Vec::new(),
@@ -555,6 +688,7 @@ impl Sketch {
             .len()
             .saturating_add(self.curves.len())
             .saturating_add(self.constraints.len())
+            .saturating_add(self.patterns.len())
             .saturating_add(self.links.len())
             .saturating_add(self.wires.len())
             .saturating_add(
@@ -570,6 +704,7 @@ impl Sketch {
             .map(|p| p.id.as_str())
             .chain(self.curves.iter().map(|c| c.id.as_str()))
             .chain(self.constraints.iter().map(|c| c.id.as_str()))
+            .chain(self.patterns.iter().map(|p| p.id.as_str()))
             .chain(self.links.iter().map(|l| l.id.as_str()))
             .chain(self.wires.iter().map(|w| w.id.as_str()))
             .collect();
@@ -591,6 +726,7 @@ impl Sketch {
         self.points.iter().any(|p| p.id == id)
             || self.curves.iter().any(|c| c.id == id)
             || self.constraints.iter().any(|c| c.id == id)
+            || self.patterns.iter().any(|p| p.id == id)
             || self.links.iter().any(|l| l.id == id)
             || self.wires.iter().any(|w| w.id == id)
             || self.offsets.iter().filter_map(|r| r.topology.as_ref()).any(|r| r.id == id || r.roles.iter().any(|role| role.output == id))
@@ -607,7 +743,7 @@ impl Sketch {
     }
 
     fn check_pos(p: Vec2) -> Result<Vec2> {
-        if p.is_finite() && p.x.abs() < 1e9 && p.y.abs() < 1e9 { Ok(p) } else { Err(SketchError::Invalid(format!("point {:?}", [p.x, p.y]))) }
+        if in_range(p) { Ok(p) } else { Err(SketchError::Invalid(format!("point {:?}", [p.x, p.y]))) }
     }
 
     /// Add a free point (or reuse an existing one within `merge_tol` of `p` when `merge_tol > 0`).
@@ -622,7 +758,7 @@ impl Sketch {
             Some(i) => i.to_string(),
             None => self.fresh("p")?,
         };
-        self.points.push(SPoint { id, pos: p, fixed: false, link: None });
+        self.points.push(SPoint { id, pos: p, fixed: false, link: None, exprs: None });
         Ok(self.points.len() - 1)
     }
 
@@ -658,6 +794,7 @@ impl Sketch {
             link: None,
             centerline: false,
             fixed: false,
+            infinite: false,
         });
         Ok(self.curves.len() - 1)
     }
@@ -679,7 +816,7 @@ impl Sketch {
     }
 
     pub fn add_circle(&mut self, center: Vec2, r: f64, c: Option<usize>, id: Option<&str>) -> Result<usize> {
-        if !(r.is_finite() && r > 1e-9 && r < 1e9) {
+        if !radius_in_range(r) {
             return Err(SketchError::Invalid(format!("radius {r}")));
         }
         let id = self.curve_id(id, "c")?;
@@ -695,6 +832,7 @@ impl Sketch {
             link: None,
             centerline: false,
             fixed: false,
+            infinite: false,
         });
         Ok(self.curves.len() - 1)
     }
@@ -703,7 +841,7 @@ impl Sketch {
     /// the circle through `p0`).
     pub fn add_arc(&mut self, center: Vec2, p0: Vec2, p1: Vec2, pts: [Option<usize>; 3], id: Option<&str>) -> Result<usize> {
         let r = center.dist(p0);
-        if !(r.is_finite() && r > 1e-9 && r < 1e9) {
+        if !radius_in_range(r) {
             return Err(SketchError::Invalid("degenerate arc".into()));
         }
         let p1 = center + (p1 - center).normalized().ok_or_else(|| SketchError::Invalid("degenerate arc".into()))? * r;
@@ -729,6 +867,7 @@ impl Sketch {
             link: None,
             centerline: false,
             fixed: false,
+            infinite: false,
         });
         Ok(self.curves.len() - 1)
     }
@@ -763,6 +902,31 @@ impl Sketch {
         let need_line = |i: usize| if is_line(i) { Ok(()) } else { Err(SketchError::WrongKind(name(i), "needs a line".into())) };
         let need_round = |i: usize| if is_round(i) { Ok(()) } else { Err(SketchError::WrongKind(name(i), "needs a circle or arc".into())) };
         match *k {
+            PatternPoint { p, q, angle, offset, directions, .. } => {
+                for (l, distance) in directions.into_iter().flatten() {
+                    need_line(l)?;
+                    if !distance.x.is_finite() || !distance.y.is_finite() || distance.x.abs() > MAX_COORD || distance.y.abs() > MAX_COORD {
+                        return Err(SketchError::Invalid("invalid pattern direction displacement".into()));
+                    }
+                }
+                if p == q
+                    || !angle.is_finite()
+                    || angle.abs() > std::f64::consts::TAU
+                    || !offset.x.is_finite()
+                    || !offset.y.is_finite()
+                    || offset.x.abs() > MAX_COORD
+                    || offset.y.abs() > MAX_COORD
+                {
+                    return Err(SketchError::Invalid("invalid pattern transform".into()));
+                }
+            }
+            PatternRadius { a, b } => {
+                let independent_radius =
+                    |c: usize| matches!(self.curves.get(c).map(|c| &c.kind), Some(CurveKind::Circle { .. } | CurveKind::Ellipse { .. }));
+                if a == b || !independent_radius(a) || !independent_radius(b) {
+                    return Err(SketchError::Invalid("pattern radius needs two circles or ellipses".into()));
+                }
+            }
             Horizontal { l }
             | Vertical { l }
             | Length { l, .. }
@@ -825,6 +989,10 @@ impl Sketch {
                     return Err(SketchError::Invalid("overall slot length must exceed its width".into()));
                 }
             }
+            LineCircleDistance { l, c, .. } => {
+                need_line(l)?;
+                need_round(c)?;
+            }
             Tangent { a, b } => {
                 let free = |i: usize| self.curves.get(i).is_some_and(|c| c.kind.is_freeform());
                 if !(is_round(a) || is_round(b) || free(a) || free(b)) {
@@ -838,9 +1006,14 @@ impl Sketch {
             _ => {}
         }
         if let Some(v) = k.value()
-            && (!v.is_finite() || v.abs() > 1e9 || (v < 0.0 && !k.is_angle()))
+            && (!v.is_finite() || v.abs() > MAX_COORD || (v < 0.0 && !k.is_angle()))
         {
             return Err(SketchError::Invalid(format!("dimension value {v}")));
+        }
+        if let OffsetDistance { output, value, .. } = k
+            && (*value <= 1e-9 || output.len() > 512 || self.offset_distance(output).is_none())
+        {
+            return Err(SketchError::Invalid("offset dimension needs a nonzero distance and an existing association".into()));
         }
         if let ArcSweep { value, .. } = *k
             && !(value.abs() > 1e-9 && value.abs() < std::f64::consts::TAU - 1e-9)
@@ -848,6 +1021,80 @@ impl Sketch {
             return Err(SketchError::Invalid("arc sweep must be nonzero and less than a full turn".into()));
         }
         Ok(())
+    }
+
+    /// The sketch scaled by `factor` about its origin, for its first dimension (#1365): drawn
+    /// geometry has no size of its own until a dimension gives it one, so the first length
+    /// dimension scales the whole sketch to its value instead of distorting it. Only a sketch
+    /// with nothing that fixes a size: no other driving length dimension, nothing fixed,
+    /// projected or patterned, no offsets and no 3D curves. Every geometric constraint
+    /// (coincident, horizontal, parallel, tangent, equal, symmetric, …) and every angle holds
+    /// on the scaled sketch as it held before. `None` when the sketch does not qualify, also
+    /// when its curves form several separate chains (#3786): the dimension sizes only its own.
+    pub fn scaled_for_first_dimension(&self, factor: f64) -> Option<Sketch> {
+        if !(factor.is_finite() && (1e-6..=1e6).contains(&factor)) {
+            return None;
+        }
+        let sizes = self.constraints.iter().any(|c| match c.kind {
+            ConstraintKind::Fix { .. } | ConstraintKind::PatternPoint { .. } | ConstraintKind::PatternRadius { .. } => true,
+            ref k => k.is_dimension() && !k.is_angle() && !c.driven,
+        });
+        if sizes
+            || !self.links.is_empty()
+            || !self.patterns.is_empty()
+            || !self.offsets.is_empty()
+            || !self.freeform_offsets.is_empty()
+            || !self.wires.is_empty()
+            || self.curves.iter().any(|c| c.fixed || c.link.is_some())
+            || self.points.iter().enumerate().any(|(i, p)| (p.fixed || p.link.is_some()) && (i != 0 || p.pos != Vec2::ZERO))
+        {
+            return None;
+        }
+        // Shapes nothing joins (#3786) are not one drawing: only one connected chain of curves
+        // scales. Curves and driving constraints join their points; the origin is a point too.
+        let mut parent: Vec<usize> = (0..self.points.len()).collect();
+        for c in &self.curves {
+            let ids = c.kind.point_ids();
+            for w in ids.windows(2) {
+                if let [a, b] = *w {
+                    union(&mut parent, a, b);
+                }
+            }
+        }
+        for c in self.constraints.iter().filter(|c| !c.driven) {
+            let ids = self.constraint_points(&c.kind);
+            for w in ids.windows(2) {
+                if let [a, b] = *w {
+                    union(&mut parent, a, b);
+                }
+            }
+        }
+        let mut roots = self.curves.iter().filter_map(|c| c.kind.point_ids().first().map(|&p| find(&mut parent, p)));
+        if let Some(first) = roots.next()
+            && roots.any(|r| r != first)
+        {
+            return None;
+        }
+        let mut out = self.clone();
+        for p in out.points.iter_mut().filter(|p| !p.fixed) {
+            p.pos = p.pos * factor;
+            if !in_range(p.pos) {
+                return None;
+            }
+        }
+        for c in &mut out.curves {
+            if let CurveKind::Circle { r, .. } | CurveKind::Ellipse { r, .. } = &mut c.kind {
+                *r *= factor;
+                if !radius_in_range(*r) {
+                    return None;
+                }
+            }
+        }
+        // Dimension texts keep their places relative to what they measure.
+        for t in out.constraints.iter_mut().filter_map(|c| c.text.as_mut()) {
+            *t = *t * factor;
+        }
+        Some(out)
     }
 
     /// Is point `i` held in place: fixed, projected (linked), fixed by a Fix constraint or a
@@ -858,7 +1105,7 @@ impl Sketch {
             || self.curves.iter().any(|c| c.fixed && c.kind.uses(i))
     }
 
-    /// [`Sketch::point_locked`] for every point at once.
+    /// [`Sketch::point_locked`] for every point at once: the points every solve keeps as they are.
     pub fn locked_points(&self) -> Vec<bool> {
         let mut out: Vec<bool> = self.points.iter().map(|p| p.fixed || p.link.is_some()).collect();
         let mut set = |i: usize| {
@@ -887,21 +1134,9 @@ impl Sketch {
         }
         // Points made one by coincident constraints.
         let mut root: Vec<usize> = (0..self.points.len()).collect();
-        fn find(r: &mut [usize], mut i: usize) -> usize {
-            while let Some(&p) = r.get(i) {
-                if p == i {
-                    break;
-                }
-                i = p;
-            }
-            i
-        }
         for c in &self.constraints {
             if let ConstraintKind::Coincident { p, q } = c.kind {
-                let (a, b) = (find(&mut root, p), find(&mut root, q));
-                if let Some(x) = root.get_mut(a) {
-                    *x = b;
-                }
+                union(&mut root, p, q);
             }
         }
         let ends: Vec<Vec<usize>> =
@@ -1007,6 +1242,77 @@ impl Sketch {
         out
     }
 
+    /// Every point a constraint touches: its points and the points of its curves.
+    pub fn constraint_points(&self, k: &ConstraintKind) -> Vec<usize> {
+        let (mut pts, curves) = k.indices();
+        pts.extend(curves.into_iter().flat_map(|c| self.curves.get(c).map(|x| x.kind.point_ids()).unwrap_or_default()));
+        pts
+    }
+
+    /// What a solve holding `points` and the radii of `radii` moves with them, as the solver
+    /// couples its variables: (per point, per curve radius). The held points, and the free
+    /// points and free circle/ellipse radii joined to them through curves and driving
+    /// constraints without passing through a constant (a held, fixed or projected point or
+    /// radius couples nothing).
+    pub fn coupled(&self, points: &[usize], radii: &[usize]) -> (Vec<bool>, Vec<bool>) {
+        let (n, m) = (self.points.len(), self.curves.len());
+        // Nodes: points, then curve radii, then one node standing for everything held.
+        let held = n + m;
+        let mut root: Vec<usize> = (0..=held).collect();
+        let mut seed = vec![false; n + m];
+        for v in points.iter().copied().chain(radii.iter().map(|c| n.saturating_add(*c))) {
+            if let Some(s) = seed.get_mut(v) {
+                *s = true;
+            }
+        }
+        let locked = self.locked_points();
+        let free = |v: usize| {
+            if seed.get(v).copied().unwrap_or(true) {
+                return false;
+            }
+            match v.checked_sub(n) {
+                None => !locked.get(v).copied().unwrap_or(true),
+                Some(c) => self
+                    .curves
+                    .get(c)
+                    .is_some_and(|x| matches!(x.kind, CurveKind::Circle { .. } | CurveKind::Ellipse { .. }) && x.link.is_none() && !x.fixed),
+            }
+        };
+        let curve_nodes = |c: usize| {
+            let mut v = self.curves.get(c).map(|x| x.kind.point_ids()).unwrap_or_default();
+            v.push(n + c);
+            v
+        };
+        // What the solver's equations join (see `solve_with`): an arc's centre and ends, a
+        // periodic spline's first and last points, and each driving constraint's entities. A
+        // curve alone joins nothing (a circle's radius and centre move independently).
+        let own = self.curves.iter().filter_map(|x| match &x.kind {
+            CurveKind::Arc { c, a, b } => Some(vec![*c, *a, *b]),
+            CurveKind::Spline { pts, periodic: true, .. } => match (pts.first(), pts.last()) {
+                (Some(a), Some(b)) if a != b => Some(vec![*a, *b]),
+                _ => None,
+            },
+            _ => None,
+        });
+        let edges = own.chain(self.constraints.iter().filter(|c| !c.driven).map(|c| {
+            let (mut v, curves) = c.kind.indices();
+            v.extend(curves.into_iter().flat_map(curve_nodes));
+            v
+        }));
+        for e in edges {
+            let mut join = e.iter().copied().filter(|&v| free(v));
+            let first = if e.iter().any(|v| seed.get(*v).copied().unwrap_or(false)) { Some(held) } else { join.next() };
+            if let Some(first) = first {
+                for v in join {
+                    union(&mut root, first, v);
+                }
+            }
+        }
+        let r = find(&mut root, held);
+        let mut coupled = |v: usize| seed.get(v).copied().unwrap_or(false) || (free(v) && find(&mut root, v) == r);
+        ((0..n).map(&mut coupled).collect(), (n..n + m).map(&mut coupled).collect())
+    }
+
     /// Is curve `c` held in place: fixed or projected (linked).
     pub fn curve_locked(&self, c: usize) -> bool {
         self.curves.get(c).is_some_and(|c| c.fixed || c.link.is_some() || self.freeform_offsets.iter().any(|offset| offset.output == c.id))
@@ -1040,7 +1346,7 @@ impl Sketch {
                 _ => Vec::new(),
             },
             CurveKind::Circle { c, r } => match self.point(c) {
-                Some(c) => solvecraft_geom::Loop2::circle(c, r).segs,
+                Some(c) => solidcraft_geom::Loop2::circle(c, r).segs,
                 None => Vec::new(),
             },
             CurveKind::Arc { c, a, b } => match (self.point(c), self.point(a), self.point(b)) {
@@ -1059,8 +1365,8 @@ impl Sketch {
     }
 
     /// Exact boundary segments of a free-form curve: ellipses as four conics, conics, fit
-    /// splines and control splines up to degree 3 as Béziers. None for other curves (and for
-    /// higher-degree splines, which stay polylines).
+    /// splines and control splines up to `MAX_BEZIER_DEGREE` as Béziers. None for other curves
+    /// (and for higher-degree splines, which stay polylines).
     pub fn exact_segs(&self, ci: usize) -> Option<Vec<Seg2>> {
         let cu = self.curves.get(ci)?;
         let pt = |i: &usize| self.point(*i);
@@ -1087,12 +1393,23 @@ impl Sketch {
                     crate::curves::fit_beziers_mode(&p, *periodic).ok()?.into_iter().map(|[p0, p1, p2, p3]| Seg2::Cubic { p0, p1, p2, p3 }).collect(),
                 )
             }
-            CurveKind::Spline { pts, control: true, degree, .. } if (*degree as usize) <= solvecraft_geom::MAX_BEZIER_DEGREE => {
+            CurveKind::Spline { pts, control: true, degree, .. } if (*degree as usize) <= solidcraft_geom::MAX_BEZIER_DEGREE => {
                 let p: Vec<Vec2> = pts.iter().map(pt).collect::<Option<_>>()?;
                 let k = (*degree as usize).min(p.len().saturating_sub(1)).max(1);
-                Some(crate::curves::bspline_beziers(&p, k).iter().filter_map(|c| solvecraft_geom::bezier(c)).collect())
+                Some(crate::curves::bspline_beziers(&p, k).iter().filter_map(|c| solidcraft_geom::bezier(c)).collect())
             }
             _ => None,
+        }
+    }
+
+    /// The exact [`Seg2`] pieces of a curve of any kind, in the curve's own direction of travel:
+    /// lines, circles and arcs from their analytic form, free-form curves through
+    /// [`Sketch::exact_segs`]. Empty for a curve with no exact pieces (a spline above
+    /// `solidcraft_geom::MAX_BEZIER_DEGREE`).
+    pub fn exact_pieces(&self, ci: usize) -> Vec<Seg2> {
+        match self.exact_segs(ci) {
+            Some(segs) => segs,
+            None => self.segs(ci),
         }
     }
 
@@ -1139,14 +1456,17 @@ impl Sketch {
             CurveKind::Circle { .. } => "c",
             CurveKind::Arc { .. } => "a",
             CurveKind::Ellipse { m, c, r } => {
-                if m == c || !(r.is_finite() && *r > 1e-9 && *r < 1e9) {
+                if m == c || !radius_in_range(*r) {
                     return Err(SketchError::Invalid("degenerate ellipse".into()));
                 }
                 "e"
             }
             CurveKind::Spline { pts, control, degree, periodic } => {
-                if pts.len() < 2 || pts.len() > crate::curves::MAX_SPLINE_POINTS || !(1..=7).contains(degree) {
-                    return Err(SketchError::Invalid("a spline needs 2 to 500 points and degree 1 to 7".into()));
+                if pts.len() < 2 || pts.len() > crate::curves::MAX_SPLINE_POINTS || !(1..=solidcraft_geom::MAX_BEZIER_DEGREE as u8).contains(degree) {
+                    return Err(SketchError::Invalid(format!(
+                        "a spline needs 2 to 500 points and degree 1 to {}",
+                        solidcraft_geom::MAX_BEZIER_DEGREE
+                    )));
                 }
                 if *periodic {
                     if *control || *degree != 3 {
@@ -1168,7 +1488,7 @@ impl Sketch {
             }
         };
         let id = self.curve_id(id, prefix)?;
-        self.curves.push(Curve { id, kind, construction: false, reversed: false, link: None, centerline: false, fixed: false });
+        self.curves.push(Curve { id, kind, construction: false, reversed: false, link: None, centerline: false, fixed: false, infinite: false });
         Ok(self.curves.len() - 1)
     }
 
@@ -1187,6 +1507,7 @@ impl Sketch {
         orphans.dedup();
         self.remove_points(&orphans);
         self.prune_links();
+        self.prune_patterns();
     }
 
     fn point_used_by_curve(&self, p: usize) -> bool {
@@ -1272,6 +1593,7 @@ impl Sketch {
             k
         });
         self.prune_links();
+        self.prune_patterns();
     }
 
     /// Resolve a point reference: a point id (`origin`, `l1.end`, `p3`) or `<curve>.start|end|center`.
@@ -1298,18 +1620,7 @@ impl Sketch {
 
     /// Axis-aligned bounds of all geometry (for views).
     pub fn bounds(&self) -> Option<(Vec2, Vec2)> {
-        let mut lo = Vec2::new(f64::INFINITY, f64::INFINITY);
-        let mut hi = Vec2::new(f64::NEG_INFINITY, f64::NEG_INFINITY);
-        let mut any = false;
-        for i in 0..self.curves.len() {
-            for s in self.segs(i) {
-                for p in s.polyline(0.5) {
-                    lo = Vec2::new(lo.x.min(p.x), lo.y.min(p.y));
-                    hi = Vec2::new(hi.x.max(p.x), hi.y.max(p.y));
-                    any = true;
-                }
-            }
-        }
-        any.then_some((lo, hi))
+        let b: Aabb2 = (0..self.curves.len()).flat_map(|i| self.segs(i)).flat_map(|s| s.polyline(0.5)).collect();
+        (!b.is_empty()).then_some((b.min, b.max))
     }
 }

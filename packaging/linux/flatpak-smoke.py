@@ -19,7 +19,7 @@ import tempfile
 import time
 import zlib
 
-APP_ID = "ai.storyteller.solvecraft"
+APP_ID = "ai.storyteller.solidcraft"
 MAX_PIXELS = 16_000_000
 MAX_PNG_BYTES = 70_000_000
 SANDBOX_PROBE = r'''
@@ -28,7 +28,10 @@ work=$(mktemp -d)
 export XDG_CONFIG_HOME="$work/config" XDG_DATA_HOME="$work/data" XDG_CACHE_HOME="$work/cache"
 mkdir -p "$XDG_CONFIG_HOME" "$XDG_DATA_HOME" "$XDG_CACHE_HOME"
 unset WGPU_BACKEND WGPU_BACKENDS
-solvecraft --control 18837 >"$work/app.log" 2>&1 &
+# The control channel's token (docs/control-protocol.md), set here so this client knows it.
+SOLIDCRAFT_CONTROL_TOKEN=$(od -An -N32 -tx1 /dev/urandom | tr -d ' \n')
+export SOLIDCRAFT_CONTROL_TOKEN
+solidcraft --control 18837 >"$work/app.log" 2>&1 &
 app=$!
 cleanup() {
   kill "$app" 2>/dev/null || true
@@ -44,7 +47,18 @@ for ((attempt=0; attempt<300; attempt++)); do
   sleep .1
 done
 test "$ready" = 1
-for request in '{"id":1,"method":"ui.inspect","params":{}}' '{"id":2,"method":"engine.execute","params":{"command":"solid.box","params":{"length":30,"width":20,"height":10}}}' '{"id":3,"method":"document.inspect","params":{"measure":true}}'; do
+# The control port opens before the first frame, so ui.inspect has no viewport yet; poll until it does.
+inspect="{\"id\":1,\"method\":\"ui.inspect\",\"params\":{},\"token\":\"$SOLIDCRAFT_CONTROL_TOKEN\"}"
+deadline=$((SECONDS + 60))
+until printf '%s\n' "$inspect" >&3 && IFS= read -r -t 30 reply <&3 && [[ "$reply" =~ \"viewport\":\ *\[ ]]; do
+  if ! kill -0 "$app" 2>/dev/null || ((SECONDS >= deadline)); then
+    echo "viewport never appeared: ${reply:-no reply}" >&2
+    exit 1
+  fi
+  sleep .25
+done
+printf '%s\n' "$reply"
+for request in '{"id":2,"method":"engine.execute","params":{"command":"solid.box","params":{"length":30,"width":20,"height":10}}}' '{"id":3,"method":"document.inspect","params":{"measure":true}}'; do
   printf '%s\n' "$request" >&3
   IFS= read -r -t 30 reply <&3
   printf '%s\n' "$reply"
@@ -165,10 +179,10 @@ def frame_statistics(png):
 def probe(gl_saved_four=False):
     shell = SANDBOX_PROBE
     if gl_saved_four:
-        shell = shell.replace('solvecraft --control',
-                              'mkdir -p "$XDG_DATA_HOME/solvecraft"\n'
-                              'printf \'{"msaa":4}\' >"$XDG_DATA_HOME/solvecraft/graphics.json"\n'
-                              'export WGPU_BACKEND=gl\nsolvecraft --control')
+        shell = shell.replace('solidcraft --control',
+                              'mkdir -p "$XDG_DATA_HOME/solidcraft"\n'
+                              'printf \'{"msaa":4}\' >"$XDG_DATA_HOME/solidcraft/graphics.json"\n'
+                              'export WGPU_BACKEND=gl\nsolidcraft --control')
     result = subprocess.run(["flatpak", "run", "--user", "--command=bash", APP_ID, "-c", shell],
                             text=True, capture_output=True, timeout=125)
     if result.returncode:
@@ -201,7 +215,8 @@ def run_backend(backend):
         env.pop("WAYLAND_DISPLAY", None)
         env.pop("WAYLAND_SOCKET", None)
         env.pop("DISPLAY", None)
-        env.pop("SOLVECRAFT_WAYLAND", None)
+        env.pop("SOLIDCRAFT_WAYLAND", None)
+        env.pop("SOLVECRAFT_WAYLAND", None)  # the legacy name is still read
         command = ["dbus-run-session", "--"]
         compositor = None
         with (Path(temporary) / "weston.log").open("wb") as log:

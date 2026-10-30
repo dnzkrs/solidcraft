@@ -71,7 +71,7 @@ fn export_keeps_split_faces_through_later_features() {
     run(&mut s, "solid.fillet", json!({"edges": [[20, 0, 0]], "radius": 2}));
     let (f, _) = faces_volume(&mut s, "B");
     assert_eq!(f, 8);
-    let dir = std::env::temp_dir().join(format!("solvecraft-split-{}", std::process::id()));
+    let dir = std::env::temp_dir().join(format!("solidcraft-split-{}", std::process::id()));
     std::fs::create_dir_all(&dir).unwrap();
     let step = dir.join("split.step");
     run(&mut s, "file.export", json!({"path": step.to_string_lossy()}));
@@ -88,7 +88,7 @@ fn split_pieces_count_and_move_apart() {
     // Measure counts the two halves of the top as two faces.
     let m = run(&mut s, "inspect.measure", json!({ "bodies": ["B"] }))["bodies"][0].clone();
     assert_eq!(m["faces"].as_u64(), Some(7), "{m}");
-    // Offset Face on one half moves that half only (Fusion): a 20 × 30 step 5 high.
+    // Offset Face on one half moves that half only: a 20 × 30 step 5 high.
     run(&mut s, "solid.offset_face", json!({"faces": [[10, 15, 20]], "distance": 5}));
     let (_, v) = faces_volume(&mut s, "B");
     assert!((v - 27000.0).abs() < 1e-6 * 27000.0, "{v}");

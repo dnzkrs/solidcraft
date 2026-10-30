@@ -364,7 +364,7 @@ where
         ))?;
         self.leader().fmt(curve_idx, f)?;
         self.surface0().fmt(surface0_idx, f)?;
-        // SolveCraft: the second surface was written at the first one's index (duplicate ids).
+        // SolidCraft: the second surface was written at the first one's index (duplicate ids).
         self.surface1().fmt(surface1_idx, f)
     }
 }
@@ -748,22 +748,42 @@ impl<C> StepSurface for RevolutedCurve<C> {
 impl<C> DisplayByStep for Processor<RevolutedCurve<C>, Matrix4>
 where C: StepLength + Transformed<Matrix4> + DisplayByStep
 {
+    // SolidCraft: a transform that commutes with turning about the axis keeps the surface one of
+    // revolution: the transformed profile revolved about the transformed axis. That holds for
+    // uniform scales (the only case taken before) and also for a scale across the axis that
+    // differs from the scale along it, which is how a shell or an offset moves a revolved
+    // cylinder or cone face. Any other transform is still refused.
     fn fmt(&self, idx: usize, f: &mut Formatter<'_>) -> Result {
         let surface = self.entity();
-        let transform = self.transform();
-        let (k, a, _) = match transform.iwasawa_decomposition() {
-            Some(x) => x,
-            None => {
-                f.write_str("Transform is not regular")?;
-                return ERR;
-            }
-        };
-        if !a[0][0].near(&a[1][1]) || !a[1][1].near(&a[2][2]) {
-            f.write_str("Transform contains non-uniform scale.")?;
+        let transform = *self.transform();
+        if transform.determinant().so_small() {
+            f.write_str("Transform is not regular")?;
             return ERR;
         }
-        let curve = surface.entity_curve().transformed(*transform);
-        let axis = k.transform_vector(surface.axis());
+        let a = surface.axis().normalize();
+        let la = transform.transform_vector(a);
+        if la.so_small() {
+            f.write_str("Transform is not regular")?;
+            return ERR;
+        }
+        let axis = la.normalize();
+        // Two directions across the axis, and their images.
+        let seed = if a.x.abs() < 0.9 { Vector3::unit_x() } else { Vector3::unit_y() };
+        let u = (seed - a * a.dot(seed)).normalize();
+        let v = a.cross(u);
+        let (lu, lv) = (transform.transform_vector(u), transform.transform_vector(v));
+        let s = lu.magnitude();
+        // Across the axis: a similarity onto the plane across the image axis.
+        let commutes = !s.so_small()
+            && (lu.dot(axis) / s).so_small()
+            && (lv.dot(axis) / s).so_small()
+            && (lu.dot(lv) / (s * s)).so_small()
+            && (lv.magnitude() / s).near(&1.0);
+        if !commutes {
+            f.write_str("Transform does not keep the surface one of revolution.")?;
+            return ERR;
+        }
+        let curve = surface.entity_curve().transformed(transform);
         let origin = transform.transform_point(surface.origin());
         let surface = RevolutedCurve::by_revolution(curve, origin, axis);
         DisplayByStep::fmt(&surface, idx, f)
@@ -773,7 +793,7 @@ impl<C: StepLength> StepLength for Processor<RevolutedCurve<C>, Matrix4> {
     fn step_length(&self) -> usize { self.entity().step_length() }
 }
 
-// SolveCraft: the written surface revolves the transformed profile about the transformed
+// SolidCraft: the written surface revolves the transformed profile about the transformed
 // axis; a mirroring transform reverses the turn, and with it the normal (was `!orientation`,
 // right only without mirroring). The STEP normal is the opposite of truck's (see above).
 impl<C> StepSurface for Processor<RevolutedCurve<C>, Matrix4> {
@@ -803,7 +823,7 @@ impl StepLength for ModelingSurface {
     }
 }
 
-// SolveCraft: was the default (`true`), which dropped an inverted revolution's orientation.
+// SolidCraft: was the default (`true`), which dropped an inverted revolution's orientation.
 impl StepSurface for ModelingSurface {
     fn same_sense(&self) -> bool {
         match self {

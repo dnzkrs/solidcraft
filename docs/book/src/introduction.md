@@ -11,7 +11,7 @@ It runs as:
 
 - a **desktop app** for Windows and Linux (egui + wgpu);
 - a **web app** in the browser (wasm, WebGPU or WebGL2), [try it here](app/);
-- a **headless CLI**, `solvecraft-cli`, that runs command scripts, measures and exports;
+- a **headless CLI**, `solidcraft-cli`, that runs command scripts, measures and exports;
 - an **MCP server** that AI agents model with, headless or driving the running app.
 
 Everything the user can do is a *command* with JSON parameters. The toolbar, the dialogs, scripts,
@@ -24,7 +24,7 @@ and a plastic-enclosure subset work; surfaces, drawings, CAM and simulation are 
 the [feature list](dev/features.md) lists every command by area, and the
 [reference tests](dev/oracle.md) check modelling results against analytic and FreeCAD values.
 
-Existing `.solvecraft` designs and `solvecraft-cli` commands keep their names and behavior.
+Existing `.solidcraft` designs and `solidcraft-cli` commands keep their names and behavior.
 
 This book has two halves: the **user guide** for people modelling with SolidCraft, and the
 **developer guide** for people working on it. The [command reference](reference/commands.md) is
@@ -32,5 +32,6 @@ generated from the code on every build.
 
 SolidCraft is licensed MIT OR Apache-2.0. It is independent: behaviour is designed from public
 documentation, general CAD conventions and user feedback, and reference tests use analytic
-values and open-source tools. SolidCraft is not affiliated with Autodesk; Fusion is a trademark
-of Autodesk, Inc.
+values and open-source tools. SolidCraft is not affiliated with Autodesk, Dassault Systèmes,
+PTC or any other CAD vendor; product names such as Fusion, SolidWorks and Onshape are trademarks of
+their respective owners, named only to describe compatibility.

@@ -1,21 +1,25 @@
 //! Floating controls reserve drawing space without changing rendering or picking projection.
 use egui::{Rect, pos2, vec2};
-use solvecraft_engine::geom::{Aabb3, Vec3};
-use solvecraft_engine::render::Camera;
+use solidcraft_engine::geom::{Aabb3, Vec3};
+use solidcraft_engine::render::Camera;
 
 #[derive(Clone, Debug)]
 pub(crate) struct Layout {
     pub viewport: Rect,
     pub drawable: Rect,
+    pub content: Rect,
     pub axis_view: Rect,
     pub navigation: Rect,
 }
 
 /// Enumerate rectangles whose edges meet the viewport or a bounded number of overlays.
-fn free_rect(view: Rect, obstacles: &[Rect]) -> Rect {
+pub(crate) fn free_rect(view: Rect, obstacles: &[Rect]) -> Rect {
+    if !view.is_finite() || !view.is_positive() {
+        return Rect::NOTHING;
+    }
     let mut xs = vec![view.left(), view.right()];
     let mut ys = vec![view.top(), view.bottom()];
-    let obstacles: Vec<_> = obstacles.iter().take(8).map(|r| r.intersect(view)).filter(|r| r.is_positive() && r.is_finite()).collect();
+    let obstacles: Vec<_> = obstacles.iter().take(16).map(|r| r.intersect(view)).filter(|r| r.is_positive() && r.is_finite()).collect();
     for r in &obstacles {
         xs.extend([r.left(), r.right()]);
         ys.extend([r.top(), r.bottom()]);
@@ -39,17 +43,22 @@ fn free_rect(view: Rect, obstacles: &[Rect]) -> Rect {
 }
 
 impl Layout {
-    pub fn new(viewport: Rect, docks: &[Rect], scale: f32) -> Self {
+    pub fn new(viewport: Rect, docks: &[Rect], scale: f32, style: crate::prefs::NavigatorStyle) -> Self {
+        Self::with_content(viewport, viewport, docks, scale, style)
+    }
+
+    pub fn with_content(viewport: Rect, content: Rect, docks: &[Rect], scale: f32, style: crate::prefs::NavigatorStyle) -> Self {
         let scale = if scale.is_finite() && scale > 0.0 { scale } else { 1.0 };
-        let mut obstacles: Vec<_> = docks.iter().take(6).copied().filter(|r| r.is_finite()).map(|r| r.expand(4.0)).collect();
+        let mut obstacles: Vec<_> = docks.iter().take(14).copied().filter(|r| r.is_finite()).map(|r| r.expand(4.0)).collect();
         // Navigation is anchored to the viewport, never to transient dialog space.
-        let available = viewport;
-        let mut axis_view = if available.width() >= 116.0 && available.height() >= 116.0 {
-            Rect::from_min_size(pos2(available.right() - 116.0, available.top()), vec2(116.0, 116.0))
+        let available = content;
+        let cube_size = super::viewport::axis_view_size(style);
+        let mut axis_view = if available.width() >= cube_size && available.height() >= cube_size {
+            Rect::from_min_size(pos2(available.right() - cube_size, available.top()), vec2(cube_size, cube_size))
         } else {
             Rect::NOTHING
         };
-        let nav_space = viewport;
+        let nav_space = content;
         let columns = ((nav_space.width() - 10.0) / 30.0).floor().clamp(1.0, 10.0);
         let nav_height = (10.0 / columns).ceil() * 30.0;
         let navigation = if nav_space.width() >= columns * 30.0 + 10.0 && nav_space.height() >= nav_height + 7.0 {
@@ -60,7 +69,12 @@ impl Layout {
         // On tiny viewports keep the bottom controls usable rather than overlapping them.
         // This decision depends only on viewport size, never on an overlay.
         if axis_view.intersect(navigation).is_positive() {
-            axis_view = Rect::NOTHING;
+            let compact = (navigation.top() - content.top() - 4.0).min(cube_size);
+            axis_view = if style == crate::prefs::NavigatorStyle::Cube && compact >= 96.0 {
+                Rect::from_min_size(pos2(content.right() - compact, content.top()), vec2(compact, compact))
+            } else {
+                Rect::NOTHING
+            };
         }
         if axis_view.is_positive() {
             obstacles.push(axis_view);
@@ -69,7 +83,7 @@ impl Layout {
             obstacles.push(navigation);
         }
         let drawable = free_rect(viewport, &obstacles).shrink(16.0 / scale);
-        Self { viewport, drawable, axis_view, navigation }
+        Self { viewport, drawable, content, axis_view, navigation }
     }
 }
 

@@ -1,6 +1,6 @@
 //! Crate for operationg shapes. Provides boolean operations to Solid, and shape healing for importing shapes from other CAD systems.
 
-// SolveCraft: warnings are not errors in the vendored copy (newer compilers flag more).
+// SolidCraft: warnings are not errors in the vendored copy (newer compilers flag more).
 #![allow(dead_code)]
 #![warn(clippy::all, rust_2018_idioms)]
 #![warn(
@@ -14,7 +14,7 @@
     unused_qualifications
 )]
 
-/// SolveCraft: report where an operation gives up (set `SHAPEOPS_TRACE`).
+/// SolidCraft: report where an operation gives up (set `SHAPEOPS_TRACE`).
 macro_rules! tr {
     ($e:expr, $tag:expr) => {
         match $e {
@@ -34,10 +34,10 @@ mod healing;
 pub use healing::{RobustSplitClosedEdgesAndFaces, SplitClosedEdgesAndFaces};
 mod transversal;
 pub use transversal::{
-    and, and_with_history, or, or_with_history, EdgeOrigin, FaceIndex, FaceOrigin, History, ShapeOpsCurve,
-    ShapeOpsSurface,
+    and, and_with_history, and_with_history_meshed, meshes, or, or_with_history, EdgeOrigin, FaceIndex, FaceOrigin,
+    History, MeshedShell, ShapeOpsCurve, ShapeOpsSurface,
 };
-// SolveCraft: exercised by kernel regressions in the workspace CI.
+// SolidCraft: exercised by kernel regressions in the workspace CI.
 #[doc(hidden)]
 pub use transversal::IntersectionCurveWithParameters;
 mod alternative;

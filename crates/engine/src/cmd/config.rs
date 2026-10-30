@@ -2,7 +2,8 @@
 //! suppressions) and switching between its rows.
 
 use serde_json::{Value, json};
-use solvecraft_doc::config::{Column, ConfigRow, MAX_COLUMNS, MAX_ROWS};
+use solidcraft_doc::DEFAULT_MATERIAL;
+use solidcraft_doc::config::{Column, ConfigRow, MAX_COLUMNS, MAX_ROWS};
 
 use super::CommandSpec;
 use crate::params::{bad, bool_, str_, string_list};
@@ -14,17 +15,17 @@ pub static COMMANDS: &[CommandSpec] = &[
     ),
     CommandSpec::new("config.table", "Display Configuration Table", show)
         .at("SOLID", "CONFIGURE")
-        .icon("params")
+        .icon("configuration_table")
         .noundo()
         .params("→ columns (param:<name> or suppress:<feature>), rows, the active row and whether the design still matches it"),
-    CommandSpec::new("config.column", "Configuration Column", column).params("param? | feature? | material? | appearance? (target name); delete?: bool"),
-    CommandSpec::new("config.row", "Configuration Row", row).params(
+    CommandSpec::new("config.column", "Configuration Column", column).icon("configuration_table").params("param? | feature? | material? | appearance? (target name); delete?: bool"),
+    CommandSpec::new("config.row", "Configuration Row", row).icon("configuration_table").params(
         "name; from? (row to copy; default current values); values?: {column key: expression, suppression, material name, appearance name or Look object}; rename?; delete?: bool",
     ),
-    CommandSpec::new("config.activate", "Activate Configuration", activate).params("row: name — sets its parameter values and suppressions"),
-    CommandSpec::new("config.preview", "Preview Configuration", preview).noundo().params("row: name — validates a rebuild without changing the design or history"),
-    CommandSpec::new("config.rule", "Configuration Rule", rule).params("rule?: {id,name,enabled,condition,effect}; id? + delete?; id? + index? (ordered move)"),
-    CommandSpec::new("config.rules", "Configuration Rules", show).noundo().params("ordered typed rules, rows and active state"),
+    CommandSpec::new("config.activate", "Activate Configuration", activate).icon("activate").params("row: name — sets its parameter values and suppressions"),
+    CommandSpec::new("config.preview", "Preview Configuration", preview).icon("eye").noundo().params("row: name — validates a rebuild without changing the design or history"),
+    CommandSpec::new("config.rule", "Configuration Rule", rule).icon("configuration_table").params("rule?: {id,name,enabled,condition,effect}; id? + delete?; id? + index? (ordered move)"),
+    CommandSpec::new("config.rules", "Configuration Rules", show).icon("list").noundo().params("ordered typed rules, rows and active state"),
 ];
 
 fn column_of(s: &Session, p: &Value, cmd: &str) -> Result<Column> {
@@ -64,8 +65,8 @@ fn column_of(s: &Session, p: &Value, cmd: &str) -> Result<Column> {
                 .ok_or_else(|| bad(cmd, "no face column"));
         }
         if let Some(target) = value.get("target") {
-            solvecraft_doc::config::validate_face_target_json(target).map_err(|error| bad(cmd, error.to_string()))?;
-            let target: solvecraft_doc::config::ConfigFaceTarget =
+            solidcraft_doc::config::validate_face_target_json(target).map_err(|error| bad(cmd, error.to_string()))?;
+            let target: solidcraft_doc::config::ConfigFaceTarget =
                 serde_json::from_value(target.clone()).map_err(|error| bad(cmd, error.to_string()))?;
             let state = s.model.state();
             let body = state.body(&target.body).ok_or_else(|| bad(cmd, "no face definition"))?;
@@ -79,7 +80,7 @@ fn column_of(s: &Session, p: &Value, cmd: &str) -> Result<Column> {
         if body.body.is_mesh() {
             return Err(bad(cmd, "mesh faces have no supported semantic lineage"));
         }
-        let index = solvecraft_doc::appearance::face_index_at(body, point).ok_or_else(|| bad(cmd, "no face at picked point"))?;
+        let index = solidcraft_doc::appearance::face_index_at(body, point).ok_or_else(|| bad(cmd, "no face at picked point"))?;
         let target = s.doc.configuration_face_target(body, index, point).map_err(|error| bad(cmd, error.to_string()))?;
         s.doc.certify_config_face(&target).map_err(|error| bad(cmd, error.to_string()))?;
         s.doc.configuration_face_indices(body, &target).map_err(|error| bad(cmd, error.to_string()))?;
@@ -265,10 +266,10 @@ fn row(s: &mut Session, p: &Value) -> Result<Value> {
                 .ok_or_else(|| bad(cmd, format!("`{k}` is not a column (config.column adds one)")))?;
             match s.doc.configs.columns.get(col) {
                 Some(Column::Material(_)) => {
-                    text = solvecraft_doc::config::material_cell(&text).map_err(|e| bad(cmd, e.to_string()))?.unwrap_or_else(|| "Default".into());
+                    text = s.doc.material_cell(&text).map_err(|e| bad(cmd, e.to_string()))?.unwrap_or_else(|| DEFAULT_MATERIAL.into());
                 }
                 Some(Column::Appearance(_) | Column::ComponentAppearance(_) | Column::FaceAppearance(_)) => {
-                    text = match solvecraft_doc::config::appearance_cell(&text).map_err(|e| bad(cmd, e.to_string()))? {
+                    text = match solidcraft_doc::config::appearance_cell(&text).map_err(|e| bad(cmd, e.to_string()))? {
                         Some(look) => serde_json::to_string(&look).map_err(|e| bad(cmd, e.to_string()))?,
                         None => String::new(),
                     };
@@ -329,8 +330,8 @@ fn validate_rows(s: &Session, cmd: &str) -> Result<()> {
 fn rule(s: &mut Session, p: &Value) -> Result<Value> {
     let cmd = "config.rule";
     if let Some(value) = p.get("rule") {
-        solvecraft_doc::config::validate_rules_json(&json!({"configs":{"rules":[value]}})).map_err(|e| bad(cmd, e.to_string()))?;
-        let mut rule: solvecraft_doc::config::ConfigRule = serde_json::from_value(value.clone()).map_err(|e| bad(cmd, e.to_string()))?;
+        solidcraft_doc::config::validate_rules_json(&json!({"configs":{"rules":[value]}})).map_err(|e| bad(cmd, e.to_string()))?;
+        let mut rule: solidcraft_doc::config::ConfigRule = serde_json::from_value(value.clone()).map_err(|e| bad(cmd, e.to_string()))?;
         if rule.length_unit.is_none() {
             rule.length_unit = s
                 .doc
@@ -345,7 +346,7 @@ fn rule(s: &mut Session, p: &Value) -> Result<Value> {
         if let Some(index) = rules.iter().position(|r| r.id == rule.id) {
             rules[index] = rule;
         } else {
-            if rules.len() >= solvecraft_doc::config::MAX_RULES {
+            if rules.len() >= solidcraft_doc::config::MAX_RULES {
                 return Err(bad(cmd, "too many rules"));
             }
             rules.push(rule);
@@ -393,8 +394,9 @@ fn activate(s: &mut Session, p: &Value) -> Result<Value> {
         return Err(bad(cmd, format!("configuration `{r}` would fail to rebuild: {}", new_errors.join("; "))));
     }
     let styles = trial.doc.configuration_style_status(&trial.model.state()).map_err(|error| bad(cmd, format!("configuration `{r}`: {error}")))?;
+    let solved = s.solved_sketches();
     s.doc = trial.doc;
-    s.refresh();
+    s.settle_value_edit(&solved)?;
     let errors: Vec<String> = s.model.results.iter().filter_map(|x| x.error.clone()).collect();
     let mut out = show(s, p)?;
     out["errors"] = json!(errors);
@@ -540,7 +542,7 @@ mod tests {
         run(&mut s, "config.rule", json!({"id":"limit","delete":true}));
         run(&mut s, "edit.undo", json!({}));
         assert_eq!(s.doc, before);
-        let reopened = solvecraft_doc::format::read(&s.doc.to_json()).unwrap();
+        let reopened = solidcraft_doc::format::read(&s.doc.to_json()).unwrap();
         assert_eq!(reopened.configs.rules, s.doc.configs.rules);
     }
 
@@ -579,7 +581,7 @@ mod tests {
         assert!((volume(&mut s) - 1000.0).abs() < 1e-6, "captured Default preserves geometry in an inch design");
         run(&mut s, "config.row", json!({"name":"Inches", "values":{length.clone():"2", format!("suppress:{feature}"):"NO"}}));
         run(&mut s, "config.activate", json!({"row":"Inches"}));
-        assert_eq!(s.doc.config_current(&solvecraft_doc::config::Column::Param(length.clone())).as_deref(), Some("2 in"));
+        assert_eq!(s.doc.config_current(&solidcraft_doc::config::Column::Param(length.clone())).as_deref(), Some("2 in"));
         assert!(s.doc.configuration_matches());
         assert!((volume(&mut s) - 5080.0).abs() < 1e-6);
         let feature_id = s.doc.features[0].id;
@@ -681,7 +683,7 @@ mod tests {
         let mass = run(&mut s, "inspect.measure", json!({}));
         assert!((mass["bodies"][0]["mass_g"].as_f64().unwrap() - 2.7).abs() < 1e-6);
         assert_eq!(s.doc.appearances.bodies.get(&body).unwrap().opacity, 0.4);
-        let reopened = solvecraft_doc::format::read(&s.doc.to_json()).unwrap();
+        let reopened = solidcraft_doc::format::read(&s.doc.to_json()).unwrap();
         assert_eq!(reopened, *s.doc);
         assert!(reopened.configuration_matches());
         run(&mut s, "edit.undo", json!({}));
@@ -739,7 +741,7 @@ mod tests {
         run(&mut s, "config.activate", json!({"row": "Default"}));
         assert_eq!(s.doc.appearances.bodies.get(&body).unwrap().name, name);
         assert!(s.doc.configuration_matches());
-        let reopened = solvecraft_doc::format::read(&s.doc.to_json()).unwrap();
+        let reopened = solidcraft_doc::format::read(&s.doc.to_json()).unwrap();
         assert!(reopened.configuration_matches());
     }
 
@@ -774,7 +776,7 @@ mod tests {
         run(&mut s, "edit.undo", json!({}));
         assert_eq!(run(&mut s, "config.table", json!({}))["columns"][2], "material:Block");
         run(&mut s, "edit.redo", json!({}));
-        let mut reopened = Session::new(solvecraft_doc::format::read(&s.doc.to_json()).unwrap());
+        let mut reopened = Session::new(solidcraft_doc::format::read(&s.doc.to_json()).unwrap());
         run(&mut reopened, "config.activate", json!({"row": "Default"}));
         assert!(!reopened.doc.materials.contains_key("Housing"));
         assert!(!reopened.doc.appearances.bodies.contains_key("Housing"));

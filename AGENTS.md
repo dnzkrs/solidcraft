@@ -6,13 +6,13 @@ kernel, and a desktop UI that agents can drive. Projects published by
 [storytold](https://github.com/storytold) can serve as references for implementation conventions.
 Any code adapted from other projects (MIT OR Apache-2.0) is noted in ATTRIBUTION.md.
 
-## Product name and compatibility
-SolidCraft is the displayed product name; `solidcraft` is the repository name. Keep existing
-`solvecraft` crate/binary names, `.solvecraft` files, format markers, environment variables,
-settings/recovery paths and package IDs compatible. Published SolveCraft release artifacts
-and attribution records keep their historical names. Public docs/web/Flatpak deployments
-use project Pages `/solidcraft/`; do not add permanent old-name Pages aliases. See README's
-compatibility notes.
+## Product name
+SolidCraft everywhere: crates `solidcraft-*`, binaries `solidcraft` and `solidcraft-cli`,
+`.solidcraft` designs, the `solidcraft/N` format tag, `SOLIDCRAFT_*` environment variables,
+settings and recovery folders, the MCP server name, docs, CI and packaging. The old name
+survives only in the explicit compatibility shims listed in `docs/compatibility.md`; don't add
+new uses of it anywhere else. Public docs/web/Flatpak deployments use project Pages
+`/solidcraft/`; do not add permanent old-name Pages aliases.
 
 ## Start every session here
 1. Read `plan/STATUS.md` (current milestone, next task), then the task in `plan/execution-plan.md`
@@ -27,16 +27,34 @@ compatibility notes.
 ## Never crash
 People trust SolidCraft with their designs; a crash loses their work. **This outranks feature work.**
 - **No panics in non-test code:** no `unwrap()`, `expect()`, `panic!`, `unreachable!`, `todo!`,
-  `unimplemented!`; no `unsafe` (`unsafe_code = "forbid"`).
+  `unimplemented!`; no `unsafe` (`unsafe_code = "forbid"`). The exceptions, in the app crate and in
+  `crates/threedx-client` (which deny it instead), have no safe API: the macOS-only
+  `crates/threedx-client/src/macos.rs` (loads the 3Dconnexion driver's client framework at run time
+  and calls through its function pointers), two functions in
+  `apps/solidcraft/src/open_documents.rs` (macOS hands Finder files only to an Objective-C
+  method), the Windows-only `apps/solidcraft/src/native_crash.rs` (the exception filter that
+  records crashes inside native code such as graphics drivers), the Windows-only
+  `apps/solidcraft/src/native_frame.rs` (the window procedure that answers the resize-border hit
+  test of the window without OS decorations, and gives its class the icon the taskbar falls back
+  on) and the Windows-only
+  `apps/solidcraft/src/space_mouse/windows_hid.rs` (asks Plug and Play which HID interfaces are 3D
+  mice, so no other device is sent anything).
 - **Errors are `Result<T, E>`** through the crate's error type and `?`. An unfinished feature
   returns an error ("not supported yet: …"); it never panics.
 - **Input-derived numbers are hostile** (command parameters, design files, control-channel
   input): `get()` not `[i]`, finite checks, caps on sizes and loop counts.
 - **Third-party kernel calls are guarded:** everything that calls `truck` goes through
-  `solvecraft_kernel::guard`, which turns a panic into `KernelError::Internal`.
+  `solidcraft_kernel::guard`, which turns a panic into `KernelError::Internal`.
 - **Last-resort guard:** `Session::execute` runs every command under `catch_unwind`; an escaped
   panic restores the design and reports `EngineError::Internal`.
-- **Prove it:** every crash fix lands with a regression test (see `hostile_params_never_panic`).
+- **Crash reports:** the desktop app writes every panic and every unclean exit to a local crash folder,
+  with the design and the commands that reproduce it (`solidcraft_engine::crash`, docs/crash-reports.md).
+  When someone says the app crashed, look there first: `solidcraft-cli crashes`, `crashes show <id>`,
+  `crashes replay <id>` (or the `diagnostics.crash_reports` command / MCP `crash_reports` tool).
+- **Prove it:** every crash fix lands with a regression test (see `hostile_params_never_panic`); a
+  crash report's `design.solidcraft` + `replay.json` is the test's starting point.
+- **Where tests go:** a regression test goes into the existing test file for its area (booleans, blends,
+  shell, sweep, STEP, naming…), never a new file named after the bug (#3226).
 - Every production crate root carries
   `#![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]`.
 
@@ -54,8 +72,11 @@ People trust SolidCraft with their designs; a crash loses their work. **This out
   nothing from FreeCAD is linked, vendored or shipped.) The sketch solver and the blend
   operations are our own.
 - **Assets — absolutely essential.** SolidCraft contains **no iconography, images, fonts or
-  artwork from commercial CAD products — ever.** Every icon is drawn in code
-  (`crates/ui-egui/src/icons.rs`). Any file asset must be original or openly licensed and **must have a row in ATTRIBUTION.md**
+  artwork from commercial CAD products — ever.** Command icons are the original SVG masters in
+  `assets/icons/ui/design/svg/`, compiled through `crates/ui-egui/src/icon_svg.rs`.
+  **Before any icon, icon assignment or media edit, read `assets/AGENTS.md`,
+  `assets/icons/ui/AGENTS.md` and `assets/icons/ui/STYLE_GUIDE.md`.** Use the canonical
+  bases and named finished references there; never invent a parallel icon style. Any file asset must be original or openly licensed and **must have a row in ATTRIBUTION.md**
   (`cargo xtask assets` enforces it). Screenshots of commercial CAD software are never committed.
   Breaking this rule is the most serious mistake you can make in this repo.
 - **Everything is a command.** User-visible behaviour = a command in `crates/engine/src/cmd/*`
@@ -70,15 +91,33 @@ People trust SolidCraft with their designs; a crash loses their work. **This out
   egui/eframe/winit/wgpu/rfd. **The UI crate is swappable.** Only `crates/kernel` may use `truck`.
 - **The UI is thin**: panels read engine state and act through `app.run(id, params)` /
   `app.start(id)`. Colours come from `theme::Tokens`.
-- **Rust only.** Units are millimetres and radians internally; Z is up.
+- **One outer UI container**: all panels, floating sheets, menus, overlays and platform UI
+  windows use `ui_kit::Container` (directly or through `Panel`, `Window`, `Confirm`, `Menu`).
+  Declare the semantic `Surface`; workspace panels use its shared layout policy and chrome.
+  System/report windows use `ui_kit::Window`; its low-level host builder is kit-private.
+  Do not construct raw egui hosts, outer popup/window frames or shadows in feature modules.
+  `cargo xtask ui-containers` recursively checks source/examples in all current and future crates
+  and apps. It runs in the fast repository CI job and `cargo xtask ci`, with no caller allowances.
+  See `docs/ui-container-audit.md` for the inventory and legitimate content/native exceptions.
+- **One set of camera controls**: every page or canvas with a camera (viewport, Render
+  preview, future flat pattern or drawing pages) calls `navigation::handle` with its `NavCaps`
+  (orbit off for flat 2D pages). New canvases must use `navigation::handle`; never hand-roll
+  camera input (a test rejects it).
+- **Application code is Rust only.** Units are millimetres and radians internally; Z is up.
+  Local asset authoring, lint and review tools use Python 3.11+ as documented in
+  `assets/AGENTS.md`; Python is not an application runtime dependency. The application exception is
+  JavaScript the browser requires: the service worker `apps/solidcraft-web/sw.js` (browsers only
+  run service workers as JavaScript) and the small inline scripts in `apps/solidcraft-web/index.html`.
+  Keep them minimal; `cargo xtask web-offline-test` covers the service worker.
 - **Quality gates** before every commit: `cargo xtask ci` (fmt, clippy -D warnings, tests,
   assets, layers). Commit after every feature arc that builds.
-- **Publishing**: `origin` is github.com/bherbruck/solidcraft. Changes land through **pull requests**:
-  push a branch, open a PR, and let GitHub CI run. Maintainers (and agents working for them) may
-  merge their own PR as soon as CI is green (`gh pr merge --squash`); a trivial fix (docs, typos)
-  may be merged right away. Keep each PR to one topic, rebase or merge `main` into it when it
-  conflicts, and never force-push `main`. Never commit `plan/`, build dirs (`target*/`) or
-  generated reference data; check `git ls-files` before pushing.
+- **Publishing**: the repository is github.com/tangency-labs/solidcraft. Changes land through
+  **pull requests** and the **merge queue**: push a branch and open a PR. The heavy CI jobs start
+  when a maintainer adds `approved-for-ci` after reviewing the code. Approved PRs go into the queue
+  with `gh pr merge N -R tangency-labs/solidcraft --squash --auto`; the queue runs the full suite
+  on each group before it lands on `main`. Keep each PR to one topic and one issue, and never
+  force-push `main`. Never commit `plan/`, build dirs (`target*/`) or generated reference data;
+  check `git ls-files` before pushing.
 - **Never break wasm**: everything below the apps must build for `wasm32-unknown-unknown`
   (`cargo xtask wasm`, part of `cargo xtask ci`).
 
@@ -97,13 +136,46 @@ People trust SolidCraft with their designs; a crash loses their work. **This out
 - Use a small public-safe example and check for private designs, paths, account details or
   other sensitive content before sharing. Attach media to the issue/PR or link to an accessible
   recording; do not commit generated screenshots or videos just to provide review evidence.
-- Throughout the work and before handoff, check current upstream commits and the relevant
-  PR's merge status. Keep your branch current with upstream merges, resolve conflicts without
-  discarding others' work, and re-run validation when integration changes the result. Use
-  `git pull --rebase origin main` before pushing as above; never force-push. Report the checked
-  upstream/PR state, any conflicts resolved and the validation performed. If a PR remains open,
-  keep monitoring it while the task is active and make its pending status clear at handoff;
-  do not claim it merged without checking.
+- Throughout the work and before handoff, check the relevant PR's merge status. Don't push to
+  an open PR only to catch up with `main` (no merge of `main`, no Update branch, no rebase for
+  that alone): every push restarts the whole CI run, and `main`'s own run catches what lands in
+  between, to be fixed forward. When you push a change anyway, or GitHub reports a conflict,
+  rebase onto the latest `main` (push your own branch with `--force-with-lease`); never merge
+  `main` into a PR. Resolve conflicts without discarding others' work; never force-push `main`.
+  Don't re-run CI on an unchanged commit: a real failure fails again. Re-run only a job that
+  runner trouble cancelled, with "Re-run failed jobs". Report the PR state you checked and any
+  conflicts resolved. If a PR remains open, keep monitoring it while the task is active and
+  make its pending status clear at handoff; do not claim it merged without checking.
+
+## Before you start: look at what is already open
+- Work with an authenticated GitHub CLI (`gh auth status`) and `git`; the checks below need both.
+- Pull the whole list, not one search: `gh pr list -R tangency-labs/solidcraft --state open --limit 500`
+  (drafts included) and `gh issue list -R tangency-labs/solidcraft --state open --limit 500`. Look for
+  work on the same issue, the same feature under another number, and PRs that change the files
+  you are about to change (`gh pr list ... --json number,title,files`).
+- If someone already has it, comment on their PR or issue instead of opening a second one. Two
+  PRs for one change can't both land, and one of them is wasted work and CI.
+
+## Claim = a draft PR
+- Before working on issue #N, check nobody has it: `gh pr list -R tangency-labs/solidcraft --state open --search "#N"`.
+- If none, branch from the latest `origin/main`, `git commit --allow-empty -m "claim: #N"`, push,
+  and open a **draft** PR titled `<summary> (#N)` right away. **The lowest-numbered open PR for an
+  issue wins**; if yours lost, close it. Opening the PR is the claim: the bot assigns you and
+  labels the issue `in progress` (or says on your PR who holds it). Reference `#N` in the PR title
+  so the bot can find it. Don't claim by editing files; comment `/claim` on the issue only to stake
+  a claim before you have a branch.
+- Push work in progress at least daily. A draft with no pushes for 72 hours may be taken over:
+  comment on it first, then open your own claim (you may start from its branch).
+  This takeover policy is separate from the bot's automatic cleanup deadlines in CONTRIBUTING.md.
+- On a shared build machine, check the load before a big build (`cut -d' ' -f1 /proc/loadavg`)
+  and wait while it is over 24; build with `nice`.
+
+## Design file format
+A change that saves something new in a design adds ONE file, `crates/doc/src/format/pending/<name>.rs`
+(a `//!` note, and `pub fn step` if older designs must be rewritten). Never edit `FORMAT`,
+`JSON_STEPS`, the history in `format.rs`, another change's file or a `v<N>/` folder: the build
+works out the number (the next one while anything is pending), and the release folds pending
+changes into `v<N>/` with `scripts/fold-format-pending.sh`. See CONTRIBUTING.md.
 
 ## Application releases
 Development pushes are not application releases. Follow `docs/releasing.md` when asked to
@@ -115,22 +187,31 @@ version bumps solely from commit prefixes, overwrite published versions, or push
 before the draft is verified.
 
 ## Running and looking at the app
-- `cargo run --release -p solvecraft -- --sample --control PORT` (sample design + control channel).
+- `cargo run --release -p solidcraft -- --sample --control PORT` (sample design + control channel).
   Pick a free port. Without a display, run it under `Xvfb :99` with `DISPLAY=:99`.
-- Drive it with JSON lines on `127.0.0.1:PORT` (see `docs/control-protocol.md`):
+- Drive it with JSON lines on `127.0.0.1:PORT` (see `docs/control-protocol.md`). The first
+  request on a connection carries the launch's token as `"token"`: read it from
+  `~/.local/share/solidcraft/control/PORT.token`, or start the app with
+  `SOLIDCRAFT_CONTROL_TOKEN=$(openssl rand -hex 32)` and send that.
   - `{"id":1,"method":"engine.execute","params":{"command":"solid.extrude","params":{"distance":20}}}`
   - `{"id":2,"method":"ui.start","params":{"command":"sketch.create"}}` then `ui.click {x, y}`
   - `{"id":3,"method":"ui.screenshot","params":{"path":"/tmp/shot.png"}}` then read the PNG.
 - **For UI work, look at the result** (screenshot, read the PNG). Without a window use
-  `ui.render` or `solvecraft-cli snapshot`.
-- Headless: `solvecraft-cli run script.json --out part.step`, `solvecraft-cli eval design.solvecraft`,
-  `solvecraft-cli snapshot script.json --out shot.png`, `solvecraft-cli commands`.
+  `ui.render` or `solidcraft-cli snapshot`.
+- Headless: `solidcraft-cli run script.json --out part.step`, `solidcraft-cli eval design.solidcraft`,
+  `solidcraft-cli snapshot script.json --out shot.png`, `solidcraft-cli commands`.
 - Reference tests: `cargo xtask oracle` replays `tests/oracle/*/recipe.json` and compares with
   each case's `expected.json` (analytic or FreeCAD values; writes `docs/oracle.md`). Expected
   values never come from a commercial CAD product.
-- Build with `CARGO_TARGET_DIR=<repo>/target`. Windows: `cargo xwin build --release --target x86_64-pc-windows-msvc -p solvecraft`.
+- Build with `CARGO_TARGET_DIR=<repo>/target`. Windows: `cargo xwin build --release --target x86_64-pc-windows-msvc -p solidcraft`.
 
 ## Roadmap
 `ROADMAP.md` (committed) tracks status, milestones and estimates. Update it whenever a
-milestone task lands. `cargo xtask features` regenerates `docs/features.md` (SolidCraft's
-commands by area, from the registry) when commands are added or renamed.
+milestone task lands. `docs/features.md` (SolidCraft's commands by area, from the registry) and
+`THIRD-PARTY-LICENSES.txt` are regenerated on `main` after each merge by the Generated files
+workflow; never regenerate them in a PR.
+
+## Lists many PRs add to
+Keep them conflict-free (CONTRIBUTING.md, "Lists many changes add to"): message catalogs sorted
+(`cargo xtask lists --fix`), `mod` lines in their sorted group, the language list English first
+then by id, generated files left to `main`, and a design-format change as one new file.

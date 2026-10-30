@@ -10,8 +10,8 @@
 //! without moved components).
 
 use serde_json::{Map, Value};
-use solvecraft_doc::{Mat, apply_point, apply_vector, is_identity, map_point_expr, mat_inverse};
-use solvecraft_geom::Vec3;
+use solidcraft_doc::{Mat, apply_point, apply_vector, is_identity, map_point_expr, mat_inverse};
+use solidcraft_geom::Vec3;
 
 use crate::Session;
 
@@ -36,7 +36,8 @@ enum K {
     /// component frame, whichever component the geometry under it belongs to (a sketch in the
     /// root on a moved component's face finds the face where it is shown).
     Here,
-    /// A plane object for a new sketch or canvas: into the active component's frame.
+    /// A plane object for a new sketch or canvas (or a mirror's copies): into the active
+    /// component's frame.
     HerePlane,
 }
 
@@ -45,7 +46,9 @@ use K::*;
 /// The parameters each command takes in world coordinates.
 fn table(id: &str) -> &'static [(&'static str, K)] {
     match id {
-        "solid.extrude" => &[("face", Pick), ("from", Make), ("to", Make), ("targets", Body), ("participants", Body)],
+        "solid.extrude" => {
+            &[("face", Pick), ("faces", Picks), ("face_body", Body), ("from", Make), ("to", Make), ("targets", Body), ("participants", Body)]
+        }
         "solid.revolve" => &[("face", Pick), ("axis", Axis), ("to", Make), ("targets", Body), ("participants", Body)],
         "solid.box" | "solid.sphere" => &[("corner", Make), ("center", Make)],
         "solid.cylinder" | "solid.coil" | "solid.torus" => &[("base", Make), ("center", Make), ("axis", Dir)],
@@ -59,13 +62,18 @@ fn table(id: &str) -> &'static [(&'static str, K)] {
         "solid.press_pull" => &[("face", Pick), ("edges", Picks)],
         "solid.replace_face" => &[("faces", Picks), ("target_face", Pick), ("target", Plane), ("body", Body)],
         "solid.align" => &[("from", Pick), ("from_face", Pick), ("to", Pick), ("to_face", Pick), ("bodies", Body)],
-        "solid.mirror" | "solid.split_body" => &[("plane", Plane), ("bodies", Body), ("body", Body)],
+        // A mirror keeps the placement its bodies were picked at (`cmd::features::placed_bodies`);
+        // its plane is in the active component, where the copies go.
+        "solid.mirror" => &[("plane", HerePlane)],
+        "solid.split_body" => &[("plane", Plane), ("bodies", Body), ("body", Body)],
         "plastic.boss" | "plastic.snap_fit" | "plastic.rest" => {
             &[("position", Pick), ("direction", Dir), ("hook", Dir), ("along", Dir), ("body", Body)]
         }
-        "plastic.lip" | "sheet.convert" => &[("face", Pick), ("body", Body)],
+        "plastic.lip" => &[("face", Pick), ("body", Body)],
+        "sheet.convert" => &[("face", Pick), ("bends", Picks), ("body", Body)],
         "sheet.flange" | "sheet.hem" => &[("edges", Picks), ("body", Body)],
         "sheet.fold" => &[("points", Picks), ("fixed", Pick), ("body", Body)],
+        "sheet.perforate" => &[("body", Body)],
         "sketch.create" | "sketch.redefine" => &[("plane", HerePlane)],
         "canvas.decal" => &[("face", Here)],
         "canvas.insert" => &[("plane", HerePlane), ("at", Here)],
@@ -198,8 +206,8 @@ impl Mapper<'_> {
     fn make_expr(&mut self, m: &Mat, v: &Value) -> Option<Value> {
         let a = v.as_array().filter(|a| a.len() == 3)?;
         let c = |i: usize| match a.get(i)? {
-            Value::Number(n) => n.as_f64().filter(|x| x.is_finite()).map(|x| format!("{x}")),
-            Value::String(e) => Some(e.clone()),
+            Value::Number(n) => n.as_f64().filter(|x| x.is_finite()).map(|x| solidcraft_doc::Expr::new(format!("{x}"))),
+            Value::String(e) => Some(solidcraft_doc::Expr::new(e.as_str())),
             _ => None,
         };
         let mut p = [c(0)?, c(1)?, c(2)?];
@@ -302,6 +310,20 @@ pub fn mapped() -> bool {
     MAPPED.with(std::cell::Cell::get)
 }
 
+/// Author generated geometry directly in the active component's local frame.
+/// Restores the enclosing command's mapping state, including on an error.
+pub(crate) fn local_geometry() -> LocalGeometry {
+    LocalGeometry(MAPPED.with(|m| m.replace(true)))
+}
+
+pub(crate) struct LocalGeometry(bool);
+
+impl Drop for LocalGeometry {
+    fn drop(&mut self) {
+        MAPPED.with(|m| m.set(self.0));
+    }
+}
+
 /// A command running inside another (its parameters are already in component frames).
 pub struct Nested;
 
@@ -329,6 +351,15 @@ impl Drop for Nested {
 
 /// `params` with world picks mapped into component frames (`None`: nothing to change).
 pub fn to_local(s: &Session, id: &str, params: &Value) -> Option<Value> {
+    if id == "library.apply" {
+        // Library targets are the same world selections as appearance.assign,
+        // nested one level down. Convert at the outer boundary exactly once;
+        // run_nested subsequently receives the component-local picks and names.
+        let targets = to_local(s, "appearance.assign", params.get("targets")?)?;
+        let mut out = params.clone();
+        out["targets"] = targets;
+        return Some(out);
+    }
     if id == "timeline.redefine" {
         let cmd = params.get("command")?.as_str()?;
         let key = params.get("feature").and_then(|v| v.as_str().map(str::to_string).or_else(|| v.as_u64().map(|id| id.to_string())))?;
@@ -337,31 +368,31 @@ pub fn to_local(s: &Session, id: &str, params: &Value) -> Option<Value> {
         // component is active. Body-relative picks still use the picked body's frame.
         let mut context = s.scratch();
         context.active_component = feature.component;
-        if let solvecraft_doc::FeatureKind::Emboss { face: Some(face), .. } = &feature.kind {
+        if let solidcraft_doc::FeatureKind::Emboss { face: Some(face), .. } = &feature.kind {
             context.active_occurrence_path = (!face.author_path.is_empty()).then(|| face.author_path.clone());
         }
         let mut inner = to_local(&context, cmd, params.get("params")?)?;
         // An untouched explicit axis is displayed in world coordinates by Edit
         // Feature. Keep its exact saved values instead of an affine round trip.
         if cmd == "solid.revolve"
-            && let solvecraft_doc::FeatureKind::Revolve { axis: solvecraft_doc::AxisRef::Line { origin, dir }, .. } = &feature.kind
+            && let solidcraft_doc::FeatureKind::Revolve { axis: solidcraft_doc::AxisRef::Line { origin, dir }, .. } = &feature.kind
         {
             let frame = context.active_component_frame();
-            let displayed = serde_json::json!({"origin":pt(apply_point(&frame,*origin)),"dir":pt(apply_vector(&frame,*dir))});
+            let displayed = serde_json::json!({"origin":pt(apply_point(&frame,origin.0)),"dir":pt(apply_vector(&frame,dir.0))});
             if params.get("params").and_then(|p| p.get("axis")) == Some(&displayed) {
-                inner["axis"] = serde_json::json!({"origin":pt(*origin),"dir":pt(*dir)});
+                inner["axis"] = serde_json::json!({"origin":pt(origin.0),"dir":pt(dir.0)});
             }
         }
         let points = match (&feature.kind, cmd) {
-            (solvecraft_doc::FeatureKind::Revolve { to, .. }, "solid.revolve") => [("to", *to), ("from", None)],
-            (solvecraft_doc::FeatureKind::Extrude { extent, .. }, "solid.extrude") => [("to", extent.to), ("from", extent.from)],
+            (solidcraft_doc::FeatureKind::Revolve { to, .. }, "solid.revolve") => [("to", *to), ("from", None)],
+            (solidcraft_doc::FeatureKind::Extrude { extent, .. }, "solid.extrude") => [("to", extent.to), ("from", extent.from)],
             _ => [("to", None), ("from", None)],
         };
         for (key, point) in points {
             if let Some(point) = point {
-                let displayed = pt(apply_point(&context.active_component_frame(), point));
+                let displayed = pt(apply_point(&context.active_component_frame(), point.0));
                 if params.get("params").and_then(|p| p.get(key)) == Some(&displayed) {
-                    inner[key] = pt(point);
+                    inner[key] = pt(point.0);
                 }
             }
         }
@@ -383,12 +414,12 @@ pub fn to_local(s: &Session, id: &str, params: &Value) -> Option<Value> {
         let key = params.get("sketch").and_then(|value| value.as_str().map(str::to_string).or_else(|| value.as_u64().map(|id| id.to_string())))?;
         let feature = s.doc.find_feature(&key)?;
         let path = crate::cmd::author_path_for_rebind(s, feature, params, id).ok()?;
-        let frame = solvecraft_doc::EmbossFace::component_frame(&s.placed_document(), feature.component, &path).ok()?;
+        let frame = solidcraft_doc::EmbossFace::component_frame(&s.placed_document(), feature.component, &path).ok()?;
         command_frames.active = frame;
         command_frames.sketch = frame;
     }
     let mut m = Mapper { s, f: command_frames, first: None, changed: false, here: false };
-    let body = obj.get("body").and_then(Value::as_str).map(str::to_string);
+    let body = obj.get("body").or_else(|| obj.get("face_body")).and_then(Value::as_str).map(str::to_string);
     let mut out: Map<String, Value> = obj.clone();
     // Picks first: their frame turns the directions.
     for pass in [true, false] {

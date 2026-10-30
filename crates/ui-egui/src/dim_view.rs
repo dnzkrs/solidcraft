@@ -2,21 +2,23 @@
 //! dimension line (or arc) with arrowheads, and the value centred on it; radius and diameter
 //! leaders with R / Ø, angles as an arc between the two lines, arc lengths with the arc mark,
 //! driven (reference) dimensions in parentheses in a muted colour. The geometry comes from
-//! `solvecraft_sketch::dim_layout`.
+//! `solidcraft_sketch::dim_layout`.
 //!
 //! A click selects a dimension (Delete removes it), a drag moves its text (and so the offset of
-//! its dimension line), a double-click edits its value in place with parameter completion.
+//! its dimension line), a double-click (or one click with the Dimension tool) edits its value
+//! in place with parameter completion.
 //! Everything acts through commands: `sketch.dimension_text`, `sketch.delete`,
 //! `parameters.change`.
 
+use crate::ui_kit::{Container, Surface};
 use std::cell::RefCell;
 use std::sync::Arc;
 
 use egui::{FontId, Pos2, Rect, Shape, Stroke, vec2};
 use serde_json::json;
-use solvecraft_engine::Sel;
-use solvecraft_engine::geom::Vec2;
-use solvecraft_engine::sketch::{ConstraintKind, DimFrame, chain_centres, default_text, dim_frame, dim_layout};
+use solidcraft_engine::Sel;
+use solidcraft_engine::geom::Vec2;
+use solidcraft_engine::sketch::{ConstraintKind, DimFrame, chain_centres, default_text, dim_frame, dim_layout_reaching, dim_reach};
 
 use crate::SolveApp;
 use crate::theme::Tokens;
@@ -46,23 +48,43 @@ struct Edit {
     /// Frames left to wait for the dimension to be drawn.
     wait: u8,
     draft: Option<DimensionDraft>,
+    /// Type-first creation: the value took the keyboard as soon as the picks determined the
+    /// dimension, and its text follows the pointer until a click pins it or Enter places it.
+    live: Option<Live>,
+    selection: Option<egui::text::CCursorRange>,
+    /// The last dimension a click referenced, and when: the second click of a double-click on
+    /// it must not insert its name again.
+    picked: Option<(String, f64)>,
+}
+
+#[derive(Clone, Copy, Debug)]
+struct Live {
+    /// The pointer (screen) at the pick: until it moves away, the text keeps its default place.
+    origin: Option<Pos2>,
+    moved: bool,
+    /// Something was typed into the value.
+    typed: bool,
 }
 
 /// Creation stays in a scratch session until the user accepts the value. Retaining the
 /// document also makes the editor's identity check safe across document replacements.
 #[derive(Clone, Debug)]
 struct DimensionDraft {
-    baseline: Arc<solvecraft_engine::doc::Document>,
+    baseline: Arc<solidcraft_engine::doc::Document>,
     sketch: u64,
     component: u64,
     path: Option<Vec<u64>>,
-    pending: std::collections::BTreeMap<u64, solvecraft_engine::doc::Mat>,
+    pending: std::collections::BTreeMap<u64, solidcraft_engine::doc::Mat>,
     entities: Vec<String>,
-    at: Vec2,
+    /// Where the text goes (None: the dimension's default place).
+    at: Option<Vec2>,
     checked_expr: String,
-    preview_doc: Arc<solvecraft_engine::doc::Document>,
-    preview: Arc<solvecraft_engine::doc::ModelState>,
+    preview_doc: Arc<solidcraft_engine::doc::Document>,
+    preview: Arc<solidcraft_engine::doc::ModelState>,
     error: Option<String>,
+    /// A dimension that would over-constrain the sketch, placed as a driven (reference) one:
+    /// it has no parameter and no value to edit (#320).
+    driven: bool,
 }
 
 impl DimensionDraft {
@@ -74,11 +96,16 @@ impl DimensionDraft {
             && app.session.pending_moves == self.pending
     }
     fn params(&self, expr: &str) -> serde_json::Value {
-        json!({"entities": self.entities, "text_at": [self.at.x, self.at.y], "value": expr})
+        // The first dimension of a sketch scales it rather than distorting it (#1365).
+        let mut params = json!({"entities": self.entities, "value": expr, "scale_sketch": true});
+        if let Some(at) = self.at {
+            params["text_at"] = json!([at.x, at.y]);
+        }
+        params
     }
-    fn evaluate(&self, app: &SolveApp, expr: &str) -> Result<solvecraft_engine::Session, String> {
+    fn evaluate(&self, app: &SolveApp, expr: &str) -> Result<solidcraft_engine::Session, String> {
         let mut scratch = app.session.scratch();
-        let result = scratch.execute("sketch.dimension", &self.params(expr)).map_err(|e| e.to_string())?;
+        let result = scratch.execute("sketch.dimension", &self.params(expr)).map_err(|e| shown_error("sketch.dimension", &e.to_string()))?;
         let param = result.get("param").and_then(serde_json::Value::as_str).ok_or("The dimension value is unavailable")?;
         let state = scratch.world_state();
         let solved = state.sketch(self.sketch).ok_or("The dimension sketch is unavailable")?;
@@ -95,6 +122,14 @@ impl DimensionDraft {
     }
 }
 
+/// A command's error as the value box and the status line show it: the command's label instead
+/// of its id, and without the `value:` field tag, since the box is the value
+/// ("Sketch Dimension: `mm` is a unit name, so it cannot be a parameter name").
+fn shown_error(id: &str, e: &str) -> String {
+    let label = crate::i18n::tr_label(crate::command_label(id));
+    crate::friendly_error(id, e).replacen(&format!("{label}: value: "), &format!("{label}: "), 1)
+}
+
 pub fn cancel() {
     EDIT.with(|edit| *edit.borrow_mut() = None);
     PLACEMENT.with(|preview| *preview.borrow_mut() = None);
@@ -102,34 +137,141 @@ pub fn cancel() {
 
 /// Infer the measured value through the same command as scripts, without creating a real
 /// parameter or an undo entry. Only accepting the editor executes the command on the design.
-pub fn begin_dimension(app: &SolveApp, entities: Vec<String>, at: Vec2) -> Result<(), String> {
-    let (param, expr, draft) = dimension_draft(app, entities, at)?;
-    EDIT.with(|edit| *edit.borrow_mut() = Some(Edit { param, expr, at: None, fresh: FRESH, wait: 10, draft: Some(draft) }));
+/// A driven dimension has no value to accept, so it is added at once.
+pub fn begin_dimension(app: &mut SolveApp, entities: Vec<String>, at: Vec2) -> Result<(), String> {
+    let (param, expr, draft) = dimension_draft(app, entities, Some(at))?;
+    if draft.driven {
+        PLACEMENT.with(|preview| *preview.borrow_mut() = None);
+        app.run("sketch.dimension", json!({"entities": draft.entities, "text_at": [at.x, at.y], "driven": true}))?;
+        app.set_status("The sketch already determines that dimension, so it was added as a driven (reference) dimension", false);
+        return Ok(());
+    }
+    EDIT.with(|edit| {
+        *edit.borrow_mut() =
+            Some(Edit { param, expr, at: None, fresh: FRESH, wait: 10, draft: Some(draft), live: None, selection: None, picked: None })
+    });
     PLACEMENT.with(|preview| *preview.borrow_mut() = None);
     Ok(())
 }
 
-fn dimension_draft(app: &SolveApp, entities: Vec<String>, at: Vec2) -> Result<(String, String, DimensionDraft), String> {
+/// Type-first creation: the picks determine a dimension, so its value takes the keyboard at
+/// once (D, click a line, type). The text follows the pointer; a click pins it, Enter places
+/// it. Midpoint pairs and dimensions that would only be driven keep the place-first flow:
+/// the pointer chooses the orientation, and a click places the text before entering a value.
+pub fn begin_live(app: &mut SolveApp, entities: Vec<String>, pointer: Option<Pos2>) -> Result<bool, String> {
+    // A midpoint pair chooses its orientation and text position before entering a value.
+    // This also permits switching freely between driving and reference spans.
+    let midpoint_pair = entities.len() == 2 && entities.iter().all(|id| id.starts_with("mid:"));
+    let (param, expr, draft) = dimension_draft(app, entities, None)?;
+    if draft.driven || midpoint_pair {
+        return Ok(false);
+    }
+    let live = Some(Live { origin: pointer, moved: false, typed: false });
+    EDIT.with(|edit| {
+        *edit.borrow_mut() = Some(Edit { param, expr, at: None, fresh: FRESH, wait: 10, draft: Some(draft), live, selection: None, picked: None })
+    });
+    PLACEMENT.with(|preview| *preview.borrow_mut() = None);
+    Ok(true)
+}
+
+/// The type-first value is open: Some(whether anything was typed into it yet).
+pub fn live() -> Option<bool> {
+    EDIT.with(|edit| edit.borrow().as_ref().and_then(|e| e.live.map(|l| l.typed)))
+}
+
+/// A click while the type-first value is open places its text there; the value keeps the
+/// keyboard (and what was typed).
+pub fn pin(app: &SolveApp, at: Vec2) {
+    EDIT.with(|edit| {
+        let mut edit = edit.borrow_mut();
+        let Some(e) = edit.as_mut() else { return };
+        let Some(live) = e.live else { return };
+        move_text(app, e, at);
+        e.live = None;
+        // An untouched value stays selected, so typing still replaces it.
+        e.fresh = if live.typed { FRESH - 1 } else { FRESH };
+    });
+}
+
+/// Move a draft's text to `at`. Where the text goes can change what the dimension measures
+/// (two points or a slanted line: across from them the distance between them, above or below
+/// the horizontal one, beside them the vertical one), so a value nothing was typed into yet
+/// becomes what the new dimension measures; carrying the old one over would preview, and on
+/// Enter apply, the aligned length as a horizontal or vertical span, moving the picked points.
+fn move_text(app: &SolveApp, e: &mut Edit, at: Vec2) {
+    let typed = e.live.is_none_or(|l| l.typed);
+    let Some(draft) = e.draft.as_mut() else { return };
+    if !typed
+        && let Ok((param, expr, redone)) = dimension_draft(app, draft.entities.clone(), Some(at))
+        && !redone.driven
+    {
+        if expr != e.expr {
+            // Keep the new value selected, so typing still replaces it.
+            e.fresh = FRESH;
+        }
+        (e.param, e.expr, *draft) = (param, expr, redone);
+        return;
+    }
+    draft.at = Some(at);
+    let expr = e.expr.clone();
+    reevaluate(app, draft, &expr);
+}
+
+fn reevaluate(app: &SolveApp, draft: &mut DimensionDraft, expr: &str) {
+    draft.checked_expr = expr.to_string();
+    match draft.evaluate(app, expr) {
+        Ok(scratch) => {
+            draft.preview = scratch.world_state();
+            draft.preview_doc = scratch.doc.clone();
+            draft.error = None;
+        }
+        Err(error) => draft.error = Some(error),
+    }
+}
+
+fn dimension_draft(app: &SolveApp, entities: Vec<String>, at: Option<Vec2>) -> Result<(String, String, DimensionDraft), String> {
     let sketch = app.session.active_sketch.ok_or("Edit a sketch to add a dimension")?;
-    if entities.is_empty() || entities.len() > 2 || !at.x.is_finite() || !at.y.is_finite() {
+    if entities.is_empty() || entities.len() > 2 || at.is_some_and(|at| !at.x.is_finite() || !at.y.is_finite()) {
         return Err("Pick one edge or two endpoints, then place the dimension".into());
     }
+    // A dimension the sketch can't take (it would over-constrain it) becomes a driven one,
+    // which only measures; when that fails too, the first refusal is the one to report.
+    draft_of(app, sketch, &entities, at, false).or_else(|error| draft_of(app, sketch, &entities, at, true).map_err(|_| error))
+}
+
+/// The draft of one dimension: its parameter (for a driven one, its constraint id, since it
+/// has no parameter), the parameter's expression, and the scratch session it was added in.
+fn draft_of(app: &SolveApp, sketch: u64, entities: &[String], at: Option<Vec2>, driven: bool) -> Result<(String, String, DimensionDraft), String> {
     let mut scratch = app.session.scratch();
-    let result = scratch.execute("sketch.dimension", &json!({"entities": entities, "text_at": [at.x, at.y]})).map_err(|e| e.to_string())?;
-    let param = result.get("param").and_then(serde_json::Value::as_str).ok_or("This dimension has no editable value")?.to_string();
-    let expr = scratch.doc.param(&param).ok_or("The dimension value is unavailable")?.expr.clone();
+    let mut params = json!({"entities": entities, "driven": driven});
+    if let Some(at) = at {
+        params["text_at"] = json!([at.x, at.y]);
+    }
+    let result = scratch.execute("sketch.dimension", &params).map_err(|e| e.to_string())?;
+    let (param, expr) = if driven {
+        let before =
+            app.session.doc.sketch(sketch).ok().map(|sk| sk.constraints.iter().map(|c| c.id.clone()).collect::<Vec<_>>()).unwrap_or_default();
+        let added =
+            scratch.doc.sketch(sketch).ok().and_then(|sk| sk.constraints.iter().find(|c| c.driven && !before.contains(&c.id)).map(|c| c.id.clone()));
+        (added.ok_or("The driven dimension is unavailable")?, String::new())
+    } else {
+        let param = result.get("param").and_then(serde_json::Value::as_str).ok_or("This dimension has no editable value")?.to_string();
+        let expr = scratch.doc.param(&param).ok_or("The dimension value is unavailable")?.expr.clone();
+        (param, expr)
+    };
     let draft = DimensionDraft {
         baseline: app.session.doc.clone(),
         sketch,
         component: app.session.active_component,
         path: app.session.active_occurrence_path.clone(),
         pending: app.session.pending_moves.clone(),
-        entities,
+        entities: entities.to_vec(),
         at,
         checked_expr: expr.clone(),
         preview: scratch.world_state(),
         preview_doc: scratch.doc.clone(),
         error: None,
+        driven,
     };
     if !draft.preview.sketch(sketch).is_some_and(|solved| solved.report.ok()) {
         return Err("That dimension conflicts with the sketch constraints".into());
@@ -140,11 +282,11 @@ fn dimension_draft(app: &SolveApp, entities: Vec<String>, at: Vec2) -> Result<(S
 /// Cache inference at a stationary pointer, including incomplete/unsupported picks.
 #[derive(Clone)]
 struct Placement {
-    baseline: Arc<solvecraft_engine::doc::Document>,
+    baseline: Arc<solidcraft_engine::doc::Document>,
     sketch: Option<u64>,
     component: u64,
     path: Option<Vec<u64>>,
-    pending: std::collections::BTreeMap<u64, solvecraft_engine::doc::Mat>,
+    pending: std::collections::BTreeMap<u64, solidcraft_engine::doc::Mat>,
     entities: Vec<String>,
     at: Vec2,
     draft: Option<(String, DimensionDraft)>,
@@ -165,7 +307,7 @@ fn placement_preview(app: &SolveApp) -> Option<(String, DimensionDraft)> {
                 && p.at == at
         });
         if !current {
-            let draft = dimension_draft(app, tool.picks.clone(), at).ok().map(|(param, _, draft)| (param, draft));
+            let draft = dimension_draft(app, tool.picks.clone(), Some(at)).ok().map(|(param, _, draft)| (param, draft));
             *preview = Some(Placement {
                 baseline: app.session.doc.clone(),
                 sketch: app.session.active_sketch,
@@ -242,10 +384,19 @@ pub fn text_rects() -> Vec<(String, Rect)> {
 
 /// A double-click on a dimension opens its value for editing (true: it was on one).
 pub fn double_click(app: &mut SolveApp, pos: Pos2) -> bool {
-    let Some(d) = DRAWN.with(|d| {
-        let id = hit(pos)?;
-        d.borrow().iter().find(|x| x.id == id).cloned()
-    }) else {
+    open_editor(app, hit(pos))
+}
+
+/// A click of the Dimension tool on an existing dimension opens its value for editing, as a
+/// double-click does without a tool (true: it was on one). Its text wins; its lines only off
+/// sketch geometry (`on_geometry`), which the click picks for a new dimension instead.
+pub fn tool_click(app: &mut SolveApp, pos: Pos2, on_geometry: bool) -> bool {
+    open_editor(app, hit_text(pos).or_else(|| if on_geometry { None } else { hit(pos) }))
+}
+
+/// Open the inline editor on the drawn dimension `id` (true: there was one to act on).
+fn open_editor(app: &mut SolveApp, id: Option<String>) -> bool {
+    let Some(d) = id.and_then(|id| DRAWN.with(|d| d.borrow().iter().find(|x| x.id == id).cloned())) else {
         return false;
     };
     let Some(param) = d.param else {
@@ -253,14 +404,18 @@ pub fn double_click(app: &mut SolveApp, pos: Pos2) -> bool {
         return true;
     };
     let expr = app.session.doc.param(&param).map(|p| p.expr.clone()).unwrap_or_default();
-    EDIT.with(|e| *e.borrow_mut() = Some(Edit { param, expr, at: Some(d.text.center()), fresh: FRESH, wait: 0, draft: None }));
+    EDIT.with(|e| {
+        *e.borrow_mut() =
+            Some(Edit { param, expr, at: Some(d.text.center()), fresh: FRESH, wait: 0, draft: None, live: None, selection: None, picked: None })
+    });
     true
 }
 
 /// Start dragging the text of the dimension under `press` (true: a dimension took the drag).
-pub fn drag_start(app: &SolveApp, press: Pos2, press_sketch: Vec2) -> bool {
+/// Its lines take it only off sketch geometry (`on_geometry`: a point or curve is under `press`).
+pub fn drag_start(app: &SolveApp, press: Pos2, press_sketch: Vec2, on_geometry: bool) -> bool {
     let Some(d) = DRAWN.with(|d| {
-        let id = hit(press)?;
+        let id = hit_text(press).or_else(|| if on_geometry { None } else { hit(press) })?;
         d.borrow().iter().find(|x| x.id == id).cloned()
     }) else {
         return false;
@@ -310,7 +465,7 @@ pub fn label(k: &ConstraintKind, expr: Option<&str>, driven: bool, units: &str, 
     let plain = expr.is_none_or(|e| {
         let e = e.trim();
         let e = ["mm", "cm", "in", "ft", "m", "deg", "rad", "°"].iter().find_map(|unit| e.strip_suffix(unit)).unwrap_or(e);
-        e.trim().parse::<f64>().is_ok()
+        crate::prefs::parse_number(e).is_some()
     });
     let text = if plain { num } else { format!("fx: {num}") };
     if driven { format!("({text})") } else { text }
@@ -324,24 +479,28 @@ pub fn show(app: &mut SolveApp, ui: &egui::Ui, painter: &egui::Painter, proj: &P
         if edit.as_ref().and_then(|e| e.draft.as_ref()).is_some_and(|d| !d.valid(app)) {
             *edit = None;
         }
-        if let Some(e) = edit.as_mut()
-            && let Some(draft) = e.draft.as_mut()
-        {
-            if e.expr != draft.checked_expr {
-                draft.checked_expr = e.expr.clone();
-                match draft.evaluate(app, &e.expr) {
-                    Ok(scratch) => {
-                        draft.preview = scratch.world_state();
-                        draft.preview_doc = scratch.doc.clone();
-                        draft.error = None;
-                    }
-                    Err(error) => draft.error = Some(error),
-                }
+        let e = edit.as_mut()?;
+        let current = e.draft.as_ref()?.at;
+        if let Some(live) = e.live.as_mut() {
+            // The text follows the pointer once it leaves the pick.
+            let pointer = ui.input(|i| i.pointer.hover_pos()).filter(|p| proj.rect.contains(*p));
+            if !live.moved && pointer.is_some_and(|p| live.origin.is_none_or(|o| o.distance(p) > 4.0)) {
+                live.moved = true;
             }
-            Some((e.param.clone(), draft.clone()))
-        } else {
-            None
+            let hover = app.tool.as_ref().and_then(|t| t.hover.as_ref()).map(|h| h.0);
+            if live.moved
+                && let Some(at) = hover
+                && current != Some(at)
+            {
+                move_text(app, e, at);
+            }
         }
+        let draft = e.draft.as_mut()?;
+        if e.expr != draft.checked_expr {
+            let expr = e.expr.clone();
+            reevaluate(app, draft, &expr);
+        }
+        Some((e.param.clone(), draft.clone()))
     });
     let placing = !editing();
     let draft = editor_draft.or_else(|| placing.then(|| placement_preview(app)).flatten());
@@ -361,13 +520,15 @@ pub fn show(app: &mut SolveApp, ui: &egui::Ui, painter: &egui::Painter, proj: &P
     let tk = Tokens::get();
     let is_sel = |id: &str| app.session.selection.iter().any(|s| matches!(s, Sel::SketchConstraint { id: x } if x == id));
     let hover = ui.input(|i| i.pointer.hover_pos()).filter(|_| ui.rect_contains_pointer(proj.rect)).and_then(hit);
-    let font = FontId::proportional(12.0);
+    let font = FontId::monospace(crate::theme::Tokens::get().font_body);
     let centres = chain_centres(sk);
     let draft_sketch = draft.as_ref().and_then(|(_, d)| d.preview.sketch(d.sketch));
     let draft_centres = draft_sketch.map(|solved| chain_centres(&solved.sketch));
     let mut constraints = sk.constraints.iter().map(|c| (ss, c, false)).collect::<Vec<_>>();
     if let (Some(source), Some((param, _))) = (draft_sketch, draft.as_ref()) {
-        constraints.extend(source.sketch.constraints.iter().filter(|c| c.param.as_deref() == Some(param.as_str())).map(|c| (source, c, true)));
+        // A driven draft is keyed by its constraint id (it has no parameter).
+        let ours = |c: &&solidcraft_engine::sketch::Constraint| c.param.as_deref() == Some(param.as_str()) || (c.driven && c.id == *param);
+        constraints.extend(source.sketch.constraints.iter().filter(ours).map(|c| (source, c, true)));
     }
     for (source, c, is_draft) in constraints {
         if ss.sketch.view.hide_dimensions && !is_draft {
@@ -407,7 +568,7 @@ pub fn show(app: &mut SolveApp, ui: &egui::Ui, painter: &egui::Painter, proj: &P
         let half = Vec2::new(f64::from(size.x) * 0.5 * px, f64::from(size.y) * 0.5 * px);
         // Unplaced linear dimensions sit outside the shape they measure.
         let away = first_point(sk, &c.kind).and_then(|p| centres.get(p).copied()).unwrap_or(anchor);
-        let lay = dim_layout(&frame, c.text.or_else(|| default_text(&frame, away, px)), px, half);
+        let lay = dim_layout_reaching(&frame, c.text.or_else(|| default_text(&frame, away, px)), px, half, dim_reach(sk, &c.kind));
         let stroke = Stroke::new(1.0, col);
         let mut segs = Vec::new();
         for line in &lay.lines {
@@ -419,14 +580,12 @@ pub fn show(app: &mut SolveApp, ui: &egui::Ui, painter: &egui::Painter, proj: &P
         }
         for (tip, dir) in &lay.arrows {
             if let (Some(t), Some(back)) = (to(*tip), to(*tip - *dir * px)) {
-                let d = (t - back).normalized();
-                let n = vec2(-d.y, d.x);
-                painter.add(Shape::convex_polygon(vec![t, t - d * 9.0 + n * 3.0, t - d * 9.0 - n * 3.0], col, Stroke::NONE));
+                crate::icons::markers::dimension_arrow(painter, t, back, col);
             }
         }
         let Some(tc) = to(lay.text) else { continue };
         let r = Rect::from_center_size(tc, size);
-        painter.rect_filled(r, 2.0, tk.viewport_top.gamma_multiply(0.85));
+        painter.rect_filled(r, tk.radius_sm / 2, tk.viewport_top.gamma_multiply(0.85));
         painter.galley(r.min + vec2(3.0, 1.0), galley, col);
         if matches!(frame, DimFrame::ArcLength { .. }) {
             // The arc-length mark over the value.
@@ -451,7 +610,7 @@ pub fn show(app: &mut SolveApp, ui: &egui::Ui, painter: &egui::Painter, proj: &P
 }
 
 /// A point a dimension measures (for the shape it belongs to).
-fn first_point(sk: &solvecraft_engine::sketch::Sketch, k: &ConstraintKind) -> Option<usize> {
+fn first_point(sk: &solidcraft_engine::sketch::Sketch, k: &ConstraintKind) -> Option<usize> {
     use ConstraintKind::*;
     match *k {
         Length { l, .. } => sk.curves.get(l).and_then(|c| c.kind.point_ids().first().copied()),
@@ -469,7 +628,81 @@ fn pos2_mid_top(r: Rect) -> Pos2 {
 /// its value is selected, so typing replaces it).
 pub fn edit_param(app: &SolveApp, param: &str) {
     let expr = app.session.doc.param(param).map(|p| p.expr.clone()).unwrap_or_default();
-    EDIT.with(|e| *e.borrow_mut() = Some(Edit { param: param.to_string(), expr, at: None, fresh: FRESH, wait: 10, draft: None }));
+    EDIT.with(|e| {
+        *e.borrow_mut() =
+            Some(Edit { param: param.to_string(), expr, at: None, fresh: FRESH, wait: 10, draft: None, live: None, selection: None, picked: None })
+    });
+}
+
+/// A lone value such as `10`, `-3`, `12.5`, `2,5`, `10 mm` or `45 deg`: a number, optionally
+/// followed by a unit, with no operator or name.
+fn is_plain_value(text: &str) -> bool {
+    let t = text.trim();
+    let t = t.strip_prefix(['-', '+']).unwrap_or(t);
+    let digits = t.find(|c: char| !(c.is_ascii_digit() || c == '.' || c == ',')).unwrap_or(t.len());
+    let (number, unit) = t.split_at(digits);
+    number.chars().any(|c| c.is_ascii_digit()) && unit.trim().chars().all(|c| c.is_alphabetic() || matches!(c, '°' | '"' | '\''))
+}
+
+/// Insert a reference into the expression, using character offsets (not bytes). The rule:
+/// - the field holds a lone value (a number, optionally with a unit: `10`, `10 mm`): the name
+///   replaces the whole text, so `10` becomes `d10`;
+/// - otherwise (an expression in progress such as `10 + ` or `2 * (`): the name goes in at the
+///   cursor, replacing selected text, so `10 + ` becomes `10 + d10`; with no cursor it is
+///   appended. Nothing else (spaces, operators) is added.
+///
+/// The cursor ends just after the name and the field keeps the keyboard.
+fn insert_reference(ctx: &egui::Context, edit: &mut Edit, name: &str) {
+    let id = egui::Id::new("sc_dim_edit");
+    let mut state = egui::TextEdit::load_state(ctx, id).unwrap_or_default();
+    let len = edit.expr.chars().count();
+    let (start, end) = if is_plain_value(&edit.expr) {
+        (0, len)
+    } else {
+        edit.selection
+            .or_else(|| state.cursor.char_range())
+            .map(|r| {
+                let a = r.primary.index.0.min(len);
+                let b = r.secondary.index.0.min(len);
+                (a.min(b), a.max(b))
+            })
+            .unwrap_or((len, len))
+    };
+    let before: String = edit.expr.chars().take(start).collect();
+    let after: String = edit.expr.chars().skip(end).collect();
+    edit.expr = format!("{before}{name}{after}");
+    state.cursor.set_char_range(Some(egui::text::CCursorRange::one(egui::text::CCursor::new(start + name.chars().count()))));
+    edit.selection = state.cursor.char_range();
+    state.store(ctx, id);
+    ctx.memory_mut(|m| m.request_focus(id));
+    edit.fresh = FRESH - 1;
+    if let Some(live) = edit.live.as_mut() {
+        live.typed = true;
+    }
+}
+
+/// Consume dimension clicks while editing: a click on another driving dimension inserts its
+/// name at the cursor (replacing selected text), keeping what was typed. The second click of a
+/// double-click on the same dimension does not insert it again.
+pub fn pick_reference(ctx: &egui::Context, pos: Pos2, double: bool) -> bool {
+    EDIT.with(|editor| {
+        let mut editor = editor.borrow_mut();
+        let Some(edit) = editor.as_mut() else { return false };
+        let Some(id) = hit(pos) else { return false };
+        let param = DRAWN.with(|d| d.borrow().iter().find(|d| d.id == id).and_then(|d| d.param.clone()));
+        // Self references and driven dimensions cannot supply a reference.
+        if let Some(param) = param.filter(|p| p != &edit.param) {
+            let now = ctx.input(|i| i.time);
+            let delay = ctx.options(|o| o.input_options.max_double_click_delay);
+            let repeat = double && edit.picked.as_ref().is_some_and(|(p, at)| *p == param && now - *at <= delay);
+            if !repeat {
+                insert_reference(ctx, edit, &param);
+                edit.picked = Some((param, now));
+            }
+        }
+        edit.fresh = FRESH - 1;
+        true
+    })
 }
 
 fn edit_box(app: &mut SolveApp, ctx: &egui::Context) {
@@ -487,7 +720,10 @@ fn edit_box(app: &mut SolveApp, ctx: &egui::Context) {
     };
     let id = egui::Id::new("sc_dim_edit");
     let mut done: Option<bool> = None;
-    let mut anchor = at - vec2(45.0, 11.0);
+    let mut escaped = false;
+    // A type-first value sits beside its text, clear of the pointer, so a click still reaches
+    // the sketch (to place the text or pick a second entity).
+    let mut anchor = if e.live.is_some() { at + vec2(18.0, 10.0) } else { at - vec2(45.0, 11.0) };
     let mut popup_width = 220.0;
     if let Some(layout) = &app.viewport.layout
         && layout.drawable.is_finite()
@@ -498,34 +734,51 @@ fn edit_box(app: &mut SolveApp, ctx: &egui::Context) {
         anchor.x = anchor.x.clamp(rect.left(), (rect.right() - popup_width - 6.0).max(rect.left()));
         anchor.y = anchor.y.clamp(rect.top(), (rect.bottom() - 80.0).max(rect.top()));
     }
-    crate::frame::area(egui::Id::new("sc_dim_edit_area")).fixed_pos(anchor).order(egui::Order::Foreground).show(ctx, |ui| {
-        egui::Frame::popup(ui.style()).inner_margin(egui::Margin::symmetric(3, 1)).show(ui, |ui| {
-            ui.set_max_width(popup_width);
-            let r = ui.add(egui::TextEdit::singleline(&mut e.expr).id(id).desired_width(popup_width.min(90.0)));
-            crate::params_dialog::complete(ui, &r, &mut e.expr);
-            if let Some(error) = e.draft.as_ref().and_then(|d| d.error.as_ref()) {
-                ui.add(egui::Label::new(egui::RichText::new(error).color(Tokens::get().error)).wrap());
-            }
-            if e.fresh == FRESH {
-                // The whole value is selected, so typing replaces it.
-                let n = e.expr.chars().count();
-                let mut s = egui::text_edit::TextEditState::load(ui.ctx(), id).unwrap_or_default();
-                s.cursor.set_char_range(Some(egui::text_selection::CCursorRange::two(egui::text::CCursor::new(0), egui::text::CCursor::new(n))));
-                s.store(ui.ctx(), id);
-            }
-            let enter = ui.input(|i| i.key_pressed(egui::Key::Enter));
-            if r.lost_focus() && enter {
-                done = Some(true);
-            } else if e.fresh > 0 {
-                if !r.has_focus() {
-                    r.request_focus();
+    Container::new(ctx, Surface::Canvas).area(egui::Id::new("sc_dim_edit_area")).fixed_pos(anchor).order(egui::Order::Foreground).show(ctx, |ui| {
+        Container::popup_frame(ui.style()).fill(Tokens::get().dialog_body).inner_margin(Tokens::get().space_4).show(ui, |ui| {
+            crate::ui_kit::scope(ui, |ui| {
+                ui.set_max_width(popup_width);
+                crate::ui_kit::text(ui, &crate::i18n::format("dialog.dimension_name", &[("name", &e.param)]), crate::ui_kit::Text::Inline)
+                    .on_hover_text(crate::i18n::tr("dialog.dimension_insert_hint"));
+                let r = crate::ui_kit::cell_editor(ui, id, &mut e.expr, "", false);
+                crate::theme::TabAccent::number_focus(ui, &r);
+                if r.has_focus() {
+                    e.selection = egui::TextEdit::load_state(ctx, id).and_then(|s| s.cursor.char_range());
                 }
-            } else if r.lost_focus() {
-                done = Some(false);
-            }
-            if ui.input(|i| i.key_pressed(egui::Key::Escape)) {
-                done = Some(false);
-            }
+                let completed = crate::params_dialog::complete(ui, &r, &mut e.expr);
+                if completed {
+                    e.selection = egui::TextEdit::load_state(ctx, id).and_then(|s| s.cursor.char_range());
+                }
+                if let Some(live) = e.live.as_mut() {
+                    live.typed |= r.changed() || completed;
+                }
+                if let Some(error) = e.draft.as_ref().and_then(|d| d.error.as_ref()) {
+                    crate::ui_kit::text(ui, error, crate::ui_kit::Text::Report("dimension_error", true));
+                }
+                if e.fresh == FRESH {
+                    // The whole value is selected, so typing replaces it.
+                    let n = e.expr.chars().count();
+                    let mut s = egui::text_edit::TextEditState::load(ui.ctx(), id).unwrap_or_default();
+                    s.cursor.set_char_range(Some(egui::text_selection::CCursorRange::two(egui::text::CCursor::new(0), egui::text::CCursor::new(n))));
+                    e.selection = s.cursor.char_range();
+                    s.store(ui.ctx(), id);
+                }
+                let enter = ui.input(|i| i.key_pressed(egui::Key::Enter));
+                if r.lost_focus() && enter {
+                    done = Some(true);
+                } else if e.fresh > 0 {
+                    if !r.has_focus() {
+                        r.request_focus();
+                    }
+                } else if r.lost_focus() {
+                    done = Some(false);
+                }
+                if ui.input(|i| i.key_pressed(egui::Key::Escape)) {
+                    done = Some(false);
+                    // Esc cancels the whole dimension, picks included.
+                    escaped = true;
+                }
+            });
         });
     });
     e.fresh = e.fresh.saturating_sub(1);
@@ -533,7 +786,9 @@ fn edit_box(app: &mut SolveApp, ctx: &egui::Context) {
         Some(true) => {
             let result = if let Some(draft) = &e.draft {
                 if draft.valid(app) {
-                    draft.evaluate(app, &e.expr).and_then(|_| app.run("sketch.dimension", draft.params(&e.expr)))
+                    draft
+                        .evaluate(app, &e.expr)
+                        .and_then(|_| app.run("sketch.dimension", draft.params(&e.expr)).map_err(|err| shown_error("sketch.dimension", &err)))
                 } else {
                     Err("The sketch changed; place the dimension again".into())
                 }
@@ -542,27 +797,70 @@ fn edit_box(app: &mut SolveApp, ctx: &egui::Context) {
                     .session
                     .doc
                     .param(&e.param)
-                    .and_then(|p| solvecraft_engine::doc::expr::unit_info(&p.unit))
+                    .and_then(|p| solidcraft_engine::doc::expr::unit_info(&p.unit))
                     .map(|(k, _)| k)
-                    .unwrap_or(solvecraft_engine::doc::expr::Kind::Unitless);
+                    .unwrap_or(solidcraft_engine::doc::expr::Kind::Unitless);
                 let expression = app.session.doc.with_design_unit(&e.expr, kind);
-                app.run("parameters.change", json!({"name": e.param, "expression": expression}))
+                app.run("parameters.change", json!({"name": e.param, "expression": expression})).map_err(|err| shown_error("parameters.change", &err))
             };
-            if let Err(err) = result {
-                app.set_status(err, true);
-                EDIT.with(|x| *x.borrow_mut() = Some(Edit { fresh: FRESH, ..e }));
-            } else {
-                app.set_status("Dimension applied", false);
+            match result {
+                Err(err) => {
+                    app.set_status(err, true);
+                    EDIT.with(|x| *x.borrow_mut() = Some(Edit { fresh: FRESH, ..e }));
+                }
+                Ok(reply) => {
+                    clear_picks(app);
+                    match reply.get("defined").and_then(serde_json::Value::as_str) {
+                        Some(name) => app.set_status(format!("Dimension applied; parameter `{name}` defined"), false),
+                        None => app.set_status("Dimension applied", false),
+                    }
+                }
             }
         }
+        Some(false) if escaped => clear_picks(app),
         Some(false) => {}
         None => EDIT.with(|x| *x.borrow_mut() = Some(e)),
+    }
+}
+
+/// The Dimension tool starts over (its picks became a dimension, or were cancelled).
+fn clear_picks(app: &mut SolveApp) {
+    if let Some(tool) = app.tool.as_mut().filter(|t| t.kind == crate::tools::Kind::Dimension) {
+        tool.picks.clear();
+        tool.point_picks.clear();
     }
 }
 
 /// Is the inline editor open (it has the keyboard)?
 pub fn editing() -> bool {
     EDIT.with(|e| e.borrow().is_some())
+}
+
+/// The open draft: its expression, the dimension it adds and the sketch it previews (tests).
+#[cfg(test)]
+pub fn draft_preview() -> Option<(String, solidcraft_engine::sketch::Constraint, solidcraft_engine::sketch::Sketch)> {
+    EDIT.with(|edit| {
+        let edit = edit.borrow();
+        let e = edit.as_ref()?;
+        let draft = e.draft.as_ref()?;
+        let sk = draft.preview.sketch(draft.sketch)?.sketch.clone();
+        let c = sk.constraints.iter().find(|c| c.param.as_deref() == Some(e.param.as_str()))?.clone();
+        Some((e.expr.clone(), c, sk))
+    })
+}
+
+/// A place-first draft, including a driven dimension, for creation tests.
+#[cfg(test)]
+pub fn placement_dimension_preview(app: &SolveApp) -> Option<solidcraft_engine::sketch::Constraint> {
+    let (id, draft) = placement_preview(app)?;
+    draft
+        .preview
+        .sketch(draft.sketch)?
+        .sketch
+        .constraints
+        .iter()
+        .find(|c| c.param.as_deref() == Some(id.as_str()) || (c.driven && c.id == id))
+        .cloned()
 }
 
 /// Dimensions drawn last frame: (id, text centre on screen), for tests and the control channel.
@@ -575,6 +873,46 @@ mod tests {
     use super::*;
 
     #[test]
+    fn plain_values_are_numbers_with_an_optional_unit() {
+        for t in ["10", " 10 mm ", "12.5", "2,5", "-3", "+4", "45 deg", "45°", "1in"] {
+            assert!(is_plain_value(t), "{t:?}");
+        }
+        for t in ["", "10 + ", "2 * (", "Width - ", "width", "d1", "10 mm + d2", "(10)", "mm", "-"] {
+            assert!(!is_plain_value(t), "{t:?}");
+        }
+    }
+
+    /// Typing `rad` into a new dimension's value lists `radius` although `rad` is itself the
+    /// radians unit; the popup is unarmed, so Down then Enter completes the name and the
+    /// dimension takes it (#3663).
+    #[test]
+    fn a_name_that_extends_a_unit_is_offered_and_completes() {
+        cancel();
+        let mut h = crate::scenario::Harness::new();
+        h.app.run("parameters.add", json!({"name":"radius","expression":"10 mm"})).unwrap();
+        h.app.run("sketch.create", json!({"plane":"XY"})).unwrap();
+        h.app.run("sketch.line", json!({"points":[[10,10],[40,10]],"infer":false})).unwrap();
+        h.call("ui.view", json!({"view":"top"}));
+        h.step(&json!({"start":"sketch.dimension"})).unwrap();
+        h.step(&json!({"click":{"sketch":[25,10]}})).unwrap();
+        assert!(editing(), "{:?}", h.app.status);
+        h.step(&json!({"text":"rad"})).unwrap();
+        h.frames(2);
+        assert!(crate::params_dialog::suggestions(&h.ctx, "rad").iter().any(|s| s.text == "radius"));
+        assert_eq!(crate::expression_complete::popup_state(&h.ctx), Some((1, true)), "a unit with no number before it is a prefix: armed");
+        h.step(&json!({"key":"Enter"})).unwrap();
+        assert!(editing(), "Enter completed the name, the editor stays open: {:?}", h.app.status);
+        assert_eq!(EDIT.with(|e| e.borrow().as_ref().map(|e| e.expr.clone())), Some("radius".to_string()));
+        h.step(&json!({"key":"Enter"})).unwrap();
+        assert!(!editing(), "{:?}", h.app.status);
+        let sk = h.app.session.doc.sketch(h.app.session.active_sketch.unwrap()).unwrap();
+        let dim = sk.constraints.iter().find_map(|c| c.param.as_deref()).expect("the dimension was added");
+        assert_eq!(h.app.session.doc.param(dim).map(|p| p.expr.as_str()), Some("radius"));
+        h.step(&json!({"key":"Escape"})).unwrap();
+        cancel();
+    }
+
+    #[test]
     fn placement_previews_radial_and_angular_dimensions_and_invalidates_on_document_change() {
         cancel();
         let mut h = crate::scenario::Harness::new();
@@ -583,11 +921,16 @@ mod tests {
         h.app.run("sketch.line", json!({"points":[[10,10],[20,10]],"infer":false,"connect":false})).unwrap();
         h.app.run("sketch.line", json!({"points":[[10,10],[10,20]],"infer":false,"connect":false})).unwrap();
         h.call("ui.view", json!({"view":"top"}));
-        for (picks, at, angular) in [(vec![[35, 30]], [40, 40], false), (vec![[15, 10], [10, 15]], [18, 18], true)] {
+        for (picks, at, angular) in [(vec![[35, 30]], [40, 40], false), (vec![[13, 10], [10, 13]], [18, 18], true)] {
             h.step(&json!({"start":"sketch.dimension"})).unwrap();
             for pick in picks {
                 h.step(&json!({"click":{"sketch":pick}})).unwrap();
             }
+            // The picks determine the dimension, so its value took the keyboard; Tab hands
+            // them back to placing first.
+            assert_eq!(live(), Some(false));
+            h.frames(4);
+            h.step(&json!({"key":"Tab"})).unwrap();
             h.step(&json!({"move":{"sketch":at}})).unwrap();
             let (param, draft) = placement_preview(&h.app).unwrap();
             let constraint =
@@ -604,6 +947,96 @@ mod tests {
         cancel();
     }
 
+    /// Typing `w = 20` into a new dimension's value defines the user parameter `w` and
+    /// dimensions with it, in one undo step, and the status line says so (#2916). A taken name
+    /// is refused and the editor stays open with the text to correct.
+    #[test]
+    fn typing_a_definition_adds_the_parameter_and_dimensions_with_it() {
+        cancel();
+        let mut h = crate::scenario::Harness::new();
+        h.app.run("sketch.create", json!({"plane":"XY"})).unwrap();
+        h.app.run("sketch.line", json!({"points":[[10,10],[40,10]],"infer":false})).unwrap();
+        h.call("ui.view", json!({"view":"top"}));
+        let undo = h.app.session.undo.len();
+        h.step(&json!({"start":"sketch.dimension"})).unwrap();
+        h.step(&json!({"click":{"sketch":[25,10]}})).unwrap();
+        assert!(editing());
+        h.step(&json!({"text":"w = 20"})).unwrap();
+        h.step(&json!({"key":"Enter"})).unwrap();
+        assert!(!editing(), "{:?}", h.app.status);
+        let w = h.app.session.doc.param("w").expect("the user parameter was added");
+        assert!(!w.model && w.expr.as_str() == "20" && w.unit == "mm", "{w:?}");
+        let sk = h.app.session.doc.sketch(h.app.session.active_sketch.unwrap()).unwrap();
+        let dim = sk.constraints.iter().find_map(|c| c.param.as_deref()).expect("the dimension was added");
+        assert_eq!(h.app.session.doc.param(dim).map(|p| p.expr.as_str()), Some("w"));
+        assert_eq!(h.app.session.undo.len(), undo + 1, "one undo step");
+        assert!(h.app.status.as_ref().is_some_and(|s| !s.2 && s.0.contains("`w`")), "{:?}", h.app.status);
+        // The same name again is refused; the editor keeps the text.
+        h.app.run("sketch.line", json!({"points":[[10,30],[40,30]],"infer":false})).unwrap();
+        let undo = h.app.session.undo.len();
+        h.step(&json!({"start":"sketch.dimension"})).unwrap();
+        h.step(&json!({"click":{"sketch":[25,30]}})).unwrap();
+        h.step(&json!({"text":"w = 25"})).unwrap();
+        h.step(&json!({"key":"Enter"})).unwrap();
+        assert!(editing(), "{:?}", h.app.status);
+        // The refusal reads as the command's own words, in the status line and in the box.
+        let taken = "Sketch Dimension: there is already a parameter `w`: type `w` to use it, or change it in Parameters";
+        assert_eq!(h.app.status.as_ref().map(|s| (s.0.as_str(), s.2)), Some((taken, true)));
+        assert_eq!(box_error(), Some(taken.to_string()));
+        assert_eq!(EDIT.with(|e| e.borrow().as_ref().map(|e| e.expr.clone())), Some("w = 25".to_string()));
+        assert_eq!(h.app.session.undo.len(), undo, "a refused definition changed nothing");
+        h.step(&json!({"key":"Escape"})).unwrap();
+        h.step(&json!({"key":"Escape"})).unwrap();
+        // A reserved name says what kind of word it is. The line goes below the first one: the
+        // ribbon floats over the top of the canvas, and a click at sketch y = 50 would land on it.
+        h.app.run("sketch.line", json!({"points":[[10,-10],[40,-10]],"infer":false})).unwrap();
+        h.step(&json!({"start":"sketch.dimension"})).unwrap();
+        h.step(&json!({"click":{"sketch":[25,-10]}})).unwrap();
+        h.step(&json!({"text":"mm = 5"})).unwrap();
+        h.step(&json!({"key":"Enter"})).unwrap();
+        assert!(editing(), "{:?}", h.app.status);
+        let reserved = "Sketch Dimension: `mm` is a unit name, so it cannot be a parameter name";
+        assert_eq!(h.app.status.as_ref().map(|s| (s.0.as_str(), s.2)), Some((reserved, true)));
+        assert_eq!(box_error(), Some(reserved.to_string()));
+        h.step(&json!({"key":"Escape"})).unwrap();
+        h.step(&json!({"key":"Escape"})).unwrap();
+        cancel();
+    }
+
+    /// The error shown inside the open value box.
+    fn box_error() -> Option<String> {
+        EDIT.with(|e| e.borrow().as_ref().and_then(|e| e.draft.as_ref()).and_then(|d| d.error.clone()))
+    }
+
+    /// Placing a dimension the sketch can't take previews it as driven: in the draft it is a
+    /// driven constraint with no parameter, labelled in parentheses (#320).
+    #[test]
+    fn an_over_constraining_placement_previews_a_driven_dimension() {
+        cancel();
+        let mut h = crate::scenario::Harness::new();
+        h.app.run("sketch.create", json!({"plane":"XY"})).unwrap();
+        h.app.run("sketch.line", json!({"points":[[10,10],[30,10]],"infer":false})).unwrap();
+        h.app.run("sketch.dimension", json!({"entities":["l1"],"value":"20 mm"})).unwrap();
+        h.call("ui.view", json!({"view":"top"}));
+        let baseline = h.app.session.doc.to_json();
+        h.step(&json!({"start":"sketch.dimension"})).unwrap();
+        h.step(&json!({"click":{"sketch":[20,10]}})).unwrap();
+        h.step(&json!({"move":{"sketch":[20,20]}})).unwrap();
+        h.settle();
+        let (id, draft) = placement_preview(&h.app).expect("an over-constraining dimension still previews");
+        assert!(draft.driven);
+        let sk = &draft.preview.sketch(draft.sketch).unwrap().sketch;
+        let c = sk.constraints.iter().find(|c| c.id == id).unwrap();
+        assert!(c.driven && c.param.is_none(), "{c:?}");
+        assert!(matches!(c.kind, ConstraintKind::Length {value,..} if (value-20.).abs()<1e-6));
+        assert_eq!(label(&c.kind, None, c.driven, "mm", 2), "(20.00)");
+        assert!(!editing());
+        assert_eq!(h.app.session.doc.to_json(), baseline);
+        h.step(&json!({"key":"Escape"})).unwrap();
+        h.step(&json!({"key":"Escape"})).unwrap();
+        cancel();
+    }
+
     #[test]
     fn placement_follows_real_pointer_without_editing_or_mutating_design() {
         cancel();
@@ -615,11 +1048,14 @@ mod tests {
         let undo = h.app.session.undo.len();
         h.step(&json!({"start":"sketch.dimension"})).unwrap();
         h.step(&json!({"click":{"sketch":[20,10]}})).unwrap();
+        assert_eq!(live(), Some(false));
+        h.frames(4);
+        h.step(&json!({"key":"Tab"})).unwrap();
         for at in [[20., 20.], [20., -5.]] {
             h.step(&json!({"move":{"sketch":at}})).unwrap();
             h.settle();
             let (param, draft) = placement_preview(&h.app).expect("a line has a dimension preview");
-            assert!((draft.at - Vec2::new(at[0], at[1])).len() < 1e-5);
+            assert!((draft.at.unwrap() - Vec2::new(at[0], at[1])).len() < 1e-5);
             let sk = &draft.preview.sketch(draft.sketch).unwrap().sketch;
             let c = sk.constraints.iter().find(|c| c.param.as_deref() == Some(&param)).unwrap();
             assert!(matches!(c.kind, ConstraintKind::Length {value,..} if (value-20.).abs()<1e-6));
@@ -662,6 +1098,8 @@ mod tests {
         let k = ConstraintKind::Length { l: 0, value: 25.0 };
         assert_eq!(label(&k, Some("25 mm"), false, "mm", 2), "25.00");
         assert_eq!(label(&k, Some("width * 2"), false, "mm", 2), "fx: 25.00");
+        // A value typed with a decimal comma is a plain value too (#1347).
+        assert_eq!(label(&ConstraintKind::Length { l: 0, value: 25.5 }, Some("25,5 mm"), false, "mm", 2), "25.50");
         assert_eq!(label(&k, None, true, "mm", 2), "(25.00)");
         assert_eq!(label(&ConstraintKind::Radius { c: 0, value: 5.0 }, Some("5 mm"), false, "mm", 2), "R5.00");
         assert_eq!(label(&ConstraintKind::Diameter { c: 0, value: 10.0 }, Some("10"), false, "mm", 2), "Ø10.00");

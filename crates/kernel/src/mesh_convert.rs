@@ -3,7 +3,7 @@
 
 use std::collections::BTreeMap;
 
-use solvecraft_geom::{Loop2, Plane, Region2, Vec2, Vec3};
+use solidcraft_geom::{Loop2, Plane, Region2, Vec2, Vec3};
 
 use crate::{Body, KernelError, Result};
 
@@ -18,6 +18,14 @@ fn invalid(message: &str) -> KernelError {
     KernelError::Invalid(format!("mesh conversion: {message}"))
 }
 
+/// A mesh over the triangle budget: how big it is, the limit, and that only constant-section
+/// parts convert, so a smaller freeform mesh would still be refused (#346).
+fn over_budget(triangles: usize) -> KernelError {
+    invalid(&format!(
+        "the mesh has {triangles} triangles, more than the {MAX_TRIANGLES} conversion can take; only closed constant-section parts (one profile extruded straight) can be converted, so a freeform mesh is refused at any size"
+    ))
+}
+
 /// Reconstruct a constant-section mesh as analytic planes and, where certified
 /// within `tolerance` mm, circular cylinders. The source mesh is not modified.
 /// Unsupported shapes are refused instead of silently returning a faceted solid.
@@ -30,7 +38,7 @@ pub fn convert_prismatic_mesh(body: &Body, tolerance: f64) -> Result<Body> {
         let welded = weld(input, tolerance)?;
         let mesh = welded.mesh.as_ref().ok_or_else(|| invalid("empty mesh"))?;
         if mesh.triangles.len() > MAX_TRIANGLES {
-            return Err(invalid("mesh exceeds the 50000-triangle conversion budget"));
+            return Err(over_budget(mesh.triangles.len()));
         }
         let mut edges: BTreeMap<(u32, u32), (usize, i32)> = BTreeMap::new();
         let mut axes: BTreeMap<(i64, i64, i64), (Vec3, f64)> = BTreeMap::new();
@@ -69,10 +77,13 @@ pub fn convert_prismatic_mesh(body: &Body, tolerance: f64) -> Result<Body> {
 }
 
 fn weld(mesh: &crate::meshbody::TriMesh, tolerance: f64) -> Result<Body> {
-    if mesh.triangles.len() > MAX_TRIANGLES || mesh.positions.len() > MAX_TRIANGLES * 3 {
-        return Err(invalid("mesh exceeds the conversion budget"));
+    if mesh.triangles.len() > MAX_TRIANGLES {
+        return Err(over_budget(mesh.triangles.len()));
     }
-    let bounds = mesh.positions.iter().fold(solvecraft_geom::Aabb3::EMPTY, |mut b, p| {
+    if mesh.positions.len() > MAX_TRIANGLES * 3 {
+        return Err(invalid(&format!("the mesh has {} vertices, more than the {} conversion can take", mesh.positions.len(), MAX_TRIANGLES * 3)));
+    }
+    let bounds = mesh.positions.iter().fold(solidcraft_geom::Aabb3::EMPTY, |mut b, p| {
         b.add(*p);
         b
     });
@@ -131,7 +142,7 @@ fn weld(mesh: &crate::meshbody::TriMesh, tolerance: f64) -> Result<Body> {
 fn extrusion(mesh: &crate::meshbody::TriMesh, axis: Vec3, tolerance: f64) -> Result<Option<Body>> {
     let (lo, hi) = mesh.positions.iter().map(|p| p.dot(axis)).fold((f64::INFINITY, f64::NEG_INFINITY), |(lo, hi), h| (lo.min(h), hi.max(h)));
     let height = hi - lo;
-    let bounds = mesh.positions.iter().fold(solvecraft_geom::Aabb3::EMPTY, |mut b, p| {
+    let bounds = mesh.positions.iter().fold(solidcraft_geom::Aabb3::EMPTY, |mut b, p| {
         b.add(*p);
         b
     });
@@ -226,7 +237,7 @@ fn extrusion(mesh: &crate::meshbody::TriMesh, axis: Vec3, tolerance: f64) -> Res
         }
         let p = plane.to_local(*p);
         if !boundary_segments.iter().any(|&(a, b)| {
-            solvecraft_geom::Seg2::Line { a, b }.point_at(solvecraft_geom::Seg2::Line { a, b }.closest_param(p)).dist(p) <= epsilon * 3.
+            solidcraft_geom::Seg2::Line { a, b }.point_at(solidcraft_geom::Seg2::Line { a, b }.closest_param(p)).dist(p) <= epsilon * 3.
         }) {
             return Ok(None);
         }
@@ -377,7 +388,7 @@ fn fit_loop(points: &[Vec2], tolerance: f64, epsilon: f64) -> Loop2 {
         }
         let remove = (0..n).find(|&i| {
             let (Some(a), Some(b), Some(c)) = (points.get((i + n - 1) % n), points.get(i), points.get((i + 1) % n)) else { return false };
-            let edge = solvecraft_geom::Seg2::Line { a: *a, b: *c };
+            let edge = solidcraft_geom::Seg2::Line { a: *a, b: *c };
             edge.point_at(edge.closest_param(*b)).dist(*b) <= linear_tolerance
         });
         let Some(index) = remove else { break };
@@ -462,6 +473,22 @@ mod tests {
             let mesh = crate::meshbody::TriMesh { positions: vec![Vec3::new(coordinate, 0., 0.)], triangles: vec![] };
             assert!(weld(&mesh, 0.05).is_err());
         }
+    }
+
+    #[test]
+    fn a_mesh_over_the_budget_says_how_big_it_is_and_what_converts() {
+        // #346: a freeform mesh just over the limit (a strip of 50001 triangles) is refused with
+        // its size, the limit, and that only constant-section parts convert at any size.
+        let n = MAX_TRIANGLES + 1;
+        let positions: Vec<Vec3> = (0..n + 2).map(|k| Vec3::new((k / 2) as f64, (k % 2) as f64, 0.)).collect();
+        let triangles: Vec<[u32; 3]> = (0..n as u32).map(|i| [i, i + 1, i + 2]).collect();
+        let body = crate::mesh_body(&positions, &triangles).unwrap();
+        let err = convert_prismatic_mesh(&body, 0.05).unwrap_err().to_string();
+        assert!(err.contains("50001 triangles") && err.contains("50000"), "{err}");
+        assert!(err.contains("constant-section") && err.contains("freeform"), "{err}");
+        let mesh = crate::meshbody::TriMesh { positions: vec![Vec3::ZERO; MAX_TRIANGLES * 3 + 1], triangles: vec![] };
+        let err = weld(&mesh, 0.05).unwrap_err().to_string();
+        assert!(err.contains("150001 vertices") && err.contains("150000"), "{err}");
     }
 
     #[test]

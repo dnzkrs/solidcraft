@@ -18,12 +18,77 @@ mod parallelizable {
 
 pub use parallelizable::*;
 
+/// SolidCraft: a disposable preview of a face from already sampled boundary loops.
+/// Caps input points and uses a fixed parameter grid, including periodic seams.
+/// This is approximate display, never an accuracy-controlled modelling mesh.
+pub fn preview_face<S: RobustMeshableSurface>(surface: &S, loops: &[Vec<Point3>], steps: usize) -> Option<PolygonMesh> {
+    triangulation::preview_face(surface, loops, steps)
+}
+
+/// Periods of a surface, including smooth geometric closure of bounded splines.
+/// Meshing wraps inferred periods into the original knot domain before evaluation.
+pub fn surface_periods<S: PreMeshableSurface>(surface: &S) -> [Option<f64>; 2] {
+    closed::Closed::new(surface).periods()
+}
+
+/// Project a trim point with the same bounded, tolerance-aware search used by the mesher.
+/// A preceding parameter is a hint, never proof that the search converged correctly.
+pub fn project_trim_point<S: RobustMeshableSurface>(surface: &S, point: Point3, hint: Option<(f64, f64)>, tolerance: f64) -> Option<(f64, f64)> {
+    triangulation::nearest_projection(surface, point, hint, tolerance, 100)
+}
+
+/// SolidCraft: an edge's polyline as the meshers divide it (at most 20 000 points). Exposed for
+/// the kernel's regressions in the workspace CI.
+#[doc(hidden)]
+pub fn bounded_polyline<C: PolylineableCurve>(curve: &C, range: (f64, f64), d: Deflection) -> PolylineCurve {
+    triangulation::bounded_polyline(curve, range, d)
+}
+
+/// SolidCraft: sampling a curve that may fail to evaluate. truck's `IntersectionCurve::subs`
+/// unwraps the projection of its leader's point onto both surfaces, which does not converge
+/// everywhere; the mesher samples through this trait so that a failed sample is data, not a panic.
+pub trait TrySubs: ParametricCurve3D {
+    /// The point at `t`, or `None` where the curve does not evaluate.
+    fn try_subs(&self, t: f64) -> Option<Point3> { Some(self.subs(t)) }
+    /// A point near the curve at `t` that always exists (an intersection curve's leader).
+    fn approx_subs(&self, t: f64) -> Point3 { self.subs(t) }
+}
+
+impl TrySubs for truck_geometry::prelude::Line<Point3> {}
+impl TrySubs for truck_geometry::prelude::BSplineCurve<Point3> {}
+impl TrySubs for truck_geometry::prelude::NurbsCurve<Vector4> {}
+impl TrySubs for PolylineCurve {}
+
+impl<C, S> TrySubs for truck_geometry::prelude::IntersectionCurve<C, S>
+where
+    C: ParametricCurve3D,
+    S: ParametricSurface3D + SearchNearestParameter<D2, Point = Point3>,
+{
+    fn try_subs(&self, t: f64) -> Option<Point3> { self.search_triple(t).map(|triple| triple.0) }
+    fn approx_subs(&self, t: f64) -> Point3 { self.leader().subs(t) }
+}
+
+impl TrySubs for truck_modeling::Curve {
+    fn try_subs(&self, t: f64) -> Option<Point3> {
+        match self {
+            truck_modeling::Curve::IntersectionCurve(curve) => TrySubs::try_subs(curve, t),
+            other => Some(other.subs(t)),
+        }
+    }
+    fn approx_subs(&self, t: f64) -> Point3 {
+        match self {
+            truck_modeling::Curve::IntersectionCurve(curve) => TrySubs::approx_subs(curve, t),
+            other => other.subs(t),
+        }
+    }
+}
+
 /// Gathered the traits used in tessellation.
 pub trait PolylineableCurve:
-    ParametricCurve3D + BoundedCurve + ParameterDivision1D<Point = Point3> + Parallelizable {
+    ParametricCurve3D + BoundedCurve + ParameterDivision1D<Point = Point3> + Parallelizable + TrySubs {
 }
 impl<
-        C: ParametricCurve3D + BoundedCurve + ParameterDivision1D<Point = Point3> + Parallelizable,
+        C: ParametricCurve3D + BoundedCurve + ParameterDivision1D<Point = Point3> + Parallelizable + TrySubs,
     > PolylineableCurve for C
 {
 }
@@ -43,6 +108,81 @@ pub trait RobustMeshableSurface:
 impl<S: MeshableSurface + SearchNearestParameter<D2, Point = Point3>> RobustMeshableSurface for S {}
 
 type PolylineCurve = truck_polymesh::PolylineCurve<Point3>;
+
+/// SolidCraft: how finely curves and surfaces are divided into facets. `chord` is the usual
+/// tolerance: the most a facet may sag from the true shape. `angle`, when finite, also bounds
+/// what one facet spans: a facet that turns more than `angle` is split whatever its size (a
+/// radius that is small beside the tolerance would otherwise stay one flat facet), until its
+/// sag is below `floor`.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Deflection {
+    /// Most a facet may sag from the curve or surface.
+    pub chord: f64,
+    /// Most a facet may turn (radians: the arc it spans on a circle); infinite for no bound.
+    pub angle: f64,
+    /// Sag below which `angle` no longer splits a facet.
+    pub floor: f64,
+    /// SolidCraft: a mesh to display or export, which must lie on its faces, rather than one a
+    /// Boolean operation intersects (whose results must not depend on what follows). Such a
+    /// mesh gets grid lines through the vertices that split a face's ruling edges (see
+    /// `with_ruling_vertices`), triangulates a trimmed face in speed-scaled parameters
+    /// (`UvScale`), keeps every boundary segment as a constraint (`PolyBoundary::insert_to`),
+    /// and puts its boundary points on the face's edges (`onto_edges`).
+    pub display: bool,
+}
+
+impl Deflection {
+    /// Most boundary segments a face may get from the angle bound. Triangulating a face tests
+    /// each triangle against the boundary loops around it, so the work grows faster than the
+    /// boundary (with its square for one long loop): the curved edges of a face that would
+    /// get more are divided at twice the angle, and again, down to the chord tolerance alone.
+    pub const MAX_ANGLE_BOUNDARY: usize = 4096;
+    /// Most grid points a face may get from the angle bound (beyond them only `chord` refines).
+    pub const MAX_ANGLE_GRID: usize = 16_384;
+    /// How often the angle is doubled for a crowded face before only `chord` is left.
+    pub const MAX_RELAX: u8 = 4;
+
+    /// The chord tolerance alone: what `triangulation(tol)` divides by.
+    pub const fn chord(tol: f64) -> Self {
+        Self {
+            chord: tol,
+            angle: f64::INFINITY,
+            floor: 0.0,
+            display: false,
+        }
+    }
+
+    /// Whether `angle` bounds anything.
+    pub fn angular(&self) -> bool { self.angle.is_finite() && self.angle > 0.0 }
+
+    /// The same with the angle doubled `level` times; from [`Deflection::MAX_RELAX`] times, or
+    /// past half a turn, the chord tolerance alone.
+    pub fn relaxed(&self, level: u8) -> Self {
+        let angle = self.angle * f64::from(1u32 << level.min(Self::MAX_RELAX));
+        match level == 0 || (level < Self::MAX_RELAX && angle < std::f64::consts::PI) {
+            true => Self { angle, ..*self },
+            false => Self { display: self.display, ..Self::chord(self.chord) },
+        }
+    }
+
+    /// The squared sag over squared length above which a facet turns more than `angle`: a
+    /// chord spanning `a` of a circle sags `tan(a / 4) / 2` of its length. Infinite without
+    /// an angle bound. SolidCraft: public for the kernel's regressions.
+    #[doc(hidden)]
+    pub fn turn2(&self) -> f64 {
+        match self.angular() && self.angle < std::f64::consts::PI {
+            true => (f64::tan(self.angle / 4.0) / 2.0).powi(2),
+            false => f64::INFINITY,
+        }
+    }
+
+    /// Whether the angle bound splits a facet of squared sag `sag2` and squared length `len2`
+    /// (`turn2` from [`Deflection::turn2`]). SolidCraft: public for the kernel's regressions.
+    #[doc(hidden)]
+    pub fn turns(&self, turn2: f64, sag2: f64, len2: f64) -> bool {
+        turn2.is_finite() && sag2 > self.floor * self.floor && sag2 > turn2 * len2
+    }
+}
 
 /// Trait for converting tessellated shape into polygon.
 pub trait MeshedShape {
@@ -258,11 +398,15 @@ impl<C: PolylineableCurve, S: MeshableSurface> MeshableShape for Shell<Point3, C
     fn triangulation(&self, tol: f64) -> Self::MeshedShape {
         nonpositive_tolerance!(tol);
         #[cfg(not(target_arch = "wasm32"))]
-        let res = triangulation::shell_tessellation(self, tol, triangulation::by_search_parameter);
+        let res = triangulation::shell_tessellation(
+            self,
+            Deflection::chord(tol),
+            triangulation::by_search_parameter,
+        );
         #[cfg(target_arch = "wasm32")]
         let res = triangulation::shell_tessellation_single_thread(
             self,
-            tol,
+            Deflection::chord(tol),
             triangulation::by_search_parameter,
         );
         res
@@ -272,17 +416,39 @@ impl<C: PolylineableCurve, S: MeshableSurface> MeshableShape for Shell<Point3, C
 impl<C: PolylineableCurve, S: RobustMeshableSurface> RobustMeshableShape for Shell<Point3, C, S> {
     type MeshedShape = Shell<Point3, PolylineCurve, Option<PolygonMesh>>;
     fn robust_triangulation(&self, tol: f64) -> Self::MeshedShape {
-        nonpositive_tolerance!(tol);
+        self.robust_triangulation_within(Deflection::chord(tol))
+    }
+}
+
+/// SolidCraft: tessellation with a bound on the angle one facet spans as well as on its sag.
+pub trait RoundMeshableShape {
+    /// Shape whose edges are made polylines and faces polygon surface.
+    type MeshedShape: MeshedShape;
+    /// [`RobustMeshableShape::robust_triangulation`] divided by `deflection`: with
+    /// [`Deflection::chord`] the very same shape; with an angle, curved edges and faces whose
+    /// radius is small beside the chord tolerance are divided as well. Every edge is still
+    /// divided once, for both faces it bounds, so neighbouring faces keep sharing its points.
+    ///
+    /// # Panics
+    ///
+    /// `deflection.chord` must be more than `TOLERANCE`.
+    fn robust_triangulation_within(&self, deflection: Deflection) -> Self::MeshedShape;
+}
+
+impl<C: PolylineableCurve, S: RobustMeshableSurface> RoundMeshableShape for Shell<Point3, C, S> {
+    type MeshedShape = Shell<Point3, PolylineCurve, Option<PolygonMesh>>;
+    fn robust_triangulation_within(&self, deflection: Deflection) -> Self::MeshedShape {
+        nonpositive_tolerance!(deflection.chord);
         #[cfg(not(target_arch = "wasm32"))]
         let res = triangulation::shell_tessellation(
             self,
-            tol,
+            deflection,
             triangulation::by_search_nearest_parameter,
         );
         #[cfg(target_arch = "wasm32")]
         let res = triangulation::shell_tessellation_single_thread(
             self,
-            tol,
+            deflection,
             triangulation::by_search_nearest_parameter,
         );
         res
@@ -357,4 +523,8 @@ impl<C: PolylineableCurve, S: RobustMeshableSurface> RobustMeshableShape
     }
 }
 
+mod closed;
 mod triangulation;
+#[cfg(feature = "test-hooks")]
+#[doc(hidden)]
+pub use triangulation::{include_test_hooks, loop_fill_test_hooks};

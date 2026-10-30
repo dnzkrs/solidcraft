@@ -1,8 +1,8 @@
 //! Canvases (reference images on planes) and decals (images on planar faces).
 
 use serde_json::{Value, json};
-use solvecraft_doc::canvas::{Canvas, MAX_CANVAS_BYTES, base64_decode, base64_encode, image_info};
-use solvecraft_geom::Vec2;
+use solidcraft_doc::canvas::{Canvas, MAX_CANVAS_BYTES, base64_decode, base64_encode, image_info};
+use solidcraft_geom::Vec2;
 
 use super::CommandSpec;
 use crate::params::{bad, bool_, num, str_, vec2};
@@ -18,9 +18,9 @@ pub static COMMANDS: &[CommandSpec] = &[
         .icon("decal")
         .params("path | data; face: [x,y,z] on a planar face (the image is centred there); width?: mm; angle?: deg; opacity?: (default 1)"),
     CommandSpec::new("canvas.edit", "Edit Canvas", edit_canvas).at("SKETCH", "INSERT").icon("canvas").params("canvas: id or name; center?, width?, angle?: deg, opacity?, flip?, visible?, name?"),
-    CommandSpec::new("canvas.calibrate", "Calibrate Canvas", calibrate)
+    CommandSpec::new("canvas.calibrate", "Calibrate Canvas", calibrate).icon("measure")
         .params("canvas: id or name; a, b: two points on the canvas plane [x,y]; distance: their true distance (mm): scales the image about a"),
-    CommandSpec::new("canvas.delete", "Delete Canvas", delete_canvas).params("canvas: id or name"),
+    CommandSpec::new("canvas.delete", "Delete Canvas", delete_canvas).icon("delete").params("canvas: id or name"),
 ];
 
 fn image_bytes(p: &Value, cmd: &str) -> Result<Vec<u8>> {
@@ -31,7 +31,7 @@ fn image_bytes(p: &Value, cmd: &str) -> Result<Vec<u8>> {
         base64_decode(d).ok_or_else(|| bad(cmd, "`data` is not base64"))?
     } else {
         let path = str_(p, "path").filter(|x| !x.trim().is_empty() && x.len() < 4096).ok_or_else(|| bad(cmd, "give `path` or `data`"))?;
-        solvecraft_io::vfs::read(path, MAX_CANVAS_BYTES).map_err(|e| EngineError::Other(format!("{path}: {e}")))?
+        solidcraft_io::vfs::read(path, MAX_CANVAS_BYTES).map_err(|e| EngineError::Other(format!("{path}: {e}")))?
     };
     if b.len() > MAX_CANVAS_BYTES {
         return Err(bad(cmd, "the image is too large"));
@@ -56,9 +56,13 @@ fn make(s: &mut Session, p: &Value, cmd: &str, decal: bool) -> Result<Value> {
     // It belongs to the active component (its plane is in that frame) and moves with it.
     let component = s.active_component;
     let doc = s.doc_mut();
-    let id = doc.canvases.iter().map(|c| c.id).max().unwrap_or(0) + 1;
+    let id = doc.allocate_id()?;
     let base = if decal { "Decal" } else { "Canvas" };
-    let name = str_(p, "name").map(str::to_string).unwrap_or_else(|| format!("{base}{id}"));
+    let name = str_(p, "name").map(str::to_string).unwrap_or_else(|| {
+        let names: std::collections::BTreeSet<_> = doc.canvases.iter().map(|c| c.name.as_str()).collect();
+        let number = (1..=doc.canvases.len().saturating_add(1)).find(|n| !names.contains(format!("{base}{n}").as_str())).unwrap_or(1);
+        format!("{base}{number}")
+    });
     doc.canvases.push(Canvas {
         id,
         name: name.clone(),
@@ -158,7 +162,7 @@ fn delete_canvas(s: &mut Session, p: &Value) -> Result<Value> {
 #[cfg(test)]
 mod tests {
     use serde_json::json;
-    use solvecraft_doc::canvas::base64_encode;
+    use solidcraft_doc::canvas::base64_encode;
 
     use crate::Session;
 
@@ -168,6 +172,19 @@ mod tests {
         b.extend(h.to_be_bytes());
         b.extend([8, 6, 0, 0, 0, 0, 0, 0, 0]);
         base64_encode(&b)
+    }
+
+    #[test]
+    fn deleted_canvas_ids_are_not_reused_after_reopening() {
+        let mut s = Session::default();
+        let params = json!({"data": png(10, 10)});
+        let first = s.execute("canvas.insert", &params).unwrap()["canvas"].as_u64().unwrap();
+        s.execute("canvas.delete", &json!({"canvas": first})).unwrap();
+        let doc = solidcraft_doc::Document::from_json(&s.doc.to_json()).unwrap();
+        *s.doc_mut() = doc;
+        let second = s.execute("canvas.insert", &params).unwrap()["canvas"].as_u64().unwrap();
+        assert!(second > first, "deleted canvas {first} was reused as {second}");
+        assert!(s.execute("canvas.edit", &json!({"canvas": first, "width": 500})).is_err());
     }
 
     #[test]
@@ -183,7 +200,7 @@ mod tests {
         assert!((s.doc.canvases[0].width - 200.0).abs() < 1e-9);
         s.execute("canvas.edit", &json!({"canvas": "Canvas1", "opacity": 0.8, "angle": 90})).unwrap();
         // Undo-able and saved with the design.
-        let back = solvecraft_doc::Document::from_json(&s.doc.to_json()).unwrap();
+        let back = solidcraft_doc::Document::from_json(&s.doc.to_json()).unwrap();
         assert_eq!(back.canvases, s.doc.canvases);
         s.execute("canvas.delete", &json!({"canvas": id})).unwrap();
         assert!(s.doc.canvases.is_empty());

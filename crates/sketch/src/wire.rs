@@ -3,10 +3,10 @@
 //! They are reference geometry: drawn and usable as paths, not part of profiles or the solver.
 
 use serde::{Deserialize, Serialize};
-use solvecraft_geom::Vec3;
+use solidcraft_geom::Vec3;
 
 use crate::link::{Link, LinkGeom, LinkKind, LinkSource};
-use crate::model::{Result, Sketch, SketchError};
+use crate::model::{Result, Sketch, SketchError, in_range3};
 
 /// Most points one wire may have.
 pub const MAX_WIRE_POINTS: usize = 100_000;
@@ -61,9 +61,13 @@ pub fn fit_polyline(fit: &[Vec3]) -> Vec<Vec3> {
         return fit.to_vec();
     }
     let n = fit.len();
+    // A curve that ends where it starts is smooth through that point (its neighbours wrap).
+    let closed = n > 3 && fit[0].dist(fit[n - 1]) < 1e-9;
     let at = |i: isize| -> Vec3 {
         match usize::try_from(i) {
             Ok(i) if i < n => fit[i],
+            Ok(_) if closed => fit[1],
+            Err(_) if closed => fit[n - 2],
             // Mirrored end tangents.
             Ok(_) => fit[n - 1] * 2.0 - fit[n - 2],
             Err(_) => fit[0] * 2.0 - fit[1],
@@ -97,7 +101,7 @@ fn clean(w: &[Vec3]) -> Option<Vec<Vec3>> {
     }
     let mut out: Vec<Vec3> = Vec::new();
     for p in w {
-        if !(p.is_finite() && p.x.abs() < 1e9 && p.y.abs() < 1e9 && p.z.abs() < 1e9) {
+        if !in_range3(*p) {
             return None;
         }
         if out.last().is_none_or(|l| l.dist(*p) > 1e-9) {
@@ -118,14 +122,14 @@ fn drawn_polyline(fit: &[Vec3]) -> Result<Vec<Vec3>> {
     if fit.is_empty() || fit.len() > MAX_FIT_POINTS {
         return Err(SketchError::Invalid(format!("a 3D curve needs 1 to {MAX_FIT_POINTS} points")));
     }
-    if fit.iter().any(|p| !(p.is_finite() && p.x.abs() < 1e9 && p.y.abs() < 1e9 && p.z.abs() < 1e9)) {
+    if fit.iter().any(|p| !in_range3(*p)) {
         return Err(SketchError::Invalid("3D point out of range".into()));
     }
     if fit.windows(2).any(|w| w[0].dist(w[1]) < 1e-9) {
         return Err(SketchError::Invalid("the points of a 3D curve must differ".into()));
     }
     let pts = fit_polyline(fit);
-    if pts.iter().any(|p| !(p.is_finite() && p.x.abs() < 1e9 && p.y.abs() < 1e9 && p.z.abs() < 1e9)) {
+    if pts.iter().any(|p| !in_range3(*p)) {
         return Err(SketchError::Invalid("3D spline samples out of range".into()));
     }
     Ok(pts)
@@ -163,7 +167,7 @@ impl Sketch {
                 || w.pts.len() > MAX_WIRE_POINTS
                 || w.fit.len() > MAX_FIT_POINTS
                 || (w.pts.len() == 1 && w.fit.len() != 1)
-                || w.pts.iter().chain(&w.fit).any(|p| !(p.is_finite() && p.x.abs() < 1e9 && p.y.abs() < 1e9 && p.z.abs() < 1e9))
+                || w.pts.iter().chain(&w.fit).any(|p| !in_range3(*p))
             {
                 return Err(SketchError::Invalid("3D curve arrays, ids or point bounds are invalid".into()));
             }
@@ -196,7 +200,7 @@ impl Sketch {
         }
         let id = if geom.is_empty() {
             let id = self.fresh("j")?;
-            self.links.push(Link { id: id.clone(), kind, source, face_name: None, auto_face: false, lost: false });
+            self.links.push(Link { id: id.clone(), kind, source, face_name: None, edge_name: None, auto_face: false, lost: false });
             id
         } else {
             self.add_link(kind, source, geom)?
@@ -241,7 +245,7 @@ impl Sketch {
     /// Move a fit point of a drawn 3D curve, and every other drawn point at the same place
     /// (curves drawn end to end stay joined). Returns how many points moved.
     pub fn move_drawn_point(&mut self, wire: &str, index: usize, to: Vec3) -> Result<usize> {
-        if !(to.is_finite() && to.x.abs() < 1e9 && to.y.abs() < 1e9 && to.z.abs() < 1e9) {
+        if !in_range3(to) {
             return Err(SketchError::Invalid("3D point out of range".into()));
         }
         let w = self.wire_index(wire).ok_or_else(|| SketchError::Unknown(wire.into()))?;
@@ -329,5 +333,21 @@ mod tests {
         assert!(sk.add_link_with_wires(LinkKind::Include, LinkSource::Origin, &[], &[vec![Vec3::ZERO; MAX_WIRE_POINTS + 1]]).is_err());
         assert_eq!(sk, before);
         sk.validate_wires().unwrap();
+    }
+
+    /// Through points around a circle that end where they start, the spline turns as smoothly at
+    /// the closing point as everywhere else; an open one keeps its mirrored end tangents.
+    #[test]
+    fn a_closed_spline_is_smooth_where_it_closes() {
+        let ring: Vec<Vec3> = (0..=12).map(|k| f64::from(k) * std::f64::consts::TAU / 12.0).map(|a| Vec3::new(a.cos(), a.sin(), 0.0)).collect();
+        let pts = fit_polyline(&ring);
+        let dir = |a: Vec3, b: Vec3| (b - a).normalized().unwrap();
+        let n = pts.len();
+        let (start, end) = (dir(pts[0], pts[1]), dir(pts[n - 2], pts[n - 1]));
+        let mid = |i: usize| dir(pts[i - 1], pts[i]).dot(dir(pts[i], pts[i + 1]));
+        assert!(start.dot(end) >= mid(SPAN_SAMPLES) - 1e-9, "turn at the close {}, at a fit point {}", start.dot(end), mid(SPAN_SAMPLES));
+        let open = fit_polyline(&ring[..12]);
+        assert_eq!(open.first(), ring.first());
+        assert_eq!(open.last(), ring.get(11));
     }
 }

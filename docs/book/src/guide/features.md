@@ -7,16 +7,59 @@ it.
 
 | Panel | Features |
 |---|---|
-| Create | extrude (one side, two sides, symmetric, taper, start offset, to a distance or through all; new body, join, cut, intersect), revolve, sweep, loft, box, cylinder, sphere, torus, coil, pipe, rib, web, emboss, hole (simple, counterbore, countersink, tapped; on faces or at sketch points), thread, rectangular/circular/path patterns, mirror |
+| Create | extrude (one side, two sides, symmetric, taper, start offset, to a distance or through all; new body, join, cut, intersect; thin walls along curves), revolve, sweep, loft, box, cylinder, sphere, torus, coil, pipe, rib, web, emboss, hole (simple, counterbore, countersink, tapped; on faces, at distances from edges, or at sketch points), thread, rectangular/circular/path patterns, mirror |
 | Modify | press pull, fillet, chamfer, shell, draft, scale, combine, split body, offset face, replace face, move/copy, align, remove |
 | Construct | offset plane, plane at angle, plane along path |
-| Inspect | measure, section analysis, interference, curvature comb and map, zebra, draft, minimum radius, isocurves, centre of mass |
+| Inspect | measure, section analysis, interference, compare bodies, curvature comb and map, zebra, draft, minimum radius, isocurves, centre of mass |
 
 Extrude automatically selects **Join** for additions when the active component already has a
 solid, including sideways elbow connections and screw bosses that meet only part of a face.
 Extruding into existing material selects **Cut**. In an empty component it selects **New Body**;
 choose **New Body** explicitly to keep an addition separate. Changing the default does not alter
-operations already saved in a design.
+operations already saved in a design. A Join (of an extrude, revolve, sweep, loft, primitive…)
+whose material touches none of its target bodies still joins it, to the first one as a separate
+piece, and the feature's warning says so: "`Body1` is now in 2 separate pieces". Combine joins
+the bodies it is given without that warning.
+
+**Extrude to a picked target** (Preferences › Design, off by default) lets a pick choose the
+extent. With it on and a profile selected in the solid Extrude dialog, picking a face away from
+its plane, a curved face, an off-plane vertex or a parallel plane automatically switches
+**Distance** to **To Object**. Coplanar faces still join the profile selection; non-parallel
+planes are not targets. The extent can still be chosen manually. For a new extrusion without
+start or end offsets or a From Object input, the target also sets the stored distance and
+one-sided direction, so returning to **Distance** keeps that reach. Thin Extrude keeps its
+existing picks. With the setting off, picks only add profiles, as before.
+
+A positive extrude taper slopes the side walls outward, so the profile grows along the
+extrusion direction and the far end is larger; a negative taper slopes them inward, making
+the far end smaller. For example, a 10 × 10 mm square extruded 10 mm with `taper: "5 deg"`
+has an approximately 11.75 × 11.75 mm far face; with `taper: "-5 deg"`, it is approximately
+8.25 × 8.25 mm.
+
+A taper slopes the sides of any profile, sketch text included: lines, arcs and spline or conic
+curves move in or out together, and a flat tip shorter than the taper closes to a point. On
+spline and conic sides the slope is approximate: the moved outline is a curve of the same kind
+within 2 % of the taper's offset (or 10 µm) of the true one, a curve that turns too much for
+that being cut into pieces first; where a curve bends tighter than the offset, the offset folds
+and is smoothed over. A taper steeper than the profile's details (a stroke, a curve or a gap
+narrower than it) is refused with that reason; a smaller taper or distance builds. A taper
+composes with a start offset (a drafted pocket that starts part way up a part): the offset moves
+the profile along the normal and the sides are drafted from there, so the profile is the section
+at the start whatever the offset. A taper with a two-sided or symmetric extent is not built yet
+and says so.
+
+**Thin Extrude** (`thin: true` on `solid.extrude`, the Thin Extrude box in its dialog) builds a
+wall of constant thickness along sketch curves instead of filling profiles: open chains (a single
+wall) and closed loops (a ring), lines, arcs, circles, ellipses and splines. In the dialog, a
+picked profile stands for the curves around it (its outline and its holes). The wall lies on the curves' centre, inside,
+outside, or on both sides with two thicknesses (`side`: `center`, `inside`, `outside`,
+`two_sides` with `thickness2`). A closed loop's inside is the area it encloses; an open chain's
+is the side it bends toward (the inside of a U), and a straight line's is the left of its first
+curve as drawn. Curves that meet end to end are one chain whose corners are mitred; walls that
+cross or meet (a ring and a cross, a honeycomb) become one piece. Every extent, operation and target of an extrude applies, and a taper
+for walls of straight lines or of whole circles. A wall thicker than the
+radius of a curve it follows on the inside is refused. Spline walls follow the exact offset
+within 0.0001 mm.
 
 Editing an extrusion retains its signed distances, From/To Object inputs, taper expressions
 and explicit body targets. Revolve edits retain world, sketch and explicit-line axes, both
@@ -33,6 +76,13 @@ intersected or ambiguous boundary cannot satisfy that whole-source reference; ch
 hole identities also makes it lost. Older curve-span selections retain their exact stored
 multisets. If an older feature has already lost its profile after subdivision changed, edit
 the feature and reselect the intended current region to capture the new identity.
+
+New symmetric solid extrusions treat the entered distance as the total thickness and split it evenly
+around the start plane: 10 mm spans -5 to +5 mm on an XY sketch. Switching from One Side to
+Symmetric keeps the entered total thickness. Through All still reaches targets in both
+directions, and Two Sides retains its independent distances. Symmetric extrusions saved before
+this change keep their original per-side distances when reopened or edited. Selecting another direction
+in the feature editor uses the current total-distance convention.
 
 New symmetric revolves split the entered angle evenly around the sketch profile, regardless
 of which way the selected axis points. Two Sides measures the second angle backward and the
@@ -52,9 +102,58 @@ unsupported. A new Emboss without an explicit face infers a unique eligible supp
 select the face when the target is ambiguous. Older saved features without a face retain their
 planar placement.
 
+A **Hole** with **Single** placement can also sit at distances from up to two straight edges of
+its face. After picking the face, click **Reference 1** and pick an edge, then pick a second one
+into **Reference 2**. Each edge gets a **Distance** row, measured from where you picked; the
+canvas shows each one as a dimension from the edge to the hole's centre, with a box beside it.
+Type a distance in either place and the hole moves so its centre is that far from the edge,
+measured in the face's plane. Moving the hole measures the distances again. The hole keeps its
+distances when the part changes: it follows its edges, and the distances are parameters like its
+diameter.
+
+A **Hole** with **Single** placement drills where you pick a planar face. A pick on or near a
+point of a shown sketch that lies on that face, such as a circle's centre, places the hole
+exactly at that point, as **Multiple** placement picks it; **Select Other** (press and hold) also
+offers the face where you clicked. The corners of text outlines don't count, nor do projected
+points while the sketch hides projected geometry. The hole keeps that place on the face; to have
+holes follow later edits of the sketch, place them with **Multiple**.
+
+Two settings under **Create Hole** in **Preferences › Design**, both off by default, change how
+a Single hole is placed:
+
+- **Snap to face and edge centres**: the face itself offers snap points too: its middle, and the centre
+  of each round edge on it (a boss standing on it, a rounded corner, a hole already in it). While
+  the cursor is over the face they show as small marks; a pick near one, or on or beside one of
+  those round edges, places the hole at that centre, and the mark it takes is named. Hold **Alt**
+  or **Ctrl** to place the hole exactly where you click.
+- **Move holes by clicking or dragging**: each placed hole has a handle at its centre. Drag it
+  to move the hole (it snaps when snapping is on), or click it to take the hole out. A pick
+  elsewhere on a face that already has a hole moves the hole there instead of taking it out.
+  **Edit Feature** shows the handle as well, so a hole can be moved later.
+
+The Hole dialog draws a section through the hole as its options make it (type, extents, drill
+point, tapped) and puts each size in a field beside the dimension it sets; hovering a field, or
+typing in it, lights its dimension.
+
 Fillets and chamfers handle straight edges between planar faces, whole smooth loops, runs of
 neighbouring edges with mitred or spherical corners, and closed chains of curved edges (a rolling
 ball). See the roadmap's known limitations for the rest.
+
+**Curvature (G2)** in the Fillet dialog's **Radius Type** blends straight edges between two
+planar faces with an exact quintic section. The tangent plane and curvature match each side
+face: curvature goes to zero at both contact rails, unlike a circular G1 fillet. Each end
+must meet one planar face; perpendicular and sloped planar ends are supported. Curved
+edges/faces, multi-face ends, and intersecting corner blends are not supported; they return
+an error, not a G1 fallback.
+**Equivalent Radius** sets the same contact setback as a circular fillet (for a right angle,
+setback equals the entered value); it is not a constant curvature radius. Reduce/Taper to Fit
+are unavailable for this type.
+
+Scripts and MCP use the same command, for example on a 20 mm box:
+```json
+{"command": "solid.fillet", "params": {"edges": [[20, 0, 10]], "radius": 2, "type": "curvature"}}
+```
+`type: "g2"` is an alias. Existing fillets still default to circular, constant-radius G1 blends.
 
 Feature references to faces and edges are stored by name, so an upstream edit that moves geometry
 keeps them on the right face (see [Persistent naming](../dev/naming.md)). When a reference can't
@@ -66,6 +165,43 @@ and 0.5 places the plane halfway along its length. The plane is perpendicular to
 local segment. Preview does not change the design; OK creates one editable timeline feature.
 The plane follows later path edits. Curved paths use their sampled polyline; absolute distance,
 reference-object placement and multi-curve chains are not yet available in this dialog.
+
+## Comparing two bodies
+
+**Compare Bodies** (`inspect.compare`) lays two versions of one part over each other, such as a
+part and the same part exported by another program, and finds the places where only one of them
+has material. It works from the two surfaces, not from a boolean of the bodies, so it also
+compares bodies that share almost every face, the case a boolean (Combine, Interference) handles
+worst.
+
+```json
+{"command": "inspect.compare", "params": {"a": "Bracket", "b": "Bracket (2)", "tolerance": 0.01, "color": true}}
+```
+
+Without `a` and `b` it compares the two selected bodies, or the design's only two. Both bodies
+are measured (volume, area, centre of mass and box, and `difference`: b − a of each). Each
+surface is sampled at the corners of its triangles and at points at most `spacing` (0.5 mm)
+apart on larger faces, and every sample measures its distance to the other surface: `deviation`
+gives the largest and the mean distance each way. Samples further than `tolerance` (0.01 mm) form
+the **regions**: `only_in_a` where `a` has material and `b` has none, `only_in_b` the other way
+round. Each region gives its volume, the deviating surface area, the largest deviation and where
+it is, its centre and box, and the faces of each body it lies on (`faces_a`, `faces_b`, numbered
+as `model.faces` lists them), largest volume first. The volume is integrated along a grid of
+parallel lines through the region (`resolution` gives their spacing), so a thin sliver is
+measured as well as a block. `identical` is true when no region is found, and `verdict` says it in
+one line. `warnings` lists what makes the result less certain: a body whose surface does not
+enclose the volume it measures (open, or with faces that failed to import), and lines left out of
+a region's volume because they crossed a gap. With `color`, the faces that hold a region turn
+red where only `a` has material and green where only `b` has, on both bodies: the faces mostly
+beyond the tolerance (a small change on a large face leaves the face alone), or, for a region
+with none, the face with the largest share.
+That is one undo step; without `color` the command changes nothing.
+
+The bodies are meshed within a quarter of the tolerance. The kernel meshes no finer than a
+millionth of a body's size, so keep the tolerance at least twice that (0.02 mm for a part 10 m
+across). Large bodies are sampled more coarsely, at about `max_points` (eight million) points
+each; `sampling.spacing_mm` says what was used, and a larger `max_points` (up to 50 million)
+samples them finer, at the cost of time.
 
 ## Editing a feature from a script
 
@@ -97,13 +233,13 @@ still be added through `set`. The fields of the common features:
 
 | Feature | Fields |
 |---|---|
-| Extrude | `extent`: {`distance`, `direction`: positive\|negative\|symmetric, `distance2`, `start_offset`, `through_all`, `taper`, `to`, `to_offset`, `from`}; `operation`: new_body\|join\|cut\|intersect; `targets`; `profiles`; `sketch` |
+| Extrude | `extent`: {`distance`, `direction`: positive\|negative\|symmetric, `distance2`, `start_offset`, `through_all`, `taper`, `to`, `to_offset`, `from`}; `operation`: new_body\|join\|cut\|intersect; `targets`; `profiles`; `sketch`; `thin`: {`curves`, `thickness`, `side`: center\|inside\|outside\|two_sides, `thickness2`} |
 | Revolve | `angle`, `angle2`, `symmetric`, `axis`, `to`, `operation`, `targets`, `profiles`, `sketch` |
 | Fillet | `radius`, `edges` (a point on each edge), `body`, `style` |
 | Chamfer | `distance`, `distance2` or `angle`, `flip`, `edges`, `body` |
 | Box | `length`, `width`, `height`, `corner`, `operation` |
 | Cylinder | `radius`, `height`, `base`, `axis`, `operation` |
-| Hole | `diameter`, `depth`, `position`, `direction`, `hole` (simple, drilled, counterbore, countersink), `thread`, `to` |
+| Hole | `diameter`, `depth`, `position`, `direction`, `hole` (simple, drilled, counterbore, countersink), `thread`, `to`, `references` (an `edge` point and a `distance` each) |
 | Shell | `thickness`, `faces`, `direction`, `body`, `tangent_chain` |
 | Draft | `angle`, `faces`, `neutral`, `pull`, `body` |
 | Offset face | `distance`, `faces`, `body` |
@@ -111,6 +247,16 @@ still be added through `set`. The fields of the common features:
 | Mirror | `plane`, `features`, `bodies`, `combine` |
 
 For any other feature, `timeline.inspect` shows the fields.
+
+Where a command takes a face as a point (`face.delete`, `solid.shell`, `solid.draft`,
+`solid.offset_face`, `solid.split_face`, the `faces` of `solid.replace_face`, and the `face` of
+`sheet.convert`), a script can give the face's name instead, as `model.faces` lists it:
+`{"command": "face.delete", "params": {"faces": ["F2:side#1", "F2:side#2"], "body": "Plate"}}`.
+`model.faces` also lists a `point` on each face that picks it (the centroid of a face with a hole
+in it is in the hole, that of a half cylinder inside the cylinder) and, for a cylindrical face,
+its `cylinder`: `origin` and `axis` of its axis, and `radius`. A name that is more than one face
+(the pieces of a split face, or one face of several bodies) is refused; `body` says which body to
+look on.
 
 Press **Delete** on anything selected (bodies, faces, sketches, features, planes, components,
 canvases). It runs as one undoable step and lists the features that would go with it or fail.

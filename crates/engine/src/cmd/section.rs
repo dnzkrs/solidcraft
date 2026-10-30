@@ -2,7 +2,7 @@
 //! positive side is hidden). It changes no geometry and is not an undo step.
 
 use serde_json::{Value, json};
-use solvecraft_geom::{Plane, Vec3};
+use solidcraft_geom::{Plane, Vec3};
 
 use super::CommandSpec;
 use crate::params::{bad, bool_, expr, vec3};
@@ -12,7 +12,7 @@ pub static COMMANDS: &[CommandSpec] =
     &[CommandSpec::new("inspect.section", "Section Analysis", section).at("SOLID", "INSPECT").icon("section").noundo().params(
         "plane: XY|XZ|YZ | construction plane name or id | {origin, normal}; offset?: expr along the plane's normal (XY: +Z, XZ: +Y, YZ: +X); \
          at?: expr, the cut's world coordinate on the named plane's axis (XY: Z, XZ: Y, YZ: X), instead of offset; \
-         flip?: bool; or clear: true. Returns the cut's origin and normal, and for a named plane its axis and at",
+         flip?: bool; hatch?: bool (hatch the cut faces, in each body's colour; default true); or clear: true. Returns the cut's origin and normal, and for a named plane its axis and at",
     )];
 
 fn section(s: &mut Session, p: &Value) -> Result<Value> {
@@ -35,13 +35,13 @@ fn section(s: &mut Session, p: &Value) -> Result<Value> {
         // A construction plane (name or id): where it is now.
         Some(v @ (Value::String(_) | Value::Number(_))) => {
             let r = super::features::plane_param(s, Some(v), cmd)?;
-            let solvecraft_doc::PlaneRef::Construction { name } = &r else { return Err(bad(cmd, "`plane` must be a plane")) };
+            let solidcraft_doc::PlaneRef::Construction { name } = &r else { return Err(bad(cmd, "`plane` must be a plane")) };
             let st = s.model.state();
             let pl = st
                 .construct
                 .iter()
                 .find(|c| &c.name == name)
-                .and_then(|c| if let solvecraft_doc::construct::ConstructGeom::Plane(pl) = &c.geom { Some(*pl) } else { None })
+                .and_then(|c| if let solidcraft_doc::construct::ConstructGeom::Plane(pl) = &c.geom { Some(*pl) } else { None })
                 .ok_or_else(|| bad(cmd, format!("construction plane `{name}` is not built (rolled back, suppressed or failed)")))?;
             (pl.origin, pl.normal(), None)
         }
@@ -54,7 +54,7 @@ fn section(s: &mut Session, p: &Value) -> Result<Value> {
     };
     let length = |key: &str| -> Result<Option<f64>> {
         match expr(p, key) {
-            Some(e) => s.doc.eval(&e, solvecraft_doc::expr::Kind::Length).map(Some).map_err(|e| bad(cmd, format!("{key}: {e}"))),
+            Some(e) => s.doc.eval(&e, solidcraft_doc::expr::Kind::Length).map(Some).map_err(|e| bad(cmd, format!("{key}: {e}"))),
             None => Ok(None),
         }
     };
@@ -72,8 +72,9 @@ fn section(s: &mut Session, p: &Value) -> Result<Value> {
     let normal = if bool_(p, "flip").unwrap_or(false) { -normal } else { normal };
     let origin = origin + normal * offset * if bool_(p, "flip").unwrap_or(false) { -1.0 } else { 1.0 };
     s.section = Some((origin, normal));
+    s.section_hatch = bool_(p, "hatch").unwrap_or(true);
     s.revision += 1;
-    let mut section = json!({"origin": origin, "normal": normal});
+    let mut section = json!({"origin": origin, "normal": normal, "hatch": s.section_hatch});
     if let Some(i) = axis {
         section["axis"] = json!(["X", "Y", "Z"].get(i).copied().unwrap_or("?"));
         section["at"] = json!(axis_component(origin, i));

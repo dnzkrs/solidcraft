@@ -3,10 +3,10 @@ use std::collections::HashMap;
 use std::hash::{Hash, Hasher};
 use std::sync::Arc;
 
-use solvecraft_engine::doc::ModelState;
-use solvecraft_engine::geom::{Loop2, Plane, Region2, Vec2, Vec3};
-use solvecraft_engine::render::{PixelCurveView, SampledPath, SamplingBudget, SamplingQuality, sample_segment, sample_segment_unclipped};
-use solvecraft_engine::sketch::Sketch;
+use solidcraft_engine::doc::ModelState;
+use solidcraft_engine::geom::{Loop2, Plane, Region2, Vec2, Vec3};
+use solidcraft_engine::render::{PixelCurveView, SampledPath, SamplingBudget, SamplingQuality, sample_segment, sample_segment_unclipped};
+use solidcraft_engine::sketch::Sketch;
 
 use crate::SolveApp;
 use crate::viewport::Proj;
@@ -26,8 +26,35 @@ pub fn pixel_view(proj: &Proj, ppp: f32) -> PixelCurveView {
     PixelCurveView { vp: proj.vp, width_px: f64::from(proj.rect.width() * ppp), height_px: f64::from(proj.rect.height() * ppp) }
 }
 
+/// The pieces a curve is drawn and picked from. An infinite line (#1359) reaches across the whole
+/// view: through the point of its line nearest the view's centre, far past the view each way
+/// (the sampler clips it to the view). Only the display changes: the line keeps its two points.
+fn display_segs(sketch: &Sketch, index: usize, plane: &Plane, proj: &Proj) -> Vec<solidcraft_engine::geom::Seg2> {
+    use solidcraft_engine::geom::Seg2;
+    let segs = sketch.exact_segs(index).unwrap_or_else(|| sketch.segs(index));
+    if !sketch.curves.get(index).is_some_and(|c| c.infinite) {
+        return segs;
+    }
+    let target = proj.cam.target - plane.origin;
+    let centre = Vec2::new(target.dot(plane.x), target.dot(plane.y));
+    let reach = 4.0 * (proj.cam.distance.abs() + proj.cam.half_height().abs()) + 1.0;
+    segs.into_iter()
+        .map(|s| match s {
+            Seg2::Line { a, b } => match (b - a).normalized() {
+                Some(dir) => {
+                    let mid = a + dir * (centre - a).dot(dir);
+                    let reach = reach + mid.dist(centre);
+                    Seg2::Line { a: mid - dir * reach, b: mid + dir * reach }
+                }
+                None => s,
+            },
+            other => other,
+        })
+        .collect()
+}
+
 pub fn curve_with_budget(sketch: &Sketch, index: usize, plane: &Plane, proj: &Proj, ppp: f32, budget: &mut SamplingBudget) -> SampledPath {
-    let segments = sketch.exact_segs(index).unwrap_or_else(|| sketch.segs(index));
+    let segments = display_segs(sketch, index, plane, proj);
     let mut local = SamplingBudget::new(budget.remaining_vertices.min(4096), budget.remaining_nodes.min(65_536));
     let initial = local.clone();
     let mut out = SampledPath { parts: Vec::new(), quality: SamplingQuality::Complete, vertex_count: 0 };
@@ -47,7 +74,7 @@ pub fn curve_with_budget(sketch: &Sketch, index: usize, plane: &Plane, proj: &Pr
 pub fn curve_unclipped(sketch: &Sketch, index: usize, plane: &Plane, proj: &Proj, ppp: f32) -> SampledPath {
     let mut budget = SamplingBudget::new(4096, 65_536);
     let mut out = SampledPath { parts: Vec::new(), quality: SamplingQuality::Complete, vertex_count: 0 };
-    for segment in sketch.exact_segs(index).unwrap_or_else(|| sketch.segs(index)) {
+    for segment in display_segs(sketch, index, plane, proj) {
         let sampled = sample_segment_unclipped(&segment, plane, &pixel_view(proj, ppp), &mut budget);
         if sampled.quality != SamplingQuality::Complete {
             out.quality = sampled.quality;
@@ -114,23 +141,26 @@ pub fn region_triangles(region: &Region2, plane: &Plane, proj: &Proj, ppp: f32) 
     display_region(region, plane, proj, ppp).map_or_else(Vec::new, |display| fill_triangles(&display, &mut 65_536))
 }
 
-/// Bound the slab triangulator's allocation before calling it. Every slab can emit
-/// at most one triangle per edge; complex fills are omitted rather than cut into holes.
+/// Bound the slab triangulator's allocation before calling it. Every slab emits one
+/// triangle per edge crossing it; complex fills are omitted rather than cut into holes.
 pub fn fill_triangles(display: &Region2, budget: &mut usize) -> Vec<[Vec2; 3]> {
-    let mut heights = Vec::new();
-    let mut edges = 0usize;
+    let mut spans = Vec::new();
     for loop_ in std::iter::once(&display.outer).chain(&display.holes) {
         for segment in &loop_.segs {
             let (a, b) = (segment.start(), segment.end());
             if (a.y - b.y).abs() > 1e-12 {
-                edges += 1;
-                heights.extend([a.y, b.y]);
+                spans.push((a.y.min(b.y), a.y.max(b.y)));
             }
         }
     }
+    let mut heights: Vec<f64> = spans.iter().flat_map(|&(lo, hi)| [lo, hi]).collect();
     heights.sort_by(f64::total_cmp);
     heights.dedup_by(|a, b| (*a - *b).abs() < 1e-12);
-    if edges.saturating_mul(heights.len().saturating_sub(1)) > *budget {
+    // An edge crosses the slabs between its end heights. Counting every edge in every slab
+    // overestimated a zoomed-in ring a hundredfold and dropped its hover fill (#164).
+    let slab = |y: f64| heights.partition_point(|h| *h < y - 1e-12);
+    let crossings = spans.iter().fold(0usize, |n, &(lo, hi)| n.saturating_add(slab(hi).saturating_sub(slab(lo))));
+    if crossings > *budget {
         return Vec::new();
     }
     let triangles = display.triangulate(1.0);
@@ -241,3 +271,7 @@ pub fn curve_sample(app: &SolveApp, sketch: u64, index: usize, plane: &Plane, pr
         )),
     }
 }
+
+#[cfg(test)]
+#[path = "infinite_line_display_tests.rs"]
+mod infinite_line_display_tests;

@@ -1,15 +1,16 @@
 //! Independent copies of a component definition graph, assembled and evaluated atomically.
+use solidcraft_doc::BodyName;
 use std::collections::{BTreeMap, BTreeSet};
 
 use crate::params::bad;
 use crate::{Result, Sel, Session};
 use serde_json::{Value, json};
-use solvecraft_doc::{Document, Feature, FeatureKind, Mat, Occurrence};
+use solidcraft_doc::{Document, Feature, FeatureKind, Mat, Occurrence};
 
 const CMD: &str = "component.paste_new";
 const MAX_WORK: usize = 10_000;
 
-fn mesh_distance(mesh: &solvecraft_geom::Mesh, point: solvecraft_geom::Vec3) -> f64 {
+fn mesh_distance(mesh: &solidcraft_geom::Mesh, point: solidcraft_geom::Vec3) -> f64 {
     mesh.triangles
         .iter()
         .filter_map(|triangle| mesh.tri(triangle))
@@ -32,7 +33,7 @@ fn mesh_distance(mesh: &solvecraft_geom::Mesh, point: solvecraft_geom::Vec3) -> 
         .fold(f64::INFINITY, f64::min)
 }
 
-fn material_probe_matches(a: &solvecraft_geom::Mesh, b: &solvecraft_geom::Mesh, point: solvecraft_geom::Vec3, tol_a: f64, tol_b: f64) -> bool {
+fn material_probe_matches(a: &solidcraft_geom::Mesh, b: &solidcraft_geom::Mesh, point: solidcraft_geom::Vec3, tol_a: f64, tol_b: f64) -> bool {
     if !point.is_finite() || !tol_a.is_finite() || !tol_b.is_finite() || tol_a <= 0. || tol_b <= 0. {
         return false;
     }
@@ -47,7 +48,7 @@ fn material_probe_matches(a: &solvecraft_geom::Mesh, b: &solvecraft_geom::Mesh, 
     let offset = 4. * tol_a.max(tol_b);
     let mut material = false;
     let mut void = false;
-    for axis in [solvecraft_geom::Vec3::X, solvecraft_geom::Vec3::Y, solvecraft_geom::Vec3::Z] {
+    for axis in [solidcraft_geom::Vec3::X, solidcraft_geom::Vec3::Y, solidcraft_geom::Vec3::Z] {
         for sign in [-1., 1.] {
             let q = point + axis * (sign * offset);
             if !q.is_finite() {
@@ -92,6 +93,24 @@ fn unique(base: &str, used: &mut BTreeSet<String>) -> String {
     }
     used.insert(name.clone());
     name
+}
+
+/// Whether `built`, the bodies a feature made, are the ones its `stored` names give, one for one. A
+/// name is built as stored, or as `stored (n)` when a body of that name exists already: the solids
+/// of a STEP file that share a label are stored as `X`, `X`, `X` and built as `X`, `X (2)`, `X (3)`,
+/// and a second import of a file builds `Aa (2)` for the stored `Aa`.
+pub(super) fn named_by(stored: &[String], built: &[String]) -> bool {
+    !stored.is_empty()
+        && stored.len() == built.len()
+        && stored.iter().zip(built).all(|(stored, built)| {
+            let base = stored.trim();
+            !base.is_empty()
+                && (built == base
+                    || built
+                        .strip_prefix(base)
+                        .and_then(|rest| rest.strip_prefix(" (")?.strip_suffix(')'))
+                        .is_some_and(|n| !n.is_empty() && n.bytes().all(|b| b.is_ascii_digit())))
+        })
 }
 
 fn graph(doc: &Document, root: u64) -> Result<Vec<u64>> {
@@ -234,6 +253,11 @@ pub(super) fn paste(
         };
         let name = unique(&c.name, &mut used);
         let new = scratch.doc_mut().add_component(Some(&name), mapped_parent)?;
+        // A copy keeps the definition's part properties.
+        if let Some(added) = scratch.doc_mut().components.iter_mut().find(|x| x.id == new) {
+            added.metadata = c.metadata.clone();
+            added.properties = c.properties.clone();
+        }
         components.insert(*old, new);
         if *old != component {
             scratch.doc_mut().occurrences.retain(|o| o.component != new);
@@ -251,7 +275,8 @@ pub(super) fn paste(
     clone_path.push(root_occurrence);
     if let Some(o) = scratch.doc_mut().occurrences.iter_mut().find(|o| o.id == root_occurrence) {
         o.transform = transform;
-        o.grounded = source_occurrence.as_ref().is_some_and(|o| o.grounded);
+        // A copy starts free, even of a grounded part (#2804); the parts inside it keep theirs.
+        o.grounded = false;
     }
     if let Some(o) = &source_occurrence {
         occurrences.insert(o.id, root_occurrence);
@@ -271,17 +296,26 @@ pub(super) fn paste(
     }
     // Collect historical outputs too: a later Combine may have consumed a named tool body.
     let mut outputs: BTreeMap<u64, Vec<String>> = BTreeMap::new();
+    // The names the bodies of a feature have in the model, where they are its stored names, numbered.
+    let mut shown: BTreeMap<u64, Vec<String>> = BTreeMap::new();
     for f in &feats {
         if let Some(result) = s.model.result(f.id) {
             let created: Vec<_> = result.state.bodies.iter().filter(|b| b.feature == f.id).map(|b| b.name.clone()).collect();
             for name in &created {
                 bodies.entry(name.clone()).or_insert_with(|| unique(name, &mut used));
             }
+            if named_by(&f.body_names, &created) {
+                shown.insert(f.id, created.clone());
+            }
             outputs.insert(f.id, created);
         }
-        for name in &f.body_names {
-            if !name.is_empty() {
-                bodies.entry(name.clone()).or_insert_with(|| unique(name, &mut used));
+        // Later features name a body as the model shows it. Where that differs from the stored name,
+        // the stored name is only a label (the first body of another import may be called so).
+        if !shown.contains_key(&f.id) {
+            for name in &f.body_names {
+                if !name.is_empty() {
+                    bodies.entry(name.clone()).or_insert_with(|| unique(name, &mut used));
+                }
             }
         }
         if bodies.len() > MAX_WORK {
@@ -294,13 +328,13 @@ pub(super) fn paste(
         if body.body.is_mesh() {
             return Err(bad(CMD, "Paste New of a reassigned mesh body is not supported yet"));
         }
-        let offset = source.model_body_offset(body).copied().unwrap_or(solvecraft_doc::IDENTITY);
+        let offset = source.model_body_offset(body).copied().unwrap_or(solidcraft_doc::IDENTITY);
         // An external transfer establishes the local baseline in this graph.
         // Freeze AFTER that boundary, then replay it as an identity ownership event.
         let entry = feats.iter().find(|f| {
             !f.suppressed
                 && matches!(&f.kind, FeatureKind::BodyTransfer { bodies, from, to, .. }
-            if !selected.contains(from) && bodies.contains(&body.name)
+            if !selected.contains(from) && bodies.iter().any(|b| *b == body.name)
                 && s.model.result(f.id).is_some_and(|result| !result.skipped && result.error.is_none()
                     && result.state.body(&body.name).is_some_and(|entered| source.model_body_component(entered) == *to)))
         });
@@ -313,13 +347,13 @@ pub(super) fn paste(
         let entered = entry.and_then(|f| s.model.result(f.id)).map(|r| r.state.clone());
         let base = entered.as_ref().and_then(|st| st.body(&body.name)).or_else(|| before.as_ref().and_then(|st| st.body(&body.name))).unwrap_or(body);
         let baseline_component = source.model_body_component(base);
-        let geometry = solvecraft_kernel::transform_matrix(&base.body, offset)?;
-        let step = solvecraft_kernel::step_export(&[&geometry], "SolidCraft independent reassigned body")?;
+        let geometry = solidcraft_kernel::transform_matrix(&base.body, offset)?;
+        let step = solidcraft_kernel::step_export(&[&geometry], "SolidCraft independent reassigned body")?;
         let new_name = unique(&body.name, &mut used);
         bodies.insert(body.name.clone(), new_name.clone());
         let feature_name = unique(&format!("{} Base", body.name), &mut used);
         let id = scratch.doc_mut().add_feature(
-            FeatureKind::Import { file: format!("{} independent base", body.name), step, components: Vec::new() },
+            FeatureKind::Import { file: format!("{} independent base", body.name), step: step.into(), components: Vec::new(), skip: Vec::new() },
             Some(&feature_name),
         )?;
         if let Some(f) = scratch.doc_mut().feature_mut(id) {
@@ -351,7 +385,7 @@ pub(super) fn paste(
                     && let Some(p) = source_parameters.get(name.as_str())
                     && p.model
                 {
-                    if scratch.doc.params.len() >= solvecraft_doc::MAX_PARAMS {
+                    if scratch.doc.params.len() >= solidcraft_doc::MAX_PARAMS {
                         return Err(bad(CMD, "too many copied parameters"));
                     }
                     let new = scratch.doc_mut().new_model_param(&p.expr, &p.unit);
@@ -367,7 +401,7 @@ pub(super) fn paste(
         if let Some(p) = source_parameters.get(old.as_str())
             && p.model
         {
-            let expr = solvecraft_doc::clone_expression(&p.expr, &parameters);
+            let expr = solidcraft_doc::clone_expression(&p.expr, &parameters);
             if let Some(p) = scratch.doc_mut().params.iter_mut().find(|p| p.name == *new) {
                 p.expr = expr;
                 p.comment = source_parameters.get(old.as_str()).map(|p| p.comment.clone()).unwrap_or_default();
@@ -379,7 +413,11 @@ pub(super) fn paste(
         f.id = *features.get(&old.id).ok_or_else(|| bad(CMD, "missing feature mapping"))?;
         f.name = names.get(&old.name).cloned().ok_or_else(|| bad(CMD, "missing feature name"))?;
         f.component = *components.get(&old.component).ok_or_else(|| bad(CMD, "missing component mapping"))?;
-        if f.body_names.is_empty() {
+        if let Some(names) = shown.get(&old.id) {
+            // Stored as `X`, `X`, `X` and built as `X`, `X (2)`, `X (3)`: the copy is stored under the
+            // names of the bodies, so that it builds the names the copied features after it use.
+            f.body_names = names.clone();
+        } else if f.body_names.is_empty() {
             f.body_names = outputs.get(&old.id).cloned().unwrap_or_default();
         }
         f.remap_clone(&features, &names, &bodies, &parameters)?;
@@ -389,13 +427,13 @@ pub(super) fn paste(
                 *from = *mapped;
             } else {
                 *from = *to;
-                *transform = solvecraft_doc::IDENTITY;
+                *transform = solidcraft_doc::IDENTITY;
             }
         }
         if let FeatureKind::Emboss { face: Some(face), .. } = &mut f.kind
             && !face.path.is_empty()
             && let FeatureKind::Emboss { face: Some(old_face), .. } = &old.kind
-            && bodies.contains_key(&old_face.body)
+            && bodies.contains_key(old_face.body.as_ref())
         {
             face.path = cloned_path(&source, &old_face.path, component, &clone_path, &occurrences)?;
         }
@@ -452,7 +490,7 @@ pub(super) fn paste(
         .collect();
     if !moved_out.is_empty() {
         let name = unique("Assigned-out bodies", &mut used);
-        let id = scratch.doc_mut().add_feature(FeatureKind::Remove { bodies: moved_out }, Some(&name))?;
+        let id = scratch.doc_mut().add_feature(FeatureKind::Remove { bodies: moved_out.into_iter().map(BodyName).collect() }, Some(&name))?;
         if let Some(f) = scratch.doc_mut().feature_mut(id) {
             f.component = root;
         }
@@ -466,15 +504,15 @@ pub(super) fn paste(
                     return Err(bad(CMD, "cannot copy strict face paint through uncertified foreign re-export"));
                 }
                 if let Some(name) = &face.name {
-                    face.point = solvecraft_doc::naming::point_on_face(&state, name, face.point)
+                    face.point = solidcraft_doc::naming::point_on_face(&state, name, face.point)
                         .map(|(point, _)| point)
                         .ok_or_else(|| bad(CMD, "source frozen face appearance lost its identity"))?;
                 }
                 let source_body = state.body(&face.body).ok_or_else(|| bad(CMD, "source frozen face appearance lost its body"))?;
-                face.point = solvecraft_doc::apply_point(source.model_body_offset(source_body).unwrap_or(&solvecraft_doc::IDENTITY), face.point);
+                face.point = solidcraft_doc::apply_point(source.model_body_offset(source_body).unwrap_or(&solidcraft_doc::IDENTITY), face.point);
                 face.name = None;
             } else if let Some(name) = &mut face.name {
-                *name = solvecraft_doc::remap_topology(name, &features, &bodies);
+                *name = solidcraft_doc::remap_topology(name, &features, &bodies);
             }
             face.body = new.clone();
             if let Some(certificate) = &mut face.certificate {
@@ -484,7 +522,7 @@ pub(super) fn paste(
         }
     }
     // Typed configuration and assembly helpers preserve original targets.
-    scratch.doc_mut().configs.clone_targets(&solvecraft_doc::config::ConfigCloneMaps {
+    scratch.doc_mut().configs.clone_targets(&solidcraft_doc::config::ConfigCloneMaps {
         features: features.clone(),
         components: components.clone(),
         bodies: bodies.clone(),
@@ -495,12 +533,12 @@ pub(super) fn paste(
     for feature in &feats {
         if let FeatureKind::Emboss { face: Some(face), .. } = &feature.kind
             && !face.path.is_empty()
-            && !bodies.contains_key(&face.body)
+            && !bodies.contains_key(face.body.as_ref())
         {
             notices.push(format!("{} retains external selected occurrence path {:?}", feature.name, face.path));
         }
         if let FeatureKind::Sketch { sketch, .. } = &feature.kind {
-            use solvecraft_sketch::LinkSource as L;
+            use solidcraft_sketch::LinkSource as L;
             let mut pending: Vec<_> = sketch.links.iter().map(|l| &l.source).collect();
             let mut work = 0;
             while let Some(link) = pending.pop() {
@@ -557,13 +595,13 @@ pub(super) fn paste(
         }
         if let FeatureKind::Pattern { features: references, .. } | FeatureKind::Mirror { features: references, .. } = &feature.kind {
             for name in references {
-                if !names.contains_key(name) {
+                if !names.contains_key(name.as_ref()) {
                     notices.push(format!("{} retains external feature reference {name}", feature.name));
                 }
             }
         }
         for expression in feature.kind.expressions() {
-            for name in solvecraft_doc::expr::references(expression) {
+            for name in solidcraft_doc::expr::references(expression) {
                 reference_work += 1;
                 if reference_work > 100_000 {
                     return Err(bad(CMD, "expression references exceed copy work limit"));
@@ -590,8 +628,8 @@ pub(super) fn paste(
         if bodies.iter().any(|(old, new)| frozen.contains(old) && *new == face.body) {
             let body = resolved.body(&face.body).ok_or_else(|| bad(CMD, "missing frozen face body"))?;
             let face_index =
-                solvecraft_doc::appearance::face_index_at(body, face.point).ok_or_else(|| bad(CMD, "cannot reproduce frozen face appearance"))?;
-            let name = solvecraft_doc::naming::face_names(body).get(face_index).cloned().ok_or_else(|| bad(CMD, "missing frozen face identity"))?;
+                solidcraft_doc::appearance::face_index_at(body, face.point).ok_or_else(|| bad(CMD, "cannot reproduce frozen face appearance"))?;
+            let name = solidcraft_doc::naming::face_names(body).get(face_index).cloned().ok_or_else(|| bad(CMD, "missing frozen face identity"))?;
             face_updates.push((index, name));
         }
     }
@@ -638,10 +676,10 @@ pub(super) fn paste(
     for body in state.bodies.iter().filter(|b| selected.contains(&source.model_body_component(b))) {
         let new = bodies.get(&body.name).ok_or_else(|| bad(CMD, format!("body {} has no clone identity", body.name)))?;
         let cloned = copied_bodies.get(new.as_str()).ok_or_else(|| bad(CMD, format!("copy did not reproduce body {}", body.name)))?;
-        let a = solvecraft_kernel::transform_matrix(&body.body, *source.model_body_offset(body).unwrap_or(&solvecraft_doc::IDENTITY))?;
-        let b = solvecraft_kernel::transform_matrix(&cloned.body, *scratch.doc.model_body_offset(cloned).unwrap_or(&solvecraft_doc::IDENTITY))?;
-        let ma = solvecraft_kernel::measure(&a)?;
-        let mb = solvecraft_kernel::measure(&b)?;
+        let a = solidcraft_kernel::transform_matrix(&body.body, *source.model_body_offset(body).unwrap_or(&solidcraft_doc::IDENTITY))?;
+        let b = solidcraft_kernel::transform_matrix(&cloned.body, *scratch.doc.model_body_offset(cloned).unwrap_or(&solidcraft_doc::IDENTITY))?;
+        let ma = solidcraft_kernel::measure(&a)?;
+        let mb = solidcraft_kernel::measure(&b)?;
         let tolerance = 1e-5 * (1.0 + (ma.bbox.max - ma.bbox.min).len()) + 64.0 * f64::EPSILON * (ma.bbox.min.len() + ma.bbox.max.len());
         let mut material_matches = true;
         let tol_a = (a.size() * 1e-3).max(1e-3).max(a.size() * 1e-6);
@@ -658,7 +696,7 @@ pub(super) fn paste(
             for y in [0.2, 0.5, 0.8] {
                 for z in [0.2, 0.5, 0.8] {
                     let d = ma.bbox.max - ma.bbox.min;
-                    let p = ma.bbox.min + solvecraft_geom::Vec3::new(d.x * x, d.y * y, d.z * z);
+                    let p = ma.bbox.min + solidcraft_geom::Vec3::new(d.x * x, d.y * y, d.z * z);
                     let roundoff = 64. * f64::EPSILON * (1. + p.len());
                     material_matches &= material_probe_matches(&mesh_a, &mesh_b, p, tol_a + roundoff, tol_b + roundoff);
                 }
@@ -668,7 +706,7 @@ pub(super) fn paste(
         // chord-volume biases after STEP. Only independently certified current
         // sections may replace that volume comparison; shape mismatches still
         // refuse even when their volumes happen to agree.
-        let volume_matches = match solvecraft_kernel::certified_prism_equivalent(&a, &b)? {
+        let volume_matches = match solidcraft_kernel::certified_prism_equivalent(&a, &b)? {
             Some(same) => same,
             None => (ma.volume - mb.volume).abs() <= 1e-5 * (1.0 + ma.volume.abs()),
         };

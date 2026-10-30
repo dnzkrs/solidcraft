@@ -1,4 +1,4 @@
-//! A sample design (used by `solvecraft --sample` and demos): a parametric plate with rounded
+//! A sample design (used by `solidcraft --sample` and demos): a parametric plate with rounded
 //! corners, two holes and a boss.
 
 use serde_json::{Value, json};
@@ -89,11 +89,11 @@ fn enclosure() -> Value {
     json!({"commands": [
         {"command": "solid.box", "params": {"length": 80, "width": 50, "height": 30, "body_name": "Enclosure"}},
         {"command": "solid.shell", "params": {"faces": [[40, 25, 30]], "thickness": 2}},
-        {"command": "plastic.lip", "params": {"face": [1, 25, 30], "width": 1, "height": 2}},
-        {"command": "plastic.snap_fit", "params": {"position": [40, 44, 2], "hook": [0, -1, 0], "length": 14, "thickness": 1.5, "width": 6, "catch_depth": 1, "catch_length": 2}},
-        {"command": "plastic.boss", "params": {"position": [10, 10, 2], "diameter": 7, "height": 12, "hole_diameter": 2.5}},
-        {"command": "plastic.boss", "params": {"position": [70, 40, 2], "diameter": 7, "height": 12, "hole_diameter": 2.5}},
-        {"command": "plastic.rest", "params": {"position": [40, 25, 2], "width": 16, "length": 24, "height": 3}},
+        {"command": "plastic.lip", "params": {"face": [1, 25, 30], "width": "1 mm", "height": "2 mm"}},
+        {"command": "plastic.snap_fit", "params": {"position": [40, 44, 2], "hook": [0, -1, 0], "length": "14 mm", "thickness": "1.5 mm", "width": "6 mm", "catch_depth": "1 mm", "catch_length": "2 mm"}},
+        {"command": "plastic.boss", "params": {"position": [10, 10, 2], "diameter": "7 mm", "height": "12 mm", "hole_diameter": "2.5 mm"}},
+        {"command": "plastic.boss", "params": {"position": [70, 40, 2], "diameter": "7 mm", "height": "12 mm", "hole_diameter": "2.5 mm"}},
+        {"command": "plastic.rest", "params": {"position": [40, 25, 2], "width": "16 mm", "length": "24 mm", "height": "3 mm"}},
     ]})
 }
 
@@ -147,14 +147,14 @@ mod tests {
             .doc
             .features
             .iter()
-            .find(|feature| feature.name == "Boss" && matches!(feature.kind, solvecraft_doc::FeatureKind::Sketch { .. }))
+            .find(|feature| feature.name == "Boss" && matches!(feature.kind, solidcraft_doc::FeatureKind::Sketch { .. }))
             .unwrap()
             .id;
         let bore = session
             .doc
             .features
             .iter()
-            .find(|feature| feature.name == "Bore" && matches!(feature.kind, solvecraft_doc::FeatureKind::Sketch { .. }))
+            .find(|feature| feature.name == "Bore" && matches!(feature.kind, solidcraft_doc::FeatureKind::Sketch { .. }))
             .unwrap()
             .id;
         session.execute("parameters.change", &serde_json::json!({"name":"thickness","expression":"12 mm"})).unwrap();
@@ -164,17 +164,17 @@ mod tests {
         let world = session.world_state();
         let plate = world.body("Plate").unwrap().mesh();
         assert!((plate.bounds().max.z - 26.).abs() < 1e-6);
-        assert!(plate.contains(solvecraft_geom::Vec3::new(5., 25., 10.)));
-        assert!(plate.contains(solvecraft_geom::Vec3::new(40., 35., 24.)));
-        assert!(!plate.contains(solvecraft_geom::Vec3::new(40., 25., 24.)));
-        assert!(!plate.contains(solvecraft_geom::Vec3::new(40., 25., 2.)));
-        assert!(plate.contains(solvecraft_geom::Vec3::new(40., 35., 2.)));
-        let reopened = crate::Session::new(solvecraft_doc::Document::from_json(&session.doc.to_json()).unwrap());
+        assert!(plate.contains(solidcraft_geom::Vec3::new(5., 25., 10.)));
+        assert!(plate.contains(solidcraft_geom::Vec3::new(40., 35., 24.)));
+        assert!(!plate.contains(solidcraft_geom::Vec3::new(40., 25., 24.)));
+        assert!(!plate.contains(solidcraft_geom::Vec3::new(40., 25., 2.)));
+        assert!(plate.contains(solidcraft_geom::Vec3::new(40., 35., 2.)));
+        let reopened = crate::Session::new(solidcraft_doc::Document::from_json(&session.doc.to_json()).unwrap());
         assert!((reopened.model.state().sketch(bore).unwrap().plane.origin.z - 26.).abs() < 1e-6);
         let reopened_world = reopened.world_state();
         let reopened_plate = reopened_world.body("Plate").unwrap().mesh();
-        assert!(!reopened_plate.contains(solvecraft_geom::Vec3::new(40., 25., 2.)));
-        assert!(reopened_plate.contains(solvecraft_geom::Vec3::new(40., 35., 2.)));
+        assert!(!reopened_plate.contains(solidcraft_geom::Vec3::new(40., 25., 2.)));
+        assert!(reopened_plate.contains(solidcraft_geom::Vec3::new(40., 35., 2.)));
     }
 
     /// Every built-in sample builds without a failing feature or joint.
