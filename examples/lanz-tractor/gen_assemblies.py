@@ -67,11 +67,13 @@ class Assembly:
         self.placed = []                                # (occurrence, part, R, t, note)
         self.first = {}                                 # part: placement of its first occurrence
 
-    def place(self, part, R=I3, t=(0, 0, 0), note=""):
-        """Link the part's design and move its occurrence to x_world = R x_part + t."""
+    def place(self, part, R=I3, t=(0, 0, 0), note="", sub=False):
+        """Link the part's design (or, with sub, a finished subassembly's) and move its occurrence
+        to x_world = R x_part + t."""
         n = self.count.get(part, 0) + 1
         self.count[part] = n
-        params = {"path": os.path.join(PARTS, f"{part}.solvecraft"), "name": part}
+        path = f"{part}.solvecraft" if sub else os.path.join(PARTS, f"{part}.solvecraft")
+        params = {"path": path, "name": part}
         if n > 1:
             params["reuse"] = True
         self.cmds.append({"command": "component.insert_design", "params": params})
@@ -211,6 +213,32 @@ def cylinder_oiler(a):
     a.place("1-08", I3, (0, 0, 6.5), "M6 in 1-07's tapped hole, flange on the hex (Z 15.5)")
     a.place("1-09", I3, (0, 0, 16.5), "in 1-08's recess")
     a.place("1-10", I3, (0, 0, 34.5), "recess over the glass's top (Z 35.5)")
+
+
+# ----------------------------------------------------------------------------- SA-1-101
+@assembly("SA-1-101", "Engine block")
+def engine_block(a):
+    """The engine block (sheet 08's SA-1-101) in the frame's own axes: X along the engine (X 0 the
+    cylinder upright's outer face), Y across, Z up from the frame's underside; the cylinder axis
+    is X at Z 70.
+    - the cylinder 1-02 bolts to the upright's outer face on the same 4 x M4 / Ø4.5 pattern (PCD
+      44 at 45°), its 9 mm oiler flange against the frame and the radial oiler hole up;
+    - the gasket ring 1-03's Ø32 spigot goes into the bore's outer end, then the inner head 1-04
+      (its countersunk face toward the cylinder, the valve channel outward) and the outer head
+      1-05 (its countersunk face outward), all on the same bolt pattern;
+    - the crankshaft bearings 1-06 (9 wide) fill the 9 thick cheeks' Ø19 bores at X 68, Z 70;
+    - the cylinder oiler SA-1-102 screws into the oiler hole, 4.5 from the flange's end, its
+      collar on the flange (Z 98)."""
+    cyl = frame((0, 0, 1), (0, -1, 0), (1, 0, 0))          # part Z along X, part X up
+    a.place("1-01", note="base: the frame's own axes")
+    a.place("1-02", cyl, (-71, 0, 70), "oiler flange on the upright's outer face, axis at Z 70")
+    a.place("1-03", cyl, (-73, 0, 70), "spigot in the bore's outer end")
+    a.place("1-04", cyl, (-76.5, 0, 70), "countersunk face on the gasket, channel outward")
+    a.place("1-05", cyl, (-80, 0, 70), "on the inner head, countersunk face outward")
+    brg = frame((1, 0, 0), (0, 0, -1), (0, 1, 0))
+    a.place("1-06", brg, (68, 19, 70), "in the cheek's Ø19 bore")
+    a.place("1-06", brg, (68, -28, 70), "in the other cheek's Ø19 bore")
+    a.place("SA-1-102", I3, (-4.5, 0, 92), "stud in the cylinder's oiler hole, collar on the flange", sub=True)
 
 
 # ----------------------------------------------------------------------------- driver
