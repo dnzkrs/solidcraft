@@ -1,0 +1,19 @@
+<svg width="640" height="350" viewBox="0 0 640 350" xmlns="http://www.w3.org/2000/svg" font-size="13"><style>svg{--ink:#16212B;--muted:#5A6B76;--line:#D4DDDA;--accent:#1D6A86;background:#FAFBFB;font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}@media (prefers-color-scheme:dark){svg{--ink:#DCE6E9;--muted:#8FA2AA;--line:#28383F;--accent:#5BB4D3;background:#101A1E}}</style>
+<text x="20" y="24" fill="var(--ink)" font-weight="bold" font-size="15">The flywheel hub 1-20 (Z from the threaded end)</text>
+<rect x="40.0" y="80" width="210.6" height="30" fill="var(--line)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="43.0" y="100" fill="var(--ink)">M16 thread</text>
+<rect x="250.6" y="80" width="161.99999999999997" height="30" fill="var(--line)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="253.6" y="100" fill="var(--ink)">Ø22 collar</text>
+<rect x="185.79999999999998" y="122" width="64.80000000000001" height="30" fill="var(--accent)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="188.79999999999998" y="142" fill="var(--ink)">web</text>
+<rect x="115.6" y="164" width="205.20000000000002" height="30" fill="var(--line)" fill-opacity="0.25" stroke="var(--ink)"/>
+<text x="118.6" y="184" fill="var(--ink)">flywheel rim 1-21</text>
+<rect x="50.8" y="206" width="135.0" height="30" fill="var(--accent)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="53.8" y="226" fill="var(--ink)">SA-1-103: pulley 1-15</text>
+<rect x="131.8" y="248" width="53.99999999999997" height="30" fill="var(--accent)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="134.8" y="268" fill="var(--ink)">cam 1-17</text>
+<rect x="72.4" y="290" width="86.4" height="30" fill="var(--ink)" fill-opacity="0.25" stroke="var(--ink)"/>
+<text x="75.4" y="310" fill="var(--ink)">nut 1-18</text>
+<line x1="326.2" y1="70" x2="326.2" y2="335" stroke="var(--accent)" stroke-dasharray="5 3"/>
+<text x="331.2" y="320" fill="var(--accent)">M6 grub at 26.5 → crankshaft cross hole (Y −38)</text>
+</svg>

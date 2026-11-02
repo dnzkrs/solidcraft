@@ -1,0 +1,41 @@
+<svg width="740" height="420" viewBox="0 0 740 420" xmlns="http://www.w3.org/2000/svg" font-size="13"><style>svg{--ink:#16212B;--muted:#5A6B76;--line:#D4DDDA;--accent:#1D6A86;background:#FAFBFB;font-family:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}@media (prefers-color-scheme:dark){svg{--ink:#DCE6E9;--muted:#8FA2AA;--line:#28383F;--accent:#5BB4D3;background:#101A1E}}</style>
+<text x="20" y="24" fill="var(--ink)" font-weight="bold" font-size="15">SA-3-315: the stack along the axle (Z, mm)</text>
+<rect x="60" y="352.8" width="80" height="38.39999999999998" fill="var(--line)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="66" y="376.0" fill="var(--ink)">3-14</text>
+<rect x="155" y="322.4" width="80" height="30.400000000000034" fill="var(--accent)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="161" y="341.6" fill="var(--ink)">3-13</text>
+<rect x="250" y="309.6" width="80" height="12.799999999999983" fill="var(--ink)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="256" y="320.0" fill="var(--ink)">3-08</text>
+<rect x="60" y="236.8" width="80" height="84.00000000000003" fill="var(--line)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="66" y="282.8" fill="var(--ink)">3-06</text>
+<rect x="250" y="236.8" width="80" height="16.0" fill="var(--ink)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="256" y="248.8" fill="var(--ink)">3-07</text>
+<rect x="155" y="172.8" width="80" height="83.20000000000002" fill="var(--line)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="161" y="218.4" fill="var(--ink)">3-04</text>
+<rect x="345" y="207.2" width="80" height="23.18399999999997" fill="var(--accent)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="351" y="222.8" fill="var(--ink)">3-10</text>
+<rect x="345" y="163.2" width="80" height="23.184000000000026" fill="var(--accent)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="351" y="178.8" fill="var(--ink)">3-10</text>
+<rect x="155" y="137.6" width="80" height="35.20000000000002" fill="var(--line)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="161" y="159.2" fill="var(--ink)">3-03</text>
+<rect x="250" y="140.8" width="80" height="15.999999999999972" fill="var(--ink)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="256" y="152.8" fill="var(--ink)">3-07</text>
+<rect x="60" y="116.0" width="80" height="40.79999999999998" fill="var(--line)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="66" y="140.4" fill="var(--ink)">3-05</text>
+<rect x="250" y="114.4" width="80" height="12.800000000000011" fill="var(--ink)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="256" y="124.8" fill="var(--ink)">3-08</text>
+<rect x="155" y="84.0" width="80" height="30.399999999999977" fill="var(--accent)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="161" y="103.2" fill="var(--ink)">3-13</text>
+<rect x="60" y="45.6" width="80" height="38.400000000000034" fill="var(--line)" fill-opacity="0.45" stroke="var(--ink)"/>
+<text x="66" y="68.8" fill="var(--ink)">3-14</text>
+<line x1="440" y1="230.4" x2="455" y2="230.4" stroke="var(--accent)"/>
+<text x="460" y="234.4" fill="var(--accent)">16: side gear hub on 3-04's Ø14 step</text>
+<line x1="440" y1="196.8" x2="455" y2="196.8" stroke="var(--accent)"/>
+<text x="460" y="200.8" fill="var(--accent)">37: cross shaft, planet</text>
+<line x1="440" y1="163.2" x2="455" y2="163.2" stroke="var(--accent)"/>
+<text x="460" y="167.2" fill="var(--accent)">58: side gear hub on 3-03's Ø14 step</text>
+<line x1="440" y1="352.8" x2="455" y2="352.8" stroke="var(--accent)"/>
+<text x="460" y="356.8" fill="var(--accent)">-60.5: 3-14 hub meets the spacer</text>
+<line x1="440" y1="84.0" x2="455" y2="84.0" stroke="var(--accent)"/>
+<text x="460" y="88.0" fill="var(--accent)">107.5: 3-14 hub meets the spacer</text>
+</svg>

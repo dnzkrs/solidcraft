@@ -1,6 +1,6 @@
 # Lanz mini tractor in SolidCraft: activity logs
 
-16 activities, written after the work, in the order it happened.
+21 activities, written after the work, in the order it happened.
 
 | # | Activity | Date | What it covers |
 | --- | --- | --- | --- |
@@ -20,6 +20,15 @@
 | 14 | [Model the hand brake, controls and stop light](14-hand-brake-and-controls.md) | 2026-10-29 | Twenty group 3 parts from sheet 07 were modelled: the hand brake parts, the reversing and coupling handles, the shaft adjuster and spacer, the accelerator bolt and link, and the stop light. Two SolidCraft problems came up: a cut of two picked sketch regions removed the wrong amount, and a strap's tongue could not be joined without a retry |
 | 15 | [Model the gearbox, coupling and belts](15-gearbox-and-belts.md) | 2026-10-29 | Twenty-eight group 4 parts and the 5-01 belt were modelled from sheets 07, 08 and 11. The gears were built prisms first, because SolidCraft could not join a tooth prism to a round hub it touched. The volume check caught a V-belt whose tangent points were on the wrong side |
 | 16 | [Model the mudguards and close the set](16-mudguards-and-closing-the-set.md) | 2026-10-29 | The last modelled parts were added: the hand brake and release handles (3-27B, 3-27E), the seat back rest 3-25D and the two mudguards 3-23/3-24. The mudguards were built already folded from overlapping solids. Four parts the drawings do not define fully were left out by the owner's decision, closing the set at 182 of 186 listed parts |
+| 17 | [Rebuild the parts on the current main](17-rebuilding-the-parts-on-current-main.md) | 2026-10-30 | An attempt to rebuild all 183 parts with the current `main`'s `solidcraft-cli` found that `main` now reads a symmetric extrude's distance as the total thickness, not per side: five parts came out half as thick or failed. The fix was found and tested on those parts, but the rebuild was cancelled and the branch keeps the earlier build |
+| 18 | [Set up the assembly method and build the rear axle](18-assembly-method-and-rear-axle.md) | 2026-10-30 | A generator for subassemblies was written: it links the part designs and places each occurrence from how the parts mate. The first subassembly, the 25-part rear axle with differential and wheels, closes exactly along its axis. The work also found that `occurrence.move` composes with the current placement, and that 3-04's cross hole must pass through both walls |
+| 19 | [Build the front wheel and the front axle yoke](19-front-wheel-and-front-axle-yoke.md) | 2026-10-30 | The front wheel (SA-2-206) and the front axle yoke (SA-2-202) were built from their parts. In the wheel, the cap's spigot and the bearing fill the rim's counterbore exactly. In the yoke, the two arms' hole patterns put both bearings on one axis. Neither has overlapping parts |
+| 20 | [Build the exhaust stack, the oiler and the engine block](20-exhaust-oiler-and-engine-block.md) | 2026-10-30 | Three engine subassemblies were built: the exhaust stack (SA-1-110), the cylinder oiler (SA-1-102), and the engine block (SA-1-101), which links the finished oiler as a nested subassembly. Their only overlaps are threads, which are modelled at full diameter in tap-drill holes |
+| 21 | [Build the flywheels and the crankshaft](21-flywheels-and-crankshaft.md) | 2026-10-30 | The two flywheel subassemblies (SA-1-103 with the drive pulley, SA-1-104 with the cam plate) and the crankshaft carrying both (SA-1-105) were built in the engine block's axes. With the hub's collar 2 clear of the frame cheek, the hub's grub screw lands exactly on the crankshaft's cross hole, which confirms the placement |
 
 Figures live in `figures/` and are referenced relatively, so keep the
 folder next to the Markdown files when moving them.
+
+The logs quote commands exactly as they ran, when the CLI was still called `solvecraft-cli` and
+designs were `.solvecraft` files; on the current `main` they are `solidcraft-cli` and `.solidcraft`
+(activity 17).
